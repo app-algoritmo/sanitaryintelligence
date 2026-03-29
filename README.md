@@ -1,2 +1,2 @@
 # sanitaryintelligence
-Global Regulatory Excellence - Landing Page
+Global Regulatory Excellence
