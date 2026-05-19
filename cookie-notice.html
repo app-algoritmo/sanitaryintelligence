@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="Sanitary Intelligence" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#667eea" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aviso de Cookies – Sanitary Intelligence</title>
+  <style>
+    :root {
+      --primary:   #667eea;
+      --secondary: #764ba2;
+      --grad:      linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --white:     #ffffff;
+      --off-white: #f8f9ff;
+      --light:     #eef0ff;
+      --border:    #e2e5f5;
+      --text:      #1a1a2e;
+      --muted:     #6b7280;
+      --shadow:    0 4px 24px rgba(102,126,234,.09);
+      --shadow-lg: 0 12px 48px rgba(102,126,234,.16);
+      --ease:      cubic-bezier(.4,0,.2,1);
+      --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      --r: 16px;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:var(--font); background:var(--white); color:var(--text); line-height:1.7; overflow-x:hidden; }
+    img  { display:block; max-width:100%; }
+    .container { max-width:1180px; margin:0 auto; padding:0 24px; }
+
+    /* ── NAV ── */
+    nav {
+      position:fixed; top:0; width:100%; z-index:900;
+      background:rgba(255,255,255,.93); backdrop-filter:blur(18px);
+      border-bottom:1px solid var(--border); transition:box-shadow .3s;
+    }
+    nav.scrolled { box-shadow:0 2px 20px rgba(102,126,234,.12); }
+    .nav-inner {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 24px; max-width:1180px; margin:0 auto;
+    }
+    .nav-logo {
+      font-size:1.3rem; font-weight:700; letter-spacing:-.01em;
+      background:var(--grad); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text; text-decoration:none;
+    }
+    .nav-right { display:flex; align-items:center; gap:14px; }
+    .lang-sel { position:relative; }
+    .lang-btn {
+      background:var(--light); border:1px solid var(--border); color:var(--primary);
+      padding:6px 14px; border-radius:20px; font-family:var(--font);
+      font-size:.82rem; font-weight:600; cursor:pointer;
+      display:flex; align-items:center; gap:6px; transition:background .2s;
+    }
+    .lang-btn:hover { background:#dde0ff; }
+    .lang-btn svg { width:11px; height:11px; fill:var(--primary); transition:transform .2s; }
+    .lang-sel.open .lang-btn svg { transform:rotate(180deg); }
+    .lang-drop {
+      position:absolute; top:calc(100% + 8px); right:0;
+      background:var(--white); border:1px solid var(--border); border-radius:12px;
+      overflow:hidden; min-width:138px; box-shadow:0 8px 28px rgba(0,0,0,.11);
+      opacity:0; pointer-events:none; transform:translateY(-6px);
+      transition:opacity .2s,transform .2s;
+    }
+    .lang-sel.open .lang-drop { opacity:1; pointer-events:all; transform:translateY(0); }
+    .lang-opt {
+      display:flex; align-items:center; gap:9px; padding:10px 16px;
+      font-size:.87rem; cursor:pointer; transition:background .15s; color:var(--text);
+    }
+    .lang-opt:hover { background:var(--off-white); }
+    .lang-opt.active { color:var(--primary); font-weight:600; background:var(--light); }
+    .nav-cta {
+      background:var(--grad); color:#fff; padding:9px 24px; border-radius:24px;
+      font-weight:600; font-size:.88rem; text-decoration:none;
+      box-shadow:0 4px 14px rgba(102,126,234,.28); transition:transform .2s,box-shadow .2s;
+    }
+    .nav-cta:hover { transform:translateY(-1px); box-shadow:0 6px 22px rgba(102,126,234,.38); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding:130px 24px 70px;
+      background:linear-gradient(160deg, #f0f2ff 0%, #fafbff 55%, #f5f0ff 100%);
+      position:relative; overflow:hidden;
+    }
+    .page-header::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 60% at 75% 35%, rgba(102,126,234,.11) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 10% 80%, rgba(118,75,162,.07) 0%, transparent 55%);
+    }
+    .ph-dots {
+      position:absolute; inset:0; pointer-events:none; opacity:.04;
+      background-image:linear-gradient(var(--primary) 1px,transparent 1px),
+                       linear-gradient(90deg,var(--primary) 1px,transparent 1px);
+      background-size:54px 54px;
+    }
+    .ph-content { position:relative; z-index:1; }
+    .breadcrumb {
+      display:flex; align-items:center; gap:8px;
+      font-size:.82rem; color:var(--muted); margin-bottom:18px;
+      animation:fadeUp .6s var(--ease) both;
+    }
+    .breadcrumb a { color:var(--primary); text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .breadcrumb span { opacity:.5; }
+    .eyebrow {
+      display:inline-block; font-size:.74rem; font-weight:600;
+      letter-spacing:.18em; text-transform:uppercase; color:var(--primary);
+      background:rgba(102,126,234,.09); border:1px solid rgba(102,126,234,.22);
+      padding:5px 18px; border-radius:20px; margin-bottom:18px;
+      animation:fadeUp .6s .08s var(--ease) both;
+    }
+    .page-header h1 {
+      font-size:clamp(2rem,4.5vw,3.2rem); font-weight:800;
+      line-height:1.12; letter-spacing:-.025em; color:var(--text);
+      margin-bottom:14px; animation:fadeUp .6s .16s var(--ease) both;
+    }
+    .page-header h1 .hl {
+      background:var(--grad); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .ph-meta {
+      display:flex; align-items:center; gap:20px; flex-wrap:wrap;
+      animation:fadeUp .6s .24s var(--ease) both; margin-top:10px;
+    }
+    .ph-meta span {
+      font-size:.83rem; color:var(--muted);
+      display:inline-flex; align-items:center; gap:6px;
+    }
+    .ph-meta span svg { width:14px; height:14px; fill:var(--muted); }
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+    /* ── LAYOUT ── */
+    .legal-layout {
+      display:grid; grid-template-columns:260px 1fr;
+      gap:48px; align-items:start;
+      padding:72px 24px 100px; max-width:1180px; margin:0 auto;
+    }
+
+    /* ── STICKY TOC ── */
+    .toc-wrap {
+      position:sticky; top:90px;
+    }
+    .toc-card {
+      background:var(--off-white); border:1px solid var(--border);
+      border-radius:var(--r); padding:28px 24px;
+    }
+    .toc-title {
+      font-size:.72rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+      color:var(--primary); margin-bottom:18px;
+    }
+    .toc-list { list-style:none; }
+    .toc-list li { margin-bottom:4px; }
+    .toc-list li a {
+      font-size:.86rem; color:var(--muted); text-decoration:none;
+      display:block; padding:7px 10px; border-radius:8px;
+      border-left:2px solid transparent;
+      transition:color .2s, background .2s, border-color .2s;
+      line-height:1.4;
+    }
+    .toc-list li a:hover { color:var(--primary); background:var(--light); }
+    .toc-list li a.active {
+      color:var(--primary); font-weight:600;
+      background:var(--light); border-left-color:var(--primary);
+    }
+    .toc-updated {
+      margin-top:20px; padding-top:18px; border-top:1px solid var(--border);
+      font-size:.78rem; color:var(--muted); line-height:1.5;
+    }
+
+    /* ── ARTICLE ── */
+    .legal-article { min-width:0; }
+    .legal-article section {
+      padding:0; margin-bottom:56px; scroll-margin-top:100px;
+    }
+    .legal-article section:last-child { margin-bottom:0; }
+
+    .section-num {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:32px; height:32px; border-radius:8px;
+      background:var(--light); color:var(--primary);
+      font-size:.82rem; font-weight:700; margin-bottom:14px;
+      border:1px solid rgba(102,126,234,.2);
+    }
+    .legal-article h2 {
+      font-size:1.4rem; font-weight:700; color:var(--text);
+      margin-bottom:14px; line-height:1.3;
+    }
+    .legal-article p {
+      font-size:.95rem; color:#374151; line-height:1.8; margin-bottom:14px;
+    }
+    .legal-article p:last-child { margin-bottom:0; }
+
+    .legal-article ul, .legal-article ol {
+      padding-left:20px; margin-bottom:14px;
+    }
+    .legal-article li {
+      font-size:.95rem; color:#374151; line-height:1.8; margin-bottom:6px;
+    }
+
+    /* highlight box */
+    .info-box {
+      background:var(--light); border:1px solid rgba(102,126,234,.2);
+      border-left:3px solid var(--primary);
+      border-radius:0 10px 10px 0; padding:16px 20px; margin-bottom:14px;
+    }
+    .info-box p { font-size:.9rem; color:var(--text); margin-bottom:0; }
+
+    /* data table */
+    .data-table {
+      width:100%; border-collapse:collapse; margin-bottom:14px;
+      font-size:.9rem;
+    }
+    .data-table th {
+      background:var(--light); color:var(--primary);
+      padding:10px 14px; text-align:left; font-size:.78rem;
+      font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+      border-bottom:2px solid var(--border);
+    }
+    .data-table td {
+      padding:10px 14px; border-bottom:1px solid var(--border);
+      color:#374151; vertical-align:top; line-height:1.6;
+    }
+    .data-table tr:last-child td { border-bottom:none; }
+    .data-table tr:hover td { background:var(--off-white); }
+
+    /* contact CTA */
+    .legal-cta {
+      background:var(--off-white); border:1px solid var(--border);
+      border-radius:var(--r); padding:32px 28px; margin-top:48px;
+      display:flex; align-items:center; gap:20px; flex-wrap:wrap;
+    }
+    .legal-cta .icon { font-size:2rem; flex-shrink:0; }
+    .legal-cta-text { flex:1; min-width:200px; }
+    .legal-cta-text h4 { font-size:1rem; font-weight:700; margin-bottom:6px; }
+    .legal-cta-text p  { font-size:.88rem; color:var(--muted); }
+    .btn-small {
+      background:var(--grad); color:#fff; padding:10px 24px;
+      border-radius:22px; font-weight:600; font-size:.88rem;
+      text-decoration:none; white-space:nowrap;
+      box-shadow:0 3px 12px rgba(102,126,234,.25);
+      transition:transform .2s, box-shadow .2s;
+    }
+    .btn-small:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(102,126,234,.35); }
+
+    /* ── FOOTER ── */
+    footer{background:#1a1a2e;color:#fff;border-top:1px solid rgba(255,255,255,.06);padding:72px 24px 0;}
+    .footer-grid{display:grid;grid-template-columns:2fr 1.2fr 1.2fr 1.5fr;gap:48px;max-width:1180px;margin:0 auto;padding-bottom:56px;}
+    .fbrand img{height:50px;width:auto;margin-bottom:14px;}
+    .fbrand-name{font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:4px;}
+    .fbrand-slogan{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--primary);margin-bottom:14px;}
+    .fbrand-desc{font-size:.87rem;color:#7a849a;line-height:1.7;max-width:268px;}
+    .fcol h4{font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--primary);margin-bottom:22px;}
+    .fcol ul{list-style:none;}
+    .fcol ul li{margin-bottom:10px;}
+    .fcol ul li a{font-size:.9rem;color:#7a849a;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:color .2s;}
+    .fcol ul li a:hover{color:#fff;}
+    .soc-icon{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:rgba(102,126,234,.14);border:1px solid rgba(102,126,234,.2);border-radius:6px;flex-shrink:0;transition:background .2s;}
+    .fcol ul li a:hover .soc-icon{background:rgba(102,126,234,.28);}
+    .soc-icon svg{width:13px;height:13px;fill:var(--primary);}
+    .fbot{border-top:1px solid rgba(255,255,255,.07);padding:20px 0;max-width:1180px;margin:0 auto;}
+    .fbot-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+    .fbot-inner p{font-size:.82rem;color:#555f72;}
+    .fbot-inner a{font-size:.82rem;color:#555f72;text-decoration:none;transition:color .2s;}
+    .fbot-inner a:hover{color:var(--primary);}
+
+    /* ── COOKIE BANNER ── */
+    #cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:1000;background:#12192b;border-top:2px solid rgba(102,126,234,.3);padding:18px 28px;transform:translateY(100%);transition:transform .45s var(--ease);box-shadow:0 -6px 40px rgba(0,0,0,.35);}
+    #cookie-banner.show{transform:translateY(0);}
+    .ck-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+    .ck-left{flex:1;min-width:240px;}
+    .ck-title{font-size:.88rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#fff;margin-bottom:5px;}
+    .ck-desc{font-size:.84rem;color:#8a95aa;line-height:1.55;}
+    .ck-desc a{color:var(--primary);text-decoration:none;}
+    .ck-desc a:hover{text-decoration:underline;}
+    .ck-toggles{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+    .ck-tog{display:flex;align-items:center;gap:8px;font-size:.82rem;color:#8a95aa;font-weight:500;cursor:pointer;}
+    .sw{position:relative;width:40px;height:22px;flex-shrink:0;}
+    .sw input{opacity:0;width:0;height:0;position:absolute;}
+    .sw-track{position:absolute;inset:0;background:#243044;border-radius:11px;cursor:pointer;transition:background .25s;border:1px solid rgba(255,255,255,.07);}
+    .sw-track::after{content:'';position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:2px;left:2px;transition:transform .25s;}
+    .sw input:checked+.sw-track{background:var(--primary);}
+    .sw input:checked+.sw-track::after{transform:translateX(18px);}
+    .sw input:disabled+.sw-track{background:#243044;opacity:.5;cursor:not-allowed;}
+    .ck-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+    .ck-btn{padding:9px 20px;border-radius:22px;font-size:.83rem;font-weight:700;letter-spacing:.03em;cursor:pointer;white-space:nowrap;transition:transform .15s,box-shadow .15s;}
+    .ck-btn:hover{transform:translateY(-1px);}
+    .ck-accept{background:var(--grad);color:#fff;border:none;box-shadow:0 3px 14px rgba(102,126,234,.4);}
+    .ck-accept:hover{box-shadow:0 5px 20px rgba(102,126,234,.5);}
+    .ck-save{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.28);}
+    .ck-save:hover{border-color:#fff;}
+    .ck-reject{background:transparent;color:#8a95aa;border:1.5px solid rgba(255,255,255,.1);}
+    .ck-reject:hover{color:#fff;border-color:rgba(255,255,255,.22);}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:860px){
+      .legal-layout{grid-template-columns:1fr;}
+      .toc-wrap{position:static;}
+      .footer-grid{grid-template-columns:1fr 1fr;gap:32px;}
+    }
+    @media(max-width:600px){
+      .footer-grid{grid-template-columns:1fr;}
+      .nav-cta{display:none;}
+      .data-table{font-size:.82rem;}
+      .data-table th,.data-table td{padding:8px 10px;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Sanitary Intelligence</a>
+    <div class="nav-right">
+      <div class="lang-sel" id="langSel">
+        <button class="lang-btn" onclick="toggleLang()" aria-label="Language">
+          <span id="langLabel">PT</span>
+          <svg viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="lang-drop" id="langDrop">
+          <div class="lang-opt" data-lang="en" onclick="setLang('en')">🇺🇸&nbsp; English</div>
+          <div class="lang-opt active" data-lang="pt" onclick="setLang('pt')">🇧🇷&nbsp; Português</div>
+          <div class="lang-opt" data-lang="es" onclick="setLang('es')">🇪🇸&nbsp; Español</div>
+        </div>
+      </div>
+      <a href="https://sanitaryintelligence.com/contact.html" class="nav-cta" data-i18n="nav.cta">Fale Conosco</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="ph-dots"></div>
+  <div class="container ph-content">
+    <nav class="breadcrumb" aria-label="breadcrumb">
+      <a href="/">Home</a><span>›</span>
+      <span data-i18n="breadcrumb">Aviso de Cookies</span>
+    </nav>
+    <span class="eyebrow" data-i18n="header.eyebrow">Legal</span>
+    <h1 data-i18n-html="header.h1">Aviso de <span class="hl">Cookies</span></h1>
+    <div class="ph-meta">
+      <span>
+        <svg viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        <span data-i18n="meta.updated">Última atualização:</span>&nbsp;<strong>Maio 2026</strong>
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        <span data-i18n="meta.gdpr">GDPR · LGPD · CCPA Conforme</span>
+      </span>
+    </div>
+  </div>
+</header>
+
+<!-- LEGAL LAYOUT -->
+<div class="legal-layout">
+
+  <!-- TOC -->
+  <aside class="toc-wrap">
+    <div class="toc-card">
+      <p class="toc-title" data-i18n="toc.title">Conteúdo</p>
+      <ul class="toc-list" id="toc-list">
+        <li><a href="#s1" data-i18n="toc.s1">1. O que são Cookies?</a></li>
+        <li><a href="#s2" data-i18n="toc.s2">2. Por que usamos Cookies?</a></li>
+        <li><a href="#s3" data-i18n="toc.s3">3. Tipos de Cookies que Utilizamos</a></li>
+        <li><a href="#s4" data-i18n="toc.s4">4. Cookies de Terceiros</a></li>
+        <li><a href="#s5" data-i18n="toc.s5">5. Como Gerenciar suas Preferências</a></li>
+        <li><a href="#s6" data-i18n="toc.s6">6. Como Desativar Cookies no Navegador</a></li>
+        <li><a href="#s7" data-i18n="toc.s7">7. Atualizações neste Aviso</a></li>
+        <li><a href="#s8" data-i18n="toc.s8">8. Contato</a></li>
+      </ul>
+      <div class="toc-updated">
+        <span data-i18n="toc.updated">Versão:</span> 1.0 — Maio 2026
+      </div>
+    </div>
+  </aside>
+
+  <!-- ARTICLE -->
+  <article class="legal-article" id="legal-article">
+
+    <section id="s1">
+      <div class="section-num">01</div>
+      <h2 data-i18n="s1.h">O que são Cookies?</h2>
+      <div data-i18n-html="s1.body">
+        <p><strong>Cookies</strong> são pequenos arquivos de texto que são armazenados no seu dispositivo (computador, tablet ou smartphone) quando você visita um site. Eles são amplamente utilizados para fazer os sites funcionarem de forma mais eficiente, além de fornecer informações aos proprietários do site.</p>
+        <p>Os cookies podem ser:</p>
+        <ul>
+          <li><strong>Permanentes:</strong> permanecem no seu dispositivo por um período definido ou até serem excluídos manualmente</li>
+          <li><strong>De sessão:</strong> são temporários e expiram quando você fecha o navegador</li>
+          <li><strong>Próprios:</strong> definidos pelo site que você está visitando</li>
+          <li><strong>De terceiros:</strong> definidos por domínios externos ao site visitado</li>
+        </ul>
+        <div class="info-box"><p>🔒 Todos os cookies utilizados em nosso site seguem as diretrizes da LGPD (Lei Geral de Proteção de Dados), GDPR e outras legislações aplicáveis de proteção de dados.</p></div>
+      </div>
+    </section>
+
+    <section id="s2">
+      <div class="section-num">02</div>
+      <h2 data-i18n="s2.h">Por que usamos Cookies?</h2>
+      <div data-i18n-html="s2.body">
+        <p>Utilizamos cookies para melhorar sua experiência de navegação, personalizar conteúdo, analisar o tráfego do site e oferecer funcionalidades específicas. Nossos objetivos incluem:</p>
+        <ul>
+          <li>Garantir o funcionamento adequado e seguro do site</li>
+          <li>Lembrar suas preferências e configurações para visitas futuras</li>
+          <li>Analisar como os visitantes interagem com nosso conteúdo para melhorá-lo continuamente</li>
+          <li>Oferecer anúncios e conteúdos relevantes com base em seus interesses</li>
+          <li>Medir a eficácia de nossas campanhas de marketing</li>
+          <li>Prevenir fraudes e aumentar a segurança de nossas plataformas</li>
+        </ul>
+        <p>Não utilizamos cookies para coletar informações que permitam sua identificação pessoal direta, exceto quando você nos fornece voluntariamente tais dados por meio de formulários ou interações específicas.</p>
+      </div>
+    </section>
+
+    <section id="s3">
+      <div class="section-num">03</div>
+      <h2 data-i18n="s3.h">Tipos de Cookies que Utilizamos</h2>
+      <div data-i18n-html="s3.body">
+        <p>Classificamos os cookies que utilizamos em quatro categorias principais:</p>
+        <table class="data-table">
+          <thead><tr><th>Tipo</th><th>Finalidade</th><th>Duração</th><th>Gerenciamento</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Necessários</strong></td>
+              <td>Essenciais para o funcionamento do site, como navegação segura, acesso a áreas protegidas e uso de funcionalidades básicas. Sem estes cookies, os serviços solicitados não podem ser fornecidos.</td>
+              <td>Até 2 anos</td>
+              <td>Não podem ser desativados</td>
+            </tr>
+            <tr>
+              <td><strong>De Desempenho/Analytics</strong></td>
+              <td>Coletam informações anônimas sobre como os visitantes usam o site (páginas mais acessadas, tempo de permanência, erros encontrados). Esses dados nos ajudam a melhorar a experiência do usuário.</td>
+              <td>Até 26 meses</td>
+              <td>Via banner de cookies ou configurações do navegador</td>
+            </tr>
+            <tr>
+              <td><strong>Funcionais</strong></td>
+              <td>Permitem que o site lembre escolhas feitas anteriormente (como idioma, região ou preferências de exibição) para oferecer uma experiência mais personalizada.</td>
+              <td>Até 1 ano</td>
+              <td>Via banner de cookies ou configurações do navegador</td>
+            </tr>
+            <tr>
+              <td><strong>De Marketing/Publicidade</strong></td>
+              <td>Utilizados para exibir anúncios relevantes com base em seus interesses, limitar a frequência de exibição de anúncios e medir a eficácia de campanhas publicitárias.</td>
+              <td>Até 13 meses</td>
+              <td>Via banner de cookies ou configurações do navegador</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Para uma lista detalhada dos cookies específicos utilizados em nosso site, incluindo nomes, provedores e finalidades, consulte nossa <a href="https://sanitaryintelligence.com/cookie-list.html" style="color:var(--primary)">Lista Completa de Cookies</a>.</p>
+      </div>
+    </section>
+
+    <section id="s4">
+      <div class="section-num">04</div>
+      <h2 data-i18n="s4.h">Cookies de Terceiros</h2>
+      <div data-i18n-html="s4.body">
+        <p>Alguns cookies em nosso site são definidos por serviços de terceiros que utilizamos para aprimorar nossa plataforma. Estes incluem:</p>
+        <ul>
+          <li><strong>Google Analytics:</strong> para análise de tráfego e comportamento do usuário (cookies: _ga, _gid, _gat)</li>
+          <li><strong>LinkedIn Insight Tag:</strong> para medição de conversões e remarketing profissional</li>
+          <li><strong>YouTube:</strong> para incorporação de vídeos e análise de visualizações</li>
+          <li><strong>Hotjar:</strong> para heatmaps e gravações de sessões (anonimizadas) visando melhorar a usabilidade</li>
+          <li><strong>Cloudflare:</strong> para segurança, proteção contra DDoS e otimização de desempenho</li>
+        </ul>
+        <div class="info-box"><p>Esses terceiros possuem suas próprias políticas de privacidade e cookies. Recomendamos que você revise essas políticas para entender como eles utilizam suas informações. Não temos controle sobre cookies definidos por terceiros.</p></div>
+      </div>
+    </section>
+
+    <section id="s5">
+      <div class="section-num">05</div>
+      <h2 data-i18n="s5.h">Como Gerenciar suas Preferências</h2>
+      <div data-i18n-html="s5.body">
+        <p>Você pode gerenciar suas preferências de cookies a qualquer momento:</p>
+        <ol>
+          <li><strong>Através do banner de cookies:</strong> Ao visitar nosso site, clique em "SALVAR ESCOLHA" no banner para personalizar quais categorias de cookies deseja aceitar</li>
+          <li><strong>Reabrindo o painel de preferências:</strong> Clique no ícone <strong>⚙️ Preferências de Cookies</strong> localizado no canto inferior direito da tela (após o primeiro acesso)</li>
+          <li><strong>Configurações do navegador:</strong> Você pode bloquear ou excluir cookies diretamente nas configurações do seu navegador (veja a seção abaixo)</li>
+        </ol>
+        <p>Se você optar por desativar cookies não essenciais, algumas funcionalidades do site podem não estar disponíveis ou funcionar de forma limitada. Cookies necessários para o funcionamento básico do site não podem ser desativados.</p>
+        <div class="info-box"><p>🔄 Suas preferências são armazenadas em um cookie próprio com duração de 12 meses. Após esse período, o banner de consentimento será exibido novamente para que você possa atualizar suas escolhas.</p></div>
+      </div>
+    </section>
+
+    <section id="s6">
+      <div class="section-num">06</div>
+      <h2 data-i18n="s6.h">Como Desativar Cookies no Navegador</h2>
+      <div data-i18n-html="s6.body">
+        <p>Você pode gerenciar ou desativar cookies diretamente nas configurações do seu navegador. Abaixo estão instruções para os navegadores mais comuns:</p>
+        <table class="data-table">
+          <thead><tr><th>Navegador</th><th>Como Gerenciar Cookies</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Google Chrome</strong></td>
+              <td>Configurações → Privacidade e segurança → Cookies e outros dados do site</td>
+            </tr>
+            <tr>
+              <td><strong>Mozilla Firefox</strong></td>
+              <td>Opções → Privacidade e Segurança → Cookies e dados do site</td>
+            </tr>
+            <tr>
+              <td><strong>Safari (macOS)</strong></td>
+              <td>Preferências → Privacidade → Gerenciar dados do site</td>
+            </tr>
+            <tr>
+              <td><strong>Microsoft Edge</strong></td>
+              <td>Configurações → Cookies e permissões do site → Gerenciar e excluir cookies</td>
+            </tr>
+            <tr>
+              <td><strong>Opera</strong></td>
+              <td>Configurações → Privacidade e segurança → Cookies</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Para dispositivos móveis, consulte as configurações do navegador ou do sistema operacional. Lembre-se de que desativar cookies pode afetar a funcionalidade de muitos sites que você visita.</p>
+        <p>Para mais informações sobre como gerenciar cookies em diversos navegadores, visite: <a href="https://www.allaboutcookies.org/manage-cookies/" target="_blank" rel="noopener" style="color:var(--primary)">allaboutcookies.org</a></p>
+      </div>
+    </section>
+
+    <section id="s7">
+      <div class="section-num">07</div>
+      <h2 data-i18n="s7.h">Atualizações neste Aviso</h2>
+      <div data-i18n-html="s7.body">
+        <p>Podemos atualizar este Aviso de Cookies periodicamente para refletir mudanças em nossas práticas, tecnologias, requisitos legais ou outros fatores. Quando fizermos alterações significativas, publicaremos um aviso destacado em nosso site e atualizaremos a data de "Última atualização" no topo desta página.</p>
+        <p>Recomendamos que você revise este aviso regularmente para se manter informado sobre como utilizamos cookies e tecnologias similares.</p>
+        <div class="info-box"><p>O uso continuado de nosso site após a publicação de alterações neste Aviso de Cookies constitui sua aceitação das práticas atualizadas.</p></div>
+      </div>
+    </section>
+
+    <section id="s8">
+      <div class="section-num">08</div>
+      <h2 data-i18n="s8.h">Contato</h2>
+      <div data-i18n-html="s8.body">
+        <p>Se você tiver dúvidas, preocupações ou solicitações relacionadas a este Aviso de Cookies ou ao uso de tecnologias de rastreamento em nosso site, entre em contato conosco:</p>
+        <ul>
+          <li><strong>Email:</strong> info@sanitaryintelligence.com</li>
+          <li><strong>Assunto sugerido:</strong> "Consulta sobre Cookies"</li>
+          <li><strong>Formulário de contato:</strong> <a href="https://sanitaryintelligence.com/contact.html" style="color:var(--primary)">sanitaryintelligence.com/contact.html</a></li>
+        </ul>
+        <p>Nossa equipe de Proteção de Dados responderá sua solicitação dentro de 30 dias úteis, conforme exigido pelas legislações aplicáveis.</p>
+        <p>Se você estiver localizado na União Europeia, também tem o direito de entrar em contato com a autoridade de proteção de dados do seu país. Uma lista das autoridades europeias está disponível em <a href="https://edpb.europa.eu" target="_blank" rel="noopener" style="color:var(--primary)">edpb.europa.eu</a>.</p>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="legal-cta">
+      <div class="icon">🍪</div>
+      <div class="legal-cta-text">
+        <h4 data-i18n="cta.h">Dúvidas sobre cookies?</h4>
+        <p data-i18n="cta.p">Nossa equipe está pronta para ajudar com qualquer consulta sobre privacidade e cookies.</p>
+      </div>
+      <a href="https://sanitaryintelligence.com/contact.html" class="btn-small" data-i18n="cta.btn">Entre em Contato</a>
+    </div>
+
+  </article>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="fbrand">
+      <img src="/sanitaryintelligence/logo.png" alt="Sanitary Intelligence"
+           onerror="this.style.display='none';document.getElementById('fb-name').style.display='block'"/>
+      <div id="fb-name" class="fbrand-name" style="display:none">Sanitary Intelligence</div>
+      <p class="fbrand-slogan" data-i18n="footer.slogan">Assuntos Regulatórios</p>
+      <p class="fbrand-desc" data-i18n="footer.desc">15 anos liderando o sucesso regulatório global em farmacêuticos, biológicos, dispositivos médicos e além.</p>
+    </div>
+    <div class="fcol">
+      <h4 data-i18n="footer.col2">Links Rápidos</h4>
+      <ul>
+        <li><a href="https://sanitaryintelligence.com/contact.html" data-i18n="footer.contact">Contato</a></li>
+        <li><a href="https://sanitaryintelligence.com/access.html"  data-i18n="footer.access">Acesso</a></li>
+        <li><a href="/#services" data-i18n="footer.services">Serviços</a></li>
+        <li><a href="/#about"    data-i18n="footer.about">Sobre</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h4 data-i18n="footer.col3">Redes Sociais</h4>
+      <ul>
+        <li><a href="https://www.linkedin.com/company/sanitary-intelligence" target="_blank" rel="noopener"><span class="soc-icon"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></span>LinkedIn</a></li>
+        <li><a href="https://www.youtube.com/@sanitaryintelligence" target="_blank" rel="noopener"><span class="soc-icon"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span>YouTube</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h4 data-i18n="footer.col4">Legal</h4>
+      <ul>
+        <li><a href="https://sanitaryintelligence.com/privacy-policy.html"  data-i18n="footer.privacy">Política de Privacidade</a></li>
+        <li><a href="https://sanitaryintelligence.com/terms-of-use.html"    data-i18n="footer.terms">Termos de Uso</a></li>
+        <li><a href="https://sanitaryintelligence.com/cookies-notice.html"  data-i18n="footer.cookies">Aviso de Cookies</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fbot">
+    <div class="fbot-inner">
+      <p>© <span id="fyear"></span> Sanitary Intelligence. <span data-i18n="footer.rights">Todos os direitos reservados.</span></p>
+      <a href="https://ds.barros.no/" target="_blank" rel="noopener" data-i18n="footer.dev">Desenvolvido por Digital Solutions</a>
+    </div>
+  </div>
+</footer>
+
+<!-- COOKIE BANNER -->
+<div id="cookie-banner" role="dialog" aria-label="Cookie consent">
+  <div class="ck-inner">
+    <div class="ck-left">
+      <p class="ck-title" data-i18n="cookie.title">🍪 PRIVACIDADE & COOKIES</p>
+      <p class="ck-desc"><span data-i18n="cookie.desc">Usamos cookies para analisar o tráfego e personalizar anúncios. Leia nossa </span><a href="https://sanitaryintelligence.com/privacy-policy.html" data-i18n="cookie.link">Política de Privacidade</a>.</p>
+    </div>
+    <div class="ck-toggles">
+      <label class="ck-tog"><div class="sw"><input type="checkbox" checked disabled/><div class="sw-track"></div></div><span data-i18n="cookie.necessary">Necessários</span></label>
+      <label class="ck-tog"><div class="sw"><input type="checkbox" id="ck-ana"/><div class="sw-track"></div></div><span data-i18n="cookie.analytics">Análise</span></label>
+      <label class="ck-tog"><div class="sw"><input type="checkbox" id="ck-mkt"/><div class="sw-track"></div></div><span data-i18n="cookie.marketing">Marketing</span></label>
+    </div>
+    <div class="ck-actions">
+      <button class="ck-btn ck-accept" id="ck-a" data-i18n="cookie.accept">ACEITAR TUDO</button>
+      <button class="ck-btn ck-save"   id="ck-s" data-i18n="cookie.save">SALVAR ESCOLHA</button>
+      <button class="ck-btn ck-reject" id="ck-r" data-i18n="cookie.reject">REJEITAR</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── i18n ── */
+const T = {
+  en:{
+    "nav.cta":"Contact Us","breadcrumb":"Cookies Notice",
+    "header.eyebrow":"Legal","header.h1":'Cookies <span class="hl">Notice</span>',
+    "meta.updated":"Last updated:","meta.gdpr":"GDPR · LGPD · CCPA Compliant",
+    "toc.title":"Contents",
+    "toc.s1":"1. What are Cookies?","toc.s2":"2. Why We Use Cookies","toc.s3":"3. Types of Cookies We Use",
+    "toc.s4":"4. Third-Party Cookies","toc.s5":"5. Managing Your Preferences",
+    "toc.s6":"6. Disabling Cookies in Browser","toc.s7":"7. Updates to This Notice","toc.s8":"8. Contact",
+    "toc.updated":"Version:",
+    "s1.h":"What are Cookies?","s2.h":"Why We Use Cookies","s3.h":"Types of Cookies We Use",
+    "s4.h":"Third-Party Cookies","s5.h":"Managing Your Preferences",
+    "s6.h":"Disabling Cookies in Browser","s7.h":"Updates to This Notice","s8.h":"Contact",
+    "cta.h":"Questions about cookies?",
+    "cta.p":"Our team is ready to help with any privacy or cookie-related inquiry.",
+    "cta.btn":"Contact Us",
+    "footer.slogan":"Regulatory Affairs","footer.desc":"15 years leading global regulatory success.",
+    "footer.col2":"Quick Links","footer.contact":"Contact","footer.access":"Access","footer.services":"Services","footer.about":"About",
+    "footer.col3":"Social Media","footer.col4":"Legal","footer.privacy":"Privacy Policy","footer.terms":"Terms of Use","footer.cookies":"Cookies Notice",
+    "footer.rights":"All rights reserved.","footer.dev":"Developed by Digital Solutions",
+    "cookie.title":"🍪 PRIVACY & COOKIES","cookie.desc":"We use cookies to analyze traffic. Read our ",
+    "cookie.link":"Privacy Policy","cookie.necessary":"Necessary","cookie.analytics":"Analytics","cookie.marketing":"Marketing",
+    "cookie.accept":"ACCEPT ALL","cookie.save":"SAVE CHOICES","cookie.reject":"REJECT"
+  },
+  pt:{
+    "nav.cta":"Fale Conosco","breadcrumb":"Aviso de Cookies",
+    "header.eyebrow":"Legal","header.h1":'Aviso de <span class="hl">Cookies</span>',
+    "meta.updated":"Última atualização:","meta.gdpr":"GDPR · LGPD · CCPA Conforme",
+    "toc.title":"Conteúdo",
+    "toc.s1":"1. O que são Cookies?","toc.s2":"2. Por que usamos Cookies?","toc.s3":"3. Tipos de Cookies que Utilizamos",
+    "toc.s4":"4. Cookies de Terceiros","toc.s5":"5. Como Gerenciar suas Preferências",
+    "toc.s6":"6. Como Desativar Cookies no Navegador","toc.s7":"7. Atualizações neste Aviso","toc.s8":"8. Contato",
+    "toc.updated":"Versão:",
+    "s1.h":"O que são Cookies?","s2.h":"Por que usamos Cookies?","s3.h":"Tipos de Cookies que Utilizamos",
+    "s4.h":"Cookies de Terceiros","s5.h":"Como Gerenciar suas Preferências",
+    "s6.h":"Como Desativar Cookies no Navegador","s7.h":"Atualizações neste Aviso","s8.h":"Contato",
+    "cta.h":"Dúvidas sobre cookies?",
+    "cta.p":"Nossa equipe está pronta para ajudar com qualquer consulta sobre privacidade e cookies.",
+    "cta.btn":"Entre em Contato",
+    "footer.slogan":"Assuntos Regulatórios","footer.desc":"15 anos liderando o sucesso regulatório global.",
+    "footer.col2":"Links Rápidos","footer.contact":"Contato","footer.access":"Acesso","footer.services":"Serviços","footer.about":"Sobre",
+    "footer.col3":"Redes Sociais","footer.col4":"Legal","footer.privacy":"Política de Privacidade","footer.terms":"Termos de Uso","footer.cookies":"Aviso de Cookies",
+    "footer.rights":"Todos os direitos reservados.","footer.dev":"Desenvolvido por Digital Solutions",
+    "cookie.title":"🍪 PRIVACIDADE & COOKIES","cookie.desc":"Usamos cookies para analisar o tráfego. Leia nossa ",
+    "cookie.link":"Política de Privacidade","cookie.necessary":"Necessários","cookie.analytics":"Análise","cookie.marketing":"Marketing",
+    "cookie.accept":"ACEITAR TUDO","cookie.save":"SALVAR ESCOLHA","cookie.reject":"REJEITAR"
+  },
+  es:{
+    "nav.cta":"Contáctenos","breadcrumb":"Aviso de Cookies",
+    "header.eyebrow":"Legal","header.h1":'Aviso de <span class="hl">Cookies</span>',
+    "meta.updated":"Última actualización:","meta.gdpr":"GDPR · LGPD · CCPA Conforme",
+    "toc.title":"Contenido",
+    "toc.s1":"1. ¿Qué son las Cookies?","toc.s2":"2. ¿Por qué usamos Cookies?","toc.s3":"3. Tipos de Cookies que Utilizamos",
+    "toc.s4":"4. Cookies de Terceros","toc.s5":"5. Cómo Gestionar sus Preferencias",
+    "toc.s6":"6. Cómo Desactivar Cookies en el Navegador","toc.s7":"7. Actualizaciones en este Aviso","toc.s8":"8. Contacto",
+    "toc.updated":"Versión:",
+    "s1.h":"¿Qué son las Cookies?","s2.h":"¿Por qué usamos Cookies?","s3.h":"Tipos de Cookies que Utilizamos",
+    "s4.h":"Cookies de Terceros","s5.h":"Cómo Gestionar sus Preferencias",
+    "s6.h":"Cómo Desactivar Cookies en el Navegador","s7.h":"Actualizaciones en este Aviso","s8.h":"Contacto",
+    "cta.h":"¿Preguntas sobre cookies?",
+    "cta.p":"Nuestro equipo está listo para ayudar con cualquier consulta de privacidad o cookies.",
+    "cta.btn":"Contáctenos",
+    "footer.slogan":"Asuntos Regulatorios","footer.desc":"15 años liderando el éxito regulatorio global.",
+    "footer.col2":"Enlaces Rápidos","footer.contact":"Contacto","footer.access":"Acceso","footer.services":"Servicios","footer.about":"Nosotros",
+    "footer.col3":"Redes Sociales","footer.col4":"Legal","footer.privacy":"Política de Privacidad","footer.terms":"Términos de Uso","footer.cookies":"Aviso de Cookies",
+    "footer.rights":"Todos los derechos reservados.","footer.dev":"Desarrollado por Digital Solutions",
+    "cookie.title":"🍪 PRIVACIDAD & COOKIES","cookie.desc":"Usamos cookies para analizar el tráfico. Lea nuestra ",
+    "cookie.link":"Política de Privacidad","cookie.necessary":"Necesarias","cookie.analytics":"Análisis","cookie.marketing":"Marketing",
+    "cookie.accept":"ACEPTAR TODO","cookie.save":"GUARDAR ELECCIÓN","cookie.reject":"RECHAZAR"
+  }
+};
+
+let lang = localStorage.getItem('si_lang') || 'pt';
+
+function applyLang(l) {
+  const t = T[l]; if (!t) return;
+  document.documentElement.lang = l === 'pt' ? 'pt-BR' : l;
+  document.querySelectorAll('[data-i18n]').forEach(el => { if (t[el.dataset.i18n] !== undefined) el.textContent = t[el.dataset.i18n]; });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => { if (t[el.dataset.i18nHtml] !== undefined) el.innerHTML = t[el.dataset.i18nHtml]; });
+  document.querySelectorAll('.lang-opt').forEach(o => o.classList.toggle('active', o.dataset.lang === l));
+  document.getElementById('langLabel').textContent = {en:'EN',pt:'PT',es:'ES'}[l]||'PT';
+}
+
+function setLang(l) { lang=l; localStorage.setItem('si_lang',l); applyLang(l); closeLang(); }
+function toggleLang(){ document.getElementById('langSel').classList.toggle('open'); }
+function closeLang() { document.getElementById('langSel').classList.remove('open'); }
+document.addEventListener('click', e => { if(!e.target.closest('#langSel')) closeLang(); });
+
+/* ── Sticky TOC active highlight ── */
+const sections = document.querySelectorAll('.legal-article section[id]');
+const tocLinks  = document.querySelectorAll('.toc-list a');
+function activeToc() {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 130) current = s.id; });
+  tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+}
+window.addEventListener('scroll', activeToc, { passive:true });
+
+/* ── Cookie ── */
+function cookieAction(action) {
+  if (action==='accept') { document.getElementById('ck-ana').checked=true; document.getElementById('ck-mkt').checked=true; }
+  localStorage.setItem('si_cookies', JSON.stringify({action}));
+  const b=document.getElementById('cookie-banner');
+  b.style.transform='translateY(100%)'; setTimeout(()=>b.remove(),500);
+}
+document.getElementById('ck-a').addEventListener('click',()=>cookieAction('accept'));
+document.getElementById('ck-s').addEventListener('click',()=>cookieAction('save'));
+document.getElementById('ck-r').addEventListener('click',()=>cookieAction('reject'));
+
+/* ── Init ── */
+document.getElementById('fyear').textContent = new Date().getFullYear();
+applyLang(lang);
+if (!localStorage.getItem('si_cookies')) setTimeout(()=>document.getElementById('cookie-banner').classList.add('show'),1600);
+window.addEventListener('scroll',()=>document.getElementById('main-nav').classList.toggle('scrolled',scrollY>30),{passive:true});
+</script>
+</body>
+</html>
