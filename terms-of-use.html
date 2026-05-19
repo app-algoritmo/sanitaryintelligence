@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="Sanitary Intelligence" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#667eea" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Termos de Uso – Sanitary Intelligence</title>
+  <style>
+    :root {
+      --primary:   #667eea;
+      --secondary: #764ba2;
+      --grad:      linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --white:     #ffffff;
+      --off-white: #f8f9ff;
+      --light:     #eef0ff;
+      --border:    #e2e5f5;
+      --text:      #1a1a2e;
+      --muted:     #6b7280;
+      --shadow:    0 4px 24px rgba(102,126,234,.09);
+      --shadow-lg: 0 12px 48px rgba(102,126,234,.16);
+      --ease:      cubic-bezier(.4,0,.2,1);
+      --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      --r: 16px;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:var(--font); background:var(--white); color:var(--text); line-height:1.7; overflow-x:hidden; }
+    img  { display:block; max-width:100%; }
+    .container { max-width:1180px; margin:0 auto; padding:0 24px; }
+
+    /* ── NAV ── */
+    nav {
+      position:fixed; top:0; width:100%; z-index:900;
+      background:rgba(255,255,255,.93); backdrop-filter:blur(18px);
+      border-bottom:1px solid var(--border); transition:box-shadow .3s;
+    }
+    nav.scrolled { box-shadow:0 2px 20px rgba(102,126,234,.12); }
+    .nav-inner {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 24px; max-width:1180px; margin:0 auto;
+    }
+    .nav-logo {
+      font-size:1.3rem; font-weight:700; letter-spacing:-.01em;
+      background:var(--grad); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text; text-decoration:none;
+    }
+    .nav-right { display:flex; align-items:center; gap:14px; }
+    .lang-sel { position:relative; }
+    .lang-btn {
+      background:var(--light); border:1px solid var(--border); color:var(--primary);
+      padding:6px 14px; border-radius:20px; font-family:var(--font);
+      font-size:.82rem; font-weight:600; cursor:pointer;
+      display:flex; align-items:center; gap:6px; transition:background .2s;
+    }
+    .lang-btn:hover { background:#dde0ff; }
+    .lang-btn svg { width:11px; height:11px; fill:var(--primary); transition:transform .2s; }
+    .lang-sel.open .lang-btn svg { transform:rotate(180deg); }
+    .lang-drop {
+      position:absolute; top:calc(100% + 8px); right:0;
+      background:var(--white); border:1px solid var(--border); border-radius:12px;
+      overflow:hidden; min-width:138px; box-shadow:0 8px 28px rgba(0,0,0,.11);
+      opacity:0; pointer-events:none; transform:translateY(-6px);
+      transition:opacity .2s,transform .2s;
+    }
+    .lang-sel.open .lang-drop { opacity:1; pointer-events:all; transform:translateY(0); }
+    .lang-opt {
+      display:flex; align-items:center; gap:9px; padding:10px 16px;
+      font-size:.87rem; cursor:pointer; transition:background .15s; color:var(--text);
+    }
+    .lang-opt:hover { background:var(--off-white); }
+    .lang-opt.active { color:var(--primary); font-weight:600; background:var(--light); }
+    .nav-cta {
+      background:var(--grad); color:#fff; padding:9px 24px; border-radius:24px;
+      font-weight:600; font-size:.88rem; text-decoration:none;
+      box-shadow:0 4px 14px rgba(102,126,234,.28); transition:transform .2s,box-shadow .2s;
+    }
+    .nav-cta:hover { transform:translateY(-1px); box-shadow:0 6px 22px rgba(102,126,234,.38); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding:130px 24px 70px;
+      background:linear-gradient(160deg, #f0f2ff 0%, #fafbff 55%, #f5f0ff 100%);
+      position:relative; overflow:hidden;
+    }
+    .page-header::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 60% at 75% 35%, rgba(102,126,234,.11) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 10% 80%, rgba(118,75,162,.07) 0%, transparent 55%);
+    }
+    .ph-dots {
+      position:absolute; inset:0; pointer-events:none; opacity:.04;
+      background-image:linear-gradient(var(--primary) 1px,transparent 1px),
+                       linear-gradient(90deg,var(--primary) 1px,transparent 1px);
+      background-size:54px 54px;
+    }
+    .ph-content { position:relative; z-index:1; }
+    .breadcrumb {
+      display:flex; align-items:center; gap:8px;
+      font-size:.82rem; color:var(--muted); margin-bottom:18px;
+      animation:fadeUp .6s var(--ease) both;
+    }
+    .breadcrumb a { color:var(--primary); text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .breadcrumb span { opacity:.5; }
+    .eyebrow {
+      display:inline-block; font-size:.74rem; font-weight:600;
+      letter-spacing:.18em; text-transform:uppercase; color:var(--primary);
+      background:rgba(102,126,234,.09); border:1px solid rgba(102,126,234,.22);
+      padding:5px 18px; border-radius:20px; margin-bottom:18px;
+      animation:fadeUp .6s .08s var(--ease) both;
+    }
+    .page-header h1 {
+      font-size:clamp(2rem,4.5vw,3.2rem); font-weight:800;
+      line-height:1.12; letter-spacing:-.025em; color:var(--text);
+      margin-bottom:14px; animation:fadeUp .6s .16s var(--ease) both;
+    }
+    .page-header h1 .hl {
+      background:var(--grad); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .ph-meta {
+      display:flex; align-items:center; gap:20px; flex-wrap:wrap;
+      animation:fadeUp .6s .24s var(--ease) both; margin-top:10px;
+    }
+    .ph-meta span {
+      font-size:.83rem; color:var(--muted);
+      display:inline-flex; align-items:center; gap:6px;
+    }
+    .ph-meta span svg { width:14px; height:14px; fill:var(--muted); }
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+    /* ── LAYOUT ── */
+    .legal-layout {
+      display:grid; grid-template-columns:260px 1fr;
+      gap:48px; align-items:start;
+      padding:72px 24px 100px; max-width:1180px; margin:0 auto;
+    }
+
+    /* ── STICKY TOC ── */
+    .toc-wrap {
+      position:sticky; top:90px;
+    }
+    .toc-card {
+      background:var(--off-white); border:1px solid var(--border);
+      border-radius:var(--r); padding:28px 24px;
+    }
+    .toc-title {
+      font-size:.72rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+      color:var(--primary); margin-bottom:18px;
+    }
+    .toc-list { list-style:none; }
+    .toc-list li { margin-bottom:4px; }
+    .toc-list li a {
+      font-size:.86rem; color:var(--muted); text-decoration:none;
+      display:block; padding:7px 10px; border-radius:8px;
+      border-left:2px solid transparent;
+      transition:color .2s, background .2s, border-color .2s;
+      line-height:1.4;
+    }
+    .toc-list li a:hover { color:var(--primary); background:var(--light); }
+    .toc-list li a.active {
+      color:var(--primary); font-weight:600;
+      background:var(--light); border-left-color:var(--primary);
+    }
+    .toc-updated {
+      margin-top:20px; padding-top:18px; border-top:1px solid var(--border);
+      font-size:.78rem; color:var(--muted); line-height:1.5;
+    }
+
+    /* ── ARTICLE ── */
+    .legal-article { min-width:0; }
+    .legal-article section {
+      padding:0; margin-bottom:56px; scroll-margin-top:100px;
+    }
+    .legal-article section:last-child { margin-bottom:0; }
+
+    .section-num {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:32px; height:32px; border-radius:8px;
+      background:var(--light); color:var(--primary);
+      font-size:.82rem; font-weight:700; margin-bottom:14px;
+      border:1px solid rgba(102,126,234,.2);
+    }
+    .legal-article h2 {
+      font-size:1.4rem; font-weight:700; color:var(--text);
+      margin-bottom:14px; line-height:1.3;
+    }
+    .legal-article p {
+      font-size:.95rem; color:#374151; line-height:1.8; margin-bottom:14px;
+    }
+    .legal-article p:last-child { margin-bottom:0; }
+
+    .legal-article ul, .legal-article ol {
+      padding-left:20px; margin-bottom:14px;
+    }
+    .legal-article li {
+      font-size:.95rem; color:#374151; line-height:1.8; margin-bottom:6px;
+    }
+
+    /* highlight box */
+    .info-box {
+      background:var(--light); border:1px solid rgba(102,126,234,.2);
+      border-left:3px solid var(--primary);
+      border-radius:0 10px 10px 0; padding:16px 20px; margin-bottom:14px;
+    }
+    .info-box p { font-size:.9rem; color:var(--text); margin-bottom:0; }
+
+    /* data table */
+    .data-table {
+      width:100%; border-collapse:collapse; margin-bottom:14px;
+      font-size:.9rem;
+    }
+    .data-table th {
+      background:var(--light); color:var(--primary);
+      padding:10px 14px; text-align:left; font-size:.78rem;
+      font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+      border-bottom:2px solid var(--border);
+    }
+    .data-table td {
+      padding:10px 14px; border-bottom:1px solid var(--border);
+      color:#374151; vertical-align:top; line-height:1.6;
+    }
+    .data-table tr:last-child td { border-bottom:none; }
+    .data-table tr:hover td { background:var(--off-white); }
+
+    /* contact CTA */
+    .legal-cta {
+      background:var(--off-white); border:1px solid var(--border);
+      border-radius:var(--r); padding:32px 28px; margin-top:48px;
+      display:flex; align-items:center; gap:20px; flex-wrap:wrap;
+    }
+    .legal-cta .icon { font-size:2rem; flex-shrink:0; }
+    .legal-cta-text { flex:1; min-width:200px; }
+    .legal-cta-text h4 { font-size:1rem; font-weight:700; margin-bottom:6px; }
+    .legal-cta-text p  { font-size:.88rem; color:var(--muted); }
+    .btn-small {
+      background:var(--grad); color:#fff; padding:10px 24px;
+      border-radius:22px; font-weight:600; font-size:.88rem;
+      text-decoration:none; white-space:nowrap;
+      box-shadow:0 3px 12px rgba(102,126,234,.25);
+      transition:transform .2s, box-shadow .2s;
+    }
+    .btn-small:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(102,126,234,.35); }
+
+    /* ── FOOTER ── */
+    footer{background:#1a1a2e;color:#fff;border-top:1px solid rgba(255,255,255,.06);padding:72px 24px 0;}
+    .footer-grid{display:grid;grid-template-columns:2fr 1.2fr 1.2fr 1.5fr;gap:48px;max-width:1180px;margin:0 auto;padding-bottom:56px;}
+    .fbrand img{height:50px;width:auto;margin-bottom:14px;}
+    .fbrand-name{font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:4px;}
+    .fbrand-slogan{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--primary);margin-bottom:14px;}
+    .fbrand-desc{font-size:.87rem;color:#7a849a;line-height:1.7;max-width:268px;}
+    .fcol h4{font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--primary);margin-bottom:22px;}
+    .fcol ul{list-style:none;}
+    .fcol ul li{margin-bottom:10px;}
+    .fcol ul li a{font-size:.9rem;color:#7a849a;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:color .2s;}
+    .fcol ul li a:hover{color:#fff;}
+    .soc-icon{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:rgba(102,126,234,.14);border:1px solid rgba(102,126,234,.2);border-radius:6px;flex-shrink:0;transition:background .2s;}
+    .fcol ul li a:hover .soc-icon{background:rgba(102,126,234,.28);}
+    .soc-icon svg{width:13px;height:13px;fill:var(--primary);}
+    .fbot{border-top:1px solid rgba(255,255,255,.07);padding:20px 0;max-width:1180px;margin:0 auto;}
+    .fbot-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+    .fbot-inner p{font-size:.82rem;color:#555f72;}
+    .fbot-inner a{font-size:.82rem;color:#555f72;text-decoration:none;transition:color .2s;}
+    .fbot-inner a:hover{color:var(--primary);}
+
+    /* ── COOKIE BANNER ── */
+    #cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:1000;background:#12192b;border-top:2px solid rgba(102,126,234,.3);padding:18px 28px;transform:translateY(100%);transition:transform .45s var(--ease);box-shadow:0 -6px 40px rgba(0,0,0,.35);}
+    #cookie-banner.show{transform:translateY(0);}
+    .ck-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+    .ck-left{flex:1;min-width:240px;}
+    .ck-title{font-size:.88rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#fff;margin-bottom:5px;}
+    .ck-desc{font-size:.84rem;color:#8a95aa;line-height:1.55;}
+    .ck-desc a{color:var(--primary);text-decoration:none;}
+    .ck-desc a:hover{text-decoration:underline;}
+    .ck-toggles{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+    .ck-tog{display:flex;align-items:center;gap:8px;font-size:.82rem;color:#8a95aa;font-weight:500;cursor:pointer;}
+    .sw{position:relative;width:40px;height:22px;flex-shrink:0;}
+    .sw input{opacity:0;width:0;height:0;position:absolute;}
+    .sw-track{position:absolute;inset:0;background:#243044;border-radius:11px;cursor:pointer;transition:background .25s;border:1px solid rgba(255,255,255,.07);}
+    .sw-track::after{content:'';position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:2px;left:2px;transition:transform .25s;}
+    .sw input:checked+.sw-track{background:var(--primary);}
+    .sw input:checked+.sw-track::after{transform:translateX(18px);}
+    .sw input:disabled+.sw-track{background:#243044;opacity:.5;cursor:not-allowed;}
+    .ck-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+    .ck-btn{padding:9px 20px;border-radius:22px;font-size:.83rem;font-weight:700;letter-spacing:.03em;cursor:pointer;white-space:nowrap;transition:transform .15s,box-shadow .15s;}
+    .ck-btn:hover{transform:translateY(-1px);}
+    .ck-accept{background:var(--grad);color:#fff;border:none;box-shadow:0 3px 14px rgba(102,126,234,.4);}
+    .ck-accept:hover{box-shadow:0 5px 20px rgba(102,126,234,.5);}
+    .ck-save{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.28);}
+    .ck-save:hover{border-color:#fff;}
+    .ck-reject{background:transparent;color:#8a95aa;border:1.5px solid rgba(255,255,255,.1);}
+    .ck-reject:hover{color:#fff;border-color:rgba(255,255,255,.22);}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:860px){
+      .legal-layout{grid-template-columns:1fr;}
+      .toc-wrap{position:static;}
+      .footer-grid{grid-template-columns:1fr 1fr;gap:32px;}
+    }
+    @media(max-width:600px){
+      .footer-grid{grid-template-columns:1fr;}
+      .nav-cta{display:none;}
+      .data-table{font-size:.82rem;}
+      .data-table th,.data-table td{padding:8px 10px;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Sanitary Intelligence</a>
+    <div class="nav-right">
+      <div class="lang-sel" id="langSel">
+        <button class="lang-btn" onclick="toggleLang()" aria-label="Language">
+          <span id="langLabel">PT</span>
+          <svg viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="lang-drop" id="langDrop">
+          <div class="lang-opt" data-lang="en" onclick="setLang('en')">🇺🇸&nbsp; English</div>
+          <div class="lang-opt active" data-lang="pt" onclick="setLang('pt')">🇧🇷&nbsp; Português</div>
+          <div class="lang-opt" data-lang="es" onclick="setLang('es')">🇪🇸&nbsp; Español</div>
+        </div>
+      </div>
+      <a href="https://sanitaryintelligence.com/contact.html" class="nav-cta" data-i18n="nav.cta">Fale Conosco</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="ph-dots"></div>
+  <div class="container ph-content">
+    <nav class="breadcrumb" aria-label="breadcrumb">
+      <a href="/">Home</a><span>›</span>
+      <span data-i18n="breadcrumb">Termos de Uso</span>
+    </nav>
+    <span class="eyebrow" data-i18n="header.eyebrow">Legal</span>
+    <h1 data-i18n-html="header.h1">Termos de <span class="hl">Uso</span></h1>
+    <div class="ph-meta">
+      <span>
+        <svg viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        <span data-i18n="meta.updated">Última atualização:</span>&nbsp;<strong>Maio 2026</strong>
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        <span data-i18n="meta.gdpr">Aplicável globalmente</span>
+      </span>
+    </div>
+  </div>
+</header>
+
+<!-- LEGAL LAYOUT -->
+<div class="legal-layout">
+
+  <!-- TOC -->
+  <aside class="toc-wrap">
+    <div class="toc-card">
+      <p class="toc-title" data-i18n="toc.title">Conteúdo</p>
+      <ul class="toc-list" id="toc-list">
+        <li><a href="#s1" data-i18n="toc.s1">1. Aceitação dos Termos</a></li>
+        <li><a href="#s2" data-i18n="toc.s2">2. Descrição dos Serviços</a></li>
+        <li><a href="#s3" data-i18n="toc.s3">3. Elegibilidade e Registro</a></li>
+        <li><a href="#s4" data-i18n="toc.s4">4. Conduta do Usuário</a></li>
+        <li><a href="#s5" data-i18n="toc.s5">5. Propriedade Intelectual</a></li>
+        <li><a href="#s6" data-i18n="toc.s6">6. Pagamentos e Faturamento</a></li>
+        <li><a href="#s7" data-i18n="toc.s7">7. Limitação de Responsabilidade</a></li>
+        <li><a href="#s8" data-i18n="toc.s8">8. Indenização</a></li>
+        <li><a href="#s9" data-i18n="toc.s9">9. Rescisão e Suspensão</a></li>
+        <li><a href="#s10" data-i18n="toc.s10">10. Privacidade e Dados</a></li>
+        <li><a href="#s11" data-i18n="toc.s11">11. Links e Conteúdo de Terceiros</a></li>
+        <li><a href="#s12" data-i18n="toc.s12">12. Alterações nestes Termos</a></li>
+        <li><a href="#s13" data-i18n="toc.s13">13. Lei Aplicável e Foro</a></li>
+        <li><a href="#s14" data-i18n="toc.s14">14. Contato</a></li>
+      </ul>
+      <div class="toc-updated">
+        <span data-i18n="toc.updated">Versão:</span> 1.0 — Maio 2026
+      </div>
+    </div>
+  </aside>
+
+  <!-- ARTICLE -->
+  <article class="legal-article" id="legal-article">
+
+    <section id="s1">
+      <div class="section-num">01</div>
+      <h2 data-i18n="s1.h">Aceitação dos Termos</h2>
+      <div data-i18n-html="s1.body">
+        <p>Bem-vindo à <strong>Sanitary Intelligence</strong>. Estes Termos de Uso ("Termos") regulam o acesso e uso do site <em>sanitaryintelligence.com</em> ("Site"), bem como dos serviços de consultoria em assuntos regulatórios ("Serviços") prestados pela Sanitary Intelligence ("Nós", "Nosso" ou "Empresa").</p>
+        <p><strong>Ao acessar ou utilizar nosso Site ou Serviços, você declara que:</strong></p>
+        <ul>
+          <li>Leu, compreendeu e concorda em ficar vinculado a estes Termos e à nossa <a href="https://sanitaryintelligence.com/privacy-policy.html" style="color:var(--primary)">Política de Privacidade</a></li>
+          <li>Possui capacidade legal para celebrar contratos em sua jurisdição</li>
+          <li>Utilizará nossos Serviços apenas para fins legítimos e em conformidade com leis aplicáveis</li>
+        </ul>
+        <div class="info-box"><p>⚠️ Se você não concordar com qualquer disposição destes Termos, deverá interromper imediatamente o uso do Site e dos Serviços.</p></div>
+      </div>
+    </section>
+
+    <section id="s2">
+      <div class="section-num">02</div>
+      <h2 data-i18n="s2.h">Descrição dos Serviços</h2>
+      <div data-i18n-html="s2.body">
+        <p>A Sanitary Intelligence é uma empresa global de consultoria em assuntos regulatórios, atuando nos setores farmacêutico, de biológicos, dispositivos médicos, cosméticos, alimentos e veterinário em mais de 50 países.</p>
+        <p>Nossos Serviços podem incluir, mas não se limitam a:</p>
+        <ul>
+          <li>Consultoria estratégica para registro e compliance regulatório</li>
+          <li>Preparação e submissão de dossiês a agências reguladoras (ANVISA, FDA, EMA, etc.)</li>
+          <li>Acompanhamento de processos regulatórios e gestão de prazos</li>
+          <li>Treinamentos, workshops e capacitação em regulações sanitárias</li>
+          <li>Inteligência regulatória e monitoramento de mudanças legislativas</li>
+          <li>Suporte em inspeções, auditorias e respostas a autoridades</li>
+        </ul>
+        <p>Detalhes específicos sobre escopo, prazos, entregas e valores de cada projeto serão definidos em contratos ou propostas comerciais individuais, que prevalecerão sobre estes Termos em caso de conflito.</p>
+      </div>
+    </section>
+
+    <section id="s3">
+      <div class="section-num">03</div>
+      <h2 data-i18n="s3.h">Elegibilidade e Registro</h2>
+      <div data-i18n-html="s3.body">
+        <p>Nossos Serviços são direcionados exclusivamente a profissionais e empresas do setor de saúde e regulatório. Ao utilizar nosso Site ou solicitar Serviços, você representa e garante que:</p>
+        <ul>
+          <li>É maior de 18 anos ou possui autorização legal para atuar em nome de uma entidade jurídica</li>
+          <li>Fornece informações verdadeiras, precisas e atualizadas durante o processo de cadastro ou contratação</li>
+          <li>Mantém a confidencialidade de suas credenciais de acesso e é responsável por todas as atividades realizadas sob sua conta</li>
+        </ul>
+        <p>Reservamo-nos o direito de recusar acesso ou encerrar contas que violem estes Termos, forneçam informações falsas ou representem risco à segurança de nossa plataforma.</p>
+      </div>
+    </section>
+
+    <section id="s4">
+      <div class="section-num">04</div>
+      <h2 data-i18n="s4.h">Conduta do Usuário</h2>
+      <div data-i18n-html="s4.body">
+        <p>Você concorda em não utilizar nosso Site ou Serviços para:</p>
+        <ul>
+          <li>Violar leis, regulamentos ou direitos de terceiros</li>
+          <li>Transmitir conteúdo ilegal, fraudulento, difamatório, obsceno ou prejudicial</li>
+          <li>Interferir no funcionamento técnico do Site (ex: ataques DDoS, injeção de código, scraping não autorizado)</li>
+          <li>Tentar acessar áreas restritas sem autorização ou contornar medidas de segurança</li>
+          <li>Utilizar nossos Serviços para fins de concorrência desleal ou engenharia reversa</li>
+          <li>Compartilhar credenciais de acesso ou permitir uso não autorizado de sua conta</li>
+        </ul>
+        <p>Violações destes Termos podem resultar em suspensão imediata do acesso, rescisão contratual e ações legais cabíveis.</p>
+      </div>
+    </section>
+
+    <section id="s5">
+      <div class="section-num">05</div>
+      <h2 data-i18n="s5.h">Propriedade Intelectual</h2>
+      <div data-i18n-html="s5.body">
+        <p>Todos os direitos de propriedade intelectual relacionados ao Site, Serviços, conteúdo, materiais, metodologias, ferramentas, marcas, logotipos e know-how da Sanitary Intelligence são de nossa propriedade exclusiva ou de nossos licenciadores.</p>
+        <table class="data-table">
+          <thead><tr><th>Tipo de Conteúdo</th><th>Direitos</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Conteúdo do Site</strong></td><td>© Sanitary Intelligence. Reprodução proibida sem autorização expressa.</td></tr>
+            <tr><td><strong>Materiais de Consultoria</strong></td><td>Licenciados para uso exclusivo do Cliente conforme contrato. Não podem ser redistribuídos.</td></tr>
+            <tr><td><strong>Marcas e Logotipos</strong></td><td>® Sanitary Intelligence. Uso não autorizado constitui violação de marca registrada.</td></tr>
+            <tr><td><strong>Conteúdo do Usuário</strong></td><td>Você mantém a propriedade, mas nos concede licença limitada para prestar os Serviços.</td></tr>
+          </tbody>
+        </table>
+        <p>Nada nestes Termos transfere propriedade intelectual para você. O uso de nossas marcas, nomes comerciais ou materiais protegidos requer autorização prévia por escrito.</p>
+      </div>
+    </section>
+
+    <section id="s6">
+      <div class="section-num">06</div>
+      <h2 data-i18n="s6.h">Pagamentos e Faturamento</h2>
+      <div data-i18n-html="s6.body">
+        <p>Os valores, formas de pagamento, prazos e condições comerciais serão estabelecidos em proposta comercial ou contrato específico para cada projeto.</p>
+        <ul>
+          <li><strong>Moeda:</strong> Os valores são cotados em USD, EUR ou BRL, conforme acordado</li>
+          <li><strong>Faturamento:</strong> Faturas são emitidas conforme cronograma definido no contrato</li>
+          <li><strong>Atrasos:</strong> Pagamentos em atraso podem acarretar juros de mora de 1% ao mês e suspensão dos Serviços</li>
+          <li><strong>Reembolsos:</strong> Sujeitos às condições específicas do contrato e estágio de execução do projeto</li>
+          <li><strong>Impostos:</strong> Valores não incluem tributos locais, que são de responsabilidade do Cliente</li>
+        </ul>
+        <div class="info-box"><p>💳 Para dúvidas sobre faturamento ou pagamentos, entre em contato com nosso departamento financeiro: <strong>finance@sanitaryintelligence.com</strong></p></div>
+      </div>
+    </section>
+
+    <section id="s7">
+      <div class="section-num">07</div>
+      <h2 data-i18n="s7.h">Limitação de Responsabilidade</h2>
+      <div data-i18n-html="s7.body">
+        <p>Nossos Serviços são prestados "no estado em que se encontram" e "conforme disponibilidade". Embora nos esforcemos para fornecer consultoria precisa e atualizada, <strong>não garantimos</strong>:</p>
+        <ul>
+          <li>Aprovação automática de registros ou submissões junto a agências reguladoras</li>
+          <li>Prazos exatos de análise por autoridades, que fogem ao nosso controle</li>
+          <li>Que o Site estará sempre disponível, livre de erros ou seguro contra ataques</li>
+          <li>Resultados comerciais específicos decorrentes do uso de nossos Serviços</li>
+        </ul>
+        <p><strong>Na extensão máxima permitida por lei:</strong></p>
+        <ul>
+          <li>Nossa responsabilidade total por quaisquer danos não excederá o valor pago por você nos últimos 12 meses</li>
+          <li>Não seremos responsáveis por danos indiretos, incidentais, lucros cessantes ou perda de dados</li>
+          <li>Você assume os riscos associados ao uso de informações regulatórias em constante evolução</li>
+        </ul>
+        <p>Estas limitações não se aplicam a casos de dolo, negligência grave ou violação de leis de proteção de dados aplicáveis.</p>
+      </div>
+    </section>
+
+    <section id="s8">
+      <div class="section-num">08</div>
+      <h2 data-i18n="s8.h">Indenização</h2>
+      <div data-i18n-html="s8.body">
+        <p>Você concorda em indenizar, defender e isentar a Sanitary Intelligence, seus diretores, funcionários e parceiros de quaisquer reclamações, danos, perdas, custos ou despesas (incluindo honorários advocatícios razoáveis) decorrentes de:</p>
+        <ul>
+          <li>Seu uso do Site ou Serviços em violação a estes Termos</li>
+          <li>Conteúdo ou informações fornecidas por você que violem direitos de terceiros</li>
+          <li>Decisões comerciais ou regulatórias tomadas com base em nossas consultorias</li>
+          <li>Violação de leis aplicáveis em sua jurisdição relacionadas ao uso de nossos Serviços</li>
+        </ul>
+        <p>Reservamo-nos o direito de assumir a defesa exclusiva de qualquer matéria sujeita a indenização, às suas custas.</p>
+      </div>
+    </section>
+
+    <section id="s9">
+      <div class="section-num">09</div>
+      <h2 data-i18n="s9.h">Rescisão e Suspensão</h2>
+      <div data-i18n-html="s9.body">
+        <p><strong>Por qualquer parte:</strong> Contratos de Serviços podem ser rescindidos conforme condições específicas nele estabelecidas.</p>
+        <p><strong>Pela Sanitary Intelligence, sem aviso prévio:</strong></p>
+        <ul>
+          <li>Violação material destes Termos não sanada em prazo razoável</li>
+          <li>Uso ilegal, fraudulento ou prejudicial de nossos Serviços</li>
+          <li>Inadimplência prolongada ou insolvência do Cliente</li>
+          <li>Requisitos legais ou ordens de autoridades competentes</li>
+        </ul>
+        <p><strong>Efeitos da rescisão:</strong></p>
+        <ul>
+          <li>Cessação imediata do acesso ao Site e Serviços</li>
+          <li>Pagamento proporcional de Serviços já executados</li>
+          <li>Devolução ou destruição de materiais confidenciais, conforme acordado</li>
+          <li>As disposições sobre propriedade intelectual, limitação de responsabilidade, indenização e lei aplicável sobrevivem à rescisão</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="s10">
+      <div class="section-num">10</div>
+      <h2 data-i18n="s10.h">Privacidade e Dados</h2>
+      <div data-i18n-html="s10.body">
+        <p>O tratamento de dados pessoais no âmbito de nossos Serviços é regido por nossa <a href="https://sanitaryintelligence.com/privacy-policy.html" style="color:var(--primary)">Política de Privacidade</a>, que integra estes Termos por referência.</p>
+        <p>Principais compromissos:</p>
+        <ul>
+          <li>Coletamos e processamos dados apenas para finalidades legítimas e específicas</li>
+          <li>Implementamos medidas técnicas e organizacionais para proteger suas informações</li>
+          <li>Respeitamos seus direitos de acesso, retificação, exclusão e portabilidade, conforme aplicável</li>
+          <li>Não vendemos seus dados pessoais a terceiros</li>
+        </ul>
+        <div class="info-box"><p>🔐 Para exercer seus direitos de privacidade ou solicitar informações sobre o tratamento de seus dados, contate: <strong>privacy@sanitaryintelligence.com</strong></p></div>
+      </div>
+    </section>
+
+    <section id="s11">
+      <div class="section-num">11</div>
+      <h2 data-i18n="s11.h">Links e Conteúdo de Terceiros</h2>
+      <div data-i18n-html="s11.body">
+        <p>Nosso Site pode conter links para sites, plataformas ou recursos de terceiros (ex: agências reguladoras, parceiros tecnológicos, publicações especializadas).</p>
+        <p>Importante:</p>
+        <ul>
+          <li>Não controlamos, endossamos ou assumimos responsabilidade por conteúdo, políticas ou práticas de terceiros</li>
+          <li>O acesso a links externos é por sua conta e risco</li>
+          <li>Recomendamos revisar os termos e políticas de privacidade de cada site visitado</li>
+        </ul>
+        <p>Se identificar conteúdo de terceiros em nosso Site que viole direitos ou leis, notifique-nos imediatamente para as providências cabíveis.</p>
+      </div>
+    </section>
+
+    <section id="s12">
+      <div class="section-num">12</div>
+      <h2 data-i18n="s12.h">Alterações nestes Termos</h2>
+      <div data-i18n-html="s12.body">
+        <p>Podemos atualizar estes Termos periodicamente para refletir mudanças em nossos Serviços, práticas comerciais, requisitos legais ou outros fatores relevantes.</p>
+        <p><strong>Como notificamos:</strong></p>
+        <ul>
+          <li>Publicando a versão atualizada no Site com data de vigência</li>
+          <li>Enviando comunicado por e-mail para alterações materiais (quando aplicável)</li>
+          <li>Destacando mudanças significativas em aviso visível no Site</li>
+        </ul>
+        <p><strong>Sua aceitação:</strong> O uso continuado de nossos Serviços após a entrada em vigor de alterações constitui aceitação dos Termos atualizados. Se não concordar com mudanças, você deverá encerrar o uso dos Serviços.</p>
+        <div class="info-box"><p>📅 Recomendamos revisar estes Termos regularmente. A versão mais recente estará sempre disponível em: <strong>sanitaryintelligence.com/terms-of-use.html</strong></p></div>
+      </div>
+    </section>
+
+    <section id="s13">
+      <div class="section-num">13</div>
+      <h2 data-i18n="s13.h">Lei Aplicável e Foro</h2>
+      <div data-i18n-html="s13.body">
+        <p><strong>Lei aplicável:</strong> Estes Termos são regidos e interpretados de acordo com as leis da República Federativa do Brasil, sem prejuízo da aplicação de normas imperativas de proteção ao consumidor ou de proteção de dados de outras jurisdições quando aplicáveis.</p>
+        <p><strong>Resolução de disputas:</strong></p>
+        <ol>
+          <li><strong>Negociação:</strong> As partes buscarão resolver controvérsias de boa-fé por meio de negociação direta</li>
+          <li><strong>Mediação/Arbitragem:</strong> Caso não haja acordo, disputas poderão ser submetidas à mediação ou arbitragem, conforme previsto em contrato específico</li>
+          <li><strong>Foro:</strong> Na ausência de cláusula específica, fica eleito o foro da comarca de São Paulo/SP, Brasil, com renúncia expressa a qualquer outro, por mais privilegiado que seja</li>
+        </ol>
+        <p>Para clientes localizados na União Europeia, Reino Unido ou outros territórios com legislação consumerista específica, certas disposições destes Termos podem ser limitadas por normas imperativas locais.</p>
+      </div>
+    </section>
+
+    <section id="s14">
+      <div class="section-num">14</div>
+      <h2 data-i18n="s14.h">Contato</h2>
+      <div data-i18n-html="s14.body">
+        <p>Para dúvidas, solicitações ou notificações relacionadas a estes Termos de Uso, entre em contato conosco:</p>
+        <ul>
+          <li><strong>Email jurídico:</strong> legal@sanitaryintelligence.com</li>
+          <li><strong>Email geral:</strong> info@sanitaryintelligence.com</li>
+          <li><strong>Formulário online:</strong> <a href="https://sanitaryintelligence.com/contact.html" style="color:var(--primary)">sanitaryintelligence.com/contact.html</a></li>
+          <li><strong>Endereço corporativo:</strong> [Inserir endereço conforme registrado]</li>
+        </ul>
+        <p>Responderemos sua solicitação dentro de prazos razoáveis, observando a complexidade da matéria e requisitos legais aplicáveis.</p>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="legal-cta">
+      <div class="icon">⚖️</div>
+      <div class="legal-cta-text">
+        <h4 data-i18n="cta.h">Dúvidas sobre estes Termos?</h4>
+        <p data-i18n="cta.p">Nossa equipe jurídica está disponível para esclarecer qualquer questão.</p>
+      </div>
+      <a href="https://sanitaryintelligence.com/contact.html" class="btn-small" data-i18n="cta.btn">Entre em Contato</a>
+    </div>
+
+  </article>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="fbrand">
+      <img src="/sanitaryintelligence/logo.png" alt="Sanitary Intelligence"
+           onerror="this.style.display='none';document.getElementById('fb-name').style.display='block'"/>
+      <div id="fb-name" class="fbrand-name" style="display:none">Sanitary Intelligence</div>
+      <p class="fbrand-slogan" data-i18n="footer.slogan">Assuntos Regulatórios</p>
+      <p class="fbrand-desc" data-i18n="footer.desc">15 anos liderando o sucesso regulatório global em farmacêuticos, biológicos, dispositivos médicos e além.</p>
+    </div>
+    <div class="fcol">
+      <h4 data-i18n="footer.col2">Links Rápidos</h4>
+      <ul>
+        <li><a href="https://sanitaryintelligence.com/contact.html" data-i18n="footer.contact">Contato</a></li>
+        <li><a href="https://sanitaryintelligence.com/access.html"  data-i18n="footer.access">Acesso</a></li>
+        <li><a href="/#services" data-i18n="footer.services">Serviços</a></li>
+        <li><a href="/#about"    data-i18n="footer.about">Sobre</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h4 data-i18n="footer.col3">Redes Sociais</h4>
+      <ul>
+        <li><a href="https://www.linkedin.com/company/sanitary-intelligence" target="_blank" rel="noopener"><span class="soc-icon"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></span>LinkedIn</a></li>
+        <li><a href="https://www.youtube.com/@sanitaryintelligence" target="_blank" rel="noopener"><span class="soc-icon"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span>YouTube</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h4 data-i18n="footer.col4">Legal</h4>
+      <ul>
+        <li><a href="https://sanitaryintelligence.com/privacy-policy.html"  data-i18n="footer.privacy">Política de Privacidade</a></li>
+        <li><a href="https://sanitaryintelligence.com/terms-of-use.html"    data-i18n="footer.terms">Termos de Uso</a></li>
+        <li><a href="https://sanitaryintelligence.com/cookies-notice.html"  data-i18n="footer.cookies">Aviso de Cookies</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fbot">
+    <div class="fbot-inner">
+      <p>© <span id="fyear"></span> Sanitary Intelligence. <span data-i18n="footer.rights">Todos os direitos reservados.</span></p>
+      <a href="https://ds.barros.no/" target="_blank" rel="noopener" data-i18n="footer.dev">Desenvolvido por Digital Solutions</a>
+    </div>
+  </div>
+</footer>
+
+<!-- COOKIE BANNER -->
+<div id="cookie-banner" role="dialog" aria-label="Cookie consent">
+  <div class="ck-inner">
+    <div class="ck-left">
+      <p class="ck-title" data-i18n="cookie.title">🍪 PRIVACIDADE & COOKIES</p>
+      <p class="ck-desc"><span data-i18n="cookie.desc">Usamos cookies para analisar o tráfego e personalizar anúncios. Leia nossa </span><a href="https://sanitaryintelligence.com/privacy-policy.html" data-i18n="cookie.link">Política de Privacidade</a>.</p>
+    </div>
+    <div class="ck-toggles">
+      <label class="ck-tog"><div class="sw"><input type="checkbox" checked disabled/><div class="sw-track"></div></div><span data-i18n="cookie.necessary">Necessários</span></label>
+      <label class="ck-tog"><div class="sw"><input type="checkbox" id="ck-ana"/><div class="sw-track"></div></div><span data-i18n="cookie.analytics">Análise</span></label>
+      <label class="ck-tog"><div class="sw"><input type="checkbox" id="ck-mkt"/><div class="sw-track"></div></div><span data-i18n="cookie.marketing">Marketing</span></label>
+    </div>
+    <div class="ck-actions">
+      <button class="ck-btn ck-accept" id="ck-a" data-i18n="cookie.accept">ACEITAR TUDO</button>
+      <button class="ck-btn ck-save"   id="ck-s" data-i18n="cookie.save">SALVAR ESCOLHA</button>
+      <button class="ck-btn ck-reject" id="ck-r" data-i18n="cookie.reject">REJEITAR</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── i18n ── */
+const T = {
+  en:{
+    "nav.cta":"Contact Us","breadcrumb":"Terms of Use",
+    "header.eyebrow":"Legal","header.h1":'Terms of <span class="hl">Use</span>',
+    "meta.updated":"Last updated:","meta.gdpr":"Globally Applicable",
+    "toc.title":"Contents",
+    "toc.s1":"1. Acceptance of Terms","toc.s2":"2. Service Description","toc.s3":"3. Eligibility & Registration",
+    "toc.s4":"4. User Conduct","toc.s5":"5. Intellectual Property","toc.s6":"6. Payments & Billing",
+    "toc.s7":"7. Limitation of Liability","toc.s8":"8. Indemnification","toc.s9":"9. Termination & Suspension",
+    "toc.s10":"10. Privacy & Data","toc.s11":"11. Third-Party Links","toc.s12":"12. Changes to Terms",
+    "toc.s13":"13. Governing Law","toc.s14":"14. Contact",
+    "toc.updated":"Version:",
+    "s1.h":"Acceptance of Terms","s2.h":"Service Description","s3.h":"Eligibility & Registration",
+    "s4.h":"User Conduct","s5.h":"Intellectual Property","s6.h":"Payments & Billing",
+    "s7.h":"Limitation of Liability","s8.h":"Indemnification","s9.h":"Termination & Suspension",
+    "s10.h":"Privacy & Data","s11.h":"Third-Party Links","s12.h":"Changes to Terms",
+    "s13.h":"Governing Law & Jurisdiction","s14.h":"Contact",
+    "cta.h":"Questions about these Terms?",
+    "cta.p":"Our legal team is available to clarify any questions.",
+    "cta.btn":"Contact Us",
+    "footer.slogan":"Regulatory Affairs","footer.desc":"15 years leading global regulatory success.",
+    "footer.col2":"Quick Links","footer.contact":"Contact","footer.access":"Access","footer.services":"Services","footer.about":"About",
+    "footer.col3":"Social Media","footer.col4":"Legal","footer.privacy":"Privacy Policy","footer.terms":"Terms of Use","footer.cookies":"Cookies Notice",
+    "footer.rights":"All rights reserved.","footer.dev":"Developed by Digital Solutions",
+    "cookie.title":"🍪 PRIVACY & COOKIES","cookie.desc":"We use cookies to analyze traffic. Read our ",
+    "cookie.link":"Privacy Policy","cookie.necessary":"Necessary","cookie.analytics":"Analytics","cookie.marketing":"Marketing",
+    "cookie.accept":"ACCEPT ALL","cookie.save":"SAVE CHOICES","cookie.reject":"REJECT"
+  },
+  pt:{
+    "nav.cta":"Fale Conosco","breadcrumb":"Termos de Uso",
+    "header.eyebrow":"Legal","header.h1":'Termos de <span class="hl">Uso</span>',
+    "meta.updated":"Última atualização:","meta.gdpr":"Aplicável globalmente",
+    "toc.title":"Conteúdo",
+    "toc.s1":"1. Aceitação dos Termos","toc.s2":"2. Descrição dos Serviços","toc.s3":"3. Elegibilidade e Registro",
+    "toc.s4":"4. Conduta do Usuário","toc.s5":"5. Propriedade Intelectual","toc.s6":"6. Pagamentos e Faturamento",
+    "toc.s7":"7. Limitação de Responsabilidade","toc.s8":"8. Indenização","toc.s9":"9. Rescisão e Suspensão",
+    "toc.s10":"10. Privacidade e Dados","toc.s11":"11. Links e Conteúdo de Terceiros","toc.s12":"12. Alterações nestes Termos",
+    "toc.s13":"13. Lei Aplicável e Foro","toc.s14":"14. Contato",
+    "toc.updated":"Versão:",
+    "s1.h":"Aceitação dos Termos","s2.h":"Descrição dos Serviços","s3.h":"Elegibilidade e Registro",
+    "s4.h":"Conduta do Usuário","s5.h":"Propriedade Intelectual","s6.h":"Pagamentos e Faturamento",
+    "s7.h":"Limitação de Responsabilidade","s8.h":"Indenização","s9.h":"Rescisão e Suspensão",
+    "s10.h":"Privacidade e Dados","s11.h":"Links e Conteúdo de Terceiros","s12.h":"Alterações nestes Termos",
+    "s13.h":"Lei Aplicável e Foro","s14.h":"Contato",
+    "cta.h":"Dúvidas sobre estes Termos?",
+    "cta.p":"Nossa equipe jurídica está disponível para esclarecer qualquer questão.",
+    "cta.btn":"Entre em Contato",
+    "footer.slogan":"Assuntos Regulatórios","footer.desc":"15 anos liderando o sucesso regulatório global.",
+    "footer.col2":"Links Rápidos","footer.contact":"Contato","footer.access":"Acesso","footer.services":"Serviços","footer.about":"Sobre",
+    "footer.col3":"Redes Sociais","footer.col4":"Legal","footer.privacy":"Política de Privacidade","footer.terms":"Termos de Uso","footer.cookies":"Aviso de Cookies",
+    "footer.rights":"Todos os direitos reservados.","footer.dev":"Desenvolvido por Digital Solutions",
+    "cookie.title":"🍪 PRIVACIDADE & COOKIES","cookie.desc":"Usamos cookies para analisar o tráfego. Leia nossa ",
+    "cookie.link":"Política de Privacidade","cookie.necessary":"Necessários","cookie.analytics":"Análise","cookie.marketing":"Marketing",
+    "cookie.accept":"ACEITAR TUDO","cookie.save":"SALVAR ESCOLHA","cookie.reject":"REJEITAR"
+  },
+  es:{
+    "nav.cta":"Contáctenos","breadcrumb":"Términos de Uso",
+    "header.eyebrow":"Legal","header.h1":'Términos de <span class="hl">Uso</span>',
+    "meta.updated":"Última actualización:","meta.gdpr":"Aplicable globalmente",
+    "toc.title":"Contenido",
+    "toc.s1":"1. Aceptación de los Términos","toc.s2":"2. Descripción de los Servicios","toc.s3":"3. Elegibilidad y Registro",
+    "toc.s4":"4. Conducta del Usuario","toc.s5":"5. Propiedad Intelectual","toc.s6":"6. Pagos y Facturación",
+    "toc.s7":"7. Limitación de Responsabilidad","toc.s8":"8. Indemnización","toc.s9":"9. Terminación y Suspensión",
+    "toc.s10":"10. Privacidad y Datos","toc.s11":"11. Enlaces de Terceros","toc.s12":"12. Cambios en los Términos",
+    "toc.s13":"13. Ley Aplicable y Foro","toc.s14":"14. Contacto",
+    "toc.updated":"Versión:",
+    "s1.h":"Aceptación de los Términos","s2.h":"Descripción de los Servicios","s3.h":"Elegibilidad y Registro",
+    "s4.h":"Conducta del Usuario","s5.h":"Propiedad Intelectual","s6.h":"Pagos y Facturación",
+    "s7.h":"Limitación de Responsabilidad","s8.h":"Indemnización","s9.h":"Terminación y Suspensión",
+    "s10.h":"Privacidad y Datos","s11.h":"Enlaces de Terceros","s12.h":"Cambios en los Términos",
+    "s13.h":"Ley Aplicable y Foro","s14.h":"Contacto",
+    "cta.h":"¿Preguntas sobre estos Términos?",
+    "cta.p":"Nuestro equipo legal está disponible para aclarar cualquier duda.",
+    "cta.btn":"Contáctenos",
+    "footer.slogan":"Asuntos Regulatorios","footer.desc":"15 años liderando el éxito regulatorio global.",
+    "footer.col2":"Enlaces Rápidos","footer.contact":"Contacto","footer.access":"Acceso","footer.services":"Servicios","footer.about":"Nosotros",
+    "footer.col3":"Redes Sociales","footer.col4":"Legal","footer.privacy":"Política de Privacidad","footer.terms":"Términos de Uso","footer.cookies":"Aviso de Cookies",
+    "footer.rights":"Todos los derechos reservados.","footer.dev":"Desarrollado por Digital Solutions",
+    "cookie.title":"🍪 PRIVACIDAD & COOKIES","cookie.desc":"Usamos cookies para analizar el tráfico. Lea nuestra ",
+    "cookie.link":"Política de Privacidad","cookie.necessary":"Necesarias","cookie.analytics":"Análisis","cookie.marketing":"Marketing",
+    "cookie.accept":"ACEPTAR TODO","cookie.save":"GUARDAR ELECCIÓN","cookie.reject":"RECHAZAR"
+  }
+};
+
+let lang = localStorage.getItem('si_lang') || 'pt';
+
+function applyLang(l) {
+  const t = T[l]; if (!t) return;
+  document.documentElement.lang = l === 'pt' ? 'pt-BR' : l;
+  document.querySelectorAll('[data-i18n]').forEach(el => { if (t[el.dataset.i18n] !== undefined) el.textContent = t[el.dataset.i18n]; });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => { if (t[el.dataset.i18nHtml] !== undefined) el.innerHTML = t[el.dataset.i18nHtml]; });
+  document.querySelectorAll('.lang-opt').forEach(o => o.classList.toggle('active', o.dataset.lang === l));
+  document.getElementById('langLabel').textContent = {en:'EN',pt:'PT',es:'ES'}[l]||'PT';
+}
+
+function setLang(l) { lang=l; localStorage.setItem('si_lang',l); applyLang(l); closeLang(); }
+function toggleLang(){ document.getElementById('langSel').classList.toggle('open'); }
+function closeLang() { document.getElementById('langSel').classList.remove('open'); }
+document.addEventListener('click', e => { if(!e.target.closest('#langSel')) closeLang(); });
+
+/* ── Sticky TOC active highlight ── */
+const sections = document.querySelectorAll('.legal-article section[id]');
+const tocLinks  = document.querySelectorAll('.toc-list a');
+function activeToc() {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 130) current = s.id; });
+  tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+}
+window.addEventListener('scroll', activeToc, { passive:true });
+
+/* ── Cookie ── */
+function cookieAction(action) {
+  if (action==='accept') { document.getElementById('ck-ana').checked=true; document.getElementById('ck-mkt').checked=true; }
+  localStorage.setItem('si_cookies', JSON.stringify({action}));
+  const b=document.getElementById('cookie-banner');
+  b.style.transform='translateY(100%)'; setTimeout(()=>b.remove(),500);
+}
+document.getElementById('ck-a').addEventListener('click',()=>cookieAction('accept'));
+document.getElementById('ck-s').addEventListener('click',()=>cookieAction('save'));
+document.getElementById('ck-r').addEventListener('click',()=>cookieAction('reject'));
+
+/* ── Init ── */
+document.getElementById('fyear').textContent = new Date().getFullYear();
+applyLang(lang);
+if (!localStorage.getItem('si_cookies')) setTimeout(()=>document.getElementById('cookie-banner').classList.add('show'),1600);
+window.addEventListener('scroll',()=>document.getElementById('main-nav').classList.toggle('scrolled',scrollY>30),{passive:true});
+</script>
+</body>
+</html>
