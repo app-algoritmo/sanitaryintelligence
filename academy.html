@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academy | Sanitary Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        si: {
+                            dark: '#0F172A',      /* Azul Marinho Profundo (Inteligência/Confiança) */
+                            primary: '#1E40AF',   /* Azul Royal */
+                            accent: '#0D9488',    /* Teal/Verde-azulado (Sanitário/Conformidade) */
+                            light: '#F8FAFC',     /* Fundo Claro */
+                            gold: '#D97706'       /* Dourado (Certificação/Excelência) */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        shake: {
+                            '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                            '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                            '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                            '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .pin-input {
+            letter-spacing: 0.5em;
+            text-align: center;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-si-light text-si-dark font-sans min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-si-dark text-white py-6 shadow-lg">
+        <div class="container mx-auto px-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-si-accent rounded-lg flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-wide">SANITARY INTELLIGENCE</h1>
+                    <p class="text-xs text-si-accent font-semibold tracking-wider">ACADEMY</p>
+                </div>
+            </div>
+            <div class="hidden md:block text-sm text-gray-400">
+                Excelência em Comércio Exterior & Conformidade
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center p-4 relative overflow-hidden">
+        <!-- Background Decorative Elements -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+            <div class="absolute top-[-10%] right-[-5%] w-96 h-96 bg-si-accent opacity-5 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-[-10%] left-[-5%] w-96 h-96 bg-si-primary opacity-5 rounded-full blur-3xl"></div>
+        </div>
+
+        <!-- PIN Access Screen -->
+        <div id="pin-screen" class="w-full max-w-md animate-fade-in">
+            <div class="glass-effect rounded-2xl shadow-2xl p-8 text-center">
+                <div class="mb-6">
+                    <div class="w-16 h-16 bg-si-light rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-si-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-si-dark mb-2">Acesso Restrito</h2>
+                    <p class="text-gray-500 text-sm">Insira seu código PIN de 6 dígitos para acessar a Academy.</p>
+                </div>
+
+                <form id="pin-form" class="space-y-6">
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="pin-input" 
+                            maxlength="6" 
+                            pattern="\d{6}"
+                            class="pin-input w-full px-4 py-4 text-2xl font-bold text-si-dark bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-si-accent focus:ring-4 focus:ring-si-accent/10 transition-all placeholder-gray-300"
+                            placeholder="000000"
+                            required
+                            autocomplete="off"
+                        >
+                    </div>
+                    <p id="error-msg" class="text-red-500 text-sm font-medium hidden flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                        </svg>
+                        Código PIN inválido. Tente novamente.
+                    </p>
+                    <button 
+                        type="submit" 
+                        class="w-full bg-si-primary hover:bg-blue-800 text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-blue-900/20 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                        Acessar Plataforma
+                    </button>
+                </form>
+                
+                <p class="mt-6 text-xs text-gray-400">
+                    Dica: O PIN padrão de demonstração é <span class="font-mono bg-gray-100 px-1 rounded">202600</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Academy Dashboard (Hidden by default) -->
+        <div id="academy-screen" class="hidden w-full max-w-5xl animate-fade-in">
+            <div class="text-center mb-10">
+                <span class="inline-block px-3 py-1 bg-si-accent/10 text-si-accent text-xs font-bold rounded-full mb-3 tracking-wider">BEM-VINDO À ACADEMY</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-si-dark mb-4">Selecione seu Programa de Estudos</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Capacitação de excelência em comércio exterior, regulamentações sanitárias e práticas internacionais de comércio.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <!-- Course 1 -->
+                <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden cursor-pointer transform hover:-translate-y-1">
+                    <div class="h-2 bg-si-primary"></div>
+                    <div class="p-8">
+                        <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-si-primary group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-si-primary group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-si-dark mb-3">Curso Completo de Trade</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">Domine as operações de Comércio Exterior, desde a classificação fiscal até o desembaraço aduaneiro, com foco em inteligência sanitária e regulatória.</p>
+                        <ul class="space-y-2 mb-8 text-sm text-gray-500">
+                            <li class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                Módulo de Legislação Aduaneira
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                Análise de Risco Sanitário
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                Certificado de Conclusão
+                            </li>
+                        </ul>
+                        <button class="w-full py-3 border-2 border-si-primary text-si-primary font-bold rounded-lg group-hover:bg-si-primary group-hover:text-white transition-all">
+                            Iniciar Curso
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden cursor-pointer transform hover:-translate-y-1">
+                    <div class="h-2 bg-si-accent"></div>
+                    <div class="p-8">
+                        <div class="w-14 h-14 bg-teal-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-si-accent group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-si-accent group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-si-dark mb-3">Curso Interativo de Incoterms</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">Aprenda de forma prática e visual as regras da ICC (Câmara de Comércio Internacional) para interpretação dos termos comerciais mais usados no mundo.</p>
+                        <ul class="space-y-2 mb-8 text-sm text-gray-500">
+                            <li class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                Simulador de Custos e Riscos
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                Atualização Incoterms® 2020
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                Casos Práticos Reais
+                            </li>
+                        </ul>
+                        <button class="w-full py-3 border-2 border-si-accent text-si-accent font-bold rounded-lg group-hover:bg-si-accent group-hover:text-white transition-all">
+                            Iniciar Curso
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certification Badge -->
+            <div class="bg-gradient-to-r from-si-dark to-blue-900 rounded-2xl p-6 md:p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 bg-si-gold/20 rounded-full flex items-center justify-center border-2 border-si-gold">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-si-gold" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold text-si-gold mb-1">Certificação Oficial</h4>
+                        <p class="text-sm text-gray-300 leading-relaxed">
+                            Curso criado por <span class="text-white font-semibold">Paulo Fernando De Barros</span><br>
+                            Certificado por <span class="text-white font-semibold">Dra. Natália Bellan</span> para Sanitary Intelligence.
+                        </p>
+                    </div>
+                </div>
+                <button onclick="logout()" class="px-6 py-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-lg text-sm font-semibold transition-colors">
+                    Sair da Plataforma
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-si-dark text-gray-400 py-6 border-t border-gray-800">
+        <div class="container mx-auto px-4 text-center text-sm">
+            <p>&copy; 2026 Sanitary Intelligence. Todos os direitos reservados.</p>
+            <p class="mt-1 text-xs text-gray-600">Plataforma educacional segura e certificada.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // CONFIGURAÇÃO: Altere este valor para o PIN desejado de 6 dígitos
+        const SECRET_PIN = "202600"; 
+        
+        const pinForm = document.getElementById('pin-form');
+        const pinInput = document.getElementById('pin-input');
+        const errorMsg = document.getElementById('error-msg');
+        const pinScreen = document.getElementById('pin-screen');
+        const academyScreen = document.getElementById('academy-screen');
+
+        // Formatar input para aceitar apenas números
+        pinInput.addEventListener('input', function (e) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+            if (this.value.length === 6) {
+                // Opcional: auto-submit ao completar 6 dígitos
+                // pinForm.requestSubmit();
+            }
+        });
+
+        pinForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const enteredPin = pinInput.value;
+
+            if (enteredPin === SECRET_PIN) {
+                // Sucesso
+                errorMsg.classList.add('hidden');
+                pinScreen.style.display = 'none';
+                academyScreen.classList.remove('hidden');
+                academyScreen.classList.add('animate-fade-in');
+                
+                // Salvar estado de login na sessão (opcional, para não pedir PIN ao recarregar)
+                sessionStorage.setItem('si_academy_access', 'granted');
+            } else {
+                // Erro
+                errorMsg.classList.remove('hidden');
+                pinInput.classList.add('animate-shake', 'border-red-500', 'focus:border-red-500', 'focus:ring-red-500/10');
+                pinInput.classList.remove('border-gray-200', 'focus:border-si-accent', 'focus:ring-si-accent/10');
+                
+                // Remover classe de animação após ela terminar para poder reutilizar
+                setTimeout(() => {
+                    pinInput.classList.remove('animate-shake');
+                }, 500);
+
+                // Limpar input após erro
+                setTimeout(() => {
+                    pinInput.value = '';
+                    pinInput.focus();
+                }, 300);
+            }
+        });
+
+        // Função de Logout
+        function logout() {
+            sessionStorage.removeItem('si_academy_access');
+            academyScreen.classList.add('hidden');
+            pinScreen.style.display = 'block';
+            pinScreen.classList.add('animate-fade-in');
+            pinInput.value = '';
+            errorMsg.classList.add('hidden');
+            pinInput.classList.remove('border-red-500', 'focus:border-red-500', 'focus:ring-red-500/10');
+            pinInput.classList.add('border-gray-200', 'focus:border-si-accent', 'focus:ring-si-accent/10');
+        }
+
+        // Verificar se já está logado na sessão atual
+        window.addEventListener('load', () => {
+            if (sessionStorage.getItem('si_academy_access') === 'granted') {
+                pinScreen.style.display = 'none';
+                academyScreen.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
