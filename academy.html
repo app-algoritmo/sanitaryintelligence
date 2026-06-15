@@ -58,6 +58,9 @@
         .lang-group:hover .lang-dropdown {
             display: block;
         }
+        .glow-text {
+            text-shadow: 0 0 10px rgba(34, 211, 238, 0.6), 0 0 20px rgba(34, 211, 238, 0.3);
+        }
     </style>
 </head>
 <body class="bg-si-light text-si-dark font-sans min-h-screen flex flex-col">
@@ -173,7 +176,7 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-8 mb-12">
-                <!-- Course 1: COMPLETE TRADE COURSE (Updated) -->
+                <!-- Course 1: COMPLETE TRADE COURSE -->
                 <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden cursor-pointer transform hover:-translate-y-1 flex flex-col">
                     <div class="h-2 bg-si-primary"></div>
                     <div class="p-6 flex flex-col flex-grow">
@@ -189,7 +192,7 @@
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span class="bg-blue-50 text-si-primary text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c1_stats_modules">6 módulos</span>
                             <span class="bg-blue-50 text-si-primary text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c1_stats_lessons">21 aulas</span>
-                            <span class="bg-blue-50 text-si-primary text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c1_stats_quiz">10 questões de quiz</span>
+                            <span class="bg-blue-50 text-si-primary text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c1_stats_quiz">10 questões</span>
                             <span class="bg-blue-50 text-si-primary text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c1_stats_glossary">28 termos</span>
                         </div>
 
@@ -203,11 +206,11 @@
                             </h4>
                             <ul class="space-y-1.5 text-xs text-gray-600 leading-snug">
                                 <li class="flex gap-2"><span class="text-si-primary font-bold flex-shrink-0">M01</span> <span data-i18n="c1_m01">Fundamentos: balança comercial, câmbio, OMC, blocos regionais</span></li>
-                                <li class="flex gap-2"><span class="text-si-primary font-bold flex-shrink-0">M02</span> <span data-i18n="c1_m02">Despacho Aduaneiro: NCM/SH, fluxo exportação/importação, tributação e regimes especiais (Drawback, RECOF, ZFM, Ex-tarifário)</span></li>
-                                <li class="flex gap-2"><span class="text-si-primary font-bold flex-shrink-0">M03</span> <span data-i18n="c1_m03">Financiamento e Câmbio: ACC/ACE, NDF, hedge, formas de pagamento (L/C, UCP 600), PROEX, BNDES-Exim, SOFR</span></li>
-                                <li class="flex gap-2"><span class="text-si-primary font-bold flex-shrink-0">M04</span> <span data-i18n="c1_m04">Logística: modais, documentação (B/L, AWB, Invoice, Packing List, CO), seguro de carga (ICC A/B/C, Avaria Grossa)</span></li>
-                                <li class="flex gap-2"><span class="text-si-primary font-bold flex-shrink-0">M05</span> <span data-i18n="c1_m05">Incoterms® 2020: todos os 11 termos com detalhamento de responsabilidades e mudanças vs 2010</span></li>
-                                <li class="flex gap-2"><span class="text-si-primary font-bold flex-shrink-0">M06</span> <span data-i18n="c1_m06">Compliance: bens de duplo uso, Wassenaar, OFAC/SDN, OEA (Operador Econômico Autorizado)</span></li>
+                                <li class="flex gap-2"><span class="text-si-primary font-bold flex-shrink-0">M02</span> <span data-i18n="c1_m02">Despacho Aduaneiro: NCM/SH, fluxo exportação/importação, tributação e regimes especiais</span></li>
+                                <li class="flex gap-2"><span class="text-si-primary font-bold flex-shrink-0">M03</span> <span data-i18n="c1_m03">Financiamento e Câmbio: ACC/ACE, NDF, hedge, formas de pagamento, PROEX, BNDES-Exim</span></li>
+                                <li class="flex gap-2"><span class="text-si-primary font-bold flex-shrink-0">M04</span> <span data-i18n="c1_m04">Logística: modais, documentação (B/L, AWB, Invoice, Packing List, CO), seguro de carga</span></li>
+                                <li class="flex gap-2"><span class="text-si-primary font-bold flex-shrink-0">M05</span> <span data-i18n="c1_m05">Incoterms® 2020: todos os 11 termos com detalhamento de responsabilidades e mudanças</span></li>
+                                <li class="flex gap-2"><span class="text-si-primary font-bold flex-shrink-0">M06</span> <span data-i18n="c1_m06">Compliance: bens de duplo uso, Wassenaar, OFAC/SDN, OEA</span></li>
                             </ul>
                         </div>
 
@@ -241,13 +244,13 @@
                             </ul>
                         </div>
 
-                        <button class="w-full py-3 border-2 border-si-primary text-si-primary font-bold rounded-lg group-hover:bg-si-primary group-hover:text-white transition-all text-sm" data-i18n="start_course">
-                            Iniciar Curso
-                        </button>
+                        <a href="trade.html" class="block w-full py-3 text-center border-2 border-si-primary text-si-primary font-bold rounded-lg group-hover:bg-si-primary group-hover:text-white transition-all text-sm" data-i18n="start_course">
+                            Iniciar
+                        </a>
                     </div>
                 </div>
 
-                <!-- Course 2: INCOTERMS (Kept intact for layout balance) -->
+                <!-- Course 2: INCOTERMS (Updated) -->
                 <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden cursor-pointer transform hover:-translate-y-1 flex flex-col">
                     <div class="h-2 bg-si-accent"></div>
                     <div class="p-6 flex flex-col flex-grow">
@@ -259,16 +262,62 @@
                         <h3 class="text-xl font-bold text-si-dark mb-3" data-i18n="course2_title">Curso Interativo de Incoterms</h3>
                         
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-teal-50 text-si-accent text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c2_stats_1">11 Termos</span>
-                            <span class="bg-teal-50 text-si-accent text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c2_stats_2">ICC 2020</span>
-                            <span class="bg-teal-50 text-si-accent text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c2_stats_3">Simulador</span>
+                            <span class="bg-teal-50 text-si-accent text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c2_stats_1">6 módulos</span>
+                            <span class="bg-teal-50 text-si-accent text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c2_stats_2">8 questões de quiz</span>
+                            <span class="bg-teal-50 text-si-accent text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c2_stats_3">Glossário</span>
                         </div>
 
-                        <p class="text-gray-600 mb-6 text-sm leading-relaxed flex-grow" data-i18n="course2_desc">Aprenda de forma prática e visual as regras da ICC (Câmara de Comércio Internacional) para interpretação dos termos comerciais mais usados no mundo.</p>
+                        <p class="text-gray-600 mb-4 text-sm leading-relaxed" data-i18n="course2_desc">Domine as regras da ICC com foco prático e contextualizado para o comércio internacional e a realidade brasileira.</p>
                         
-                        <button class="w-full py-3 border-2 border-si-accent text-si-accent font-bold rounded-lg group-hover:bg-si-accent group-hover:text-white transition-all text-sm mt-auto" data-i18n="start_course">
-                            Iniciar Curso
-                        </button>
+                        <!-- Modules List -->
+                        <div class="mb-4 flex-grow">
+                            <h4 class="text-[10px] font-bold text-si-dark uppercase tracking-wider mb-2 flex items-center gap-1">
+                                <svg class="w-3 h-3 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
+                                <span data-i18n="c2_modules_title">Módulos</span>
+                            </h4>
+                            <ul class="space-y-1.5 text-xs text-gray-600 leading-snug">
+                                <li class="flex gap-2"><span class="text-si-accent font-bold flex-shrink-0">M01</span> <span data-i18n="c2_m01">O que são Incoterms (origem, citação correta, o que definem e o que NÃO definem)</span></li>
+                                <li class="flex gap-2"><span class="text-si-accent font-bold flex-shrink-0">M02</span> <span data-i18n="c2_m02">Grupo E — EXW</span></li>
+                                <li class="flex gap-2"><span class="text-si-accent font-bold flex-shrink-0">M03</span> <span data-i18n="c2_m03">Grupo F — FCA, FAS, FOB (com alerta sobre FOB + contêiner)</span></li>
+                                <li class="flex gap-2"><span class="text-si-accent font-bold flex-shrink-0">M04</span> <span data-i18n="c2_m04">Grupo C — CPT, CIP, CFR, CIF (com destaque para novidades 2020)</span></li>
+                                <li class="flex gap-2"><span class="text-si-accent font-bold flex-shrink-0">M05</span> <span data-i18n="c2_m05">Grupo D — DAP, DPU, DDP (com atenção ao contexto brasileiro)</span></li>
+                                <li class="flex gap-2"><span class="text-si-accent font-bold flex-shrink-0">M06</span> <span data-i18n="c2_m06">Quiz interativo com 8 questões práticas e gabarito comentado</span></li>
+                            </ul>
+                        </div>
+
+                        <!-- Features List -->
+                        <div class="mb-6 pt-4 border-t border-gray-100">
+                            <h4 class="text-[10px] font-bold text-si-dark uppercase tracking-wider mb-2 flex items-center gap-1">
+                                <svg class="w-3 h-3 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
+                                <span data-i18n="c2_features_title">Destaques Pedagógicos</span>
+                            </h4>
+                            <ul class="space-y-1.5 text-xs text-gray-600">
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-3.5 h-3.5 text-si-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                    <span data-i18n="c2_f1">Cada Incoterm tem painel expansível com tabela vendedor × comprador</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-3.5 h-3.5 text-si-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                    <span data-i18n="c2_f2">Alertas sobre mudanças dos Incoterms 2020 (DPU substituiu DAT, CIP exige ICC A)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-3.5 h-3.5 text-si-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                    <span data-i18n="c2_f3">Contexto Brasil: valor CIF como base do imposto de importação, FOB vs FCA para contêiner</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-3.5 h-3.5 text-si-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                    <span data-i18n="c2_f4">Glossário com termos essenciais</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-3.5 h-3.5 text-si-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                    <span data-i18n="c2_f5">Barra de progresso que rastreia quais termos já foram vistos</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <a href="incoterms.html" class="block w-full py-3 text-center border-2 border-si-accent text-si-accent font-bold rounded-lg group-hover:bg-si-accent group-hover:text-white transition-all text-sm mt-auto" data-i18n="start_course">
+                            Iniciar
+                        </a>
                     </div>
                 </div>
             </div>
@@ -300,7 +349,15 @@
     <footer class="bg-si-dark text-gray-400 py-6 border-t border-gray-800">
         <div class="container mx-auto px-4 text-center text-sm">
             <p data-i18n="footer_copy">&copy; 2026 Sanitary Intelligence. Todos os direitos reservados.</p>
-            <p class="mt-1 text-xs text-gray-600" data-i18n="footer_secure">Plataforma educacional segura e certificada.</p>
+            <p class="mt-1 text-xs text-gray-600 mb-3" data-i18n="footer_secure">Plataforma educacional segura e certificada.</p>
+            
+            <!-- Digital Solutions Link -->
+            <a href="https://app-algoritmo.github.io/digital-solutions" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-cyan-400 font-semibold text-sm hover:text-cyan-300 transition-all duration-300 glow-text group">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover:animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+                <span>&lt;/&gt; Digital Solutions</span>
+            </a>
         </div>
     </footer>
 
@@ -321,16 +378,16 @@
                 course1_title: "Curso Completo de Trade",
                 c1_stats_modules: "6 módulos",
                 c1_stats_lessons: "21 aulas",
-                c1_stats_quiz: "10 questões de quiz",
+                c1_stats_quiz: "10 questões",
                 c1_stats_glossary: "28 termos",
                 course1_desc: "Domine as operações de Comércio Exterior, da classificação fiscal ao desembaraço, com foco em inteligência sanitária e regulatória.",
                 c1_modules_title: "Módulos",
                 c1_m01: "Fundamentos: balança comercial, câmbio, OMC, blocos regionais",
-                c1_m02: "Despacho Aduaneiro: NCM/SH, fluxo exportação/importação, tributação e regimes especiais (Drawback, RECOF, ZFM, Ex-tarifário)",
-                c1_m03: "Financiamento e Câmbio: ACC/ACE, NDF, hedge, formas de pagamento (L/C, UCP 600), PROEX, BNDES-Exim, SOFR",
-                c1_m04: "Logística: modais, documentação (B/L, AWB, Invoice, Packing List, CO), seguro de carga (ICC A/B/C, Avaria Grossa)",
-                c1_m05: "Incoterms® 2020: todos os 11 termos com detalhamento de responsabilidades e mudanças vs 2010",
-                c1_m06: "Compliance: bens de duplo uso, Wassenaar, OFAC/SDN, OEA (Operador Econômico Autorizado)",
+                c1_m02: "Despacho Aduaneiro: NCM/SH, fluxo exportação/importação, tributação e regimes especiais",
+                c1_m03: "Financiamento e Câmbio: ACC/ACE, NDF, hedge, formas de pagamento, PROEX, BNDES-Exim",
+                c1_m04: "Logística: modais, documentação (B/L, AWB, Invoice, Packing List, CO), seguro de carga",
+                c1_m05: "Incoterms® 2020: todos os 11 termos com detalhamento de responsabilidades e mudanças",
+                c1_m06: "Compliance: bens de duplo uso, Wassenaar, OFAC/SDN, OEA",
                 c1_features_title: "Funcionalidades",
                 c1_f1: "Progresso individual por aula com barra geral",
                 c1_f2: "Navegação entre aulas com \"marcar como concluída\"",
@@ -338,11 +395,24 @@
                 c1_f4: "Glossário com 28 termos do Comex",
                 c1_f5: "Certificado de conclusão ao completar tudo",
                 course2_title: "Curso Interativo de Incoterms",
-                c2_stats_1: "11 Termos",
-                c2_stats_2: "ICC 2020",
-                c2_stats_3: "Simulador",
-                course2_desc: "Aprenda de forma prática e visual as regras da ICC (Câmara de Comércio Internacional) para interpretação dos termos comerciais mais usados no mundo.",
-                start_course: "Iniciar Curso",
+                c2_stats_1: "6 módulos",
+                c2_stats_2: "8 questões de quiz",
+                c2_stats_3: "Glossário",
+                course2_desc: "Domine as regras da ICC com foco prático e contextualizado para o comércio internacional e a realidade brasileira.",
+                c2_modules_title: "Módulos",
+                c2_m01: "O que são Incoterms (origem, citação correta, o que definem e o que NÃO definem)",
+                c2_m02: "Grupo E — EXW",
+                c2_m03: "Grupo F — FCA, FAS, FOB (com alerta sobre FOB + contêiner)",
+                c2_m04: "Grupo C — CPT, CIP, CFR, CIF (com destaque para novidades 2020)",
+                c2_m05: "Grupo D — DAP, DPU, DDP (com atenção ao contexto brasileiro)",
+                c2_m06: "Quiz interativo com 8 questões práticas e gabarito comentado",
+                c2_features_title: "Destaques Pedagógicos",
+                c2_f1: "Cada Incoterm tem painel expansível com tabela vendedor × comprador",
+                c2_f2: "Alertas sobre mudanças dos Incoterms 2020 (DPU substituiu DAT, CIP exige ICC A)",
+                c2_f3: "Contexto Brasil: valor CIF como base do imposto de importação, FOB vs FCA para contêiner",
+                c2_f4: "Glossário com termos essenciais",
+                c2_f5: "Barra de progresso que rastreia quais termos já foram vistos",
+                start_course: "Iniciar",
                 cert_title: "Certificação Oficial",
                 cert_created: "Curso criado por",
                 cert_certified: "Certificado por",
@@ -364,16 +434,16 @@
                 course1_title: "Complete Trade Course",
                 c1_stats_modules: "6 modules",
                 c1_stats_lessons: "21 classes",
-                c1_stats_quiz: "10 quiz questions",
+                c1_stats_quiz: "10 questions",
                 c1_stats_glossary: "28 terms",
                 course1_desc: "Master Foreign Trade operations, from fiscal classification to customs clearance, with a focus on sanitary and regulatory intelligence.",
                 c1_modules_title: "Modules",
                 c1_m01: "Fundamentals: trade balance, exchange rates, WTO, regional blocs",
-                c1_m02: "Customs Clearance: HS Code, export/import flow, taxation, and special regimes (Drawback, RECOF, ZFM, Ex-tariff)",
-                c1_m03: "Financing and FX: ACC/ACE, NDF, hedging, payment methods (L/C, UCP 600), PROEX, BNDES-Exim, SOFR",
-                c1_m04: "Logistics: modes, documentation (B/L, AWB, Invoice, Packing List, CO), cargo insurance (ICC A/B/C, General Average)",
-                c1_m05: "Incoterms® 2020: all 11 terms with detailed responsibilities and changes vs 2010",
-                c1_m06: "Compliance: dual-use goods, Wassenaar, OFAC/SDN, AEO (Authorized Economic Operator)",
+                c1_m02: "Customs Clearance: HS Code, export/import flow, taxation, and special regimes",
+                c1_m03: "Financing and FX: ACC/ACE, NDF, hedging, payment methods, PROEX, BNDES-Exim",
+                c1_m04: "Logistics: modes, documentation (B/L, AWB, Invoice, Packing List, CO), cargo insurance",
+                c1_m05: "Incoterms® 2020: all 11 terms with detailed responsibilities and changes",
+                c1_m06: "Compliance: dual-use goods, Wassenaar, OFAC/SDN, AEO",
                 c1_features_title: "Features",
                 c1_f1: "Individual lesson progress with overall bar",
                 c1_f2: "Navigation between lessons with \"mark as completed\"",
@@ -381,11 +451,24 @@
                 c1_f4: "Glossary with 28 Comex terms",
                 c1_f5: "Completion certificate upon finishing everything",
                 course2_title: "Interactive Incoterms Course",
-                c2_stats_1: "11 Terms",
-                c2_stats_2: "ICC 2020",
-                c2_stats_3: "Simulator",
-                course2_desc: "Learn the ICC (International Chamber of Commerce) rules in a practical and visual way to interpret the most used commercial terms in the world.",
-                start_course: "Start Course",
+                c2_stats_1: "6 modules",
+                c2_stats_2: "8 quiz questions",
+                c2_stats_3: "Glossary",
+                course2_desc: "Master ICC rules with a practical focus contextualized for international trade and the Brazilian reality.",
+                c2_modules_title: "Modules",
+                c2_m01: "What are Incoterms (origin, correct citation, what they define and what they DO NOT define)",
+                c2_m02: "Group E — EXW",
+                c2_m03: "Group F — FCA, FAS, FOB (with alert on FOB + container)",
+                c2_m04: "Group C — CPT, CIP, CFR, CIF (highlighting 2020 updates)",
+                c2_m05: "Group D — DAP, DPU, DDP (with attention to the Brazilian context)",
+                c2_m06: "Interactive quiz with 8 practical questions and commented answer key",
+                c2_features_title: "Pedagogical Highlights",
+                c2_f1: "Each Incoterm has an expandable panel with a seller × buyer table",
+                c2_f2: "Alerts on Incoterms 2020 changes (DPU replaced DAT, CIP requires ICC A)",
+                c2_f3: "Brazil context: CIF value as import tax base, FOB vs FCA for containers",
+                c2_f4: "Glossary with essential terms",
+                c2_f5: "Progress bar tracking which terms have been viewed",
+                start_course: "Start",
                 cert_title: "Official Certification",
                 cert_created: "Course created by",
                 cert_certified: "Certified by",
@@ -407,16 +490,16 @@
                 course1_title: "Curso Completo de Comercio Exterior",
                 c1_stats_modules: "6 módulos",
                 c1_stats_lessons: "21 clases",
-                c1_stats_quiz: "10 preguntas de quiz",
+                c1_stats_quiz: "10 preguntas",
                 c1_stats_glossary: "28 términos",
                 course1_desc: "Domine las operaciones de Comercio Exterior, desde la clasificación fiscal hasta el despacho de aduanas, con enfoque en inteligencia sanitaria y regulatoria.",
                 c1_modules_title: "Módulos",
                 c1_m01: "Fundamentos: balanza comercial, tipo de cambio, OMC, bloques regionales",
-                c1_m02: "Despacho Aduanero: NCM/SA, flujo exportación/importación, tributación y regímenes especiales (Drawback, RECOF, ZFM, Ex-arancelario)",
-                c1_m03: "Financiación y Divisas: ACC/ACE, NDF, cobertura, formas de pago (L/C, UCP 600), PROEX, BNDES-Exim, SOFR",
-                c1_m04: "Logística: modales, documentación (B/L, AWB, Invoice, Packing List, CO), seguro de carga (ICC A/B/C, Avería Gruesa)",
-                c1_m05: "Incoterms® 2020: los 11 términos con detalle de responsabilidades y cambios vs 2010",
-                c1_m06: "Compliance: bienes de doble uso, Wassenaar, OFAC/SDN, OEA (Operador Económico Autorizado)",
+                c1_m02: "Despacho Aduanero: NCM/SA, flujo exportación/importación, tributación y regímenes especiales",
+                c1_m03: "Financiación y Divisas: ACC/ACE, NDF, cobertura, formas de pago, PROEX, BNDES-Exim",
+                c1_m04: "Logística: modales, documentación (B/L, AWB, Invoice, Packing List, CO), seguro de carga",
+                c1_m05: "Incoterms® 2020: los 11 términos con detalle de responsabilidades y cambios",
+                c1_m06: "Compliance: bienes de doble uso, Wassenaar, OFAC/SDN, OEA",
                 c1_features_title: "Funcionalidades",
                 c1_f1: "Progreso individual por clase con barra general",
                 c1_f2: "Navegación entre clases con \"marcar como completada\"",
@@ -424,11 +507,24 @@
                 c1_f4: "Glosario con 28 términos de comercio exterior",
                 c1_f5: "Certificado de finalización al completar todo",
                 course2_title: "Curso Interactivo de Incoterms",
-                c2_stats_1: "11 Términos",
-                c2_stats_2: "CCI 2020",
-                c2_stats_3: "Simulador",
-                course2_desc: "Aprenda de forma práctica y visual las reglas de la CCI (Cámara de Comercio Internacional) para interpretar los términos comerciales más usados en el mundo.",
-                start_course: "Iniciar Curso",
+                c2_stats_1: "6 módulos",
+                c2_stats_2: "8 preguntas de quiz",
+                c2_stats_3: "Glosario",
+                course2_desc: "Domine las reglas de la CCI con un enfoque práctico contextualizado para el comercio internacional y la realidad brasileña.",
+                c2_modules_title: "Módulos",
+                c2_m01: "Qué son los Incoterms (origen, citación correcta, qué definen y qué NO definen)",
+                c2_m02: "Grupo E — EXW",
+                c2_m03: "Grupo F — FCA, FAS, FOB (con alerta sobre FOB + contenedor)",
+                c2_m04: "Grupo C — CPT, CIP, CFR, CIF (con destaque para las novedades 2020)",
+                c2_m05: "Grupo D — DAP, DPU, DDP (con atención al contexto brasileño)",
+                c2_m06: "Quiz interactivo con 8 preguntas prácticas y clave de respuestas comentada",
+                c2_features_title: "Aspectos Pedagógicos",
+                c2_f1: "Cada Incoterm tiene un panel expandible con tabla vendedor × comprador",
+                c2_f2: "Alertas sobre cambios de Incoterms 2020 (DPU reemplazó a DAT, CIP exige ICC A)",
+                c2_f3: "Contexto Brasil: valor CIF como base del impuesto de importación, FOB vs FCA para contenedores",
+                c2_f4: "Glosario con términos esenciales",
+                c2_f5: "Barra de progreso que rastrea qué términos ya fueron vistos",
+                start_course: "Iniciar",
                 cert_title: "Certificación Oficial",
                 cert_created: "Curso creado por",
                 cert_certified: "Certificado por",
