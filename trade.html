@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso Completo de Trade | Sanitary Intelligence Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        si: {
+                            dark: '#0F172A',      /* Azul Marinho Profundo */
+                            primary: '#1E40AF',   /* Azul Royal */
+                            accent: '#0D9488',    /* Teal/Verde-azulado */
+                            light: '#F8FAFC',     /* Fundo Claro */
+                            gold: '#D97706',      /* Dourado */
+                            goldLight: '#F59E0B'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .lang-dropdown { display: none; }
+        .lang-group:hover .lang-dropdown { display: block; }
+        .glow-text {
+            text-shadow: 0 0 10px rgba(34, 211, 238, 0.6), 0 0 20px rgba(34, 211, 238, 0.3);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, opacity 0.4s ease-out;
+            opacity: 0;
+        }
+        .accordion-content.open {
+            max-height: 2000px; /* Valor alto o suficiente para o conteúdo */
+            opacity: 1;
+        }
+        .module-card.active {
+            border-color: #0D9488;
+            background-color: #F0FDFA;
+            border-left: 4px solid #0D9488;
+        }
+    </style>
+</head>
+<body class="bg-si-light text-si-dark font-sans min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-si-dark text-white py-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='academy.html'">
+                <div class="w-10 h-10 bg-si-accent rounded-lg flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-wide">SANITARY INTELLIGENCE</h1>
+                    <p class="text-[10px] text-si-accent font-semibold tracking-wider uppercase">Academy · Trade Course</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-6">
+                <div class="hidden md:block text-sm text-gray-400 text-right">
+                    <p data-i18n="header_subtitle">Excelência em Assuntos Regulatórios</p>
+                </div>
+                
+                <!-- Language Selector -->
+                <div class="relative lang-group">
+                    <button class="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-3 py-2 rounded-lg transition-colors text-sm font-medium">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span id="current-lang-label">PT</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="lang-dropdown absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-xl border border-gray-100 overflow-hidden z-50">
+                        <button onclick="changeLanguage('pt')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-si-accent hover:text-white transition-colors flex items-center gap-2">🇧🇷 Português</button>
+                        <button onclick="changeLanguage('en')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-si-accent hover:text-white transition-colors flex items-center gap-2">🇺🇸 English</button>
+                        <button onclick="changeLanguage('es')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-si-accent hover:text-white transition-colors flex items-center gap-2">🇪🇸 Español</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-5xl animate-fade-in">
+        
+        <!-- Hero Section -->
+        <div class="bg-gradient-to-r from-si-dark to-si-primary rounded-2xl p-8 md:p-10 text-white mb-10 shadow-xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+            <div class="relative z-10">
+                <span class="inline-block px-3 py-1 bg-si-gold/20 text-si-gold text-xs font-bold rounded-full mb-4 tracking-wider border border-si-gold/30" data-i18n="hero_badge">CURSO COMPLETO</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-i18n="hero_title">Comércio Exterior & Inteligência Regulatória</h2>
+                <p class="text-gray-300 max-w-2xl mb-8 text-lg" data-i18n="hero_subtitle">Domine as operações de Comex, da classificação fiscal ao desembaraço, com foco em inteligência sanitária, logística e compliance internacional.</p>
+                
+                <div class="flex flex-wrap gap-6 mb-8">
+                    <div class="text-center"><div class="text-2xl font-bold text-si-gold font-mono">6</div><div class="text-xs text-gray-400 uppercase tracking-wider" data-i18n="stat_modules">Módulos</div></div>
+                    <div class="text-center"><div class="text-2xl font-bold text-si-gold font-mono">21</div><div class="text-xs text-gray-400 uppercase tracking-wider" data-i18n="stat_lessons">Aulas</div></div>
+                    <div class="text-center"><div class="text-2xl font-bold text-si-gold font-mono">10</div><div class="text-xs text-gray-400 uppercase tracking-wider" data-i18n="stat_quiz">Questões</div></div>
+                    <div class="text-center"><div class="text-2xl font-bold text-si-gold font-mono">28</div><div class="text-xs text-gray-400 uppercase tracking-wider" data-i18n="stat_glossary">Termos</div></div>
+                </div>
+
+                <!-- BOTÃO DE CERTIFICADO EM DESTAQUE NO HERO -->
+                <a href="#" class="inline-flex items-center gap-3 bg-si-gold hover:bg-si-goldLight text-si-dark font-bold py-4 px-8 rounded-xl shadow-lg shadow-si-gold/20 transition-all transform hover:scale-[1.02] active:scale-[0.98] text-sm md:text-base">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span data-i18n="cert_button">Iniciar teste para obter seu certificado de conclusão</span>
+                </a>
+                <p class="text-[10px] text-gray-400 mt-3 font-mono">⚠️ LINK DO TESTE A SER INSERIDO</p>
+            </div>
+        </div>
+
+        <!-- Modules Navigation -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-12">
+            <button onclick="scrollToModule('m01')" class="module-nav-btn p-3 bg-white border border-gray-200 rounded-lg text-center hover:border-si-accent hover:shadow-md transition-all text-xs font-semibold text-si-dark">M01<br><span class="text-[10px] font-normal text-gray-500" data-i18n="nav_m01">Fundamentos</span></button>
+            <button onclick="scrollToModule('m02')" class="module-nav-btn p-3 bg-white border border-gray-200 rounded-lg text-center hover:border-si-accent hover:shadow-md transition-all text-xs font-semibold text-si-dark">M02<br><span class="text-[10px] font-normal text-gray-500" data-i18n="nav_m02">Aduaneiro</span></button>
+            <button onclick="scrollToModule('m03')" class="module-nav-btn p-3 bg-white border border-gray-200 rounded-lg text-center hover:border-si-accent hover:shadow-md transition-all text-xs font-semibold text-si-dark">M03<br><span class="text-[10px] font-normal text-gray-500" data-i18n="nav_m03">Finanças</span></button>
+            <button onclick="scrollToModule('m04')" class="module-nav-btn p-3 bg-white border border-gray-200 rounded-lg text-center hover:border-si-accent hover:shadow-md transition-all text-xs font-semibold text-si-dark">M04<br><span class="text-[10px] font-normal text-gray-500" data-i18n="nav_m04">Logística</span></button>
+            <button onclick="scrollToModule('m05')" class="module-nav-btn p-3 bg-white border border-gray-200 rounded-lg text-center hover:border-si-accent hover:shadow-md transition-all text-xs font-semibold text-si-dark">M05<br><span class="text-[10px] font-normal text-gray-500" data-i18n="nav_m05">Incoterms</span></button>
+            <button onclick="scrollToModule('m06')" class="module-nav-btn p-3 bg-white border border-gray-200 rounded-lg text-center hover:border-si-accent hover:shadow-md transition-all text-xs font-semibold text-si-dark">M06<br><span class="text-[10px] font-normal text-gray-500" data-i18n="nav_m06">Compliance</span></button>
+        </div>
+
+        <!-- MODULES CONTENT -->
+        <div class="space-y-6">
+            
+            <!-- M01 -->
+            <div id="m01" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <button onclick="toggleAccordion('acc-m01', this)" class="w-full px-6 py-5 flex items-center justify-between bg-white hover:bg-gray-50 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-100 text-si-primary flex items-center justify-center font-bold font-mono">M01</span>
+                        <div class="text-left">
+                            <h3 class="font-bold text-si-dark text-lg" data-i18n="m01_title">Fundamentos do Comércio Internacional</h3>
+                            <p class="text-sm text-gray-500" data-i18n="m01_desc">Balança comercial, câmbio, OMC e blocos regionais.</p>
+                        </div>
+                    </div>
+                    <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                </button>
+                <div id="acc-m01" class="accordion-content bg-si-light border-t border-gray-100">
+                    <div class="p-6 space-y-4 text-sm text-gray-700 leading-relaxed">
+                        <p data-i18n="m01_content_1">O Comércio Exterior engloba todas as operações de importação e exportação de bens e serviços. É regulado por normas nacionais e tratados multilaterais.</p>
+                        <div class="bg-white p-4 rounded-lg border border-gray-200">
+                            <h4 class="font-bold text-si-dark mb-2 flex items-center gap-2"><svg class="w-4 h-4 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> <span data-i18n="m01_key_1">Vantagem comparativa e Economia de escala</span></h4>
+                            <h4 class="font-bold text-si-dark mb-2 flex items-center gap-2"><svg class="w-4 h-4 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> <span data-i18n="m01_key_2">Órgãos reguladores: Secex, Receita Federal, Bacen, Anvisa, Mapa</span></h4>
+                            <h4 class="font-bold text-si-dark mb-2 flex items-center gap-2"><svg class="w-4 h-4 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> <span data-i18n="m01_key_3">Impacto do câmbio (PTAX) na competitividade das exportações</span></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- M02 -->
+            <div id="m02" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <button onclick="toggleAccordion('acc-m02', this)" class="w-full px-6 py-5 flex items-center justify-between bg-white hover:bg-gray-50 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-100 text-si-primary flex items-center justify-center font-bold font-mono">M02</span>
+                        <div class="text-left">
+                            <h3 class="font-bold text-si-dark text-lg" data-i18n="m02_title">Despacho Aduaneiro e Tributação</h3>
+                            <p class="text-sm text-gray-500" data-i18n="m02_desc">NCM, DU-E, RADAR, tributação e regimes especiais.</p>
+                        </div>
+                    </div>
+                    <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                </button>
+                <div id="acc-m02" class="accordion-content bg-si-light border-t border-gray-100">
+                    <div class="p-6 space-y-4 text-sm text-gray-700 leading-relaxed">
+                        <p data-i18n="m02_content_1">A classificação fiscal (NCM/SH) define alíquotas de II, IPI, PIS, COFINS e controles de órgãos anuentes. Erros geram multas de 75% a 150%.</p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                <h4 class="font-bold text-si-primary mb-2 text-xs uppercase tracking-wider">Exportação</h4>
+                                <ul class="list-disc list-inside space-y-1 text-gray-600">
+                                    <li>Habilitação RADAR</li>
+                                    <li>Registro de Exportação (RE)</li>
+                                    <li>DU-E (Declaração Única)</li>
+                                    <li>Canais de parametrização (Verde, Amarelo, Vermelho)</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                <h4 class="font-bold text-si-primary mb-2 text-xs uppercase tracking-wider">Regimes Especiais</h4>
+                                <ul class="list-disc list-inside space-y-1 text-gray-600">
+                                    <li><strong>Drawback:</strong> Suspensão/isenção para insumos de exportação.</li>
+                                    <li><strong>Ex-tarifário:</strong> Redução de II para bens sem similar nacional.</li>
+                                    <li><strong>ZFM:</strong> Incentivos fiscais da Zona Franca de Manaus.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- M03 -->
+            <div id="m03" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <button onclick="toggleAccordion('acc-m03', this)" class="w-full px-6 py-5 flex items-center justify-between bg-white hover:bg-gray-50 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-100 text-si-primary flex items-center justify-center font-bold font-mono">M03</span>
+                        <div class="text-left">
+                            <h3 class="font-bold text-si-dark text-lg" data-i18n="m03_title">Financiamento e Câmbio</h3>
+                            <p class="text-sm text-gray-500" data-i18n="m03_desc">ACC/ACE, NDF, hedge, L/C, UCP 600, PROEX, SOFR.</p>
+                        </div>
+                    </div>
+                    <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                </button>
+                <div id="acc-m03" class="accordion-content bg-si-light border-t border-gray-100">
+                    <div class="p-6 space-y-4 text-sm text-gray-700 leading-relaxed">
+                        <p data-i18n="m03_content_1">O contrato de câmbio é o instrumento jurídico para liquidação de moeda estrangeira. O <strong>ACC</strong> é o financiamento pré-embarque (taxa menor), enquanto o <strong>ACE</strong> é pós-embarque.</p>
+                        <div class="bg-white p-4 rounded-lg border border-gray-200">
+                            <h4 class="font-bold text-si-dark mb-2">Formas de Pagamento (Risco decrescente para o exportador):</h4>
+                            <p class="text-gray-600 font-mono text-xs bg-gray-50 p-2 rounded">Open Account > Cobrança D/A > Cobrança D/P > Carta de Crédito (L/C) > Pagamento Antecipado</p>
+                            <p class="mt-2 text-gray-600" data-i18n="m03_content_2">A <strong>Carta de Crédito (L/C)</strong> é regida pela UCP 600 da ICC, oferecendo a maior segurança, pois o banco emissor garante o pagamento mediante apresentação de documentos conformes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- M04 -->
+            <div id="m04" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <button onclick="toggleAccordion('acc-m04', this)" class="w-full px-6 py-5 flex items-center justify-between bg-white hover:bg-gray-50 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-100 text-si-primary flex items-center justify-center font-bold font-mono">M04</span>
+                        <div class="text-left">
+                            <h3 class="font-bold text-si-dark text-lg" data-i18n="m04_title">Logística Internacional</h3>
+                            <p class="text-sm text-gray-500" data-i18n="m04_desc">Modais, B/L, AWB, FCL/LCL, seguro ICC A/B/C, Avaria Grossa.</p>
+                        </div>
+                    </div>
+                    <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                </button>
+                <div id="acc-m04" class="accordion-content bg-si-light border-t border-gray-100">
+                    <div class="p-6 space-y-4 text-sm text-gray-700 leading-relaxed">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                <h4 class="font-bold text-si-dark mb-2">Documentos de Transporte</h4>
+                                <ul class="space-y-2 text-gray-600">
+                                    <li><strong class="text-si-primary">B/L (Bill of Lading):</strong> Marítimo. Título negociável e prova de propriedade.</li>
+                                    <li><strong class="text-si-primary">AWB (Air Waybill):</strong> Aéreo. Não negociável, apenas prova de contrato.</li>
+                                    <li><strong class="text-si-primary">FCL vs LCL:</strong> Contêiner completo (Full) vs Carga consolidada (Less).</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                <h4 class="font-bold text-si-dark mb-2">Seguro de Carga (ICC)</h4>
+                                <ul class="space-y-2 text-gray-600">
+                                    <li><strong>ICC A:</strong> "All risks" (Ampla). Obrigatória no CIP desde 2020.</li>
+                                    <li><strong>ICC C:</strong> Mínima (apenas riscos graves). Padrão no CIF.</li>
+                                    <li><strong>Avaria Grossa:</strong> Rateio proporcional de prejuízo em sacrifício voluntário para salvar o navio.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- M05 -->
+            <div id="m05" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <button onclick="toggleAccordion('acc-m05', this)" class="w-full px-6 py-5 flex items-center justify-between bg-white hover:bg-gray-50 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-100 text-si-primary flex items-center justify-center font-bold font-mono">M05</span>
+                        <div class="text-left">
+                            <h3 class="font-bold text-si-dark text-lg" data-i18n="m05_title">Incoterms® 2020</h3>
+                            <p class="text-sm text-gray-500" data-i18n="m05_desc">11 termos, responsabilidades, mudanças vs 2010 e contexto Brasil.</p>
+                        </div>
+                    </div>
+                    <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                </button>
+                <div id="acc-m05" class="accordion-content bg-si-light border-t border-gray-100">
+                    <div class="p-6 space-y-4 text-sm text-gray-700 leading-relaxed">
+                        <p data-i18n="m05_content_1">Os Incoterms definem onde ocorre a transferência de risco, quem paga o frete/seguro e quem faz o despacho. <strong>Não definem</strong> preço, pagamento ou transferência de propriedade.</p>
+                        <div class="bg-si-dark text-white p-4 rounded-lg">
+                            <h4 class="font-bold text-si-gold mb-2 text-xs uppercase tracking-wider">Mudanças Críticas 2020</h4>
+                            <ul class="space-y-2 text-sm text-gray-300">
+                                <li>• <strong>DPU</strong> substituiu o DAT (vendedor descarrega no destino).</li>
+                                <li>• <strong>CIP</strong> agora exige seguro ICC A (ampla), enquanto o CIF mantém ICC C (mínima).</li>
+                                <li>• <strong>FCA</strong> permite instrução de B/L "on board" para facilitar Cartas de Crédito.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- M06 -->
+            <div id="m06" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <button onclick="toggleAccordion('acc-m06', this)" class="w-full px-6 py-5 flex items-center justify-between bg-white hover:bg-gray-50 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-100 text-si-primary flex items-center justify-center font-bold font-mono">M06</span>
+                        <div class="text-left">
+                            <h3 class="font-bold text-si-dark text-lg" data-i18n="m06_title">Compliance e Controles Especiais</h3>
+                            <p class="text-sm text-gray-500" data-i18n="m06_desc">Bens de duplo uso, Wassenaar, OFAC/SDN, OEA.</p>
+                        </div>
+                    </div>
+                    <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                </button>
+                <div id="acc-m06" class="accordion-content bg-si-light border-t border-gray-100">
+                    <div class="p-6 space-y-4 text-sm text-gray-700 leading-relaxed">
+                        <p data-i18n="m06_content_1">O compliance em Comex exige verificação do importador final (End User) para evitar violações de sanções internacionais (OFAC, ONU) e controle de bens de duplo uso (Wassenaar Arrangement).</p>
+                        <div class="bg-white p-4 rounded-lg border border-gray-200 border-l-4 border-l-si-accent">
+                            <h4 class="font-bold text-si-dark mb-2">OEA (Operador Econômico Autorizado)</h4>
+                            <p class="text-gray-600 mb-2">Certificação da Receita Federal que atesta a confiabilidade da empresa na cadeia logística.</p>
+                            <ul class="list-disc list-inside text-gray-600 text-xs space-y-1">
+                                <li>Mais canais verdes de parametrização.</li>
+                                <li>Reconhecimento mútuo internacional (EUA, UE, Mercosul).</li>
+                                <li>Redução de garantias em regimes especiais.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- QUIZ SECTION -->
+        <div id="quiz-section" class="mt-16 bg-si-dark rounded-2xl p-8 text-white shadow-xl">
+            <div class="text-center mb-8">
+                <span class="inline-block px-3 py-1 bg-si-gold/20 text-si-gold text-xs font-bold rounded-full mb-3 tracking-wider" data-i18n="quiz_badge">AVALIAÇÃO DE CONHECIMENTO</span>
+                <h2 class="text-2xl md:text-3xl font-bold" data-i18n="quiz_title">Quiz Interativo de Fixação</h2>
+                <p class="text-gray-400 mt-2" data-i18n="quiz_subtitle">10 questões práticas com feedback explicado para validar seu aprendizado.</p>
+            </div>
+
+            <div id="quiz-container" class="max-w-3xl mx-auto">
+                <div class="mb-6">
+                    <div class="flex justify-between text-xs font-mono text-gray-400 mb-2">
+                        <span id="q-counter">Questão 1 / 10</span>
+                        <span id="score-display">Pontos: 0</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-2">
+                        <div id="progress-bar" class="bg-si-gold h-2 rounded-full transition-all duration-500" style="width: 10%"></div>
+                    </div>
+                </div>
+
+                <h3 id="q-text" class="text-xl font-medium mb-6 leading-relaxed"></h3>
+                
+                <div id="q-options" class="space-y-3 mb-6">
+                    <!-- Options injected via JS -->
+                </div>
+
+                <div id="q-feedback" class="hidden p-4 rounded-lg mb-6 text-sm leading-relaxed"></div>
+
+                <div class="flex justify-end">
+                    <button id="btn-next" onclick="nextQuestion()" disabled class="bg-si-gold text-si-dark font-bold py-3 px-8 rounded-lg opacity-50 cursor-not-allowed transition-all">
+                        <span data-i18n="btn_next">Próxima Questão</span> →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Result Screen (Hidden by default) -->
+            <div id="quiz-result" class="hidden max-w-2xl mx-auto text-center">
+                <div class="text-6xl mb-4">🏆</div>
+                <h3 class="text-3xl font-bold mb-2" data-i18n="result_title">Quiz Concluído!</h3>
+                <p id="result-msg" class="text-gray-300 mb-6"></p>
+                <div class="text-5xl font-bold text-si-gold font-mono mb-2"><span id="final-score">0</span>/10</div>
+                <p class="text-sm text-gray-400 mb-8" data-i18n="result_pct">de aproveitamento</p>
+
+                <!-- BOTÃO DE CERTIFICADO NO RESULTADO -->
+                <a href="#" class="inline-flex items-center gap-3 bg-si-gold hover:bg-si-goldLight text-si-dark font-bold py-4 px-8 rounded-xl shadow-lg shadow-si-gold/20 transition-all transform hover:scale-[1.02] mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span data-i18n="cert_button">Iniciar teste para obter seu certificado de conclusão</span>
+                </a>
+                <p class="text-[10px] text-gray-500 font-mono mb-6">⚠️ LINK DO TESTE A SER INSERIDO</p>
+
+                <button onclick="resetQuiz()" class="text-gray-400 hover:text-white text-sm underline" data-i18n="btn_retry">Refazer Quiz</button>
+            </div>
+        </div>
+
+        <!-- GLOSSARY SECTION -->
+        <div id="glossary-section" class="mt-16">
+            <div class="text-center mb-8">
+                <span class="inline-block px-3 py-1 bg-si-accent/10 text-si-accent text-xs font-bold rounded-full mb-3 tracking-wider" data-i18n="glossary_badge">REFERÊNCIA RÁPIDA</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-si-dark" data-i18n="glossary_title">Glossário de Comércio Exterior</h2>
+                <p class="text-gray-500 mt-2" data-i18n="glossary_subtitle">28 termos essenciais para consulta durante o curso.</p>
+            </div>
+            <div id="glossary-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Glossary items injected via JS -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-si-dark text-gray-400 py-8 border-t border-gray-800 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm mb-2" data-i18n="footer_copy">&copy; 2026 Sanitary Intelligence. Todos os direitos reservados.</p>
+            <p class="text-xs text-gray-600 mb-6" data-i18n="footer_secure">Plataforma educacional segura e certificada.</p>
+            
+            <!-- Digital Solutions Link -->
+            <a href="https://app-algoritmo.github.io/digital-solutions" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-cyan-400 font-semibold text-sm hover:text-cyan-300 transition-all duration-300 glow-text group">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover:animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+                <span>&lt;/&gt; Digital Solutions</span>
+            </a>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // ==========================================
+        // 1. TRANSLATION DICTIONARY
+        // ==========================================
+        const translations = {
+            pt: {
+                header_subtitle: "Excelência em Assuntos Regulatórios",
+                hero_badge: "CURSO COMPLETO",
+                hero_title: "Comércio Exterior & Inteligência Regulatória",
+                hero_subtitle: "Domine as operações de Comex, da classificação fiscal ao desembaraço, com foco em inteligência sanitária, logística e compliance internacional.",
+                stat_modules: "Módulos", stat_lessons: "Aulas", stat_quiz: "Questões", stat_glossary: "Termos",
+                cert_button: "Iniciar teste para obter seu certificado de conclusão",
+                nav_m01: "Fundamentos", nav_m02: "Aduaneiro", nav_m03: "Finanças", nav_m04: "Logística", nav_m05: "Incoterms", nav_m06: "Compliance",
+                m01_title: "Fundamentos do Comércio Internacional", m01_desc: "Balança comercial, câmbio, OMC e blocos regionais.",
+                m01_content_1: "O Comércio Exterior engloba todas as operações de importação e exportação de bens e serviços. É regulado por normas nacionais e tratados multilaterais.",
+                m01_key_1: "Vantagem comparativa e Economia de escala", m01_key_2: "Órgãos reguladores: Secex, Receita Federal, Bacen, Anvisa, Mapa", m01_key_3: "Impacto do câmbio (PTAX) na competitividade das exportações",
+                m02_title: "Despacho Aduaneiro e Tributação", m02_desc: "NCM, DU-E, RADAR, tributação e regimes especiais.",
+                m02_content_1: "A classificação fiscal (NCM/SH) define alíquotas de II, IPI, PIS, COFINS e controles de órgãos anuentes. Erros geram multas de 75% a 150%.",
+                m03_title: "Financiamento e Câmbio", m03_desc: "ACC/ACE, NDF, hedge, L/C, UCP 600, PROEX, SOFR.",
+                m03_content_1: "O contrato de câmbio é o instrumento jurídico para liquidação de moeda estrangeira. O ACC é o financiamento pré-embarque (taxa menor), enquanto o ACE é pós-embarque.",
+                m03_content_2: "A Carta de Crédito (L/C) é regida pela UCP 600 da ICC, oferecendo a maior segurança, pois o banco emissor garante o pagamento mediante apresentação de documentos conformes.",
+                m04_title: "Logística Internacional", m04_desc: "Modais, B/L, AWB, FCL/LCL, seguro ICC A/B/C, Avaria Grossa.",
+                m05_title: "Incoterms® 2020", m05_desc: "11 termos, responsabilidades, mudanças vs 2010 e contexto Brasil.",
+                m05_content_1: "Os Incoterms definem onde ocorre a transferência de risco, quem paga o frete/seguro e quem faz o despacho. Não definem preço, pagamento ou transferência de propriedade.",
+                m06_title: "Compliance e Controles Especiais", m06_desc: "Bens de duplo uso, Wassenaar, OFAC/SDN, OEA.",
+                m06_content_1: "O compliance em Comex exige verificação do importador final (End User) para evitar violações de sanções internacionais (OFAC, ONU) e controle de bens de duplo uso.",
+                quiz_badge: "AVALIAÇÃO DE CONHECIMENTO", quiz_title: "Quiz Interativo de Fixação", quiz_subtitle: "10 questões práticas com feedback explicado para validar seu aprendizado.",
+                btn_next: "Próxima Questão", result_title: "Quiz Concluído!", result_pct: "de aproveitamento", btn_retry: "Refazer Quiz",
+                glossary_badge: "REFERÊNCIA RÁPIDA", glossary_title: "Glossário de Comércio Exterior", glossary_subtitle: "28 termos essenciais para consulta durante o curso.",
+                footer_copy: "© 2026 Sanitary Intelligence. Todos os direitos reservados.", footer_secure: "Plataforma educacional segura e certificada."
+            },
+            en: {
+                header_subtitle: "Excellence in Regulatory Affairs",
+                hero_badge: "COMPLETE COURSE",
+                hero_title: "Foreign Trade & Regulatory Intelligence",
+                hero_subtitle: "Master Comex operations, from fiscal classification to customs clearance, focusing on sanitary intelligence, logistics, and international compliance.",
+                stat_modules: "Modules", stat_lessons: "Lessons", stat_quiz: "Questions", stat_glossary: "Terms",
+                cert_button: "Start test to get your completion certificate",
+                nav_m01: "Fundamentals", nav_m02: "Customs", nav_m03: "Finance", nav_m04: "Logistics", nav_m05: "Incoterms", nav_m06: "Compliance",
+                m01_title: "Fundamentals of International Trade", m01_desc: "Trade balance, exchange rates, WTO, and regional blocs.",
+                m01_content_1: "Foreign Trade encompasses all import and export operations of goods and services. It is regulated by national norms and multilateral treaties.",
+                m01_key_1: "Comparative advantage and Economies of scale", m01_key_2: "Regulatory bodies: Secex, Federal Revenue, Bacen, Anvisa, Mapa", m01_key_3: "Impact of exchange rates (PTAX) on export competitiveness",
+                m02_title: "Customs Clearance and Taxation", m02_desc: "NCM, DU-E, RADAR, taxation, and special regimes.",
+                m02_content_1: "Fiscal classification (NCM/HS) defines II, IPI, PIS, COFINS rates and controls by relevant agencies. Errors result in fines of 75% to 150%.",
+                m03_title: "Financing and Foreign Exchange", m03_desc: "ACC/ACE, NDF, hedging, L/C, UCP 600, PROEX, SOFR.",
+                m03_content_1: "The exchange contract is the legal instrument for settling foreign currency. ACC is pre-shipment financing (lower rate), while ACE is post-shipment.",
+                m03_content_2: "The Letter of Credit (L/C) is governed by ICC's UCP 600, offering the highest security, as the issuing bank guarantees payment upon presentation of compliant documents.",
+                m04_title: "International Logistics", m04_desc: "Modes, B/L, AWB, FCL/LCL, ICC A/B/C insurance, General Average.",
+                m05_title: "Incoterms® 2020", m05_desc: "11 terms, responsibilities, changes vs 2010, and Brazil context.",
+                m05_content_1: "Incoterms define where risk transfer occurs, who pays freight/insurance, and who handles customs. They do NOT define price, payment, or property transfer.",
+                m06_title: "Compliance and Special Controls", m06_desc: "Dual-use goods, Wassenaar, OFAC/SDN, AEO.",
+                m06_content_1: "Comex compliance requires verification of the end user to avoid international sanctions violations (OFAC, UN) and control of dual-use goods.",
+                quiz_badge: "KNOWLEDGE ASSESSMENT", quiz_title: "Interactive Fixation Quiz", quiz_subtitle: "10 practical questions with explained feedback to validate your learning.",
+                btn_next: "Next Question", result_title: "Quiz Completed!", result_pct: "success rate", btn_retry: "Retake Quiz",
+                glossary_badge: "QUICK REFERENCE", glossary_title: "Foreign Trade Glossary", glossary_subtitle: "28 essential terms for consultation during the course.",
+                footer_copy: "© 2026 Sanitary Intelligence. All rights reserved.", footer_secure: "Secure and certified educational platform."
+            },
+            es: {
+                header_subtitle: "Excelencia en Asuntos Regulatorios",
+                hero_badge: "CURSO COMPLETO",
+                hero_title: "Comercio Exterior e Inteligencia Regulatoria",
+                hero_subtitle: "Domine las operaciones de Comex, desde la clasificación fiscal hasta el despacho de aduanas, con enfoque en inteligencia sanitaria, logística y cumplimiento internacional.",
+                stat_modules: "Módulos", stat_lessons: "Clases", stat_quiz: "Preguntas", stat_glossary: "Términos",
+                cert_button: "Iniciar prueba para obtener su certificado de finalización",
+                nav_m01: "Fundamentos", nav_m02: "Aduanero", nav_m03: "Finanzas", nav_m04: "Logística", nav_m05: "Incoterms", nav_m06: "Compliance",
+                m01_title: "Fundamentos del Comercio Internacional", m01_desc: "Balanza comercial, tipo de cambio, OMC y bloques regionales.",
+                m01_content_1: "El Comercio Exterior engloba todas las operaciones de importación y exportación de bienes y servicios. Está regulado por normas nacionales y tratados multilaterales.",
+                m01_key_1: "Ventaja comparativa y Economía de escala", m01_key_2: "Órganos reguladores: Secex, Receita Federal, Bacen, Anvisa, Mapa", m01_key_3: "Impacto del tipo de cambio (PTAX) en la competitividad de las exportaciones",
+                m02_title: "Despacho Aduanero y Tributación", m02_desc: "NCM, DU-E, RADAR, tributación y regímenes especiales.",
+                m02_content_1: "La clasificación fiscal (NCM/SA) define alícuotas de II, IPI, PIS, COFINS y controles de órganos anuentes. Los errores generan multas del 75% al 150%.",
+                m03_title: "Financiamiento y Cambio", m03_desc: "ACC/ACE, NDF, cobertura, L/C, UCP 600, PROEX, SOFR.",
+                m03_content_1: "El contrato de cambio es el instrumento jurídico para la liquidación de moneda extranjera. El ACC es financiamiento pre-embarque (tasa menor), mientras que el ACE es post-embarque.",
+                m03_content_2: "La Carta de Crédito (L/C) está regida por la UCP 600 de la CCI, ofreciendo la mayor seguridad, ya que el banco emisor garantiza el pago ante la presentación de documentos conformes.",
+                m04_title: "Logística Internacional", m04_desc: "Modales, B/L, AWB, FCL/LCL, seguro ICC A/B/C, Avería Gruesa.",
+                m05_title: "Incoterms® 2020", m05_desc: "11 términos, responsabilidades, cambios vs 2010 y contexto Brasil.",
+                m05_content_1: "Los Incoterms definen dónde ocurre la transferencia de riesgo, quién paga el flete/seguro y quién realiza el despacho. NO definen precio, pago o transferencia de propiedad.",
+                m06_title: "Compliance y Controles Especiales", m06_desc: "Bienes de doble uso, Wassenaar, OFAC/SDN, OEA.",
+                m06_content_1: "El compliance en Comex exige verificación del importador final (End User) para evitar violaciones de sanciones internacionales (OFAC, ONU) y control de bienes de doble uso.",
+                quiz_badge: "EVALUACIÓN DE CONOCIMIENTO", quiz_title: "Quiz Interactivo de Fijación", quiz_subtitle: "10 preguntas prácticas con retroalimentación explicada para validar su aprendizaje.",
+                btn_next: "Siguiente Pregunta", result_title: "¡Quiz Completado!", result_pct: "de aprovechamiento", btn_retry: "Rehacer Quiz",
+                glossary_badge: "REFERENCIA RÁPIDA", glossary_title: "Glosario de Comercio Exterior", glossary_subtitle: "28 términos esenciales para consulta durante el curso.",
+                footer_copy: "© 2026 Sanitary Intelligence. Todos los derechos reservados.", footer_secure: "Plataforma educativa segura y certificada."
+            }
+        };
+
+        // ==========================================
+        // 2. LANGUAGE LOGIC
+        // ==========================================
+        function setLanguage(lang) {
+            const validLang = ['pt', 'en', 'es'].includes(lang) ? lang : 'pt';
+            localStorage.setItem('si_trade_lang', validLang);
+            document.documentElement.lang = validLang === 'pt' ? 'pt-BR' : (validLang === 'es' ? 'es-ES' : 'en-US');
+            
+            const labels = { pt: 'PT', en: 'EN', es: 'ES' };
+            document.getElementById('current-lang-label').textContent = labels[validLang];
+
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[validLang][key]) {
+                    element.textContent = translations[validLang][key];
+                }
+            });
+            renderGlossary(); // Re-render glossary in new language
+        }
+
+        function changeLanguage(lang) {
+            setLanguage(lang);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('si_trade_lang');
+            if (savedLang) {
+                setLanguage(savedLang);
+            } else {
+                const browserLang = navigator.language || navigator.userLanguage;
+                const detectedLang = browserLang.startsWith('es') ? 'es' : (browserLang.startsWith('en') ? 'en' : 'pt');
+                setLanguage(detectedLang);
+            }
+        });
+
+        // ==========================================
+        // 3. UI INTERACTIONS
+        // ==========================================
+        function toggleAccordion(id, btn) {
+            const content = document.getElementById(id);
+            const isOpen = content.classList.contains('open');
+            
+            // Close all
+            document.querySelectorAll('.accordion-content').forEach(el => el.classList.remove('open'));
+            document.querySelectorAll('.module-nav-btn').forEach(el => el.classList.remove('active', 'border-si-accent', 'bg-si-light'));
+            
+            // Open clicked if it was closed
+            if (!isOpen) {
+                content.classList.add('open');
+                btn.closest('.bg-white').classList.add('active');
+                // Highlight nav button
+                const modId = id.replace('acc-', '');
+                document.querySelectorAll('.module-nav-btn').forEach(btn => {
+                    if(btn.getAttribute('onclick').includes(modId)) {
+                        btn.classList.add('active', 'border-si-accent', 'bg-si-light');
+                    }
+                });
+            }
+        }
+
+        function scrollToModule(id) {
+            const el = document.getElementById(id);
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Simulate click to open
+            const btn = el.querySelector('button');
+            toggleAccordion('acc-' + id, btn);
+        }
+
+        // ==========================================
+        // 4. GLOSSARY DATA & RENDER
+        // ==========================================
+        const glossaryData = {
+            pt: [
+                {t: "NCM", d: "Nomenclatura Comum do Mercosul. 8 dígitos baseados no SH internacional."},
+                {t: "SISCOMEX", d: "Sistema Integrado de Comércio Exterior. Plataforma federal para registro."},
+                {t: "DU-E", d: "Declaração Única de Exportação. Substituiu o DE desde 2017."},
+                {t: "RADAR", d: "Habilitação obrigatória na Receita Federal para operar no Comex."},
+                {t: "Drawback", d: "Regime que suspende/isenta tributos na importação de insumos para exportação."},
+                {t: "Ex-tarifário", d: "Redução do II para bens de capital e informática sem similar nacional."},
+                {t: "ZFM", d: "Zona Franca de Manaus. Incentivos fiscais para industrialização até 2073."},
+                {t: "B/L", d: "Bill of Lading. Conhecimento de embarque marítimo. Título negociável."},
+                {t: "AWB", d: "Air Waybill. Conhecimento de transporte aéreo. Não negociável."},
+                {t: "FCL", d: "Full Container Load. Contêiner exclusivo de um único embarcador."},
+                {t: "LCL", d: "Less than Container Load. Carga consolidada de vários embarcadores."},
+                {t: "AFRMM", d: "Adicional ao Frete para Renovação da Marinha Mercante (25% do frete)."},
+                {t: "PTAX", d: "Taxa de câmbio de referência diária calculada pelo Banco Central."},
+                {t: "ACC", d: "Adiantamento sobre Contrato de Câmbio. Financiamento pré-embarque."},
+                {t: "ACE", d: "Adiantamento sobre Cambiais Entregues. Financiamento pós-embarque."},
+                {t: "NDF", d: "Non-Deliverable Forward. Contrato de câmbio a prazo para hedge."},
+                {t: "UCP 600", d: "Regras da ICC que regem as Cartas de Crédito (L/C)."},
+                {t: "URC 522", d: "Regras da ICC que regem as cobranças documentárias."},
+                {t: "PROEX", d: "Programa de Financiamento às Exportações (Financiamento ou Equalização)."},
+                {t: "SOFR", d: "Secured Overnight Financing Rate. Substituiu a LIBOR em 2023."},
+                {t: "OEA", d: "Operador Econômico Autorizado. Certificação de confiabilidade da RFB."},
+                {t: "OFAC", d: "Office of Foreign Assets Control. Lista de sancionados dos EUA."},
+                {t: "Wassenaar", d: "Arranjo multilateral de controle de exportação de bens de duplo uso."},
+                {t: "Avaria Grossa", d: "Sacrifício voluntário de carga para salvar o navio, com rateio de custos."},
+                {t: "ICC A/B/C", d: "Institute Cargo Clauses. Coberturas de seguro: A (ampla), B, C (mínima)."},
+                {t: "RECOF", d: "Regime Aduaneiro Especial de Entreposto Industrial (suspensão de tributos)."},
+                {t: "C-TPAT", d: "Programa americano de segurança na cadeia de suprimentos (equivalente ao OEA)."},
+                {t: "DPU", d: "Delivered at Place Unloaded. Vendedor descarrega no destino (novo em 2020)."}
+            ],
+            en: [
+                {t: "NCM", d: "Mercosur Common Nomenclature. 8 digits based on international HS."},
+                {t: "SISCOMEX", d: "Integrated Foreign Trade System. Federal platform for registration."},
+                {t: "DU-E", d: "Single Export Declaration. Replaced DE since 2017."},
+                {t: "RADAR", d: "Mandatory registration with Federal Revenue to operate in Comex."},
+                {t: "Drawback", d: "Regime that suspends/exempts taxes on import of inputs for export."},
+                {t: "Ex-tariff", d: "Reduction of II for capital goods and IT without national similar."},
+                {t: "ZFM", d: "Manaus Free Trade Zone. Tax incentives for industrialization until 2073."},
+                {t: "B/L", d: "Bill of Lading. Marine transport document. Negotiable title."},
+                {t: "AWB", d: "Air Waybill. Air transport document. Non-negotiable."},
+                {t: "FCL", d: "Full Container Load. Exclusive container for a single shipper."},
+                {t: "LCL", d: "Less than Container Load. Consolidated cargo from multiple shippers."},
+                {t: "AFRMM", d: "Surcharge for Merchant Marine Renewal (25% of freight)."},
+                {t: "PTAX", d: "Daily reference exchange rate calculated by the Central Bank."},
+                {t: "ACC", d: "Advance on Exchange Contract. Pre-shipment financing."},
+                {t: "ACE", d: "Advance on Delivered Exchange Bills. Post-shipment financing."},
+                {t: "NDF", d: "Non-Deliverable Forward. Forward exchange contract for hedging."},
+                {t: "UCP 600", d: "ICC rules governing Letters of Credit (L/C)."},
+                {t: "URC 522", d: "ICC rules governing documentary collections."},
+                {t: "PROEX", d: "Export Financing Program (Financing or Equalization)."},
+                {t: "SOFR", d: "Secured Overnight Financing Rate. Replaced LIBOR in 2023."},
+                {t: "AEO", d: "Authorized Economic Operator. RFB reliability certification."},
+                {t: "OFAC", d: "Office of Foreign Assets Control. US sanctions list."},
+                {t: "Wassenaar", d: "Multilateral export control arrangement for dual-use goods."},
+                {t: "General Average", d: "Voluntary sacrifice of cargo to save the ship, with cost sharing."},
+                {t: "ICC A/B/C", d: "Institute Cargo Clauses. Insurance coverage: A (broad), B, C (minimum)."},
+                {t: "RECOF", d: "Special Customs Regime for Industrial Warehousing (tax suspension)."},
+                {t: "C-TPAT", d: "US supply chain security program (equivalent to AEO)."},
+                {t: "DPU", d: "Delivered at Place Unloaded. Seller unloads at destination (new in 2020)."}
+            ],
+            es: [
+                {t: "NCM", d: "Nomenclatura Común del Mercosur. 8 dígitos basados en el SA internacional."},
+                {t: "SISCOMEX", d: "Sistema Integrado de Comercio Exterior. Plataforma federal de registro."},
+                {t: "DU-E", d: "Declaración Única de Exportación. Reemplazó al DE desde 2017."},
+                {t: "RADAR", d: "Habilitación obligatoria en la Receita Federal para operar en Comex."},
+                {t: "Drawback", d: "Régimen que suspende/exime tributos en la importación de insumos para exportación."},
+                {t: "Ex-arancelario", d: "Reducción del II para bienes de capital e informática sin similar nacional."},
+                {t: "ZFM", d: "Zona Franca de Manaus. Incentivos fiscales para industrialización hasta 2073."},
+                {t: "B/L", d: "Bill of Lading. Conocimiento de embarque marítimo. Título negociable."},
+                {t: "AWB", d: "Air Waybill. Conocimiento de transporte aéreo. No negociable."},
+                {t: "FCL", d: "Full Container Load. Contenedor exclusivo de un único embarcador."},
+                {t: "LCL", d: "Less than Container Load. Carga consolidada de varios embarcadores."},
+                {t: "AFRMM", d: "Adicional al Flete para Renovación de la Marina Mercante (25% del flete)."},
+                {t: "PTAX", d: "Tasa de cambio de referencia diaria calculada por el Banco Central."},
+                {t: "ACC", d: "Adelanto sobre Contrato de Cambio. Financiamiento pre-embarque."},
+                {t: "ACE", d: "Adelanto sobre Cambiales Entregadas. Financiamiento post-embarque."},
+                {t: "NDF", d: "Non-Deliverable Forward. Contrato de cambio a plazo para cobertura."},
+                {t: "UCP 600", d: "Reglas de la CCI que rigen las Cartas de Crédito (L/C)."},
+                {t: "URC 522", d: "Reglas de la CCI que rigen los cobros documentarios."},
+                {t: "PROEX", d: "Programa de Financiamiento a las Exportaciones."},
+                {t: "SOFR", d: "Secured Overnight Financing Rate. Reemplazó a la LIBOR en 2023."},
+                {t: "OEA", d: "Operador Económico Autorizado. Certificación de confiabilidad de la RFB."},
+                {t: "OFAC", d: "Office of Foreign Assets Control. Lista de sancionados de EE.UU."},
+                {t: "Wassenaar", d: "Acuerdo multilateral de control de exportación de bienes de doble uso."},
+                {t: "Avería Gruesa", d: "Sacrificio voluntario de carga para salvar el barco, con rateo de costos."},
+                {t: "ICC A/B/C", d: "Institute Cargo Clauses. Coberturas de seguro: A (amplia), B, C (mínima)."},
+                {t: "RECOF", d: "Régimen Aduanero Especial de Depósito Industrial (suspensión de tributos)."},
+                {t: "C-TPAT", d: "Programa estadounidense de seguridad en la cadena de suministro."},
+                {t: "DPU", d: "Delivered at Place Unloaded. Vendedor descarga en destino (nuevo en 2020)."}
+            ]
+        };
+
+        function renderGlossary() {
+            const lang = localStorage.getItem('si_trade_lang') || 'pt';
+            const grid = document.getElementById('glossary-grid');
+            grid.innerHTML = '';
+            glossaryData[lang].forEach(item => {
+                grid.innerHTML += `
+                    <div class="bg-white p-4 rounded-lg border border-gray-200 hover:border-si-accent hover:shadow-md transition-all">
+                        <h4 class="font-bold text-si-primary font-mono text-sm mb-1">${item.t}</h4>
+                        <p class="text-xs text-gray-600 leading-relaxed">${item.d}</p>
+                    </div>
+                `;
+            });
+        }
+
+        // ==========================================
+        // 5. QUIZ LOGIC
+        // ==========================================
+        const quizData = {
+            pt: [
+                {q: "Qual regime aduaneiro suspende ou isenta tributos na importação de insumos destinados à exportação?", opts: ["Ex-tarifário", "Drawback", "RECOF", "Admissão Temporária"], ans: 1, exp: "O Drawback é o regime específico para suspensão/isenção de tributos em insumos que serão industrializados e exportados."},
+                {q: "Qual documento de transporte marítimo é considerado um título de crédito negociável?", opts: ["AWB", "CRT", "Bill of Lading (B/L)", "DTA"], ans: 2, exp: "O B/L (Bill of Lading) é um título de crédito negociável que representa a propriedade da carga, diferentemente do AWB aéreo."},
+                {q: "No Incoterms CIP (2020), qual é a cobertura mínima de seguro obrigatória para o vendedor?", opts: ["ICC C (mínima)", "ICC B (intermediária)", "ICC A (all risks)", "Nenhuma, é opcional"], ans: 2, exp: "Uma das principais mudanças de 2020 foi elevar o seguro mínimo do CIP para ICC A (cobertura ampla)."},
+                {q: "O ACC (Adiantamento sobre Contrato de Câmbio) é caracterizado por ser:", opts: ["Financiamento pós-embarque", "Financiamento pré-embarque com câmbio já contratado", "Um tipo de seguro de crédito", "Um regime de drawback"], ans: 1, exp: "O ACC é concedido antes do embarque, com o câmbio já contratado, o que reduz o risco e a taxa de juros para o exportador."},
+                {q: "Qual é a base de cálculo do Imposto de Importação (II) no Brasil?", opts: ["Valor FOB", "Valor EXW", "Valor CIF", "Valor DDP"], ans: 2, exp: "O Brasil adota o Valor Aduaneiro baseado no acordo da OMC, que utiliza o valor CIF (Custo + Seguro + Frete) como base."},
+                {q: "Por que a ICC recomenda o uso de FCA em vez de FOB para cargas em contêiner?", opts: ["O FCA é mais barato", "No FOB, o risco só passa a bordo, mas o contêiner é entregue no terminal antes", "O FCA não exige despacho de exportação", "O FOB é exclusivo para transporte aéreo"], ans: 1, exp: "No FOB, o risco passa quando a mercadoria está a bordo. Em contêineres, a entrega ocorre no terminal, criando um 'buraco' de responsabilidade. O FCA resolve isso."},
+                {q: "A Nomenclatura Comum do Mercosul (NCM) possui quantos dígitos?", opts: ["6", "8", "10", "12"], ans: 1, exp: "A NCM tem 8 dígitos: os 6 primeiros são do Sistema Harmonizado (SH) internacional, e os 2 últimos são específicos do Mercosul."},
+                {q: "O que significa a sigla OEA no contexto aduaneiro brasileiro?", opts: ["Operador de Exportação Autorizado", "Organização de Empresas Aduaneiras", "Operador Econômico Autorizado", "Órgão Especial de Aduana"], ans: 2, exp: "OEA (Operador Econômico Autorizado) é a certificação da Receita Federal que atesta a confiabilidade e segurança da empresa na cadeia logística."},
+                {q: "Qual é o único Incoterm onde o vendedor é responsável pelo descarregamento da mercadoria no destino?", opts: ["DAP", "DDP", "DPU", "CIF"], ans: 2, exp: "DPU (Delivered at Place Unloaded) é o único termo onde a entrega e a transferência de risco só ocorrem após o vendedor descarregar a mercadoria no local de destino."},
+                {q: "A UCP 600 da Câmara de Comércio Internacional (ICC) regula qual instrumento de pagamento?", opts: ["Cobrança Documentária", "Carta de Crédito (L/C)", "Remessa sem Saque", "Câmbio a Termo"], ans: 1, exp: "A UCP 600 (Uniform Customs and Practice for Documentary Credits) é a regra internacional que rege as operações de Carta de Crédito."}
+            ],
+            en: [
+                {q: "Which customs regime suspends or exempts taxes on the import of inputs destined for export?", opts: ["Ex-tariff", "Drawback", "RECOF", "Temporary Admission"], ans: 1, exp: "Drawback is the specific regime for tax suspension/exemption on inputs that will be industrialized and exported."},
+                {q: "Which marine transport document is considered a negotiable title of credit?", opts: ["AWB", "CRT", "Bill of Lading (B/L)", "DTA"], ans: 2, exp: "The B/L is a negotiable title of credit representing cargo ownership, unlike the non-negotiable air AWB."},
+                {q: "Under Incoterms CIP (2020), what is the minimum mandatory insurance coverage for the seller?", opts: ["ICC C (minimum)", "ICC B (intermediate)", "ICC A (all risks)", "None, it is optional"], ans: 2, exp: "A key 2020 change was elevating the minimum CIP insurance to ICC A (broad coverage)."},
+                {q: "ACC (Advance on Exchange Contract) is characterized by being:", opts: ["Post-shipment financing", "Pre-shipment financing with exchange already contracted", "A type of credit insurance", "A drawback regime"], ans: 1, exp: "ACC is granted before shipment, with the exchange rate already locked, reducing risk and interest rates for the exporter."},
+                {q: "What is the calculation base for Import Tax (II) in Brazil?", opts: ["FOB Value", "EXW Value", "CIF Value", "DDP Value"], ans: 2, exp: "Brazil adopts the Customs Value based on the WTO agreement, which uses the CIF value (Cost + Insurance + Freight) as the base."},
+                {q: "Why does the ICC recommend using FCA instead of FOB for containerized cargo?", opts: ["FCA is cheaper", "In FOB, risk passes on board, but containers are delivered at the terminal earlier", "FCA does not require export clearance", "FOB is exclusive to air transport"], ans: 1, exp: "In FOB, risk passes when goods are on board. For containers, delivery happens at the terminal, creating a responsibility gap. FCA resolves this."},
+                {q: "How many digits does the Mercosur Common Nomenclature (NCM) have?", opts: ["6", "8", "10", "12"], ans: 1, exp: "NCM has 8 digits: the first 6 are from the international Harmonized System (HS), and the last 2 are Mercosur-specific."},
+                {q: "What does AEO stand for in the Brazilian customs context?", opts: ["Authorized Export Operator", "Customs Companies Organization", "Authorized Economic Operator", "Special Customs Body"], ans: 2, exp: "AEO (Authorized Economic Operator) is the Federal Revenue certification attesting to a company's reliability and security in the logistics chain."},
+                {q: "Which is the only Incoterm where the seller is responsible for unloading the goods at the destination?", opts: ["DAP", "DDP", "DPU", "CIF"], ans: 2, exp: "DPU (Delivered at Place Unloaded) is the only term where delivery and risk transfer occur only after the seller unloads the goods at the destination."},
+                {q: "ICC's UCP 600 regulates which payment instrument?", opts: ["Documentary Collection", "Letter of Credit (L/C)", "Open Account", "Forward Exchange"], ans: 1, exp: "UCP 600 (Uniform Customs and Practice for Documentary Credits) is the international rule governing Letter of Credit operations."}
+            ],
+            es: [
+                {q: "¿Qué régimen aduanero suspende o exime tributos en la importación de insumos destinados a la exportación?", opts: ["Ex-arancelario", "Drawback", "RECOF", "Admisión Temporaria"], ans: 1, exp: "El Drawback es el régimen específico para la suspensión/exención de tributos en insumos que serán industrializados y exportados."},
+                {q: "¿Qué documento de transporte marítimo se considera un título de crédito negociable?", opts: ["AWB", "CRT", "Bill of Lading (B/L)", "DTA"], ans: 2, exp: "El B/L es un título de crédito negociable que representa la propiedad de la carga, a diferencia del AWB aéreo no negociable."},
+                {q: "En Incoterms CIP (2020), ¿cuál es la cobertura mínima de seguro obligatoria para el vendedor?", opts: ["ICC C (mínima)", "ICC B (intermedia)", "ICC A (all risks)", "Ninguna, es opcional"], ans: 2, exp: "Un cambio clave de 2020 fue elevar el seguro mínimo del CIP a ICC A (cobertura amplia)."},
+                {q: "El ACC (Adelanto sobre Contrato de Cambio) se caracteriza por ser:", opts: ["Financiamiento post-embarque", "Financiamiento pre-embarque con cambio ya contratado", "Un tipo de seguro de crédito", "Un régimen de drawback"], ans: 1, exp: "El ACC se otorga antes del embarque, con el tipo de cambio ya fijado, lo que reduce el riesgo y la tasa de interés para el exportador."},
+                {q: "¿Cuál es la base de cálculo del Impuesto de Importación (II) en Brasil?", opts: ["Valor FOB", "Valor EXW", "Valor CIF", "Valor DDP"], ans: 2, exp: "Brasil adopta el Valor Aduanero basado en el acuerdo de la OMC, que utiliza el valor CIF (Costo + Seguro + Flete) como base."},
+                {q: "¿Por qué la CCI recomienda usar FCA en lugar de FOB para cargas en contenedor?", opts: ["El FCA es más barato", "En el FOB, el riesgo pasa a bordo, pero el contenedor se entrega en la terminal antes", "El FCA no exige despacho de exportación", "El FOB es exclusivo para transporte aéreo"], ans: 1, exp: "En el FOB, el riesgo pasa cuando la mercancía está a bordo. En contenedores, la entrega ocurre en la terminal, creando un vacío de responsabilidad. El FCA resuelve esto."},
+                {q: "¿Cuántos dígitos tiene la Nomenclatura Común del Mercosur (NCM)?", opts: ["6", "8", "10", "12"], ans: 1, exp: "La NCM tiene 8 dígitos: los 6 primeros son del Sistema Armonizado (SA) internacional, y los 2 últimos son específicos del Mercosur."},
+                {q: "¿Qué significa la sigla OEA en el contexto aduanero brasileño?", opts: ["Operador de Exportación Autorizado", "Organización de Empresas Aduaneras", "Operador Económico Autorizado", "Órgano Especial de Aduana"], ans: 2, exp: "OEA (Operador Económico Autorizado) es la certificación de la Receita Federal que acredita la confiabilidad y seguridad de la empresa en la cadena logística."},
+                {q: "¿Cuál es el único Incoterm donde el vendedor es responsable de la descarga de la mercancía en el destino?", opts: ["DAP", "DDP", "DPU", "CIF"], ans: 2, exp: "DPU (Delivered at Place Unloaded) es el único término donde la entrega y la transferencia de riesgo ocurren solo después de que el vendedor descarga la mercancía en el destino."},
+                {q: "La UCP 600 de la Cámara de Comercio Internacional (CCI) regula qué instrumento de pago?", opts: ["Cobro Documentario", "Carta de Crédito (L/C)", "Remesa sin Giro", "Cambio a Término"], ans: 1, exp: "La UCP 600 (Uniform Customs and Practice for Documentary Credits) es la regla internacional que rige las operaciones de Carta de Crédito."}
+            ]
+        };
+
+        let currentQ = 0;
+        let score = 0;
+        let answered = false;
+
+        function renderQuiz() {
+            const lang = localStorage.getItem('si_trade_lang') || 'pt';
+            const q = quizData[lang][currentQ];
+            
+            document.getElementById('q-counter').textContent = `${lang === 'pt' ? 'Questão' : lang === 'en' ? 'Question' : 'Pregunta'} ${currentQ + 1} / 10`;
+            document.getElementById('score-display').textContent = `${lang === 'pt' ? 'Pontos' : lang === 'en' ? 'Points' : 'Puntos'}: ${score}`;
+            document.getElementById('progress-bar').style.width = `${((currentQ + 1) / 10) * 100}%`;
+            document.getElementById('q-text').textContent = q.q;
+            
+            const optionsDiv = document.getElementById('q-options');
+            optionsDiv.innerHTML = '';
+            
+            q.opts.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left p-4 rounded-lg border border-gray-600 bg-gray-800/50 hover:bg-gray-700 transition-all text-sm font-medium';
+                btn.textContent = opt;
+                btn.onclick = () => selectAnswer(index, btn);
+                optionsDiv.appendChild(btn);
+            });
+
+            document.getElementById('q-feedback').className = 'hidden p-4 rounded-lg mb-6 text-sm leading-relaxed';
+            document.getElementById('q-feedback').textContent = '';
+            
+            const nextBtn = document.getElementById('btn-next');
+            nextBtn.disabled = true;
+            nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            nextBtn.innerHTML = `<span data-i18n="btn_next">${translations[lang].btn_next}</span> →`;
+            
+            answered = false;
+        }
+
+        function selectAnswer(index, btnElement) {
+            if (answered) return;
+            answered = true;
+            
+            const lang = localStorage.getItem('si_trade_lang') || 'pt';
+            const q = quizData[lang][currentQ];
+            const allBtns = document.getElementById('q-options').children;
+            
+            if (index === q.ans) {
+                score++;
+                btnElement.classList.remove('bg-gray-800/50', 'border-gray-600');
+                btnElement.classList.add('bg-green-900/50', 'border-green-500', 'text-green-300');
+            } else {
+                btnElement.classList.remove('bg-gray-800/50', 'border-gray-600');
+                btnElement.classList.add('bg-red-900/50', 'border-red-500', 'text-red-300');
+                allBtns[q.ans].classList.remove('bg-gray-800/50', 'border-gray-600');
+                allBtns[q.ans].classList.add('bg-green-900/50', 'border-green-500', 'text-green-300');
+            }
+
+            const feedback = document.getElementById('q-feedback');
+            feedback.classList.remove('hidden');
+            if (index === q.ans) {
+                feedback.classList.add('bg-green-900/30', 'border-l-4', 'border-green-500', 'text-green-200');
+                feedback.innerHTML = `<strong>✓ ${lang === 'pt' ? 'Correto!' : lang === 'en' ? 'Correct!' : '¡Correcto!'}</strong> ${q.exp}`;
+            } else {
+                feedback.classList.add('bg-red-900/30', 'border-l-4', 'border-red-500', 'text-red-200');
+                feedback.innerHTML = `<strong>✗ ${lang === 'pt' ? 'Incorreto.' : lang === 'en' ? 'Incorrect.' : 'Incorrecto.'}</strong> ${q.exp}`;
+            }
+
+            document.getElementById('score-display').textContent = `${lang === 'pt' ? 'Pontos' : lang === 'en' ? 'Points' : 'Puntos'}: ${score}`;
+            
+            const nextBtn = document.getElementById('btn-next');
+            nextBtn.disabled = false;
+            nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            
+            if (currentQ === 9) {
+                nextBtn.innerHTML = lang === 'pt' ? 'Ver Resultado ✓' : lang === 'en' ? 'See Result ✓' : 'Ver Resultado ✓';
+            }
+        }
+
+        function nextQuestion() {
+            currentQ++;
+            if (currentQ >= 10) {
+                showResult();
+            } else {
+                renderQuiz();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('quiz-result').classList.remove('hidden');
+            document.getElementById('final-score').textContent = score;
+            
+            const lang = localStorage.getItem('si_trade_lang') || 'pt';
+            const pct = (score / 10) * 100;
+            let msg = "";
+            if (lang === 'pt') msg = pct >= 80 ? "Excelente! Você dominou os conceitos de Comércio Exterior." : pct >= 60 ? "Bom resultado! Revise os módulos onde teve dificuldade." : "Recomendamos revisar o material do curso antes de prosseguir.";
+            else if (lang === 'en') msg = pct >= 80 ? "Excellent! You have mastered Foreign Trade concepts." : pct >= 60 ? "Good result! Review the modules where you struggled." : "We recommend reviewing the course material before proceeding.";
+            else msg = pct >= 80 ? "¡Excelente! Ha dominado los conceptos de Comercio Exterior." : pct >= 60 ? "¡Buen resultado! Revise los módulos donde tuvo dificultades." : "Recomendamos revisar el material del curso antes de continuar.";
+            
+            document.getElementById('result-msg').textContent = msg;
+        }
+
+        function resetQuiz() {
+            currentQ = 0;
+            score = 0;
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            renderQuiz();
+        }
+
+        // Initialize Quiz on Load
+        window.addEventListener('DOMContentLoaded', renderQuiz);
+
+    </script>
+</body>
+</html>
