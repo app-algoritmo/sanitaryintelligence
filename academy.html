@@ -12,11 +12,11 @@
                 extend: {
                     colors: {
                         si: {
-                            dark: '#0F172A',      /* Azul Marinho Profundo (Inteligência/Confiança) */
+                            dark: '#0F172A',      /* Azul Marinho Profundo */
                             primary: '#1E40AF',   /* Azul Royal */
-                            accent: '#0D9488',    /* Teal/Verde-azulado (Sanitário/Conformidade) */
+                            accent: '#0D9488',    /* Teal/Verde-azulado */
                             light: '#F8FAFC',     /* Fundo Claro */
-                            gold: '#D97706'       /* Dourado (Certificação/Excelência) */
+                            gold: '#D97706'       /* Dourado */
                         }
                     },
                     fontFamily: {
@@ -52,12 +52,18 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
+        .lang-dropdown {
+            display: none;
+        }
+        .lang-group:hover .lang-dropdown {
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-si-light text-si-dark font-sans min-h-screen flex flex-col">
 
     <!-- Header -->
-    <header class="bg-si-dark text-white py-6 shadow-lg">
+    <header class="bg-si-dark text-white py-4 shadow-lg">
         <div class="container mx-auto px-4 flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 bg-si-accent rounded-lg flex items-center justify-center">
@@ -70,8 +76,35 @@
                     <p class="text-xs text-si-accent font-semibold tracking-wider">ACADEMY</p>
                 </div>
             </div>
-            <div class="hidden md:block text-sm text-gray-400">
-                Excelência em Comércio Exterior & Conformidade
+            
+            <div class="flex items-center gap-6">
+                <div class="hidden md:block text-sm text-gray-400 text-right">
+                    <p data-i18n="header_subtitle">Excelência em Assuntos Regulatórios</p>
+                </div>
+                
+                <!-- Language Selector -->
+                <div class="relative lang-group">
+                    <button class="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-3 py-2 rounded-lg transition-colors text-sm font-medium">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span id="current-lang-label">PT</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="lang-dropdown absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-xl border border-gray-100 overflow-hidden z-50">
+                        <button onclick="changeLanguage('pt')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-si-accent hover:text-white transition-colors flex items-center gap-2">
+                            🇧🇷 Português
+                        </button>
+                        <button onclick="changeLanguage('en')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-si-accent hover:text-white transition-colors flex items-center gap-2">
+                            🇺🇸 English
+                        </button>
+                        <button onclick="changeLanguage('es')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-si-accent hover:text-white transition-colors flex items-center gap-2">
+                            🇪🇸 Español
+                        </button>
+                    </div
+                </div>
             </div>
         </div>
     </header>
@@ -93,8 +126,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                         </svg>
                     </div>
-                    <h2 class="text-2xl font-bold text-si-dark mb-2">Acesso Restrito</h2>
-                    <p class="text-gray-500 text-sm">Insira seu código PIN de 6 dígitos para acessar a Academy.</p>
+                    <h2 class="text-2xl font-bold text-si-dark mb-2" data-i18n="pin_title">Acesso Restrito</h2>
+                    <p class="text-gray-500 text-sm" data-i18n="pin_subtitle">Insira seu código PIN de 6 dígitos para acessar a Academy.</p>
                 </div>
 
                 <form id="pin-form" class="space-y-6">
@@ -114,17 +147,18 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                         </svg>
-                        Código PIN inválido. Tente novamente.
+                        <span data-i18n="pin_error">Código PIN inválido. Tente novamente.</span>
                     </p>
                     <button 
                         type="submit" 
                         class="w-full bg-si-primary hover:bg-blue-800 text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-blue-900/20 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                        data-i18n="pin_button"
                     >
                         Acessar Plataforma
                     </button>
                 </form>
                 
-                <p class="mt-6 text-xs text-gray-400 font-medium tracking-wide">
+                <p class="mt-6 text-xs text-gray-500 font-medium tracking-wide uppercase" data-i18n="pin_hint">
                     USE O PIN QUE RECEBEU NA SALA DE AULA
                 </p>
             </div>
@@ -133,9 +167,9 @@
         <!-- Academy Dashboard (Hidden by default) -->
         <div id="academy-screen" class="hidden w-full max-w-5xl animate-fade-in">
             <div class="text-center mb-10">
-                <span class="inline-block px-3 py-1 bg-si-accent/10 text-si-accent text-xs font-bold rounded-full mb-3 tracking-wider">BEM-VINDO À ACADEMY</span>
-                <h2 class="text-3xl md:text-4xl font-bold text-si-dark mb-4">Selecione seu Programa de Estudos</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Capacitação de excelência em comércio exterior, regulamentações sanitárias e práticas internacionais de comércio.</p>
+                <span class="inline-block px-3 py-1 bg-si-accent/10 text-si-accent text-xs font-bold rounded-full mb-3 tracking-wider" data-i18n="welcome_badge">BEM-VINDO À ACADEMY</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-si-dark mb-4" data-i18n="main_title">Programa de Estudos</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto" data-i18n="main_subtitle">Capacitação de excelência em regulamentações, práticas e normas internacionais.</p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8 mb-12">
@@ -148,23 +182,23 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
-                        <h3 class="text-2xl font-bold text-si-dark mb-3">Curso Completo de Trade</h3>
-                        <p class="text-gray-600 mb-6 leading-relaxed">Domine as operações de Comércio Exterior, desde a classificação fiscal até o desembaraço aduaneiro, com foco em inteligência sanitária e regulatória.</p>
+                        <h3 class="text-2xl font-bold text-si-dark mb-3" data-i18n="course1_title">Curso Completo de Trade</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed" data-i18n="course1_desc">Domine as operações de Comércio Exterior, desde a classificação fiscal até o desembaraço aduaneiro, com foco em inteligência sanitária e regulatória.</p>
                         <ul class="space-y-2 mb-8 text-sm text-gray-500">
                             <li class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                Módulo de Legislação Aduaneira
+                                <svg class="w-4 h-4 text-si-accent flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <span data-i18n="course1_b1">Módulo de Legislação Aduaneira</span>
                             </li>
                             <li class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                Análise de Risco Sanitário
+                                <svg class="w-4 h-4 text-si-accent flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <span data-i18n="course1_b2">Análise de Risco Sanitário</span>
                             </li>
                             <li class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                Certificado de Conclusão
+                                <svg class="w-4 h-4 text-si-accent flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <span data-i18n="course1_b3">Certificado de Conclusão</span>
                             </li>
                         </ul>
-                        <button class="w-full py-3 border-2 border-si-primary text-si-primary font-bold rounded-lg group-hover:bg-si-primary group-hover:text-white transition-all">
+                        <button class="w-full py-3 border-2 border-si-primary text-si-primary font-bold rounded-lg group-hover:bg-si-primary group-hover:text-white transition-all" data-i18n="start_course">
                             Iniciar Curso
                         </button>
                     </div>
@@ -179,23 +213,23 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                             </svg>
                         </div>
-                        <h3 class="text-2xl font-bold text-si-dark mb-3">Curso Interativo de Incoterms</h3>
-                        <p class="text-gray-600 mb-6 leading-relaxed">Aprenda de forma prática e visual as regras da ICC (Câmara de Comércio Internacional) para interpretação dos termos comerciais mais usados no mundo.</p>
+                        <h3 class="text-2xl font-bold text-si-dark mb-3" data-i18n="course2_title">Curso Interativo de Incoterms</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed" data-i18n="course2_desc">Aprenda de forma prática e visual as regras da ICC (Câmara de Comércio Internacional) para interpretação dos termos comerciais mais usados no mundo.</p>
                         <ul class="space-y-2 mb-8 text-sm text-gray-500">
                             <li class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                Simulador de Custos e Riscos
+                                <svg class="w-4 h-4 text-si-accent flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <span data-i18n="course2_b1">Simulador de Custos e Riscos</span>
                             </li>
                             <li class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                Atualização Incoterms® 2020
+                                <svg class="w-4 h-4 text-si-accent flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <span data-i18n="course2_b2">Atualização Incoterms® 2020</span>
                             </li>
                             <li class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                Casos Práticos Reais
+                                <svg class="w-4 h-4 text-si-accent flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <span data-i18n="course2_b3">Casos Práticos Reais</span>
                             </li>
                         </ul>
-                        <button class="w-full py-3 border-2 border-si-accent text-si-accent font-bold rounded-lg group-hover:bg-si-accent group-hover:text-white transition-all">
+                        <button class="w-full py-3 border-2 border-si-accent text-si-accent font-bold rounded-lg group-hover:bg-si-accent group-hover:text-white transition-all" data-i18n="start_course">
                             Iniciar Curso
                         </button>
                     </div>
@@ -205,20 +239,20 @@
             <!-- Certification Badge -->
             <div class="bg-gradient-to-r from-si-dark to-blue-900 rounded-2xl p-6 md:p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
                 <div class="flex items-center gap-4">
-                    <div class="w-16 h-16 bg-si-gold/20 rounded-full flex items-center justify-center border-2 border-si-gold">
+                    <div class="w-16 h-16 bg-si-gold/20 rounded-full flex items-center justify-center border-2 border-si-gold flex-shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-si-gold" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                         </svg>
                     </div>
                     <div>
-                        <h4 class="text-lg font-bold text-si-gold mb-1">Certificação Oficial</h4>
+                        <h4 class="text-lg font-bold text-si-gold mb-1" data-i18n="cert_title">Certificação Oficial</h4>
                         <p class="text-sm text-gray-300 leading-relaxed">
-                            Curso criado por <span class="text-white font-semibold">Paulo Fernando De Barros</span><br>
-                            Certificado por <span class="text-white font-semibold">Dra. Natália Bellan</span> para Sanitary Intelligence.
+                            <span data-i18n="cert_created">Curso criado por</span> <span class="text-white font-semibold">Paulo Fernando De Barros</span><br>
+                            <span data-i18n="cert_certified">Certificado por</span> <span class="text-white font-semibold">Dra. Natália Bellan</span> <span data-i18n="cert_for">para</span> Sanitary Intelligence.
                         </p>
                     </div>
                 </div>
-                <button onclick="logout()" class="px-6 py-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-lg text-sm font-semibold transition-colors">
+                <button onclick="logout()" class="px-6 py-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-lg text-sm font-semibold transition-colors whitespace-nowrap" data-i18n="logout_btn">
                     Sair da Plataforma
                 </button>
             </div>
@@ -228,14 +262,145 @@
     <!-- Footer -->
     <footer class="bg-si-dark text-gray-400 py-6 border-t border-gray-800">
         <div class="container mx-auto px-4 text-center text-sm">
-            <p>&copy; 2026 Sanitary Intelligence. Todos os direitos reservados.</p>
-            <p class="mt-1 text-xs text-gray-600">Plataforma educacional segura e certificada.</p>
+            <p data-i18n="footer_copy">&copy; 2026 Sanitary Intelligence. Todos os direitos reservados.</p>
+            <p class="mt-1 text-xs text-gray-600" data-i18n="footer_secure">Plataforma educacional segura e certificada.</p>
         </div>
     </footer>
 
     <!-- JavaScript Logic -->
     <script>
-        // CONFIGURAÇÃO: PIN de acesso mantido como 202600
+        // --- TRANSLATION DICTIONARY ---
+        const translations = {
+            pt: {
+                header_subtitle: "Excelência em Assuntos Regulatórios",
+                pin_title: "Acesso Restrito",
+                pin_subtitle: "Insira seu código PIN de 6 dígitos para acessar a Academy.",
+                pin_error: "Código PIN inválido. Tente novamente.",
+                pin_button: "Acessar Plataforma",
+                pin_hint: "USE O PIN QUE RECEBEU NA SALA DE AULA",
+                welcome_badge: "BEM-VINDO À ACADEMY",
+                main_title: "Programa de Estudos",
+                main_subtitle: "Capacitação de excelência em regulamentações, práticas e normas internacionais.",
+                course1_title: "Curso Completo de Trade",
+                course1_desc: "Domine as operações de Comércio Exterior, desde a classificação fiscal até o desembaraço aduaneiro, com foco em inteligência sanitária e regulatória.",
+                course1_b1: "Módulo de Legislação Aduaneira",
+                course1_b2: "Análise de Risco Sanitário",
+                course1_b3: "Certificado de Conclusão",
+                course2_title: "Curso Interativo de Incoterms",
+                course2_desc: "Aprenda de forma prática e visual as regras da ICC (Câmara de Comércio Internacional) para interpretação dos termos comerciais mais usados no mundo.",
+                course2_b1: "Simulador de Custos e Riscos",
+                course2_b2: "Atualização Incoterms® 2020",
+                course2_b3: "Casos Práticos Reais",
+                start_course: "Iniciar Curso",
+                cert_title: "Certificação Oficial",
+                cert_created: "Curso criado por",
+                cert_certified: "Certificado por",
+                cert_for: "para",
+                logout_btn: "Sair da Plataforma",
+                footer_copy: "© 2026 Sanitary Intelligence. Todos os direitos reservados.",
+                footer_secure: "Plataforma educacional segura e certificada."
+            },
+            en: {
+                header_subtitle: "Excellence in Regulatory Affairs",
+                pin_title: "Restricted Access",
+                pin_subtitle: "Enter your 6-digit PIN code to access the Academy.",
+                pin_error: "Invalid PIN code. Please try again.",
+                pin_button: "Access Platform",
+                pin_hint: "USE THE PIN YOU RECEIVED IN THE CLASSROOM",
+                welcome_badge: "WELCOME TO THE ACADEMY",
+                main_title: "Study Program",
+                main_subtitle: "Excellence training in regulations, practices, and international standards.",
+                course1_title: "Complete Trade Course",
+                course1_desc: "Master Foreign Trade operations, from fiscal classification to customs clearance, with a focus on sanitary and regulatory intelligence.",
+                course1_b1: "Customs Legislation Module",
+                course1_b2: "Sanitary Risk Analysis",
+                course1_b3: "Certificate of Completion",
+                course2_title: "Interactive Incoterms Course",
+                course2_desc: "Learn the ICC (International Chamber of Commerce) rules in a practical and visual way to interpret the most used commercial terms in the world.",
+                course2_b1: "Cost and Risk Simulator",
+                course2_b2: "Incoterms® 2020 Update",
+                course2_b3: "Real Practical Cases",
+                start_course: "Start Course",
+                cert_title: "Official Certification",
+                cert_created: "Course created by",
+                cert_certified: "Certified by",
+                cert_for: "for",
+                logout_btn: "Logout",
+                footer_copy: "© 2026 Sanitary Intelligence. All rights reserved.",
+                footer_secure: "Secure and certified educational platform."
+            },
+            es: {
+                header_subtitle: "Excelencia en Asuntos Regulatorios",
+                pin_title: "Acceso Restringido",
+                pin_subtitle: "Ingrese su código PIN de 6 dígitos para acceder a la Academy.",
+                pin_error: "Código PIN inválido. Inténtelo de nuevo.",
+                pin_button: "Acceder a la Plataforma",
+                pin_hint: "USE EL PIN QUE RECIBIÓ EN EL AULA",
+                welcome_badge: "BIENVENIDO A LA ACADEMY",
+                main_title: "Programa de Estudios",
+                main_subtitle: "Capacitación de excelencia en regulaciones, prácticas y normas internacionales.",
+                course1_title: "Curso Completo de Comercio Exterior",
+                course1_desc: "Domine las operaciones de Comercio Exterior, desde la clasificación fiscal hasta el despacho de aduanas, con enfoque en inteligencia sanitaria y regulatoria.",
+                course1_b1: "Módulo de Legislación Aduanera",
+                course1_b2: "Análisis de Riesgo Sanitario",
+                course1_b3: "Certificado de Finalización",
+                course2_title: "Curso Interactivo de Incoterms",
+                course2_desc: "Aprenda de forma práctica y visual las reglas de la CCI (Cámara de Comercio Internacional) para interpretar los términos comerciales más usados en el mundo.",
+                course2_b1: "Simulador de Costos y Riesgos",
+                course2_b2: "Actualización Incoterms® 2020",
+                course2_b3: "Casos Prácticos Reales",
+                start_course: "Iniciar Curso",
+                cert_title: "Certificación Oficial",
+                cert_created: "Curso creado por",
+                cert_certified: "Certificado por",
+                cert_for: "para",
+                logout_btn: "Salir de la Plataforma",
+                footer_copy: "© 2026 Sanitary Intelligence. Todos los derechos reservados.",
+                footer_secure: "Plataforma educativa segura y certificada."
+            }
+        };
+
+        // --- LANGUAGE DETECTION & SWITCHING ---
+        function setLanguage(lang) {
+            // Fallback to 'pt' if lang is not supported
+            const validLang = ['pt', 'en', 'es'].includes(lang) ? lang : 'pt';
+            
+            // Save to localStorage
+            localStorage.setItem('si_academy_lang', validLang);
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = validLang === 'pt' ? 'pt-BR' : (validLang === 'es' ? 'es-ES' : 'en-US');
+            
+            // Update label
+            const labels = { pt: 'PT', en: 'EN', es: 'ES' };
+            document.getElementById('current-lang-label').textContent = labels[validLang];
+
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[validLang][key]) {
+                    element.textContent = translations[validLang][key];
+                }
+            });
+        }
+
+        function changeLanguage(lang) {
+            setLanguage(lang);
+        }
+
+        // Detect language on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('si_academy_lang');
+            if (savedLang) {
+                setLanguage(savedLang);
+            } else {
+                const browserLang = navigator.language || navigator.userLanguage;
+                const detectedLang = browserLang.startsWith('es') ? 'es' : (browserLang.startsWith('en') ? 'en' : 'pt');
+                setLanguage(detectedLang);
+            }
+        });
+
+        // --- PIN LOGIC ---
         const SECRET_PIN = "202600"; 
         
         const pinForm = document.getElementById('pin-form');
@@ -244,7 +409,6 @@
         const pinScreen = document.getElementById('pin-screen');
         const academyScreen = document.getElementById('academy-screen');
 
-        // Formatar input para aceitar apenas números
         pinInput.addEventListener('input', function (e) {
             this.value = this.value.replace(/[^0-9]/g, '');
         });
@@ -254,26 +418,20 @@
             const enteredPin = pinInput.value;
 
             if (enteredPin === SECRET_PIN) {
-                // Sucesso
                 errorMsg.classList.add('hidden');
                 pinScreen.style.display = 'none';
                 academyScreen.classList.remove('hidden');
                 academyScreen.classList.add('animate-fade-in');
-                
-                // Salvar estado de login na sessão
                 sessionStorage.setItem('si_academy_access', 'granted');
             } else {
-                // Erro
                 errorMsg.classList.remove('hidden');
                 pinInput.classList.add('animate-shake', 'border-red-500', 'focus:border-red-500', 'focus:ring-red-500/10');
                 pinInput.classList.remove('border-gray-200', 'focus:border-si-accent', 'focus:ring-si-accent/10');
                 
-                // Remover classe de animação após ela terminar para poder reutilizar
                 setTimeout(() => {
                     pinInput.classList.remove('animate-shake');
                 }, 500);
 
-                // Limpar input após erro
                 setTimeout(() => {
                     pinInput.value = '';
                     pinInput.focus();
@@ -281,7 +439,6 @@
             }
         });
 
-        // Função de Logout
         function logout() {
             sessionStorage.removeItem('si_academy_access');
             academyScreen.classList.add('hidden');
@@ -293,7 +450,6 @@
             pinInput.classList.add('border-gray-200', 'focus:border-si-accent', 'focus:ring-si-accent/10');
         }
 
-        // Verificar se já está logado na sessão atual
         window.addEventListener('load', () => {
             if (sessionStorage.getItem('si_academy_access') === 'granted') {
                 pinScreen.style.display = 'none';
