@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Incoterms 2020 | Sanitary Intelligence Academy</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    /* Sanitary Intelligence Palette */
+    --si-navy: #0F172A;
+    --si-primary: #1E40AF;
+    --si-primary-light: #3B82F6;
+    --si-teal: #0D9488;
+    --si-teal-light: #14B8A6;
+    --si-gold: #D97706;
+    --si-gold-light: #F59E0B;
+    --si-light: #F8FAFC;
+    --si-white: #FFFFFF;
+    --si-muted: #64748B;
+    --si-rule: #E2E8F0;
+    --si-red: #EF4444;
+    --si-green: #10B981;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--si-light);
+    color: var(--si-navy);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--si-navy);
+    color: var(--si-white);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .nav-logo {
+    width: 36px;
+    height: 36px;
+    background: var(--si-teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+  .nav-text span {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--si-teal);
+    letter-spacing: 0.15em;
+  }
+  .progress-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+  .progress-bar {
+    width: 160px;
+    height: 6px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--si-gold);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .progress-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--si-navy) 0%, var(--si-primary) 100%);
+    color: var(--si-white);
+    padding: 64px 32px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: 'INCOTERMS';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 80px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: 0.2em;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--si-gold);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 300;
+    line-height: 1.15;
+    max-width: 700px;
+    margin-bottom: 20px;
+  }
+  .hero h1 strong { font-weight: 700; color: var(--si-white); }
+  .hero p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.75);
+    max-width: 600px;
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+  .ship-visual {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+  .container-box {
+    width: 48px;
+    height: 32px;
+    border: 1.5px solid;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.2);
+    color: var(--si-white);
+  }
+  
+  /* BUTTONS */
+  .btn-start {
+    background: var(--si-white);
+    color: var(--si-navy);
+    border: none;
+    padding: 14px 32px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+    margin-right: 12px;
+  }
+  .btn-start:hover { background: var(--si-light); transform: translateY(-1px); }
+
+  .btn-test-cert {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--si-gold);
+    color: var(--si-navy);
+    text-decoration: none;
+    padding: 16px 28px;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+    transition: all 0.2s;
+  }
+  .btn-test-cert:hover { 
+    background: var(--si-gold-light); 
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 16px rgba(217, 119, 6, 0.4);
+  }
+
+  /* MAIN LAYOUT */
+  main { max-width: 960px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  /* SECTION HEADERS */
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--si-teal);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--si-navy);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .section-sub {
+    font-size: 15px;
+    color: var(--si-muted);
+    margin-bottom: 32px;
+    max-width: 700px;
+  }
+
+  /* MODULE CARDS */
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 56px;
+  }
+  .module-card {
+    background: var(--si-white);
+    border: 1px solid var(--si-rule);
+    padding: 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .module-card:hover { 
+    border-color: var(--si-primary); 
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08); 
+    transform: translateY(-2px);
+  }
+  .mod-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--si-muted);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .mod-title { font-size: 16px; font-weight: 700; color: var(--si-navy); margin-bottom: 8px; }
+  .mod-desc { font-size: 13px; color: var(--si-muted); line-height: 1.5; }
+
+  /* INCOTERM GROUPS */
+  .group-section { margin-bottom: 48px; }
+  .group-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--si-rule);
+  }
+  .group-badge {
+    background: var(--si-primary);
+    color: var(--si-white);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 6px;
+  }
+  .group-name { font-size: 20px; font-weight: 700; color: var(--si-navy); }
+  .group-subtitle { font-size: 13px; color: var(--si-muted); margin-top: 2px; }
+
+  .incoterm-list { display: flex; flex-direction: column; gap: 12px; }
+  .incoterm-item {
+    background: var(--si-white);
+    border: 1px solid var(--si-rule);
+    padding: 20px 24px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    align-items: center;
+    gap: 16px;
+  }
+  .incoterm-item:hover { 
+    border-color: var(--si-teal); 
+    background: #F0FDFA;
+  }
+  .incoterm-item.active-detail {
+    border-color: var(--si-teal);
+    background: #F0FDFA;
+    border-left: 4px solid var(--si-teal);
+  }
+  .inc-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--si-primary);
+  }
+  .inc-name { font-size: 15px; font-weight: 600; color: var(--si-navy); }
+  .inc-desc { font-size: 13px; color: var(--si-muted); margin-top: 4px; line-height: 1.4; }
+  .inc-transport {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    border: 1px solid var(--si-rule);
+    border-radius: 4px;
+    color: var(--si-muted);
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .inc-transport.maritime { 
+    border-color: var(--si-primary); 
+    color: var(--si-primary); 
+    background: rgba(30, 64, 175, 0.05);
+  }
+
+  /* RESPONSIBILITY DIAGRAM */
+  .resp-diagram {
+    background: var(--si-white);
+    border: 1px solid var(--si-rule);
+    border-top: none;
+    padding: 24px;
+    margin-top: -12px;
+    margin-bottom: 12px;
+    border-radius: 0 0 10px 10px;
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .resp-diagram.open { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+  
+  .resp-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--si-muted);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .responsibility-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 16px;
+    border: 1px solid var(--si-rule);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .resp-buyer {
+    background: #E0F2FE;
+    color: #0369A1;
+    text-align: center;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .resp-seller {
+    background: var(--si-navy);
+    color: var(--si-white);
+    text-align: center;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .resp-details { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 16px; }
+  .resp-col h4 { 
+    font-size: 12px; 
+    font-weight: 700; 
+    margin-bottom: 10px; 
+    color: var(--si-muted); 
+    text-transform: uppercase; 
+    letter-spacing: 0.06em; 
+  }
+  .resp-col ul { list-style: none; }
+  .resp-col ul li { 
+    font-size: 13px; 
+    padding: 6px 0; 
+    border-bottom: 1px solid var(--si-rule); 
+    color: var(--si-navy); 
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .resp-col ul li:last-child { border-bottom: none; }
+  .resp-col ul li::before { content: '▸'; color: var(--si-teal); font-weight: 700; flex-shrink: 0; }
+
+  /* SCENARIO BOX */
+  .scenario-box {
+    border-left: 4px solid var(--si-gold);
+    background: #FFFBEB;
+    padding: 20px 24px;
+    margin: 20px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .scenario-label { 
+    font-family: 'JetBrains Mono', monospace; 
+    font-size: 10px; 
+    letter-spacing: 0.15em; 
+    text-transform: uppercase; 
+    color: var(--si-gold); 
+    margin-bottom: 8px; 
+    font-weight: 700;
+  }
+  .scenario-text { font-size: 14px; line-height: 1.7; color: var(--si-navy); }
+  .scenario-text strong { color: var(--si-primary); }
+
+  /* QUIZ */
+  .quiz-section {
+    background: var(--si-navy);
+    color: var(--si-white);
+    padding: 40px;
+    border-radius: 16px;
+    margin-bottom: 48px;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.2);
+  }
+  .quiz-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--si-gold);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .quiz-question { font-size: 20px; font-weight: 400; line-height: 1.5; margin-bottom: 28px; }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .quiz-opt {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--si-white);
+    padding: 16px 20px;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: all 0.15s;
+  }
+  .quiz-opt:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); }
+  .quiz-opt.correct { background: rgba(16, 185, 129, 0.2); border-color: var(--si-green); }
+  .quiz-opt.wrong { background: rgba(239, 68, 68, 0.2); border-color: var(--si-red); }
+  
+  .quiz-feedback {
+    font-size: 14px;
+    padding: 16px 20px;
+    margin-top: 8px;
+    display: none;
+    line-height: 1.6;
+    border-radius: 8px;
+  }
+  .quiz-feedback.show { display: block; animation: fadeIn 0.3s ease; }
+  .quiz-feedback.ok { background: rgba(16, 185, 129, 0.15); border-left: 4px solid var(--si-green); color: #D1FAE5; }
+  .quiz-feedback.fail { background: rgba(239, 68, 68, 0.15); border-left: 4px solid var(--si-red); color: #FEE2E2; }
+  
+  .quiz-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .btn-quiz {
+    background: var(--si-gold);
+    color: var(--si-navy);
+    border: none;
+    padding: 12px 28px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  .btn-quiz:hover { background: var(--si-gold-light); transform: translateY(-1px); }
+  .btn-quiz:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+  .quiz-counter { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: rgba(255,255,255,0.5); }
+
+  /* GLOSSARY */
+  .glossary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 56px; }
+  .gloss-card {
+    border: 1px solid var(--si-rule);
+    padding: 20px;
+    background: var(--si-white);
+    border-radius: 10px;
+    transition: all 0.2s;
+  }
+  .gloss-card:hover { border-color: var(--si-teal); box-shadow: 0 4px 12px rgba(13, 148, 136, 0.08); }
+  .gloss-term { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: var(--si-primary); margin-bottom: 8px; }
+  .gloss-def { font-size: 13px; color: var(--si-muted); line-height: 1.5; }
+
+  /* DIVIDERS */
+  hr { border: none; border-top: 1px solid var(--si-rule); margin: 56px 0; }
+  .section-block { margin-bottom: 56px; }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; flex-direction: column; gap: 16px; align-items: flex-start; }
+    .progress-wrap { width: 100%; align-items: flex-start; }
+    .progress-bar { width: 100%; }
+    .hero { padding: 40px 20px; }
+    main { padding: 32px 20px; }
+    .incoterm-item { grid-template-columns: 60px 1fr; }
+    .inc-transport { display: none; }
+    .resp-details { grid-template-columns: 1fr; gap: 16px; }
+    .quiz-section { padding: 24px 20px; }
+    .btn-start, .btn-test-cert { width: 100%; justify-content: center; margin-bottom: 12px; margin-right: 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+    </div>
+    <div class="nav-text">
+      Sanitary Intelligence
+      <span>Academy</span>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    <div class="progress-label" id="progressLabel">0 / 11 termos explorados</div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Comércio Exterior · Capacitação Oficial</div>
+  <h1><strong>Incoterms® 2020</strong><br>Curso Interativo</h1>
+  <p>Domine os 11 termos do comércio internacional: responsabilidades, transferência de risco e aplicações práticas para exportação e importação, com foco em regulamentação e compliance.</p>
+  
+  <div class="ship-visual">
+    <div class="container-box" style="border-color: var(--si-gold); color: var(--si-gold);">EXW</div>
+    <div class="container-box" style="border-color: var(--si-teal); color: var(--si-teal);">FCA</div>
+    <div class="container-box" style="border-color: var(--si-teal); color: var(--si-teal);">CIP</div>
+    <div class="container-box" style="border-color: var(--si-primary); color: var(--si-primary-light);">DDP</div>
+  </div>
+
+  <!-- BOTÃO DE TESTE / CERTIFICADO (HERO) -->
+  <a href="#" class="btn-test-cert" title="⚠️ INSIRA O LINK DO TESTE AQUI">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+    Iniciar teste para obter seu certificado de conclusão
+  </a>
+  
+  <button class="btn-start" onclick="document.querySelector('main').scrollIntoView({behavior:'smooth'})">Explorar Módulos ↓</button>
+</div>
+
+<main>
+
+  <!-- MÓDULOS -->
+  <div class="section-block">
+    <div class="section-eyebrow">Estrutura do Curso</div>
+    <h2>Módulos de Aprendizado</h2>
+    <p class="section-sub">Siga a sequência ou explore por tema. Clique em cada termo para expandir o painel de responsabilidades.</p>
+    <div class="modules-grid">
+      <div class="module-card" onclick="scrollTo('mod1')">
+        <div class="mod-num">MÓDULO 01</div>
+        <div class="mod-title">Fundamentos dos Incoterms</div>
+        <div class="mod-desc">Origem, propósito, edições e como ler os termos corretamente.</div>
+      </div>
+      <div class="module-card" onclick="scrollTo('mod2')">
+        <div class="mod-num">MÓDULO 02</div>
+        <div class="mod-title">Grupo E — Saída</div>
+        <div class="mod-desc">EXW: mínima responsabilidade do vendedor.</div>
+      </div>
+      <div class="module-card" onclick="scrollTo('mod3')">
+        <div class="mod-num">MÓDULO 03</div>
+        <div class="mod-title">Grupo F — Frete não pago</div>
+        <div class="mod-desc">FCA, FAS e FOB: entrega próxima ao exportador.</div>
+      </div>
+      <div class="module-card" onclick="scrollTo('mod4')">
+        <div class="mod-num">MÓDULO 04</div>
+        <div class="mod-title">Grupo C — Frete pago</div>
+        <div class="mod-desc">CPT, CIP, CFR e CIF: vendedor paga o frete principal.</div>
+      </div>
+      <div class="module-card" onclick="scrollTo('mod5')">
+        <div class="mod-num">MÓDULO 05</div>
+        <div class="mod-title">Grupo D — Destino</div>
+        <div class="mod-desc">DAP, DPU e DDP: entrega no país do comprador.</div>
+      </div>
+      <div class="module-card" onclick="scrollTo('quiz')">
+        <div class="mod-num">MÓDULO 06</div>
+        <div class="mod-title">Quiz de Fixação</div>
+        <div class="mod-desc">8 questões práticas para validar seu conhecimento.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- MÓDULO 1 -->
+  <div class="section-block" id="mod1">
+    <div class="section-eyebrow">Módulo 01</div>
+    <h2>O que são Incoterms?</h2>
+    <p class="section-sub">International Commercial Terms — regras publicadas pela Câmara de Comércio Internacional (CCI/ICC).</p>
+
+    <div class="scenario-box">
+      <div class="scenario-label">Por que existem?</div>
+      <div class="scenario-text">Em um contrato de compra e venda internacional, duas perguntas são críticas: <strong>Quem paga o frete e o seguro?</strong> e <strong>Em que ponto o risco de perda ou dano passa do vendedor para o comprador?</strong> Os Incoterms respondem essas duas perguntas de forma padronizada, evitando disputas e mal-entendidos entre países com sistemas jurídicos diferentes.</div>
+    </div>
+
+    <div style="margin: 24px 0; background: var(--si-white); padding: 24px; border-radius: 10px; border: 1px solid var(--si-rule);">
+      <strong style="color: var(--si-navy); display: block; margin-bottom: 12px;">Pontos-chave:</strong>
+      <ul style="padding-left:0; list-style:none; display:flex; flex-direction:column; gap:10px;">
+        <li style="border-left:3px solid var(--si-teal); padding-left:14px; font-size:14px; color: var(--si-muted);">Publicados pela <strong style="color: var(--si-navy);">Câmara de Comércio Internacional (CCI/ICC)</strong> desde 1936.</li>
+        <li style="border-left:3px solid var(--si-teal); padding-left:14px; font-size:14px; color: var(--si-muted);">Versão atual: <strong style="color: var(--si-navy);">Incoterms® 2020</strong> (em vigor desde 1º de janeiro de 2020).</li>
+        <li style="border-left:3px solid var(--si-teal); padding-left:14px; font-size:14px; color: var(--si-muted);"><strong style="color: var(--si-navy);">11 termos</strong> divididos em dois grupos: qualquer modal e apenas marítimo/fluvial.</li>
+        <li style="border-left:3px solid var(--si-teal); padding-left:14px; font-size:14px; color: var(--si-muted);">Definem <strong style="color: var(--si-navy);">entrega, risco e custos</strong> — mas NÃO definem preço, pagamento ou transferência de propriedade.</li>
+        <li style="border-left:3px solid var(--si-teal); padding-left:14px; font-size:14px; color: var(--si-muted);">Para validade jurídica, deve-se citar explicitamente: <em style="color: var(--si-primary);">ex. "FOB Santos Incoterms® 2020"</em>.</li>
+      </ul>
+    </div>
+
+    <div class="scenario-box">
+      <div class="scenario-label">Como usar corretamente</div>
+      <div class="scenario-text"><strong>Formato correto:</strong> [SIGLA] [Local nomeado] Incoterms® 2020<br><br>
+        Exemplo exportação: <em>CIF Port of Rotterdam Incoterms® 2020</em><br>
+        Exemplo importação: <em>DDP Guarulhos Incoterms® 2020</em><br><br>
+        ⚠️ O local nomeado é determinante — sempre especifique o porto, aeroporto ou endereço exato.</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- MÓDULO 2 — GRUPO E -->
+  <div class="section-block" id="mod2">
+    <div class="section-eyebrow">Módulo 02</div>
+    <h2>Grupo E — Saída</h2>
+    <p class="section-sub">Mínima obrigação do vendedor. O comprador assume o controle e os riscos desde a origem.</p>
+
+    <div class="group-section">
+      <div class="group-header">
+        <div class="group-badge">E</div>
+        <div>
+          <div class="group-name">Ex Works</div>
+          <div class="group-subtitle">Qualquer modal de transporte</div>
+        </div>
+      </div>
+      <div class="incoterm-list">
+        <div class="incoterm-item" onclick="toggleDetail('exw', this)">
+          <div class="inc-code">EXW</div>
+          <div>
+            <div class="inc-name">Ex Works — Na origem</div>
+            <div class="inc-desc">Vendedor coloca mercadoria à disposição em seu estabelecimento. Comprador faz tudo.</div>
+          </div>
+          <div class="inc-transport">Qualquer modal</div>
+        </div>
+        <div class="resp-diagram" id="detail-exw">
+          <div class="resp-title">Distribuição de responsabilidades — EXW</div>
+          <div class="responsibility-bar">
+            <div class="resp-seller">Vendedor — Mínimo</div>
+            <div class="resp-buyer">Comprador — Máximo</div>
+          </div>
+          <div class="resp-details">
+            <div class="resp-col">
+              <h4>Vendedor é responsável por</h4>
+              <ul>
+                <li>Disponibilizar a mercadoria embalada</li>
+                <li>Avisar ao comprador sobre a disponibilidade</li>
+              </ul>
+            </div>
+            <div class="resp-col">
+              <h4>Comprador é responsável por</h4>
+              <ul>
+                <li>Carga no caminhão na fábrica</li>
+                <li>Transporte interno no país exportador</li>
+                <li>Despacho aduaneiro de exportação</li>
+                <li>Frete e seguro internacional</li>
+                <li>Desembaraço na importação e todos os impostos</li>
+              </ul>
+            </div>
+          </div>
+          <div class="scenario-box">
+            <div class="scenario-label">Quando usar EXW</div>
+            <div class="scenario-text">Ideal para compradores com boa estrutura logística no país do vendedor, ou para vendas domésticas. <strong>Atenção:</strong> o vendedor não precisa despachar para exportação — pode ser problemático se o comprador não tiver CNPJ/representação no país exportador.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- MÓDULO 3 — GRUPO F -->
+  <div class="section-block" id="mod3">
+    <div class="section-eyebrow">Módulo 03</div>
+    <h2>Grupo F — Frete principal não pago</h2>
+    <p class="section-sub">O vendedor entrega a mercadoria a um transportador indicado pelo comprador. O frete principal é por conta do comprador.</p>
+
+    <div class="group-section">
+      <div class="group-header">
+        <div class="group-badge">F</div>
+        <div>
+          <div class="group-name">Termos F</div>
+          <div class="group-subtitle">FCA · FAS · FOB</div>
+        </div>
+      </div>
+      <div class="incoterm-list">
+        <div class="incoterm-item" onclick="toggleDetail('fca', this)">
+          <div class="inc-code">FCA</div>
+          <div>
+            <div class="inc-name">Free Carrier — Transportador livre</div>
+            <div class="inc-desc">Vendedor entrega ao transportador indicado pelo comprador no local combinado.</div>
+          </div>
+          <div class="inc-transport">Qualquer modal</div>
+        </div>
+        <div class="resp-diagram" id="detail-fca">
+          <div class="resp-title">FCA — Responsabilidades</div>
+          <div class="resp-details">
+            <div class="resp-col">
+              <h4>Vendedor faz</h4>
+              <ul>
+                <li>Embalagem e marcação</li>
+                <li>Despacho aduaneiro de exportação</li>
+                <li>Entrega ao transportador no local indicado</li>
+              </ul>
+            </div>
+            <div class="resp-col">
+              <h4>Comprador faz</h4>
+              <ul>
+                <li>Contrata e paga o frete internacional</li>
+                <li>Seguro (opcional, responsabilidade do comprador)</li>
+                <li>Desembaraço na importação e tributos</li>
+              </ul>
+            </div>
+          </div>
+          <div class="scenario-box">
+            <div class="scenario-label">Novidade Incoterms 2020</div>
+            <div class="scenario-text">O FCA 2020 permite que as partes acordem que o comprador instrua seu transportador a emitir um B/L com bordo (on board B/L) ao vendedor após o carregamento — facilitando operações com crédito documentário (carta de crédito).</div>
+          </div>
+        </div>
+
+        <div class="incoterm-item" onclick="toggleDetail('fas', this)">
+          <div class="inc-code">FAS</div>
+          <div>
+            <div class="inc-name">Free Alongside Ship — Ao lado do navio</div>
+            <div class="inc-desc">Vendedor coloca a mercadoria ao lado do navio no porto de embarque.</div>
+          </div>
+          <div class="inc-transport maritime">Marítimo/Fluvial</div>
+        </div>
+        <div class="resp-diagram" id="detail-fas">
+          <div class="resp-title">FAS — Responsabilidades</div>
+          <div class="resp-details">
+            <div class="resp-col">
+              <h4>Vendedor faz</h4>
+              <ul><li>Despacho aduaneiro de exportação</li><li>Leva mercadoria ao cais, ao lado do navio</li></ul>
+            </div>
+            <div class="resp-col">
+              <h4>Comprador faz</h4>
+              <ul><li>Estiva e carregamento a bordo</li><li>Frete e seguro marítimo</li><li>Desembaraço na importação</li></ul>
+            </div>
+          </div>
+          <div class="scenario-box">
+            <div class="scenario-label">Uso típico do FAS</div>
+            <div class="scenario-text">Adequado para cargas a granel (grãos, minérios) e commodities, onde a estiva é contratada pelo armador/comprador. Pouco usado para cargas em contêiner.</div>
+          </div>
+        </div>
+
+        <div class="incoterm-item" onclick="toggleDetail('fob', this)">
+          <div class="inc-code">FOB</div>
+          <div>
+            <div class="inc-name">Free On Board — A bordo</div>
+            <div class="inc-desc">O risco passa quando a mercadoria está a bordo do navio no porto de embarque.</div>
+          </div>
+          <div class="inc-transport maritime">Marítimo/Fluvial</div>
+        </div>
+        <div class="resp-diagram" id="detail-fob">
+          <div class="resp-title">FOB — Responsabilidades</div>
+          <div class="resp-details">
+            <div class="resp-col">
+              <h4>Vendedor faz</h4>
+              <ul><li>Embalagem e despacho de exportação</li><li>Frete interno até o porto</li><li>Estiva e colocação a bordo</li></ul>
+            </div>
+            <div class="resp-col">
+              <h4>Comprador faz</h4>
+              <ul><li>Contrata e paga o frete marítimo</li><li>Seguro marítimo (recomendado)</li><li>Desembaraço e tributos na importação</li></ul>
+            </div>
+          </div>
+          <div class="scenario-box">
+            <div class="scenario-label">⚠️ FOB e contêineres</div>
+            <div class="scenario-text">O FOB é formalmente inadequado para contêineres (a entrega no terminal ocorre antes do embarque). A ICC recomenda usar <strong>FCA porto de origem</strong> para cargas em contêiner. Porém, o FOB ainda é amplamente usado na prática comercial brasileira.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- MÓDULO 4 — GRUPO C -->
+  <div class="section-block" id="mod4">
+    <div class="section-eyebrow">Módulo 04</div>
+    <h2>Grupo C — Frete principal pago</h2>
+    <p class="section-sub">O vendedor contrata e paga o frete principal, mas o risco passa ao comprador no país de origem (duplo ponto crítico).</p>
+
+    <div class="group-section">
+      <div class="group-header">
+        <div class="group-badge">C</div>
+        <div>
+          <div class="group-name">Termos C</div>
+          <div class="group-subtitle">CPT · CIP · CFR · CIF</div>
+        </div>
+      </div>
+      <div class="incoterm-list">
+        <div class="incoterm-item" onclick="toggleDetail('cpt', this)">
+          <div class="inc-code">CPT</div>
+          <div>
+            <div class="inc-name">Carriage Paid To — Transporte pago até</div>
+            <div class="inc-desc">Vendedor paga frete até destino, mas risco passa ao 1º transportador na origem.</div>
+          </div>
+          <div class="inc-transport">Qualquer modal</div>
+        </div>
+        <div class="resp-diagram" id="detail-cpt">
+          <div class="resp-title">CPT — Ponto de risco vs. ponto de custo</div>
+          <div class="scenario-box">
+            <div class="scenario-label">Atenção — duplo ponto</div>
+            <div class="scenario-text">No CPT (e CIP), existe uma distinção importante: o <strong>risco passa</strong> quando a mercadoria é entregue ao 1º transportador na origem, mas o <strong>custo do frete</strong> é pago pelo vendedor até o destino nomeado. O vendedor paga mais, mas o risco é do comprador durante o transporte.</div>
+          </div>
+          <div class="resp-details">
+            <div class="resp-col">
+              <h4>Vendedor faz</h4>
+              <ul><li>Despacho de exportação</li><li>Contrata e paga frete até o destino</li><li>Seguro não obrigatório (mas recomendado)</li></ul>
+            </div>
+            <div class="resp-col">
+              <h4>Comprador faz</h4>
+              <ul><li>Suporta o risco desde a entrega ao 1º transportador</li><li>Desembaraço e tributos na importação</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="incoterm-item" onclick="toggleDetail('cip', this)">
+          <div class="inc-code">CIP</div>
+          <div>
+            <div class="inc-name">Carriage and Insurance Paid</div>
+            <div class="inc-desc">Como CPT, mas o vendedor deve contratar seguro com cobertura ampla (Institute Cargo Clauses A).</div>
+          </div>
+          <div class="inc-transport">Qualquer modal</div>
+        </div>
+        <div class="resp-diagram" id="detail-cip">
+          <div class="resp-title">CIP — Novidade Incoterms 2020</div>
+          <div class="scenario-box">
+            <div class="scenario-label">Mudança importante em 2020</div>
+            <div class="scenario-text">O CIP 2020 exige cobertura mínima <strong>Institute Cargo Clauses A</strong> (cobertura ampla — "all risks"). Na versão 2010, bastava ICC C (mínima). Isso representa um aumento significativo de proteção para o comprador. O CIF manteve a cobertura mínima ICC C.</div>
+          </div>
+        </div>
+
+        <div class="incoterm-item" onclick="toggleDetail('cfr', this)">
+          <div class="inc-code">CFR</div>
+          <div>
+            <div class="inc-name">Cost and Freight — Custo e frete</div>
+            <div class="inc-desc">Vendedor paga frete marítimo até porto de destino. Risco passa com embarque.</div>
+          </div>
+          <div class="inc-transport maritime">Marítimo/Fluvial</div>
+        </div>
+        <div class="resp-diagram" id="detail-cfr">
+          <div class="resp-title">CFR — Responsabilidades</div>
+          <div class="resp-details">
+            <div class="resp-col">
+              <h4>Vendedor faz</h4>
+              <ul><li>Despacho de exportação</li><li>Frete marítimo até porto destino</li></ul>
+            </div>
+            <div class="resp-col">
+              <h4>Comprador faz</h4>
+              <ul><li>Seguro marítimo (recomendado!)</li><li>Descarregamento e desembaraço</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="incoterm-item" onclick="toggleDetail('cif', this)">
+          <div class="inc-code">CIF</div>
+          <div>
+            <div class="inc-name">Cost, Insurance and Freight</div>
+            <div class="inc-desc">Como CFR, mas vendedor contrata seguro mínimo (ICC C) em nome do comprador.</div>
+          </div>
+          <div class="inc-transport maritime">Marítimo/Fluvial</div>
+        </div>
+        <div class="resp-diagram" id="detail-cif">
+          <div class="resp-title">CIF — O mais usado no comércio mundial</div>
+          <div class="scenario-box">
+            <div class="scenario-label">CIF na prática brasileira</div>
+            <div class="scenario-text">O CIF é a base de cálculo do imposto de importação no Brasil. O valor aduaneiro para fins de tributação inclui custo + seguro + frete (valor CIF). Mesmo que a negociação seja em FOB, o importador deve declarar o valor CIF ao Siscomex.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- MÓDULO 5 — GRUPO D -->
+  <div class="section-block" id="mod5">
+    <div class="section-eyebrow">Módulo 05</div>
+    <h2>Grupo D — Entrega no destino</h2>
+    <p class="section-sub">Máxima responsabilidade do vendedor. Risco e custo ficam com o vendedor até o país do comprador.</p>
+
+    <div class="group-section">
+      <div class="group-header">
+        <div class="group-badge">D</div>
+        <div>
+          <div class="group-name">Termos D</div>
+          <div class="group-subtitle">DAP · DPU · DDP</div>
+        </div>
+      </div>
+      <div class="incoterm-list">
+
+        <div class="incoterm-item" onclick="toggleDetail('dap', this)">
+          <div class="inc-code">DAP</div>
+          <div>
+            <div class="inc-name">Delivered at Place — Entregue no local</div>
+            <div class="inc-desc">Vendedor entrega no destino, pronto para descarga. Importação por conta do comprador.</div>
+          </div>
+          <div class="inc-transport">Qualquer modal</div>
+        </div>
+        <div class="resp-diagram" id="detail-dap">
+          <div class="resp-details">
+            <div class="resp-col">
+              <h4>Vendedor faz</h4>
+              <ul><li>Todo o frete até o destino</li><li>Seguro (não obrigatório, mas recomendado)</li><li>Despacho de exportação</li></ul>
+            </div>
+            <div class="resp-col">
+              <h4>Comprador faz</h4>
+              <ul><li>Descarregamento no destino</li><li>Desembaraço aduaneiro de importação</li><li>Impostos e taxas na importação</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="incoterm-item" onclick="toggleDetail('dpu', this)">
+          <div class="inc-code">DPU</div>
+          <div>
+            <div class="inc-name">Delivered at Place Unloaded</div>
+            <div class="inc-desc">Único termo onde o vendedor é responsável pelo DESCARREGAMENTO no destino.</div>
+          </div>
+          <div class="inc-transport">Qualquer modal</div>
+        </div>
+        <div class="resp-diagram" id="detail-dpu">
+          <div class="resp-title">DPU — Novo em 2020 (substitui DAT)</div>
+          <div class="scenario-box">
+            <div class="scenario-label">Mudança Incoterms 2020</div>
+            <div class="scenario-text">O DPU substituiu o DAT (Delivered at Terminal) dos Incoterms 2010. A mudança amplia o local de entrega para além de terminais — pode ser qualquer local. O <strong>vendedor é responsável pelo descarregamento</strong>, diferente do DAP onde a mercadoria é entregue ainda carregada no veículo.</div>
+          </div>
+        </div>
+
+        <div class="incoterm-item" onclick="toggleDetail('ddp', this)">
+          <div class="inc-code">DDP</div>
+          <div>
+            <div class="inc-name">Delivered Duty Paid</div>
+            <div class="inc-desc">Máxima obrigação do vendedor. Inclui todos os impostos de importação no destino.</div>
+          </div>
+          <div class="inc-transport">Qualquer modal</div>
+        </div>
+        <div class="resp-diagram" id="detail-ddp">
+          <div class="resp-details">
+            <div class="resp-col">
+              <h4>Vendedor faz TUDO</h4>
+              <ul><li>Frete porta a porta</li><li>Seguro (recomendado)</li><li>Despacho de exportação E importação</li><li>Todos os impostos de importação</li><li>Entrega no endereço do comprador</li></ul>
+            </div>
+            <div class="resp-col">
+              <h4>Comprador faz</h4>
+              <ul><li>Receber a mercadoria</li><li>Pagar o preço combinado</li></ul>
+            </div>
+          </div>
+          <div class="scenario-box">
+            <div class="scenario-label">DDP no Brasil — Atenção</div>
+            <div class="scenario-text">O DDP é muito atrativo para compradores brasileiros, mas extremamente complexo para vendedores estrangeiros. No Brasil, o importador precisa ter CNPJ ativo para realizar o despacho aduaneiro — o vendedor estrangeiro geralmente precisa de um <strong>operador logístico licenciado</strong> ou representante local.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- QUIZ -->
+  <div class="section-block" id="quiz">
+    <div class="section-eyebrow">Módulo 06</div>
+    <h2>Quiz de Fixação</h2>
+    <p class="section-sub">Teste seus conhecimentos com situações práticas do dia a dia do comércio exterior.</p>
+
+    <div class="quiz-section" id="quizContainer">
+      <div class="quiz-eyebrow">Questão <span id="qNum">1</span> de 8</div>
+      <div class="quiz-question" id="qText"></div>
+      <div class="quiz-options" id="qOptions"></div>
+      <div class="quiz-feedback" id="qFeedback"></div>
+      <div class="quiz-nav">
+        <div class="quiz-counter" id="qScore">Pontos: 0</div>
+        <button class="btn-quiz" id="btnNext" onclick="nextQuestion()" disabled>Próxima →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GLOSSÁRIO -->
+  <div class="section-block">
+    <div class="section-eyebrow">Referência Rápida</div>
+    <h2>Glossário</h2>
+    <p class="section-sub">Termos essenciais do comércio exterior relacionados aos Incoterms.</p>
+    <div class="glossary-grid">
+      <div class="gloss-card"><div class="gloss-term">B/L (Bill of Lading)</div><div class="gloss-def">Conhecimento de embarque marítimo. Documento que comprova contrato de transporte e propriedade da carga.</div></div>
+      <div class="gloss-card"><div class="gloss-term">AWB (Air Waybill)</div><div class="gloss-def">Conhecimento de transporte aéreo. Equivalente ao B/L para cargas aéreas.</div></div>
+      <div class="gloss-card"><div class="gloss-term">Despacho Aduaneiro</div><div class="gloss-def">Processo de liberação da mercadoria perante a Receita Federal (exportação ou importação).</div></div>
+      <div class="gloss-card"><div class="gloss-term">ICC Clauses</div><div class="gloss-def">Institute Cargo Clauses: A (ampla), B (intermediária) e C (mínima). Coberturas padrão de seguro de carga marítima.</div></div>
+      <div class="gloss-card"><div class="gloss-term">Local Nomeado</div><div class="gloss-def">Ponto geográfico específico indicado no Incoterm. Define onde ocorre a transferência de risco.</div></div>
+      <div class="gloss-card"><div class="gloss-term">Estiva</div><div class="gloss-def">Operação de carregamento e arrumação de carga no porão ou convés de um navio.</div></div>
+      <div class="gloss-card"><div class="gloss-term">Armador</div><div class="gloss-def">Empresa proprietária ou operadora de navios. Ex: Maersk, MSC, CMA CGM.</div></div>
+      <div class="gloss-card"><div class="gloss-term">SISCOMEX</div><div class="gloss-def">Sistema Integrado de Comércio Exterior do Brasil. Plataforma para registro de exportações e importações.</div></div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  // Toggle detail panels
+  function toggleDetail(id, element) {
+    const el = document.getElementById('detail-' + id);
+    const isOpen = el.classList.contains('open');
+    
+    // Close all others for cleaner UI (optional, but good for focus)
+    document.querySelectorAll('.resp-diagram').forEach(d => d.classList.remove('open'));
+    document.querySelectorAll('.incoterm-item').forEach(i => i.classList.remove('active-detail'));
+    
+    if (!isOpen) {
+      el.classList.add('open');
+      element.classList.add('active-detail');
+    }
+    updateProgress();
+  }
+
+  // Scroll helper
+  function scrollTo(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Progress tracking (11 total diagrams)
+  let seen = new Set();
+  function updateProgress() {
+    const all = document.querySelectorAll('.resp-diagram.open');
+    all.forEach(el => seen.add(el.id));
+    const pct = Math.round((seen.size / 11) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = seen.size + ' / 11 termos explorados';
+  }
+
+  // QUIZ DATA
+  const questions = [
+    {
+      q: "Uma empresa brasileira compra equipamentos industriais da Alemanha. O fornecedor diz que vai entregar no armazém dele e o importador cuida de tudo. Qual Incoterm é esse?",
+      opts: ["FOB Hamburg", "EXW Munich", "DAP São Paulo", "CIF Santos"],
+      answer: 1,
+      feedback: "Correto! EXW (Ex Works) significa que o vendedor disponibiliza a mercadoria em seu estabelecimento e o comprador assume toda a responsabilidade — incluindo o carregamento no próprio armazém do vendedor."
+    },
+    {
+      q: "O exportador brasileiro vende soja a granel para a China. O comprador chinês contratará o navio. O risco deve passar quando a soja estiver ao lado do navio no porto de Santos. Qual Incoterm?",
+      opts: ["FCA Santos", "FAS Santos", "FOB Santos", "CFR Shanghai"],
+      answer: 1,
+      feedback: "Correto! FAS (Free Alongside Ship) é usado para granel marítimo — o risco passa quando a mercadoria é posicionada ao lado do navio no porto de embarque."
+    },
+    {
+      q: "Uma importadora quer que o fornecedor pague o frete marítimo e contrate seguro amplo (all risks). Qual Incoterm 2020 garante isso?",
+      opts: ["CIF", "CFR", "CIP", "CPT"],
+      answer: 2,
+      feedback: "Correto! CIP (Carriage and Insurance Paid) exige seguro mínimo ICC A (all risks) desde os Incoterms 2020. O CIF manteve apenas ICC C (mínima). Para cargas em contêiner, o CIP é mais adequado que o CIF."
+    },
+    {
+      q: "Qual é o único Incoterm onde o VENDEDOR é responsável pelo descarregamento no local de destino?",
+      opts: ["DAP", "DDP", "DPU", "CIF"],
+      answer: 2,
+      feedback: "Correto! DPU (Delivered at Place Unloaded) é o único termo onde o risco só passa ao comprador APÓS o descarregamento no local de destino."
+    },
+    {
+      q: "Para o cálculo do Imposto de Importação no Brasil, qual base de valor é usada?",
+      opts: ["Valor FOB", "Valor EXW", "Valor CIF", "Valor DAP"],
+      answer: 2,
+      feedback: "Correto! O Brasil adota o valor CIF como base de cálculo do imposto de importação, conforme as regras da OMC (GATT Artigo VII)."
+    },
+    {
+      q: "Uma empresa usa FOB Santos para exportar contêineres. A ICC recomenda qual Incoterm como substituto mais adequado?",
+      opts: ["CIF Santos", "FCA Santos", "FAS Santos", "CPT Santos"],
+      answer: 1,
+      feedback: "Correto! A ICC recomenda FCA (porto de origem) para contêineres, pois a entrega ao terminal ocorre antes do navio atracar."
+    },
+    {
+      q: "Nos Incoterms do Grupo C, existe uma distinção importante. Qual afirmação está correta?",
+      opts: [
+        "O risco e o custo passam no mesmo ponto — no destino",
+        "O vendedor paga o frete, mas o risco passa ao comprador ainda na origem",
+        "O comprador paga o frete e assume o risco na origem",
+        "O vendedor assume risco e custo até o destino"
+      ],
+      answer: 1,
+      feedback: "Correto! Nos termos C, existe um 'duplo ponto': o RISCO passa ao comprador na origem, mas o CUSTO do frete é pago pelo vendedor até o destino."
+    },
+    {
+      q: "Qual Incoterm representa a máxima responsabilidade do vendedor, incluindo desembaraço e impostos de importação no país do comprador?",
+      opts: ["DAP", "DPU", "DDP", "CIP"],
+      answer: 2,
+      feedback: "Correto! DDP (Delivered Duty Paid) é o oposto do EXW. O vendedor assume responsabilidade total, incluindo todos os impostos de importação."
+    }
+  ];
+
+  let currentQ = 0;
+  let score = 0;
+  let answered = false;
+
+  function renderQuestion() {
+    const q = questions[currentQ];
+    document.getElementById('qNum').textContent = currentQ + 1;
+    document.getElementById('qText').textContent = q.q;
+    const opts = document.getElementById('qOptions');
+    opts.innerHTML = '';
+    q.opts.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => selectAnswer(i);
+      opts.appendChild(btn);
+    });
+    document.getElementById('qFeedback').className = 'quiz-feedback';
+    document.getElementById('qFeedback').textContent = '';
+    document.getElementById('btnNext').disabled = true;
+    answered = false;
+  }
+
+  function selectAnswer(i) {
+    if (answered) return;
+    answered = true;
+    const q = questions[currentQ];
+    const btns = document.querySelectorAll('.quiz-opt');
+    btns[q.answer].classList.add('correct');
+    if (i !== q.answer) {
+      btns[i].classList.add('wrong');
+    } else {
+      score++;
+    }
+    const fb = document.getElementById('qFeedback');
+    fb.textContent = (i === q.answer ? '✓ ' : '✗ ') + q.feedback;
+    fb.className = 'quiz-feedback show ' + (i === q.answer ? 'ok' : 'fail');
+    document.getElementById('qScore').textContent = 'Pontos: ' + score;
+    document.getElementById('btnNext').disabled = false;
+    if (currentQ === questions.length - 1) {
+      document.getElementById('btnNext').textContent = 'Ver resultado ✓';
+    }
+  }
+
+  function nextQuestion() {
+    currentQ++;
+    if (currentQ >= questions.length) {
+      showResult();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  function showResult() {
+    const pct = Math.round((score / questions.length) * 100);
+    const msg = pct >= 80 ? '🏆 Excelente domínio dos Incoterms!' : pct >= 60 ? '👍 Bom resultado! Revise os módulos onde errou.' : '📚 Recomenda-se revisar o material antes de aplicar.';
+    
+    document.getElementById('quizContainer').innerHTML = `
+      <div class="quiz-eyebrow">Resultado Final</div>
+      <div class="quiz-question">${msg}</div>
+      <div style="font-size:48px; font-weight:700; font-family:'JetBrains Mono',monospace; margin:24px 0; color:var(--si-gold);">${score}<span style="font-size:24px; color:rgba(255,255,255,0.4)"> / ${questions.length}</span></div>
+      <div style="font-size:14px; color:rgba(255,255,255,0.7); margin-bottom:32px;">${pct}% de aproveitamento</div>
+      
+      <!-- BOTÃO DE TESTE / CERTIFICADO (RESULTADO DO QUIZ) -->
+      <a href="#" class="btn-test-cert" style="margin-bottom: 16px; width: 100%; justify-content: center;" title="⚠️ INSIRA O LINK DO TESTE AQUI">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        Iniciar teste para obter seu certificado de conclusão
+      </a>
+      
+      <div style="display: flex; gap: 12px; justify-content: center;">
+        <button class="btn-quiz" onclick="restartQuiz()" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);">Refazer Quiz</button>
+        <button class="btn-quiz" onclick="scrollTo('mod1')" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);">Revisar Módulos</button>
+      </div>
+    `;
+  }
+
+  function restartQuiz() {
+    currentQ = 0;
+    score = 0;
+    document.getElementById('quizContainer').innerHTML = `
+      <div class="quiz-eyebrow">Questão <span id="qNum">1</span> de 8</div>
+      <div class="quiz-question" id="qText"></div>
+      <div class="quiz-options" id="qOptions"></div>
+      <div class="quiz-feedback" id="qFeedback"></div>
+      <div class="quiz-nav">
+        <div class="quiz-counter" id="qScore">Pontos: 0</div>
+        <button class="btn-quiz" id="btnNext" onclick="nextQuestion()" disabled>Próxima →</button>
+      </div>
+    `;
+    renderQuestion();
+  }
+
+  // Initialize
+  renderQuestion();
+</script>
+</body>
+</html>
