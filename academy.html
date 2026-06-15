@@ -124,8 +124,8 @@
                     </button>
                 </form>
                 
-                <p class="mt-6 text-xs text-gray-400">
-                    Dica: O PIN padrão de demonstração é <span class="font-mono bg-gray-100 px-1 rounded">202600</span>
+                <p class="mt-6 text-xs text-gray-400 font-medium tracking-wide">
+                    USE O PIN QUE RECEBEU NA SALA DE AULA
                 </p>
             </div>
         </div>
@@ -235,7 +235,7 @@
 
     <!-- JavaScript Logic -->
     <script>
-        // CONFIGURAÇÃO: Altere este valor para o PIN desejado de 6 dígitos
+        // CONFIGURAÇÃO: PIN de acesso mantido como 202600
         const SECRET_PIN = "202600"; 
         
         const pinForm = document.getElementById('pin-form');
@@ -247,10 +247,6 @@
         // Formatar input para aceitar apenas números
         pinInput.addEventListener('input', function (e) {
             this.value = this.value.replace(/[^0-9]/g, '');
-            if (this.value.length === 6) {
-                // Opcional: auto-submit ao completar 6 dígitos
-                // pinForm.requestSubmit();
-            }
         });
 
         pinForm.addEventListener('submit', function (e) {
@@ -264,7 +260,7 @@
                 academyScreen.classList.remove('hidden');
                 academyScreen.classList.add('animate-fade-in');
                 
-                // Salvar estado de login na sessão (opcional, para não pedir PIN ao recarregar)
+                // Salvar estado de login na sessão
                 sessionStorage.setItem('si_academy_access', 'granted');
             } else {
                 // Erro
