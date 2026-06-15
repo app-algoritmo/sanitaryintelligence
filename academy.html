@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Academy | Sanitary Intelligence</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -103,7 +103,7 @@
                         <button onclick="changeLanguage('es')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-si-accent hover:text-white transition-colors flex items-center gap-2">
                             🇪🇸 Español
                         </button>
-                    </div
+                    </div>
                 </div>
             </div>
         </div>
@@ -173,63 +173,100 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-8 mb-12">
-                <!-- Course 1 -->
-                <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden cursor-pointer transform hover:-translate-y-1">
+                <!-- Course 1: COMPLETE TRADE COURSE (Updated) -->
+                <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden cursor-pointer transform hover:-translate-y-1 flex flex-col">
                     <div class="h-2 bg-si-primary"></div>
-                    <div class="p-8">
-                        <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-si-primary group-hover:text-white transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-si-primary group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-si-primary group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-si-primary group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
-                        <h3 class="text-2xl font-bold text-si-dark mb-3" data-i18n="course1_title">Curso Completo de Trade</h3>
-                        <p class="text-gray-600 mb-6 leading-relaxed" data-i18n="course1_desc">Domine as operações de Comércio Exterior, desde a classificação fiscal até o desembaraço aduaneiro, com foco em inteligência sanitária e regulatória.</p>
-                        <ul class="space-y-2 mb-8 text-sm text-gray-500">
-                            <li class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-si-accent flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                <span data-i18n="course1_b1">Módulo de Legislação Aduaneira</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-si-accent flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                <span data-i18n="course1_b2">Análise de Risco Sanitário</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-si-accent flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                <span data-i18n="course1_b3">Certificado de Conclusão</span>
-                            </li>
-                        </ul>
-                        <button class="w-full py-3 border-2 border-si-primary text-si-primary font-bold rounded-lg group-hover:bg-si-primary group-hover:text-white transition-all" data-i18n="start_course">
+                        
+                        <h3 class="text-xl font-bold text-si-dark mb-3" data-i18n="course1_title">Curso Completo de Trade</h3>
+                        
+                        <!-- Stats Badges -->
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-50 text-si-primary text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c1_stats_modules">6 módulos</span>
+                            <span class="bg-blue-50 text-si-primary text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c1_stats_lessons">21 aulas</span>
+                            <span class="bg-blue-50 text-si-primary text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c1_stats_quiz">10 questões de quiz</span>
+                            <span class="bg-blue-50 text-si-primary text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c1_stats_glossary">28 termos</span>
+                        </div>
+
+                        <p class="text-gray-600 mb-4 text-sm leading-relaxed" data-i18n="course1_desc">Domine as operações de Comércio Exterior, da classificação fiscal ao desembaraço, com foco em inteligência sanitária e regulatória.</p>
+                        
+                        <!-- Modules List -->
+                        <div class="mb-4 flex-grow">
+                            <h4 class="text-[10px] font-bold text-si-dark uppercase tracking-wider mb-2 flex items-center gap-1">
+                                <svg class="w-3 h-3 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
+                                <span data-i18n="c1_modules_title">Módulos</span>
+                            </h4>
+                            <ul class="space-y-1.5 text-xs text-gray-600 leading-snug">
+                                <li class="flex gap-2"><span class="text-si-primary font-bold flex-shrink-0">M01</span> <span data-i18n="c1_m01">Fundamentos: balança comercial, câmbio, OMC, blocos regionais</span></li>
+                                <li class="flex gap-2"><span class="text-si-primary font-bold flex-shrink-0">M02</span> <span data-i18n="c1_m02">Despacho Aduaneiro: NCM/SH, fluxo exportação/importação, tributação e regimes especiais (Drawback, RECOF, ZFM, Ex-tarifário)</span></li>
+                                <li class="flex gap-2"><span class="text-si-primary font-bold flex-shrink-0">M03</span> <span data-i18n="c1_m03">Financiamento e Câmbio: ACC/ACE, NDF, hedge, formas de pagamento (L/C, UCP 600), PROEX, BNDES-Exim, SOFR</span></li>
+                                <li class="flex gap-2"><span class="text-si-primary font-bold flex-shrink-0">M04</span> <span data-i18n="c1_m04">Logística: modais, documentação (B/L, AWB, Invoice, Packing List, CO), seguro de carga (ICC A/B/C, Avaria Grossa)</span></li>
+                                <li class="flex gap-2"><span class="text-si-primary font-bold flex-shrink-0">M05</span> <span data-i18n="c1_m05">Incoterms® 2020: todos os 11 termos com detalhamento de responsabilidades e mudanças vs 2010</span></li>
+                                <li class="flex gap-2"><span class="text-si-primary font-bold flex-shrink-0">M06</span> <span data-i18n="c1_m06">Compliance: bens de duplo uso, Wassenaar, OFAC/SDN, OEA (Operador Econômico Autorizado)</span></li>
+                            </ul>
+                        </div>
+
+                        <!-- Features List -->
+                        <div class="mb-6 pt-4 border-t border-gray-100">
+                            <h4 class="text-[10px] font-bold text-si-dark uppercase tracking-wider mb-2 flex items-center gap-1">
+                                <svg class="w-3 h-3 text-si-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
+                                <span data-i18n="c1_features_title">Funcionalidades</span>
+                            </h4>
+                            <ul class="space-y-1.5 text-xs text-gray-600">
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-3.5 h-3.5 text-si-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                    <span data-i18n="c1_f1">Progresso individual por aula com barra geral</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-3.5 h-3.5 text-si-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                    <span data-i18n="c1_f2">Navegação entre aulas com "marcar como concluída"</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-3.5 h-3.5 text-si-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                    <span data-i18n="c1_f3">Quiz interativo com feedback explicado por questão</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-3.5 h-3.5 text-si-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                    <span data-i18n="c1_f4">Glossário com 28 termos do Comex</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-3.5 h-3.5 text-si-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                    <span data-i18n="c1_f5">Certificado de conclusão ao completar tudo</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <button class="w-full py-3 border-2 border-si-primary text-si-primary font-bold rounded-lg group-hover:bg-si-primary group-hover:text-white transition-all text-sm" data-i18n="start_course">
                             Iniciar Curso
                         </button>
                     </div>
                 </div>
 
-                <!-- Course 2 -->
-                <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden cursor-pointer transform hover:-translate-y-1">
+                <!-- Course 2: INCOTERMS (Kept intact for layout balance) -->
+                <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden cursor-pointer transform hover:-translate-y-1 flex flex-col">
                     <div class="h-2 bg-si-accent"></div>
-                    <div class="p-8">
-                        <div class="w-14 h-14 bg-teal-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-si-accent group-hover:text-white transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-si-accent group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-si-accent group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-si-accent group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                             </svg>
                         </div>
-                        <h3 class="text-2xl font-bold text-si-dark mb-3" data-i18n="course2_title">Curso Interativo de Incoterms</h3>
-                        <p class="text-gray-600 mb-6 leading-relaxed" data-i18n="course2_desc">Aprenda de forma prática e visual as regras da ICC (Câmara de Comércio Internacional) para interpretação dos termos comerciais mais usados no mundo.</p>
-                        <ul class="space-y-2 mb-8 text-sm text-gray-500">
-                            <li class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-si-accent flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                <span data-i18n="course2_b1">Simulador de Custos e Riscos</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-si-accent flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                <span data-i18n="course2_b2">Atualização Incoterms® 2020</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-si-accent flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                <span data-i18n="course2_b3">Casos Práticos Reais</span>
-                            </li>
-                        </ul>
-                        <button class="w-full py-3 border-2 border-si-accent text-si-accent font-bold rounded-lg group-hover:bg-si-accent group-hover:text-white transition-all" data-i18n="start_course">
+                        <h3 class="text-xl font-bold text-si-dark mb-3" data-i18n="course2_title">Curso Interativo de Incoterms</h3>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-teal-50 text-si-accent text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c2_stats_1">11 Termos</span>
+                            <span class="bg-teal-50 text-si-accent text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c2_stats_2">ICC 2020</span>
+                            <span class="bg-teal-50 text-si-accent text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c2_stats_3">Simulador</span>
+                        </div>
+
+                        <p class="text-gray-600 mb-6 text-sm leading-relaxed flex-grow" data-i18n="course2_desc">Aprenda de forma prática e visual as regras da ICC (Câmara de Comércio Internacional) para interpretação dos termos comerciais mais usados no mundo.</p>
+                        
+                        <button class="w-full py-3 border-2 border-si-accent text-si-accent font-bold rounded-lg group-hover:bg-si-accent group-hover:text-white transition-all text-sm mt-auto" data-i18n="start_course">
                             Iniciar Curso
                         </button>
                     </div>
@@ -282,15 +319,29 @@
                 main_title: "Programa de Estudos",
                 main_subtitle: "Capacitação de excelência em regulamentações, práticas e normas internacionais.",
                 course1_title: "Curso Completo de Trade",
-                course1_desc: "Domine as operações de Comércio Exterior, desde a classificação fiscal até o desembaraço aduaneiro, com foco em inteligência sanitária e regulatória.",
-                course1_b1: "Módulo de Legislação Aduaneira",
-                course1_b2: "Análise de Risco Sanitário",
-                course1_b3: "Certificado de Conclusão",
+                c1_stats_modules: "6 módulos",
+                c1_stats_lessons: "21 aulas",
+                c1_stats_quiz: "10 questões de quiz",
+                c1_stats_glossary: "28 termos",
+                course1_desc: "Domine as operações de Comércio Exterior, da classificação fiscal ao desembaraço, com foco em inteligência sanitária e regulatória.",
+                c1_modules_title: "Módulos",
+                c1_m01: "Fundamentos: balança comercial, câmbio, OMC, blocos regionais",
+                c1_m02: "Despacho Aduaneiro: NCM/SH, fluxo exportação/importação, tributação e regimes especiais (Drawback, RECOF, ZFM, Ex-tarifário)",
+                c1_m03: "Financiamento e Câmbio: ACC/ACE, NDF, hedge, formas de pagamento (L/C, UCP 600), PROEX, BNDES-Exim, SOFR",
+                c1_m04: "Logística: modais, documentação (B/L, AWB, Invoice, Packing List, CO), seguro de carga (ICC A/B/C, Avaria Grossa)",
+                c1_m05: "Incoterms® 2020: todos os 11 termos com detalhamento de responsabilidades e mudanças vs 2010",
+                c1_m06: "Compliance: bens de duplo uso, Wassenaar, OFAC/SDN, OEA (Operador Econômico Autorizado)",
+                c1_features_title: "Funcionalidades",
+                c1_f1: "Progresso individual por aula com barra geral",
+                c1_f2: "Navegação entre aulas com \"marcar como concluída\"",
+                c1_f3: "Quiz interativo com feedback explicado por questão",
+                c1_f4: "Glossário com 28 termos do Comex",
+                c1_f5: "Certificado de conclusão ao completar tudo",
                 course2_title: "Curso Interativo de Incoterms",
+                c2_stats_1: "11 Termos",
+                c2_stats_2: "ICC 2020",
+                c2_stats_3: "Simulador",
                 course2_desc: "Aprenda de forma prática e visual as regras da ICC (Câmara de Comércio Internacional) para interpretação dos termos comerciais mais usados no mundo.",
-                course2_b1: "Simulador de Custos e Riscos",
-                course2_b2: "Atualização Incoterms® 2020",
-                course2_b3: "Casos Práticos Reais",
                 start_course: "Iniciar Curso",
                 cert_title: "Certificação Oficial",
                 cert_created: "Curso criado por",
@@ -311,15 +362,29 @@
                 main_title: "Study Program",
                 main_subtitle: "Excellence training in regulations, practices, and international standards.",
                 course1_title: "Complete Trade Course",
+                c1_stats_modules: "6 modules",
+                c1_stats_lessons: "21 classes",
+                c1_stats_quiz: "10 quiz questions",
+                c1_stats_glossary: "28 terms",
                 course1_desc: "Master Foreign Trade operations, from fiscal classification to customs clearance, with a focus on sanitary and regulatory intelligence.",
-                course1_b1: "Customs Legislation Module",
-                course1_b2: "Sanitary Risk Analysis",
-                course1_b3: "Certificate of Completion",
+                c1_modules_title: "Modules",
+                c1_m01: "Fundamentals: trade balance, exchange rates, WTO, regional blocs",
+                c1_m02: "Customs Clearance: HS Code, export/import flow, taxation, and special regimes (Drawback, RECOF, ZFM, Ex-tariff)",
+                c1_m03: "Financing and FX: ACC/ACE, NDF, hedging, payment methods (L/C, UCP 600), PROEX, BNDES-Exim, SOFR",
+                c1_m04: "Logistics: modes, documentation (B/L, AWB, Invoice, Packing List, CO), cargo insurance (ICC A/B/C, General Average)",
+                c1_m05: "Incoterms® 2020: all 11 terms with detailed responsibilities and changes vs 2010",
+                c1_m06: "Compliance: dual-use goods, Wassenaar, OFAC/SDN, AEO (Authorized Economic Operator)",
+                c1_features_title: "Features",
+                c1_f1: "Individual lesson progress with overall bar",
+                c1_f2: "Navigation between lessons with \"mark as completed\"",
+                c1_f3: "Interactive quiz with explained feedback per question",
+                c1_f4: "Glossary with 28 Comex terms",
+                c1_f5: "Completion certificate upon finishing everything",
                 course2_title: "Interactive Incoterms Course",
+                c2_stats_1: "11 Terms",
+                c2_stats_2: "ICC 2020",
+                c2_stats_3: "Simulator",
                 course2_desc: "Learn the ICC (International Chamber of Commerce) rules in a practical and visual way to interpret the most used commercial terms in the world.",
-                course2_b1: "Cost and Risk Simulator",
-                course2_b2: "Incoterms® 2020 Update",
-                course2_b3: "Real Practical Cases",
                 start_course: "Start Course",
                 cert_title: "Official Certification",
                 cert_created: "Course created by",
@@ -340,15 +405,29 @@
                 main_title: "Programa de Estudios",
                 main_subtitle: "Capacitación de excelencia en regulaciones, prácticas y normas internacionales.",
                 course1_title: "Curso Completo de Comercio Exterior",
+                c1_stats_modules: "6 módulos",
+                c1_stats_lessons: "21 clases",
+                c1_stats_quiz: "10 preguntas de quiz",
+                c1_stats_glossary: "28 términos",
                 course1_desc: "Domine las operaciones de Comercio Exterior, desde la clasificación fiscal hasta el despacho de aduanas, con enfoque en inteligencia sanitaria y regulatoria.",
-                course1_b1: "Módulo de Legislación Aduanera",
-                course1_b2: "Análisis de Riesgo Sanitario",
-                course1_b3: "Certificado de Finalización",
+                c1_modules_title: "Módulos",
+                c1_m01: "Fundamentos: balanza comercial, tipo de cambio, OMC, bloques regionales",
+                c1_m02: "Despacho Aduanero: NCM/SA, flujo exportación/importación, tributación y regímenes especiales (Drawback, RECOF, ZFM, Ex-arancelario)",
+                c1_m03: "Financiación y Divisas: ACC/ACE, NDF, cobertura, formas de pago (L/C, UCP 600), PROEX, BNDES-Exim, SOFR",
+                c1_m04: "Logística: modales, documentación (B/L, AWB, Invoice, Packing List, CO), seguro de carga (ICC A/B/C, Avería Gruesa)",
+                c1_m05: "Incoterms® 2020: los 11 términos con detalle de responsabilidades y cambios vs 2010",
+                c1_m06: "Compliance: bienes de doble uso, Wassenaar, OFAC/SDN, OEA (Operador Económico Autorizado)",
+                c1_features_title: "Funcionalidades",
+                c1_f1: "Progreso individual por clase con barra general",
+                c1_f2: "Navegación entre clases con \"marcar como completada\"",
+                c1_f3: "Quiz interactivo con retroalimentación explicada por pregunta",
+                c1_f4: "Glosario con 28 términos de comercio exterior",
+                c1_f5: "Certificado de finalización al completar todo",
                 course2_title: "Curso Interactivo de Incoterms",
+                c2_stats_1: "11 Términos",
+                c2_stats_2: "CCI 2020",
+                c2_stats_3: "Simulador",
                 course2_desc: "Aprenda de forma práctica y visual las reglas de la CCI (Cámara de Comercio Internacional) para interpretar los términos comerciales más usados en el mundo.",
-                course2_b1: "Simulador de Costos y Riesgos",
-                course2_b2: "Actualización Incoterms® 2020",
-                course2_b3: "Casos Prácticos Reales",
                 start_course: "Iniciar Curso",
                 cert_title: "Certificación Oficial",
                 cert_created: "Curso creado por",
@@ -362,20 +441,13 @@
 
         // --- LANGUAGE DETECTION & SWITCHING ---
         function setLanguage(lang) {
-            // Fallback to 'pt' if lang is not supported
             const validLang = ['pt', 'en', 'es'].includes(lang) ? lang : 'pt';
-            
-            // Save to localStorage
             localStorage.setItem('si_academy_lang', validLang);
-            
-            // Update HTML lang attribute
             document.documentElement.lang = validLang === 'pt' ? 'pt-BR' : (validLang === 'es' ? 'es-ES' : 'en-US');
             
-            // Update label
             const labels = { pt: 'PT', en: 'EN', es: 'ES' };
             document.getElementById('current-lang-label').textContent = labels[validLang];
 
-            // Update all elements with data-i18n attribute
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
                 if (translations[validLang][key]) {
@@ -388,7 +460,6 @@
             setLanguage(lang);
         }
 
-        // Detect language on load
         window.addEventListener('DOMContentLoaded', () => {
             const savedLang = localStorage.getItem('si_academy_lang');
             if (savedLang) {
