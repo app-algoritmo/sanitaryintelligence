@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="Sanitary Intelligence" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#667eea" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subscription | SI Academy — Sanitary Intelligence</title>
+  <meta name="description" content="Enroll in the SI Academy International Trade course. One-time payment, immediate access." />
+  <style>
+    :root {
+      --primary:   #667eea;
+      --primary-d: #5a6fd6;
+      --secondary: #764ba2;
+      --grad:      linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --white:     #ffffff;
+      --off-white: #f8f9ff;
+      --light:     #eef0ff;
+      --border:    #e2e5f5;
+      --text:      #1a1a2e;
+      --muted:     #6b7280;
+      --shadow:    0 4px 24px rgba(102,126,234,.09);
+      --shadow-lg: 0 12px 48px rgba(102,126,234,.16);
+      --ease:      cubic-bezier(.4,0,.2,1);
+      --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      --r: 14px;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:var(--font); background:var(--white); color:var(--text); line-height:1.7; -webkit-font-smoothing:antialiased; }
+    a { text-decoration:none; color:inherit; }
+    .container { max-width:1040px; margin:0 auto; padding:0 24px; }
+
+    /* NAV */
+    nav { border-bottom:1px solid var(--border); }
+    .nav-inner { display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:1040px; margin:0 auto; }
+    .nav-logo { font-size:1.15rem; font-weight:700; letter-spacing:-.01em; background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .nav-right { display:flex; align-items:center; gap:22px; }
+    .nav-right a { font-size:.85rem; color:var(--muted); transition:color .2s; }
+    .nav-right a:hover { color:var(--primary); }
+
+    /* Language selector (same pattern as index.html) */
+    .lang-sel { position:relative; }
+    .lang-btn {
+      background:var(--light); border:1px solid var(--border);
+      color:var(--primary); padding:6px 14px; border-radius:20px;
+      font-family:var(--font); font-size:.82rem; font-weight:600;
+      cursor:pointer; display:flex; align-items:center; gap:6px;
+      transition:background .2s;
+    }
+    .lang-btn:hover { background:#dde0ff; }
+    .lang-btn svg { width:11px; height:11px; fill:var(--primary); transition:transform .2s; }
+    .lang-sel.open .lang-btn svg { transform:rotate(180deg); }
+    .lang-drop {
+      position:absolute; top:calc(100% + 8px); right:0;
+      background:var(--white); border:1px solid var(--border);
+      border-radius:12px; overflow:hidden; min-width:138px;
+      box-shadow:0 8px 28px rgba(0,0,0,.11);
+      opacity:0; pointer-events:none; transform:translateY(-6px);
+      transition:opacity .2s,transform .2s; z-index:50;
+    }
+    .lang-sel.open .lang-drop { opacity:1; pointer-events:all; transform:translateY(0); }
+    .lang-opt {
+      display:flex; align-items:center; gap:9px;
+      padding:10px 16px; font-size:.87rem; cursor:pointer;
+      transition:background .15s; color:var(--text);
+    }
+    .lang-opt:hover { background:var(--off-white); }
+    .lang-opt.active { color:var(--primary); font-weight:600; background:var(--light); }
+
+    /* HERO */
+    .hero {
+      text-align:center; padding:90px 24px 40px;
+      background:linear-gradient(160deg, #f0f2ff 0%, #fafbff 50%, #f5f0ff 100%);
+      position:relative; overflow:hidden;
+    }
+    .hero::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background: radial-gradient(ellipse 65% 55% at 68% 18%, rgba(102,126,234,.13) 0%, transparent 60%),
+                  radial-gradient(ellipse 45% 40% at 12% 85%, rgba(118,75,162,.09) 0%, transparent 55%);
+    }
+    .hero-inner { position:relative; z-index:1; max-width:680px; margin:0 auto; }
+    .eyebrow {
+      display:inline-block; font-size:.74rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase;
+      color:var(--primary); background:rgba(102,126,234,.09); border:1px solid rgba(102,126,234,.22);
+      padding:6px 18px; border-radius:20px; margin-bottom:26px;
+    }
+    h1 { font-size:clamp(1.9rem,4.6vw,2.9rem); font-weight:800; line-height:1.18; letter-spacing:-.02em; margin-bottom:8px; }
+    h1 .hl { background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .subtitle-line { font-size:1.05rem; font-weight:600; color:var(--text); margin-bottom:18px; }
+    .hero p.sub { font-size:1.04rem; color:var(--muted); max-width:540px; margin:0 auto; }
+
+    .stats-row { display:flex; justify-content:center; gap:40px; margin-top:42px; flex-wrap:wrap; }
+    .stat { text-align:center; }
+    .stat .num { font-size:1.7rem; font-weight:800; background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .stat .label { font-size:.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-top:2px; }
+
+    /* PLAN AREA */
+    .plan-wrap {
+      max-width:1040px; margin:0 auto; padding:64px 24px 110px;
+      display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:start;
+    }
+    @media (max-width:860px) { .plan-wrap { grid-template-columns:1fr; } }
+
+    .includes-card {
+      background:var(--off-white); border:1px solid var(--border); border-radius:var(--r); padding:36px;
+    }
+    .includes-card h3 { font-size:.74rem; text-transform:uppercase; letter-spacing:.14em; color:var(--primary); margin-bottom:22px; font-weight:700; }
+    .includes-list { list-style:none; }
+    .includes-list li {
+      display:flex; gap:12px; align-items:flex-start; padding:11px 0;
+      border-bottom:1px solid var(--border); font-size:.92rem; color:var(--text);
+    }
+    .includes-list li:last-child { border-bottom:none; }
+    .check {
+      flex-shrink:0; width:20px; height:20px; border-radius:50%;
+      background:var(--light); color:var(--primary);
+      display:flex; align-items:center; justify-content:center; font-size:.65rem; margin-top:1px; font-weight:700;
+    }
+
+    .modules-strip { margin-top:26px; padding-top:22px; border-top:1px solid var(--border); }
+    .modules-strip .label { font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin-bottom:12px; }
+    .mod-chip-row { display:flex; flex-wrap:wrap; gap:8px; }
+    .mod-chip { font-size:.74rem; border:1px solid var(--border); color:var(--muted); padding:5px 11px; border-radius:8px; background:var(--white); }
+
+    /* PRICE CARD */
+    .price-card {
+      background:var(--grad); color:#fff; border-radius:var(--r);
+      padding:40px 34px; box-shadow:var(--shadow-lg); position:relative; overflow:hidden;
+    }
+    .price-tag { font-size:.72rem; text-transform:uppercase; letter-spacing:.12em; opacity:.85; margin-bottom:12px; font-weight:700; }
+    .price-amount { font-size:3rem; font-weight:800; line-height:1; margin-bottom:6px; }
+    .price-amount .currency { font-size:1.2rem; vertical-align:top; margin-right:4px; opacity:.75; }
+    .price-note { font-size:.84rem; opacity:.85; margin-bottom:30px; }
+
+    .cta-btn {
+      display:block; width:100%; text-align:center; background:#fff; color:var(--primary);
+      font-weight:700; font-size:1rem; padding:15px 0; border-radius:30px; border:none;
+      cursor:pointer; transition:transform .2s, box-shadow .2s; box-shadow:0 4px 20px rgba(0,0,0,.14);
+    }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,0,0,.2); }
+    .cta-btn:focus-visible { outline:3px solid #fff; outline-offset:3px; }
+
+    .secure-note { display:flex; align-items:center; justify-content:center; gap:8px; font-size:.76rem; opacity:.8; margin-top:16px; }
+
+    footer { text-align:center; padding:34px 24px 44px; border-top:1px solid var(--border); font-size:.76rem; color:var(--muted); }
+    footer .iso { margin-top:6px; }
+
+    @media (max-width:560px) {
+      .hero { padding:64px 20px 24px; }
+      h1 { font-size:1.7rem; }
+      .stats-row { gap:22px; }
+      .plan-wrap { padding:48px 20px 80px; }
+      .nav-right a.hide-mobile { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">Sanitary Intelligence</a>
+      <div class="nav-right">
+        <a href="trade.html" class="hide-mobile" data-i18n="nav.trade">Full Course</a>
+        <a href="incoterms.html" class="hide-mobile" data-i18n="nav.incoterms">Incoterms</a>
+        <div class="lang-sel" id="langSel">
+          <button class="lang-btn" onclick="toggleLang()" aria-label="Language">
+            <span id="langLabel">EN</span>
+            <svg viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="lang-drop" id="langDrop">
+            <div class="lang-opt active" data-lang="en" onclick="setLang('en')">🇺🇸&nbsp; English</div>
+            <div class="lang-opt" data-lang="pt" onclick="setLang('pt')">🇧🇷&nbsp; Português</div>
+            <div class="lang-opt" data-lang="es" onclick="setLang('es')">🇪🇸&nbsp; Español</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow" data-i18n="hero.eyebrow">Enrollment Open · 2026 Class</span>
+      <h1>
+        <span data-i18n="hero.h1pre">Secure your access to</span>
+        <span class="hl">SI Academy</span>
+      </h1>
+      <p class="subtitle-line" data-i18n="hero.subtitle">International Trade</p>
+      <p class="sub" data-i18n="hero.sub">One-time payment. Access released automatically after confirmation — no subscription, no recurring fees.</p>
+
+      <div class="stats-row">
+        <div class="stat"><div class="num">6</div><div class="label" data-i18n="stats.modules">Modules</div></div>
+        <div class="stat"><div class="num">35h</div><div class="label" data-i18n="stats.hours">Total Hours</div></div>
+        <div class="stat"><div class="num">74</div><div class="label" data-i18n="stats.terms">Glossary Terms</div></div>
+        <div class="stat"><div class="num">✓</div><div class="label" data-i18n="stats.certificate">Certificate Included</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="plan-wrap">
+
+    <div class="includes-card">
+      <h3 data-i18n="includes.title">What's Included</h3>
+      <ul class="includes-list">
+        <li><span class="check">✓</span> <span data-i18n="includes.i1">Full access to all 6 modules on Google Classroom (workbooks, slides, video lessons and support materials)</span></li>
+        <li><span class="check">✓</span> <span data-i18n="includes.i2">Weekly Study Plan as your primary pacing guide</span></li>
+        <li><span class="check">✓</span> <span data-i18n="includes.i3">Bilingual Glossary with 74 essential international trade terms (PT/EN)</span></li>
+        <li><span class="check">✓</span> <span data-i18n="includes.i4">Complete "International Trade Master Guide" e-book in Portuguese and English</span></li>
+        <li><span class="check">✓</span> <span data-i18n="includes.i5">Complete Incoterms® 2020 reference table</span></li>
+        <li><span class="check">✓</span> <span data-i18n="includes.i6">Final assessment with automatically issued completion certificate</span></li>
+        <li><span class="check">✓</span> <span data-i18n="includes.i7">Compliant with ISO 9001:2015, ISO 21001:2018 and ISO 29993:2017</span></li>
+      </ul>
+
+      <div class="modules-strip">
+        <div class="label" data-i18n="modules.label">Course Modules</div>
+        <div class="mod-chip-row">
+          <span class="mod-chip" data-i18n="mod.m01">M01 Fundamentals</span>
+          <span class="mod-chip" data-i18n="mod.m02">M02 Customs Clearance</span>
+          <span class="mod-chip" data-i18n="mod.m03">M03 Exchange & Finance</span>
+          <span class="mod-chip" data-i18n="mod.m04">M04 Logistics</span>
+          <span class="mod-chip" data-i18n="mod.m05">M05 Incoterms® 2020</span>
+          <span class="mod-chip" data-i18n="mod.m06">M06 Compliance</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="price-card">
+      <div class="price-tag" data-i18n="price.tag">One-time payment</div>
+      <div class="price-amount"><span class="currency">USD</span>197</div>
+      <div class="price-note" data-i18n="price.note">No auto-renewal · Lifetime access to the content</div>
+
+      <!--
+        REPLACE THE HREF BELOW WITH YOUR STRIPE PAYMENT LINK.
+        Create it in: Stripe Dashboard → Payment Links → Create payment link.
+        Set the "redirect URL after payment" to success.html
+      -->
+      <a class="cta-btn" href="https://buy.stripe.com/YOUR_LINK_HERE" target="_blank" rel="noopener" data-i18n="price.cta">
+        Enroll now
+      </a>
+
+      <div class="secure-note">🔒 <span data-i18n="price.secure">Payment securely processed by Stripe</span></div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div data-i18n="footer.line1">SI Academy · Oslo, Norway · Sanitary Intelligence</div>
+    <div class="iso">ISO 9001:2015 · ISO 21001:2018 · ISO 29993:2017 · ISO 19600 · ISO 37001</div>
+  </footer>
+
+<script>
+const T = {
+  en:{
+    "nav.trade":"Full Course","nav.incoterms":"Incoterms",
+    "hero.eyebrow":"Enrollment Open · 2026 Class",
+    "hero.h1pre":"Secure your access to",
+    "hero.subtitle":"International Trade",
+    "hero.sub":"One-time payment. Access released automatically after confirmation — no subscription, no recurring fees.",
+    "stats.modules":"Modules","stats.hours":"Total Hours","stats.terms":"Glossary Terms","stats.certificate":"Certificate Included",
+    "includes.title":"What's Included",
+    "includes.i1":"Full access to all 6 modules on Google Classroom (workbooks, slides, video lessons and support materials)",
+    "includes.i2":"Weekly Study Plan as your primary pacing guide",
+    "includes.i3":"Bilingual Glossary with 74 essential international trade terms (PT/EN)",
+    "includes.i4":"Complete \u201CInternational Trade Master Guide\u201D e-book in Portuguese and English",
+    "includes.i5":"Complete Incoterms® 2020 reference table",
+    "includes.i6":"Final assessment with automatically issued completion certificate",
+    "includes.i7":"Compliant with ISO 9001:2015, ISO 21001:2018 and ISO 29993:2017",
+    "modules.label":"Course Modules",
+    "mod.m01":"M01 Fundamentals","mod.m02":"M02 Customs Clearance","mod.m03":"M03 Exchange & Finance",
+    "mod.m04":"M04 Logistics","mod.m05":"M05 Incoterms® 2020","mod.m06":"M06 Compliance",
+    "price.tag":"One-time payment","price.note":"No auto-renewal · Lifetime access to the content",
+    "price.cta":"Enroll now","price.secure":"Payment securely processed by Stripe",
+    "footer.line1":"SI Academy · Oslo, Norway · Sanitary Intelligence"
+  },
+  pt:{
+    "nav.trade":"Curso Completo","nav.incoterms":"Incoterms",
+    "hero.eyebrow":"Inscrição Aberta · Turma 2026",
+    "hero.h1pre":"Garanta seu acesso ao",
+    "hero.subtitle":"Comércio Internacional",
+    "hero.sub":"Pagamento único. Acesso liberado automaticamente após a confirmação — sem mensalidade, sem recorrência.",
+    "stats.modules":"Módulos","stats.hours":"Carga Horária","stats.terms":"Termos no Glossário","stats.certificate":"Certificado Incluso",
+    "includes.title":"O que está incluído",
+    "includes.i1":"Acesso completo aos 6 módulos no Google Classroom (apostilas, slides, vídeo-aulas e materiais de apoio)",
+    "includes.i2":"Plano de Estudos Semanal como guia primário de ritmo de aprendizagem",
+    "includes.i3":"Glossário Bilíngue com 74 termos essenciais do Comex (PT/EN)",
+    "includes.i4":"E-book completo \u201CGuia Mestre de Comércio Internacional\u201D em português e inglês",
+    "includes.i5":"Tabela de referência completa dos Incoterms® 2020",
+    "includes.i6":"Avaliação final com certificado de conclusão emitido automaticamente",
+    "includes.i7":"Conformidade com ISO 9001:2015, ISO 21001:2018 e ISO 29993:2017",
+    "modules.label":"Módulos do curso",
+    "mod.m01":"M01 Fundamentos","mod.m02":"M02 Despacho Aduaneiro","mod.m03":"M03 Câmbio",
+    "mod.m04":"M04 Logística","mod.m05":"M05 Incoterms® 2020","mod.m06":"M06 Compliance",
+    "price.tag":"Pagamento único","price.note":"Sem renovação automática · Acesso vitalício ao conteúdo",
+    "price.cta":"Inscrever-se agora","price.secure":"Pagamento processado com segurança pelo Stripe",
+    "footer.line1":"SI Academy · Oslo, Noruega · Sanitary Intelligence"
+  },
+  es:{
+    "nav.trade":"Curso Completo","nav.incoterms":"Incoterms",
+    "hero.eyebrow":"Inscripción Abierta · Cohorte 2026",
+    "hero.h1pre":"Asegure su acceso a",
+    "hero.subtitle":"Comercio Internacional",
+    "hero.sub":"Pago único. Acceso liberado automáticamente tras la confirmación — sin mensualidad, sin recurrencia.",
+    "stats.modules":"Módulos","stats.hours":"Carga Horaria","stats.terms":"Términos del Glosario","stats.certificate":"Certificado Incluido",
+    "includes.title":"Qué incluye",
+    "includes.i1":"Acceso completo a los 6 módulos en Google Classroom (manuales, diapositivas, videoclases y materiales de apoyo)",
+    "includes.i2":"Plan de Estudio Semanal como guía principal de ritmo de aprendizaje",
+    "includes.i3":"Glosario Bilingüe con 74 términos esenciales de comercio internacional (PT/EN)",
+    "includes.i4":"E-book completo \u201CGuía Maestra de Comercio Internacional\u201D en portugués e inglés",
+    "includes.i5":"Tabla de referencia completa de los Incoterms® 2020",
+    "includes.i6":"Evaluación final con certificado de finalización emitido automáticamente",
+    "includes.i7":"Conforme con ISO 9001:2015, ISO 21001:2018 e ISO 29993:2017",
+    "modules.label":"Módulos del curso",
+    "mod.m01":"M01 Fundamentos","mod.m02":"M02 Despacho Aduanero","mod.m03":"M03 Cambio y Finanzas",
+    "mod.m04":"M04 Logística","mod.m05":"M05 Incoterms® 2020","mod.m06":"M06 Compliance",
+    "price.tag":"Pago único","price.note":"Sin renovación automática · Acceso de por vida al contenido",
+    "price.cta":"Inscribirse ahora","price.secure":"Pago procesado de forma segura por Stripe",
+    "footer.line1":"SI Academy · Oslo, Noruega · Sanitary Intelligence"
+  }
+};
+
+let lang = localStorage.getItem('si_lang') || 'en';
+
+function applyLang(l) {
+  const t = T[l]; if (!t) return;
+  document.documentElement.lang = l === 'pt' ? 'pt-BR' : l;
+  document.querySelectorAll('[data-i18n]').forEach(el => { if (t[el.dataset.i18n] !== undefined) el.textContent = t[el.dataset.i18n]; });
+  document.querySelectorAll('.lang-opt').forEach(o => o.classList.toggle('active', o.dataset.lang === l));
+  document.getElementById('langLabel').textContent = {en:'EN',pt:'PT',es:'ES'}[l]||'EN';
+}
+
+function setLang(l) { lang=l; localStorage.setItem('si_lang',l); applyLang(l); closeLang(); }
+function toggleLang() { document.getElementById('langSel').classList.toggle('open'); }
+function closeLang()  { document.getElementById('langSel').classList.remove('open'); }
+document.addEventListener('click', e => { if (!e.target.closest('#langSel')) closeLang(); });
+
+applyLang(lang);
+</script>
+</body>
+</html>
