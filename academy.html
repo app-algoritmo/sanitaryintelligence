@@ -61,6 +61,9 @@
         .glow-text {
             text-shadow: 0 0 10px rgba(34, 211, 238, 0.6), 0 0 20px rgba(34, 211, 238, 0.3);
         }
+        .classroom-card {
+            background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%);
+        }
     </style>
 </head>
 <body class="bg-si-light text-si-dark font-sans min-h-screen flex flex-col">
@@ -168,14 +171,20 @@
         </div>
 
         <!-- Academy Dashboard (Hidden by default) -->
-        <div id="academy-screen" class="hidden w-full max-w-5xl animate-fade-in">
+        <div id="academy-screen" class="hidden w-full max-w-6xl animate-fade-in">
             <div class="text-center mb-10">
                 <span class="inline-block px-3 py-1 bg-si-accent/10 text-si-accent text-xs font-bold rounded-full mb-3 tracking-wider" data-i18n="welcome_badge">BEM-VINDO À ACADEMY</span>
                 <h2 class="text-3xl md:text-4xl font-bold text-si-dark mb-4" data-i18n="main_title">Programa de Estudos</h2>
                 <p class="text-gray-600 max-w-2xl mx-auto" data-i18n="main_subtitle">Capacitação de excelência em regulamentações, práticas e normas internacionais.</p>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <!-- Explainer banner: where things really happen -->
+            <div class="bg-blue-50 border border-blue-100 rounded-xl p-5 mb-10 flex items-start gap-3 max-w-3xl mx-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-si-primary flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <p class="text-sm text-gray-700" data-i18n="explainer_banner">Os cards abaixo trazem prévias e ensaios de estudo. As apostilas completas, vídeo-aulas, avaliação final e certificado de conclusão estão disponíveis na sala de aula no Google Classroom.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
                 <!-- Course 1: COMPLETE TRADE COURSE -->
                 <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden cursor-pointer transform hover:-translate-y-1 flex flex-col">
                     <div class="h-2 bg-si-primary"></div>
@@ -186,7 +195,8 @@
                             </svg>
                         </div>
                         
-                        <h3 class="text-xl font-bold text-si-dark mb-3" data-i18n="course1_title">Curso Completo de Trade</h3>
+                        <h3 class="text-xl font-bold text-si-dark mb-1" data-i18n="course1_title">Ensaio: Trade</h3>
+                        <p class="text-xs font-semibold text-si-accent uppercase tracking-wider mb-3" data-i18n="course1_tag">Prévia de estudo</p>
                         
                         <!-- Stats Badges -->
                         <div class="flex flex-wrap gap-2 mb-4">
@@ -196,7 +206,7 @@
                             <span class="bg-blue-50 text-si-primary text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c1_stats_glossary">28 termos</span>
                         </div>
 
-                        <p class="text-gray-600 mb-4 text-sm leading-relaxed" data-i18n="course1_desc">Domine as operações de Comércio Exterior, da classificação fiscal ao desembaraço, com foco em inteligência sanitária e regulatória.</p>
+                        <p class="text-gray-600 mb-4 text-sm leading-relaxed" data-i18n="course1_desc">Prévia introdutória das operações de Comércio Exterior, da classificação fiscal ao desembaraço, com foco em inteligência sanitária e regulatória.</p>
                         
                         <!-- Modules List -->
                         <div class="mb-4 flex-grow">
@@ -231,7 +241,7 @@
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <svg class="w-3.5 h-3.5 text-si-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                    <span data-i18n="c1_f3">Quiz interativo com feedback explicado por questão</span>
+                                    <span data-i18n="c1_f3">Quiz interativo de ensaio com feedback explicado por questão</span>
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <svg class="w-3.5 h-3.5 text-si-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
@@ -239,7 +249,7 @@
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <svg class="w-3.5 h-3.5 text-si-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                    <span data-i18n="c1_f5">Certificado de conclusão ao completar tudo</span>
+                                    <span data-i18n="c1_f5">Avaliação oficial e certificado disponíveis no Google Classroom</span>
                                 </li>
                             </ul>
                         </div>
@@ -259,7 +269,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-si-dark mb-3" data-i18n="course2_title">Curso Interativo de Incoterms</h3>
+                        <h3 class="text-xl font-bold text-si-dark mb-1" data-i18n="course2_title">Ensaio: Incoterms</h3>
+                        <p class="text-xs font-semibold text-si-accent uppercase tracking-wider mb-3" data-i18n="course2_tag">Prévia interativa</p>
                         
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span class="bg-teal-50 text-si-accent text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c2_stats_1">6 módulos</span>
@@ -267,7 +278,7 @@
                             <span class="bg-teal-50 text-si-accent text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c2_stats_3">Glossário</span>
                         </div>
 
-                        <p class="text-gray-600 mb-4 text-sm leading-relaxed" data-i18n="course2_desc">Domine as regras da ICC com foco prático e contextualizado para o comércio internacional e a realidade brasileira.</p>
+                        <p class="text-gray-600 mb-4 text-sm leading-relaxed" data-i18n="course2_desc">Prévia interativa das regras da ICC com foco prático e contextualizado para o comércio internacional e a realidade brasileira.</p>
                         
                         <!-- Modules List -->
                         <div class="mb-4 flex-grow">
@@ -281,7 +292,7 @@
                                 <li class="flex gap-2"><span class="text-si-accent font-bold flex-shrink-0">M03</span> <span data-i18n="c2_m03">Grupo F — FCA, FAS, FOB (com alerta sobre FOB + contêiner)</span></li>
                                 <li class="flex gap-2"><span class="text-si-accent font-bold flex-shrink-0">M04</span> <span data-i18n="c2_m04">Grupo C — CPT, CIP, CFR, CIF (com destaque para novidades 2020)</span></li>
                                 <li class="flex gap-2"><span class="text-si-accent font-bold flex-shrink-0">M05</span> <span data-i18n="c2_m05">Grupo D — DAP, DPU, DDP (com atenção ao contexto brasileiro)</span></li>
-                                <li class="flex gap-2"><span class="text-si-accent font-bold flex-shrink-0">M06</span> <span data-i18n="c2_m06">Quiz interativo com 8 questões práticas e gabarito comentado</span></li>
+                                <li class="flex gap-2"><span class="text-si-accent font-bold flex-shrink-0">M06</span> <span data-i18n="c2_m06">Quiz de ensaio com 8 questões práticas e gabarito comentado</span></li>
                             </ul>
                         </div>
 
@@ -317,6 +328,58 @@
 
                         <a href="incoterms.html" class="block w-full py-3 text-center border-2 border-si-accent text-si-accent font-bold rounded-lg group-hover:bg-si-accent group-hover:text-white transition-all text-sm mt-auto" data-i18n="start_course">
                             Iniciar
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Course 3: GOOGLE CLASSROOM -->
+                <div class="classroom-card group rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-1 flex flex-col text-white">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                            </svg>
+                        </div>
+
+                        <h3 class="text-xl font-bold mb-1" data-i18n="course3_title">Sala de Aula Oficial</h3>
+                        <p class="text-xs font-semibold text-white/80 uppercase tracking-wider mb-3" data-i18n="course3_tag">Google Classroom</p>
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-white/15 text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c3_stats_1">35 horas</span>
+                            <span class="bg-white/15 text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c3_stats_2">Avaliação oficial</span>
+                            <span class="bg-white/15 text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide" data-i18n="c3_stats_3">Certificado</span>
+                        </div>
+
+                        <p class="text-white/90 mb-4 text-sm leading-relaxed" data-i18n="course3_desc">É aqui que o curso completo acontece de verdade: apostilas, vídeo-aulas, materiais de apoio, avaliação final oficial e emissão automática do certificado de conclusão.</p>
+
+                        <div class="mb-4 flex-grow">
+                            <h4 class="text-[10px] font-bold uppercase tracking-wider mb-2 flex items-center gap-1 text-white/80">
+                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
+                                <span data-i18n="c3_includes_title">O que você encontra lá</span>
+                            </h4>
+                            <ul class="space-y-1.5 text-xs text-white/90">
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-3.5 h-3.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                    <span data-i18n="c3_f1">Apostilas completas e apresentações de todos os módulos</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-3.5 h-3.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                    <span data-i18n="c3_f2">Vídeo-aulas e materiais de apoio</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-3.5 h-3.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                    <span data-i18n="c3_f3">Avaliação final oficial, com nota</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-3.5 h-3.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                    <span data-i18n="c3_f4">Certificado de conclusão emitido automaticamente</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <a href="https://classroom.google.com/c/Nzk4MjAyNzU5ODQ4?cjc=3ggjyqv3" target="_blank" rel="noopener" class="block w-full py-3 text-center bg-white text-si-accent font-bold rounded-lg hover:bg-gray-50 transition-all text-sm" data-i18n="go_to_classroom">
+                            Ir para o Classroom
                         </a>
                     </div>
                 </div>
@@ -375,12 +438,14 @@
                 welcome_badge: "BEM-VINDO À ACADEMY",
                 main_title: "Programa de Estudos",
                 main_subtitle: "Capacitação de excelência em regulamentações, práticas e normas internacionais.",
-                course1_title: "Curso Completo de Trade",
+                explainer_banner: "Os cards abaixo trazem prévias e ensaios de estudo. As apostilas completas, vídeo-aulas, avaliação final e certificado de conclusão estão disponíveis na sala de aula no Google Classroom.",
+                course1_title: "Ensaio: Trade",
+                course1_tag: "Prévia de estudo",
                 c1_stats_modules: "6 módulos",
                 c1_stats_lessons: "21 aulas",
                 c1_stats_quiz: "10 questões",
                 c1_stats_glossary: "28 termos",
-                course1_desc: "Domine as operações de Comércio Exterior, da classificação fiscal ao desembaraço, com foco em inteligência sanitária e regulatória.",
+                course1_desc: "Prévia introdutória das operações de Comércio Exterior, da classificação fiscal ao desembaraço, com foco em inteligência sanitária e regulatória.",
                 c1_modules_title: "Módulos",
                 c1_m01: "Fundamentos: balança comercial, câmbio, OMC, blocos regionais",
                 c1_m02: "Despacho Aduaneiro: NCM/SH, fluxo exportação/importação, tributação e regimes especiais",
@@ -391,27 +456,40 @@
                 c1_features_title: "Funcionalidades",
                 c1_f1: "Progresso individual por aula com barra geral",
                 c1_f2: "Navegação entre aulas com \"marcar como concluída\"",
-                c1_f3: "Quiz interativo com feedback explicado por questão",
+                c1_f3: "Quiz interativo de ensaio com feedback explicado por questão",
                 c1_f4: "Glossário com 28 termos do Comex",
-                c1_f5: "Certificado de conclusão ao completar tudo",
-                course2_title: "Curso Interativo de Incoterms",
+                c1_f5: "Avaliação oficial e certificado disponíveis no Google Classroom",
+                course2_title: "Ensaio: Incoterms",
+                course2_tag: "Prévia interativa",
                 c2_stats_1: "6 módulos",
                 c2_stats_2: "8 questões de quiz",
                 c2_stats_3: "Glossário",
-                course2_desc: "Domine as regras da ICC com foco prático e contextualizado para o comércio internacional e a realidade brasileira.",
+                course2_desc: "Prévia interativa das regras da ICC com foco prático e contextualizado para o comércio internacional e a realidade brasileira.",
                 c2_modules_title: "Módulos",
                 c2_m01: "O que são Incoterms (origem, citação correta, o que definem e o que NÃO definem)",
                 c2_m02: "Grupo E — EXW",
                 c2_m03: "Grupo F — FCA, FAS, FOB (com alerta sobre FOB + contêiner)",
                 c2_m04: "Grupo C — CPT, CIP, CFR, CIF (com destaque para novidades 2020)",
                 c2_m05: "Grupo D — DAP, DPU, DDP (com atenção ao contexto brasileiro)",
-                c2_m06: "Quiz interativo com 8 questões práticas e gabarito comentado",
+                c2_m06: "Quiz de ensaio com 8 questões práticas e gabarito comentado",
                 c2_features_title: "Destaques Pedagógicos",
                 c2_f1: "Cada Incoterm tem painel expansível com tabela vendedor × comprador",
                 c2_f2: "Alertas sobre mudanças dos Incoterms 2020 (DPU substituiu DAT, CIP exige ICC A)",
                 c2_f3: "Contexto Brasil: valor CIF como base do imposto de importação, FOB vs FCA para contêiner",
                 c2_f4: "Glossário com termos essenciais",
                 c2_f5: "Barra de progresso que rastreia quais termos já foram vistos",
+                course3_title: "Sala de Aula Oficial",
+                course3_tag: "Google Classroom",
+                c3_stats_1: "35 horas",
+                c3_stats_2: "Avaliação oficial",
+                c3_stats_3: "Certificado",
+                course3_desc: "É aqui que o curso completo acontece de verdade: apostilas, vídeo-aulas, materiais de apoio, avaliação final oficial e emissão automática do certificado de conclusão.",
+                c3_includes_title: "O que você encontra lá",
+                c3_f1: "Apostilas completas e apresentações de todos os módulos",
+                c3_f2: "Vídeo-aulas e materiais de apoio",
+                c3_f3: "Avaliação final oficial, com nota",
+                c3_f4: "Certificado de conclusão emitido automaticamente",
+                go_to_classroom: "Ir para o Classroom",
                 start_course: "Iniciar",
                 cert_title: "Certificação Oficial",
                 cert_created: "Curso criado por",
@@ -431,12 +509,14 @@
                 welcome_badge: "WELCOME TO THE ACADEMY",
                 main_title: "Study Program",
                 main_subtitle: "Excellence training in regulations, practices, and international standards.",
-                course1_title: "Complete Trade Course",
+                explainer_banner: "The cards below offer previews and study trial runs. Full workbooks, video lessons, final assessment, and completion certificate are available in the classroom on Google Classroom.",
+                course1_title: "Trial: Trade",
+                course1_tag: "Study preview",
                 c1_stats_modules: "6 modules",
                 c1_stats_lessons: "21 classes",
                 c1_stats_quiz: "10 questions",
                 c1_stats_glossary: "28 terms",
-                course1_desc: "Master Foreign Trade operations, from fiscal classification to customs clearance, with a focus on sanitary and regulatory intelligence.",
+                course1_desc: "Introductory preview of Foreign Trade operations, from fiscal classification to customs clearance, with a focus on sanitary and regulatory intelligence.",
                 c1_modules_title: "Modules",
                 c1_m01: "Fundamentals: trade balance, exchange rates, WTO, regional blocs",
                 c1_m02: "Customs Clearance: HS Code, export/import flow, taxation, and special regimes",
@@ -447,27 +527,40 @@
                 c1_features_title: "Features",
                 c1_f1: "Individual lesson progress with overall bar",
                 c1_f2: "Navigation between lessons with \"mark as completed\"",
-                c1_f3: "Interactive quiz with explained feedback per question",
+                c1_f3: "Interactive trial quiz with explained feedback per question",
                 c1_f4: "Glossary with 28 Comex terms",
-                c1_f5: "Completion certificate upon finishing everything",
-                course2_title: "Interactive Incoterms Course",
+                c1_f5: "Official assessment and certificate available on Google Classroom",
+                course2_title: "Trial: Incoterms",
+                course2_tag: "Interactive preview",
                 c2_stats_1: "6 modules",
                 c2_stats_2: "8 quiz questions",
                 c2_stats_3: "Glossary",
-                course2_desc: "Master ICC rules with a practical focus contextualized for international trade and the Brazilian reality.",
+                course2_desc: "Interactive preview of ICC rules with a practical focus contextualized for international trade and the Brazilian reality.",
                 c2_modules_title: "Modules",
                 c2_m01: "What are Incoterms (origin, correct citation, what they define and what they DO NOT define)",
                 c2_m02: "Group E — EXW",
                 c2_m03: "Group F — FCA, FAS, FOB (with alert on FOB + container)",
                 c2_m04: "Group C — CPT, CIP, CFR, CIF (highlighting 2020 updates)",
                 c2_m05: "Group D — DAP, DPU, DDP (with attention to the Brazilian context)",
-                c2_m06: "Interactive quiz with 8 practical questions and commented answer key",
+                c2_m06: "Trial quiz with 8 practical questions and commented answer key",
                 c2_features_title: "Pedagogical Highlights",
                 c2_f1: "Each Incoterm has an expandable panel with a seller × buyer table",
                 c2_f2: "Alerts on Incoterms 2020 changes (DPU replaced DAT, CIP requires ICC A)",
                 c2_f3: "Brazil context: CIF value as import tax base, FOB vs FCA for containers",
                 c2_f4: "Glossary with essential terms",
                 c2_f5: "Progress bar tracking which terms have been viewed",
+                course3_title: "Official Classroom",
+                course3_tag: "Google Classroom",
+                c3_stats_1: "35 hours",
+                c3_stats_2: "Official assessment",
+                c3_stats_3: "Certificate",
+                course3_desc: "This is where the full course really happens: workbooks, video lessons, support materials, the official final assessment, and automatic certificate issuance.",
+                c3_includes_title: "What you'll find there",
+                c3_f1: "Full workbooks and slide decks for every module",
+                c3_f2: "Video lessons and support materials",
+                c3_f3: "Official graded final assessment",
+                c3_f4: "Automatically issued completion certificate",
+                go_to_classroom: "Go to Classroom",
                 start_course: "Start",
                 cert_title: "Official Certification",
                 cert_created: "Course created by",
@@ -487,12 +580,14 @@
                 welcome_badge: "BIENVENIDO A LA ACADEMY",
                 main_title: "Programa de Estudios",
                 main_subtitle: "Capacitación de excelencia en regulaciones, prácticas y normas internacionales.",
-                course1_title: "Curso Completo de Comercio Exterior",
+                explainer_banner: "Las tarjetas a continuación ofrecen vistas previas y ensayos de estudio. Los manuales completos, videoclases, evaluación final y certificado de finalización están disponibles en el aula de Google Classroom.",
+                course1_title: "Ensayo: Trade",
+                course1_tag: "Vista previa de estudio",
                 c1_stats_modules: "6 módulos",
                 c1_stats_lessons: "21 clases",
                 c1_stats_quiz: "10 preguntas",
                 c1_stats_glossary: "28 términos",
-                course1_desc: "Domine las operaciones de Comercio Exterior, desde la clasificación fiscal hasta el despacho de aduanas, con enfoque en inteligencia sanitaria y regulatoria.",
+                course1_desc: "Vista previa introductoria de las operaciones de Comercio Exterior, desde la clasificación fiscal hasta el despacho de aduanas, con enfoque en inteligencia sanitaria y regulatoria.",
                 c1_modules_title: "Módulos",
                 c1_m01: "Fundamentos: balanza comercial, tipo de cambio, OMC, bloques regionales",
                 c1_m02: "Despacho Aduanero: NCM/SA, flujo exportación/importación, tributación y regímenes especiales",
@@ -503,27 +598,40 @@
                 c1_features_title: "Funcionalidades",
                 c1_f1: "Progreso individual por clase con barra general",
                 c1_f2: "Navegación entre clases con \"marcar como completada\"",
-                c1_f3: "Quiz interactivo con retroalimentación explicada por pregunta",
+                c1_f3: "Quiz interactivo de ensayo con retroalimentación explicada por pregunta",
                 c1_f4: "Glosario con 28 términos de comercio exterior",
-                c1_f5: "Certificado de finalización al completar todo",
-                course2_title: "Curso Interactivo de Incoterms",
+                c1_f5: "Evaluación oficial y certificado disponibles en Google Classroom",
+                course2_title: "Ensayo: Incoterms",
+                course2_tag: "Vista previa interactiva",
                 c2_stats_1: "6 módulos",
                 c2_stats_2: "8 preguntas de quiz",
                 c2_stats_3: "Glosario",
-                course2_desc: "Domine las reglas de la CCI con un enfoque práctico contextualizado para el comercio internacional y la realidad brasileña.",
+                course2_desc: "Vista previa interactiva de las reglas de la CCI con un enfoque práctico contextualizado para el comercio internacional y la realidad brasileña.",
                 c2_modules_title: "Módulos",
                 c2_m01: "Qué son los Incoterms (origen, citación correcta, qué definen y qué NO definen)",
                 c2_m02: "Grupo E — EXW",
                 c2_m03: "Grupo F — FCA, FAS, FOB (con alerta sobre FOB + contenedor)",
                 c2_m04: "Grupo C — CPT, CIP, CFR, CIF (con destaque para las novedades 2020)",
                 c2_m05: "Grupo D — DAP, DPU, DDP (con atención al contexto brasileño)",
-                c2_m06: "Quiz interactivo con 8 preguntas prácticas y clave de respuestas comentada",
+                c2_m06: "Quiz de ensayo con 8 preguntas prácticas y clave de respuestas comentada",
                 c2_features_title: "Aspectos Pedagógicos",
                 c2_f1: "Cada Incoterm tiene un panel expandible con tabla vendedor × comprador",
                 c2_f2: "Alertas sobre cambios de Incoterms 2020 (DPU reemplazó a DAT, CIP exige ICC A)",
                 c2_f3: "Contexto Brasil: valor CIF como base del impuesto de importación, FOB vs FCA para contenedores",
                 c2_f4: "Glosario con términos esenciales",
                 c2_f5: "Barra de progreso que rastrea qué términos ya fueron vistos",
+                course3_title: "Aula Oficial",
+                course3_tag: "Google Classroom",
+                c3_stats_1: "35 horas",
+                c3_stats_2: "Evaluación oficial",
+                c3_stats_3: "Certificado",
+                course3_desc: "Aquí es donde el curso completo realmente ocurre: manuales, videoclases, materiales de apoyo, evaluación final oficial y emisión automática del certificado de finalización.",
+                c3_includes_title: "Lo que encontrará allí",
+                c3_f1: "Manuales completos y presentaciones de todos los módulos",
+                c3_f2: "Videoclases y materiales de apoyo",
+                c3_f3: "Evaluación final oficial, con calificación",
+                c3_f4: "Certificado de finalización emitido automáticamente",
+                go_to_classroom: "Ir al Classroom",
                 start_course: "Iniciar",
                 cert_title: "Certificación Oficial",
                 cert_created: "Curso creado por",
