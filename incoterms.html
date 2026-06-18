@@ -41,284 +41,6 @@
   .resp-diagram { display: none; animation: fadeIn 0.3s ease; }
   .resp-diagram.open { display: block; }
   
-  .incoterm-item.active-detail { border-color: var(--tw-colors-si-accent); background: #F0FDFA; border-left: 4px solid var(--tw-colors-si-accent); }
-</style>
-</head>
-<body class="bg-si-light text-si-dark font-sans min-h-screen flex flex-col relative">
-
-<!-- PIN OVERLAY (Bloqueio de Segurança) -->
-<div id="pin-overlay" class="fixed inset-0 bg-si-light z-[100] flex items-center justify-center p-4 hidden">
-    <div class="glass-effect rounded-2xl shadow-2xl p-8 text-center w-full max-w-md animate-fade-in border border-gray-200">
-        <div class="mb-6">
-            <div class="w-16 h-16 bg-si-light rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-200">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-si-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-            </div>
-            <h2 class="text-2xl font-bold text-si-dark mb-2" data-i18n="pin_title">Acesso Restrito</h2>
-            <p class="text-gray-500 text-sm" data-i18n="pin_subtitle">Insira seu código PIN de 6 dígitos para acessar este módulo.</p>
-        </div>
-        <form id="pin-form" class="space-y-6">
-            <input type="password" id="pin-input" maxlength="6" pattern="\d{6}" class="w-full px-4 py-4 text-2xl font-bold text-si-dark bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-si-accent focus:ring-4 focus:ring-si-accent/10 transition-all placeholder-gray-300 text-center tracking-[0.5em]" placeholder="000000" required autocomplete="off">
-            <p id="error-msg" class="text-red-500 text-sm font-medium hidden flex items-center justify-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
-                <span data-i18n="pin_error">Código PIN inválido. Tente novamente.</span>
-            </p>
-            <button type="submit" class="w-full bg-si-primary hover:bg-blue-800 text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-blue-900/20 transition-all transform hover:scale-[1.02] active:scale-[0.98]" data-i18n="pin_button">Acessar Módulo</button>
-        </form>
-        <p class="mt-6 text-xs text-gray-500 font-medium tracking-wide uppercase" data-i18n="pin_hint">USE O PIN QUE RECEBEU NA SALA DE AULA</p>
-    </div>
-</div>
-
-<!-- Header -->
-<nav class="bg-si-dark text-white py-4 shadow-lg sticky top-0 z-50">
-  <div class="container mx-auto px-4 flex items-center justify-between">
-    <div class="nav-brand flex items-center gap-3 cursor-pointer" onclick="window.location.href='academy.html'">
-      <div class="w-10 h-10 bg-si-accent rounded-lg flex items-center justify-center">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-      </div>
-      <div class="nav-text">
-        <div class="text-sm font-bold tracking-wide uppercase">Sanitary Intelligence</div>
-        <span class="text-[10px] font-semibold text-si-accent tracking-widest uppercase">Academy · Incoterms</span>
-      </div>
-    </div>
-    <div class="progress-wrap flex flex-col items-end gap-1">
-      <div class="progress-bar w-40 h-1.5 bg-white/15 rounded-full overflow-hidden">
-        <div class="progress-fill h-full bg-si-gold rounded-full transition-all duration-500" id="progressFill" style="width:0%"></div>
-      </div>
-      <div class="progress-label text-[10px] text-white/60 font-mono" id="progressLabel">0 / 11 termos explorados</div>
-    </div>
-    
-    <!-- Language Selector -->
-    <div class="relative lang-group ml-6">
-        <button class="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-3 py-2 rounded-lg transition-colors text-sm font-medium">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            <span id="current-lang-label">PT</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-        </button>
-        <div class="lang-dropdown absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-xl border border-gray-100 overflow-hidden z-50">
-            <button onclick="changeLanguage('pt')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-si-accent hover:text-white transition-colors flex items-center gap-2">🇧🇷 Português</button>
-            <button onclick="changeLanguage('en')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-si-accent hover:text-white transition-colors flex items-center gap-2">🇺🇸 English</button>
-            <button onclick="changeLanguage('es')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-si-accent hover:text-white transition-colors flex items-center gap-2">🇪🇸 Español</button>
-        </div>
-    </div>
-  </div>
-</nav>
-
-<!-- Hero -->
-<div class="hero bg-gradient-to-br from-si-dark to-si-primary text-white py-16 px-4 relative overflow-hidden">
-  <div class="absolute right-[-40px] top-1/2 -translate-y-1/2 rotate-90 font-mono text-8xl font-bold text-white/5 pointer-events-none whitespace-nowrap select-none">INCOTERMS</div>
-  <div class="container mx-auto max-w-4xl relative z-10">
-    <div class="hero-tag text-si-gold font-mono text-xs tracking-[0.2em] uppercase mb-4 font-semibold" data-i18n="hero_badge">Capacitação Oficial</div>
-    <h1 class="text-4xl md:text-5xl font-light mb-6 leading-tight" data-i18n="hero_title">Domine os <strong class="font-bold text-white">Incoterms® 2020</strong></h1>
-    <p class="text-white/80 text-lg max-w-2xl mb-8 leading-relaxed" data-i18n="hero_subtitle">Entenda responsabilidades, transferência de risco e aplicações práticas para exportação e importação com foco em regulamentação e compliance.</p>
-    
-    <div class="ship-visual flex gap-3 mb-8">
-      <div class="container-box w-12 h-8 border border-si-gold text-si-gold rounded flex items-center justify-center font-mono text-xs font-bold bg-white/5">EXW</div>
-      <div class="container-box w-12 h-8 border border-si-accent text-si-accent rounded flex items-center justify-center font-mono text-xs font-bold bg-white/5">FCA</div>
-      <div class="container-box w-12 h-8 border border-si-accent text-si-accent rounded flex items-center justify-center font-mono text-xs font-bold bg-white/5">CIP</div>
-      <div class="container-box w-12 h-8 border border-si-primary text-blue-300 rounded flex items-center justify-center font-mono text-xs font-bold bg-white/5">DDP</div>
-    </div>
-
-    <!-- BOTÃO DE CERTIFICADO (HERO) -->
-    <a href="#" class="btn-test-cert inline-flex items-center gap-3 bg-si-gold hover:bg-si-goldLight text-si-dark font-bold py-4 px-8 rounded-xl shadow-lg shadow-si-gold/20 transition-all transform hover:scale-[1.02] mb-4">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-      <span data-i18n="cert_button">Iniciar teste para obter seu certificado de conclusão</span>
-    </a>
-    <p class="text-[10px] text-white/40 font-mono mb-6">⚠️ LINK DO TESTE A SER INSERIDO</p>
-
-    <button class="btn-start inline-flex items-center gap-2 bg-white text-si-dark px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all" onclick="document.querySelector('main').scrollIntoView({behavior:'smooth'})">
-      Explorar Módulos ↓
-    </button>
-  </div>
-</div>
-
-<main class="container mx-auto px-4 py-12 max-w-5xl flex-grow">
-
-  <!-- MÓDULOS NAV -->
-  <div class="section-block mb-12">
-    <div class="section-eyebrow text-si-accent font-mono text-xs tracking-widest uppercase mb-2 font-semibold" data-i18n="nav_eyebrow">Estrutura do Curso</div>
-    <h2 class="text-2xl font-bold text-si-dark mb-6" data-i18n="nav_title">Módulos de Aprendizado</h2>
-    <div class="modules-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div class="module-card bg-white border border-gray-200 p-5 rounded-xl cursor-pointer hover:border-si-primary hover:shadow-lg transition-all" onclick="scrollTo('mod1')">
-        <div class="mod-num font-mono text-xs text-gray-500 mb-2 font-semibold">MÓDULO 01</div>
-        <div class="mod-title font-bold text-si-dark mb-1" data-i18n="m1_title">Fundamentos dos Incoterms</div>
-        <div class="mod-desc text-sm text-gray-500" data-i18n="m1_desc">Origem, propósito e como ler os termos corretamente.</div>
-      </div>
-      <div class="module-card bg-white border border-gray-200 p-5 rounded-xl cursor-pointer hover:border-si-primary hover:shadow-lg transition-all" onclick="scrollTo('mod2')">
-        <div class="mod-num font-mono text-xs text-gray-500 mb-2 font-semibold">MÓDULO 02</div>
-        <div class="mod-title font-bold text-si-dark mb-1" data-i18n="m2_title">Grupo E — Saída</div>
-        <div class="mod-desc text-sm text-gray-500" data-i18n="m2_desc">EXW: mínima responsabilidade do vendedor.</div>
-      </div>
-      <div class="module-card bg-white border border-gray-200 p-5 rounded-xl cursor-pointer hover:border-si-primary hover:shadow-lg transition-all" onclick="scrollTo('mod3')">
-        <div class="mod-num font-mono text-xs text-gray-500 mb-2 font-semibold">MÓDULO 03</div>
-        <div class="mod-title font-bold text-si-dark mb-1" data-i18n="m3_title">Grupo F — Frete não pago</div>
-        <div class="mod-desc text-sm text-gray-500" data-i18n="m3_desc">FCA, FAS e FOB: entrega próxima ao exportador.</div>
-      </div>
-      <div class="module-card bg-white border border-gray-200 p-5 rounded-xl cursor-pointer hover:border-si-primary hover:shadow-lg transition-all" onclick="scrollTo('mod4')">
-        <div class="mod-num font-mono text-xs text-gray-500 mb-2 font-semibold">MÓDULO 04</div>
-        <div class="mod-title font-bold text-si-dark mb-1" data-i18n="m4_title">Grupo C — Frete pago</div>
-        <div class="mod-desc text-sm text-gray-500" data-i18n="m4_desc">CPT, CIP, CFR e CIF: vendedor paga o frete principal.</div>
-      </div>
-      <div class="module-card bg-white border border-gray-200 p-5 rounded-xl cursor-pointer hover:border-si-primary hover:shadow-lg transition-all" onclick="scrollTo('mod5')">
-        <div class="mod-num font-mono text-xs text-gray-500 mb-2 font-semibold">MÓDULO 05</div>
-        <div class="mod-title font-bold text-si-dark mb-1" data-i18n="m5_title">Grupo D — Destino</div>
-        <div class="mod-desc text-sm text-gray-500" data-i18n="m5_desc">DAP, DPU e DDP: entrega no país do comprador.</div>
-      </div>
-      <div class="module-card bg-white border border-gray-200 p-5 rounded-xl cursor-pointer hover:border-si-primary hover:shadow-lg transition-all" onclick="scrollTo('quiz')">
-        <div class="mod-num font-mono text-xs text-gray-500 mb-2 font-semibold">MÓDULO 06</div>
-        <div class="mod-title font-bold text-si-dark mb-1" data-i18n="m6_title">Quiz de Fixação</div>
-        <div class="mod-desc text-sm text-gray-500" data-i18n="m6_desc">8 questões práticas para validar seu conhecimento.</div>
-      </div>
-    </div>
-  </div>
-
-  <hr class="border-gray-200 my-12">
-
-  <!-- MÓDULO 1 -->
-  <div class="section-block mb-16" id="mod1">
-    <div class="section-eyebrow text-si-accent font-mono text-xs tracking-widest uppercase mb-2 font-semibold">Módulo 01</div>
-    <h2 class="text-2xl font-bold text-si-dark mb-2" data-i18n="m1_h2">O que são Incoterms?</h2>
-    <p class="section-sub text-gray-500 mb-6" data-i18n="m1_sub">International Commercial Terms — regras publicadas pela Câmara de Comércio Internacional (CCI/ICC).</p>
-
-    <div class="scenario-box border-l-4 border-si-gold bg-amber-50 p-5 rounded-r-lg mb-6">
-      <div class="scenario-label text-si-gold font-mono text-[10px] tracking-widest uppercase font-bold mb-2" data-i18n="m1_sc1_label">Por que existem?</div>
-      <div class="scenario-text text-sm text-si-dark leading-relaxed" data-i18n="m1_sc1_text">Em um contrato de compra e venda internacional, duas perguntas são críticas: <strong>Quem paga o frete e o seguro?</strong> e <strong>Em que ponto o risco de perda ou dano passa do vendedor para o comprador?</strong> Os Incoterms respondem essas duas perguntas de forma padronizada, evitando disputas entre países com sistemas jurídicos diferentes.</div>
-    </div>
-
-    <div class="bg-white p-6 rounded-xl border border-gray-200 mb-6">
-      <strong class="text-si-dark block mb-3 font-semibold" data-i18n="m1_key_title">Pontos-chave:</strong>
-      <ul class="space-y-3">
-        <li class="flex items-start gap-3 text-sm text-gray-600"><span class="text-si-accent font-bold mt-0.5">▸</span> <span data-i18n="m1_k1">Publicados pela Câmara de Comércio Internacional (CCI/ICC) desde 1936.</span></li>
-        <li class="flex items-start gap-3 text-sm text-gray-600"><span class="text-si-accent font-bold mt-0.5">▸</span> <span data-i18n="m1_k2">Versão atual: Incoterms® 2020 (em vigor desde 1º de janeiro de 2020).</span></li>
-        <li class="flex items-start gap-3 text-sm text-gray-600"><span class="text-si-accent font-bold mt-0.5">▸</span> <span data-i18n="m1_k3">11 termos divididos em dois grupos: qualquer modal e apenas marítimo/fluvial.</span></li>
-        <li class="flex items-start gap-3 text-sm text-gray-600"><span class="text-si-accent font-bold mt-0.5">▸</span> <span data-i18n="m1_k4">Definem entrega, risco e custos — mas NÃO definem preço, pagamento ou transferência de propriedade.</span></li>
-      </ul>
-    </div>
-  </div>
-
-  <hr class="border-gray-200 my-12">
-
-  <!-- MÓDULO 2 -->
-  <div class="section-block mb-16" id="mod2">
-    <div class="section-eyebrow text-si-accent font-mono text-xs tracking-widest uppercase mb-2 font-semibold">Módulo 02</div>
-    <h2 class="text-2xl font-bold text-si-dark mb-2" data-i18n="m2_h2">Grupo E — Saída</h2>
-    <p class="section-sub text-gray-500 mb-6" data-i18n="m2_sub">Mínima obrigação do vendedor. O comprador assume o controle e os riscos desde a origem.</p>
-
-    <div class="group-section">
-      <div class="group-header flex items-center gap-4 mb-4 pb-3 border-b-2 border-gray-200">
-        <div class="group-badge bg-si-primary text-white font-mono text-xs font-bold px-3 py-1.5 rounded">E</div>
-        <div>
-          <div class="group-name text-lg font-bold text-si-dark">Ex Works</div>
-          <div class="group-subtitle text-xs text-gray-500" data-i18n="m2_any">Qualquer modal de transporte</div>
-        </div>
-      </div>
-      <div class="incoterm-list space-y-3">
-        <div class="incoterm-item bg-white border border-gray-200 p-5 rounded-lg cursor-pointer hover:border-si-accent hover:bg-teal-50/30 transition-all grid grid-cols-[80px_1fr_auto] items-center gap-4" onclick="toggleDetail('exw', this)">
-          <div class="inc-code font-mono text-xl font-bold text-si-primary">EXW</div>
-          <div>
-            <div class="inc-name font-semibold text-si-dark" data-i18n="exw_name">Ex Works — Na origem</div>
-            <div class="inc-desc text-sm text-gray-500 mt-1" data-i18n="exw_desc">Vendedor coloca mercadoria à disposição em seu estabelecimento. Comprador faz tudo.</div>
-          </div>
-          <div class="inc-transport font-mono text-[10px] px-2 py-1 border border-gray-300 rounded text-gray-500 font-semibold" data-i18n="m2_any">Qualquer modal</div>
-        </div>
-        <div class="resp-diagram bg-white border border-t-0 border-gray-200 p-6 rounded-b-lg" id="detail-exw">
-          <div class="resp-title font-mono text-xs tracking-wider uppercase text-gray-500 mb-4 font-semibold" data-i18n="resp_title">Distribuição de responsabilidades</div>
-          <div class="responsibility-bar grid grid-cols-2 gap-0.5 border border-gray-200 rounded-lg overflow-hidden mb-4">
-            <div class="resp-seller bg-si-dark text-white text-center py-2 text-xs font-bold" data-i18n="resp_seller_min">Vendedor — Mínimo</div>
-            <div class="resp-buyer bg-blue-100 text-blue-800 text-center py-2 text-xs font-bold" data-i18n="resp_buyer_max">Comprador — Máximo</div>
-          </div>
-          <div class="resp-details grid md:grid-cols-2 gap-6 mt-4">
-            <div class="resp-col">
-              <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2" data-i18n="resp_seller">Vendedor é responsável por</h4>
-              <ul class="space-y-2 text-sm text-si-dark"><li class="flex gap-2"><span class="text-si-accent">▸</span> <span data-i18n="exw_s1">Disponibilizar a mercadoria embalada</span></li><li class="flex gap-2"><span class="text-si-accent">▸</span> <span data-i18n="exw_s2">Avisar ao comprador sobre a disponibilidade</span></li></ul>
-            </div>
-            <div class="resp-col">
-              <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2" data-i18n="resp_buyer">Comprador é responsável por</h4>
-              <ul class="space-y-2 text-sm text-si-dark"><li class="flex gap-2"><span class="text-si-accent">▸</span> <span data-i18n="exw_b1">Carga no caminhão na fábrica</span></li><li class="flex gap-2"><span class="text-si-accent">▸</span> <span data-i18n="exw_b2">Despacho aduaneiro de exportação</span></li><li class="flex gap-2"><span class="text-si-accent">▸</span> <span data-i18n="exw_b3">Frete, seguro internacional e desembaraço na importação</span></li></ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <hr class="border-gray-200 my-12">
-
-  <!-- MÓDULO 3 -->
-  <div class="section-block mb-16" id="mod3">
-    <div class="section-eyebrow text-si-accent font-mono text-xs tracking-widest uppercase mb-2 font-semibold">Módulo 03</div>
-    <h2 class="text-2xl font-bold text-si-dark mb-2" data-i18n="m3_h2">Grupo F — Frete principal não pago</h2>
-    <p class="section-sub text-gray-500 mb-6" data-i18n="m3_sub">O vendedor entrega a mercadoria a um transportador indicado pelo comprador.</p>
-
-    <div class="group-section">
-      <div class="group-header flex items-center gap-4 mb-4 pb-3 border-b-2 border-gray-200">
-        <div class="group-badge bg-si-primary text-white font-mono text-xs font-bold px-3 py-1.5 rounded">F</div>
-        <div><div class="group-name text-lg font-bold text-si-dark">Termos F</div><div class="group-subtitle text-xs text-gray-500">FCA · FAS · FOB</div></div>
-      </div>
-      <div class="incoterm-list space-y-3">
-        <!-- FCA -->
-        <div class="incoterm-item bg-white border border-gray-200 p-5 rounded-lg cursor-pointer hover:border-si-accent hover:bg-teal-50/30 transition-all grid grid-cols-[80px_1fr_auto] items-center gap-4" onclick="toggleDetail('fca', this)">
-          <div class="inc-code font-mono text-xl font-bold text-si-primary">FCA</div>
-          <div><div class="inc-name font-semibold text-si-dark">Free Carrier</div><div class="inc-desc text-sm text-gray-500 mt-1" data-i18n="fca_desc">Vendedor entrega ao transportador indicado pelo comprador no local combinado.</div></div>
-          <div class="inc-transport font-mono text-[10px] px-2 py-1 border border-gray-300 rounded text-gray-500 font-semibold" data-i18n="m2_any">Qualquer modal</div>
-        </div>
-        <div class="resp-diagram bg-white border border-t-0 border-gray-200 p-6 rounded-b-lg" id="detail-fca">
-          <div class="scenario-box border-l-4 border-si-gold bg-amber-50 p-4 rounded-r-lg mt-4">
-            <div class="scenario-label text-si-gold font-mono text-[10px] tracking-widest uppercase font-bold mb-1" data-i18n="fca_new">Novidade Incoterms 2020</div>
-            <div class="scenario-text text-sm text-si-dark" data-i18n="fca_new_text">O FCA 2020 permite que o comprador instrua seu transportador a emitir um B/L com bordo (on board B/L) ao vendedor,<think>
-</think>
-
-Aqui está o código **COMPLETO e atualizado** do arquivo **`incoterms.html`**. 
-
-Assim como fizemos no `trade.html`, adicionei a **tela de bloqueio por PIN (`202600`)** que verifica a sessão. Se o aluno tentar acessar esta página diretamente sem ter passado pela `academy.html`, a tela de segurança será exibida.
-
-O design, o sistema trilingue, o botão de certificado e o link do rodapé foram mantidos perfeitamente alinhados com a identidade da Sanitary Intelligence.
-
-```html
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Incoterms 2020 | Sanitary Intelligence Academy</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          si: {
-            dark: '#0F172A', primary: '#1E40AF', accent: '#0D9488',
-            light: '#F8FAFC', gold: '#D97706', goldLight: '#F59E0B'
-          }
-        },
-        fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
-        animation: { 
-          'fade-in': 'fadeIn 0.5s ease-out forwards', 
-          'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both' 
-        },
-        keyframes: {
-          fadeIn: { '0%': { opacity: '0', transform: 'translateY(10px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-          shake: {
-            '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' }, '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
-            '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' }, '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
-          }
-        }
-      }
-    }
-  }
-</script>
-<style>
-  .lang-dropdown { display: none; }
-  .lang-group:hover .lang-dropdown { display: block; }
-  .glow-text { text-shadow: 0 0 10px rgba(34, 211, 238, 0.6), 0 0 20px rgba(34, 211, 238, 0.3); }
-  .glass-effect { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
-  
-  .resp-diagram { display: none; animation: fadeIn 0.3s ease; }
-  .resp-diagram.open { display: block; }
-  
   .incoterm-item.active-detail { border-color: #0D9488; background: #F0FDFA; border-left: 4px solid #0D9488; }
 </style>
 </head>
@@ -387,9 +109,9 @@ O design, o sistema trilingue, o botão de certificado e o link do rodapé foram
 <div class="hero bg-gradient-to-br from-si-dark to-si-primary text-white py-16 px-4 relative overflow-hidden">
   <div class="absolute right-[-40px] top-1/2 -translate-y-1/2 rotate-90 font-mono text-8xl font-bold text-white/5 pointer-events-none whitespace-nowrap select-none">INCOTERMS</div>
   <div class="container mx-auto max-w-4xl relative z-10">
-    <div class="hero-tag text-si-gold font-mono text-xs tracking-[0.2em] uppercase mb-4 font-semibold" data-i18n="hero_badge">Capacitação Oficial</div>
+    <div class="hero-tag text-si-gold font-mono text-xs tracking-[0.2em] uppercase mb-4 font-semibold" data-i18n="hero_badge">Ensaio de Estudo</div>
     <h1 class="text-4xl md:text-5xl font-light mb-6 leading-tight" data-i18n="hero_title">Domine os <strong class="font-bold text-white">Incoterms® 2020</strong></h1>
-    <p class="text-white/80 text-lg max-w-2xl mb-8 leading-relaxed" data-i18n="hero_subtitle">Entenda responsabilidades, transferência de risco e aplicações práticas para exportação e importação com foco em regulamentação e compliance.</p>
+    <p class="text-white/80 text-lg max-w-2xl mb-8 leading-relaxed" data-i18n="hero_subtitle">Prévia introdutória sobre responsabilidades, transferência de risco e aplicações práticas para exportação e importação com foco em regulamentação e compliance.</p>
     
     <div class="ship-visual flex gap-3 mb-8">
       <div class="container-box w-12 h-8 border border-si-gold text-si-gold rounded flex items-center justify-center font-mono text-xs font-bold bg-white/5">EXW</div>
@@ -398,12 +120,12 @@ O design, o sistema trilingue, o botão de certificado e o link do rodapé foram
       <div class="container-box w-12 h-8 border border-si-primary text-blue-300 rounded flex items-center justify-center font-mono text-xs font-bold bg-white/5">DDP</div>
     </div>
 
-    <!-- BOTÃO DE CERTIFICADO (HERO) -->
-    <a href="#" class="btn-test-cert inline-flex items-center gap-3 bg-si-gold hover:bg-si-goldLight text-si-dark font-bold py-4 px-8 rounded-xl shadow-lg shadow-si-gold/20 transition-all transform hover:scale-[1.02] mb-4">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-      <span data-i18n="cert_button">Iniciar teste para obter seu certificado de conclusão</span>
+    <!-- BOTÃO PARA O CLASSROOM (HERO) -->
+    <a href="https://classroom.google.com/c/Nzk4MjAyNzU5ODQ4?cjc=3ggjyqv3" target="_blank" rel="noopener" class="btn-test-cert inline-flex items-center gap-3 bg-si-gold hover:bg-si-goldLight text-si-dark font-bold py-4 px-8 rounded-xl shadow-lg shadow-si-gold/20 transition-all transform hover:scale-[1.02] mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" /></svg>
+      <span data-i18n="cert_button">Acessar o curso completo no Google Classroom</span>
     </a>
-    <p class="text-[10px] text-white/40 font-mono mb-6">⚠️ LINK DO TESTE A SER INSERIDO</p>
+    <p class="text-[10px] text-white/40 mb-6" data-i18n="classroom_note">Apostilas, vídeo-aulas, avaliação oficial e certificado de conclusão estão disponíveis na sala de aula.</p>
 
     <button class="btn-start inline-flex items-center gap-2 bg-white text-si-dark px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all" onclick="document.querySelector('main').scrollIntoView({behavior:'smooth'})">
       Explorar Módulos ↓
@@ -694,9 +416,9 @@ O design, o sistema trilingue, o botão de certificado e o link do rodapé foram
 
   <!-- QUIZ -->
   <div class="section-block mb-16" id="quiz">
-    <div class="section-eyebrow text-si-gold font-mono text-xs tracking-widest uppercase mb-2 font-semibold" data-i18n="quiz_eyebrow">Módulo 06</div>
+    <div class="section-eyebrow text-si-gold font-mono text-xs tracking-widest uppercase mb-2 font-semibold" data-i18n="quiz_eyebrow">Módulo 06 · Ensaio</div>
     <h2 class="text-2xl font-bold text-si-dark mb-2" data-i18n="quiz_h2">Quiz de Fixação</h2>
-    <p class="section-sub text-gray-500 mb-6" data-i18n="quiz_sub">Teste seus conhecimentos com situações práticas do dia a dia do comércio exterior.</p>
+    <p class="section-sub text-gray-500 mb-6" data-i18n="quiz_sub">Teste seus conhecimentos com situações práticas do dia a dia do comércio exterior. Este é um ensaio — a avaliação oficial fica no Google Classroom.</p>
 
     <div class="quiz-section bg-si-dark text-white p-8 rounded-2xl shadow-xl" id="quizContainer">
       <div class="quiz-eyebrow text-si-gold font-mono text-xs tracking-widest uppercase mb-4 font-semibold">
@@ -785,8 +507,10 @@ O design, o sistema trilingue, o botão de certificado e o link do rodapé foram
       pt: {
           pin_title: "Acesso Restrito", pin_subtitle: "Insira seu código PIN de 6 dígitos para acessar este módulo.",
           pin_error: "Código PIN inválido. Tente novamente.", pin_button: "Acessar Módulo", pin_hint: "USE O PIN QUE RECEBEU NA SALA DE AULA",
-          hero_badge: "Capacitação Oficial", hero_title: "Domine os Incoterms® 2020", hero_subtitle: "Entenda responsabilidades, transferência de risco e aplicações práticas para exportação e importação com foco em regulamentação e compliance.",
-          cert_button: "Iniciar teste para obter seu certificado de conclusão",
+          hero_badge: "Ensaio de Estudo", hero_title: "Domine os Incoterms® 2020", hero_subtitle: "Prévia introdutória sobre responsabilidades, transferência de risco e aplicações práticas para exportação e importação com foco em regulamentação e compliance.",
+          cert_button: "Acessar o curso completo no Google Classroom",
+          classroom_note: "Apostilas, vídeo-aulas, avaliação oficial e certificado de conclusão estão disponíveis na sala de aula.",
+          classroom_note_result: "A avaliação oficial e o certificado de conclusão estão disponíveis na sala de aula.",
           nav_eyebrow: "Estrutura do Curso", nav_title: "Módulos de Aprendizado",
           m1_title: "Fundamentos dos Incoterms", m1_desc: "Origem, propósito e como ler os termos corretamente.",
           m2_title: "Grupo E — Saída", m2_desc: "EXW: mínima responsabilidade do vendedor.",
@@ -815,16 +539,21 @@ O design, o sistema trilingue, o botão de certificado e o link do rodapé foram
           dap_desc: "Vendedor entrega no destino, pronto para descarga. Importação por conta do comprador.",
           dpu_desc: "Único termo onde o vendedor é responsável pelo DESCARREGAMENTO no destino.", dpu_new: "Mudança Incoterms 2020", dpu_new_text: "O DPU substituiu o DAT. O vendedor é responsável pelo descarregamento, diferente do DAP.",
           ddp_desc: "Máxima obrigação do vendedor. Inclui todos os impostos de importação no destino.", ddp_br: "DDP no Brasil — Atenção", ddp_br_text: "O DDP é complexo para vendedores estrangeiros. No Brasil, o importador precisa ter CNPJ ativo para realizar o despacho aduaneiro.",
-          quiz_eyebrow: "Módulo 06", quiz_h2: "Quiz de Fixação", quiz_sub: "Teste seus conhecimentos com situações práticas do dia a dia do comércio exterior.",
+          quiz_eyebrow: "Módulo 06 · Ensaio", quiz_h2: "Quiz de Fixação", quiz_sub: "Teste seus conhecimentos com situações práticas do dia a dia do comércio exterior. Este é um ensaio — a avaliação oficial fica no Google Classroom.",
           quiz_q: "Questão", quiz_of: "de", btn_next: "Próxima →", btn_retry: "Refazer Quiz", btn_review: "Revisar Módulos",
           gloss_eyebrow: "Referência Rápida", gloss_h2: "Glossário", gloss_sub: "Termos essenciais do comércio exterior relacionados aos Incoterms.",
-          footer_copy: "© 2026 Sanitary Intelligence. Todos os direitos reservados.", footer_secure: "Plataforma educacional segura e certificada."
+          footer_copy: "© 2026 Sanitary Intelligence. Todos os direitos reservados.", footer_secure: "Plataforma educacional segura e certificada.",
+          result_msg_high: "🏆 Excelente domínio dos Incoterms! Continue no Classroom para a avaliação oficial e seu certificado.",
+          result_msg_mid: "👍 Bom resultado! Revise os módulos onde errou e continue no Classroom para a avaliação oficial.",
+          result_msg_low: "📚 Recomenda-se revisar o material deste ensaio antes de seguir para o curso completo no Classroom."
       },
       en: {
           pin_title: "Restricted Access", pin_subtitle: "Enter your 6-digit PIN code to access this module.",
           pin_error: "Invalid PIN code. Please try again.", pin_button: "Access Module", pin_hint: "USE THE PIN YOU RECEIVED IN THE CLASSROOM",
-          hero_badge: "Official Training", hero_title: "Master Incoterms® 2020", hero_subtitle: "Understand responsibilities, risk transfer, and practical applications for export and import with a focus on regulation and compliance.",
-          cert_button: "Start test to get your completion certificate",
+          hero_badge: "Study Trial", hero_title: "Master Incoterms® 2020", hero_subtitle: "Introductory preview of responsibilities, risk transfer, and practical applications for export and import with a focus on regulation and compliance.",
+          cert_button: "Access the full course on Google Classroom",
+          classroom_note: "Workbooks, video lessons, official assessment, and completion certificate are available in the classroom.",
+          classroom_note_result: "The official assessment and completion certificate are available in the classroom.",
           nav_eyebrow: "Course Structure", nav_title: "Learning Modules",
           m1_title: "Incoterms Fundamentals", m1_desc: "Origin, purpose, and how to read the terms correctly.",
           m2_title: "Group E — Departure", m2_desc: "EXW: minimum seller responsibility.",
@@ -853,16 +582,21 @@ O design, o sistema trilingue, o botão de certificado e o link do rodapé foram
           dap_desc: "Seller delivers at destination, ready for unloading. Import is buyer's responsibility.",
           dpu_desc: "Only term where the seller is responsible for UNLOADING at the destination.", dpu_new: "Incoterms 2020 Change", dpu_new_text: "DPU replaced DAT. The seller is responsible for unloading, unlike DAP.",
           ddp_desc: "Maximum seller obligation. Includes all import taxes at destination.", ddp_br: "DDP in Brazil — Attention", ddp_br_text: "DDP is complex for foreign sellers. In Brazil, the importer needs an active CNPJ to perform customs clearance.",
-          quiz_eyebrow: "Module 06", quiz_h2: "Fixation Quiz", quiz_sub: "Test your knowledge with practical day-to-day foreign trade situations.",
+          quiz_eyebrow: "Module 06 · Trial", quiz_h2: "Fixation Quiz", quiz_sub: "Test your knowledge with practical day-to-day foreign trade situations. This is a trial — the official assessment is on Google Classroom.",
           quiz_q: "Question", quiz_of: "of", btn_next: "Next →", btn_retry: "Retake Quiz", btn_review: "Review Modules",
           gloss_eyebrow: "Quick Reference", gloss_h2: "Glossary", gloss_sub: "Essential foreign trade terms related to Incoterms.",
-          footer_copy: "© 2026 Sanitary Intelligence. All rights reserved.", footer_secure: "Secure and certified educational platform."
+          footer_copy: "© 2026 Sanitary Intelligence. All rights reserved.", footer_secure: "Secure and certified educational platform.",
+          result_msg_high: "🏆 Excellent mastery of Incoterms! Continue on Classroom for the official assessment and your certificate.",
+          result_msg_mid: "👍 Good result! Review the modules where you made mistakes and continue on Classroom for the official assessment.",
+          result_msg_low: "📚 We recommend reviewing this trial's material before moving on to the full course on Classroom."
       },
       es: {
           pin_title: "Acceso Restringido", pin_subtitle: "Ingrese su código PIN de 6 dígitos para acceder a este módulo.",
           pin_error: "Código PIN inválido. Inténtelo de nuevo.", pin_button: "Acceder al Módulo", pin_hint: "USE EL PIN QUE RECIBIÓ EN EL AULA",
-          hero_badge: "Capacitación Oficial", hero_title: "Domine los Incoterms® 2020", hero_subtitle: "Entienda responsabilidades, transferencia de riesgo y aplicaciones prácticas para exportación e importación con enfoque en regulación y cumplimiento.",
-          cert_button: "Iniciar prueba para obtener su certificado de finalización",
+          hero_badge: "Ensayo de Estudio", hero_title: "Domine los Incoterms® 2020", hero_subtitle: "Vista previa introductoria sobre responsabilidades, transferencia de riesgo y aplicaciones prácticas para exportación e importación con enfoque en regulación y cumplimiento.",
+          cert_button: "Acceder al curso completo en Google Classroom",
+          classroom_note: "Manuales, videoclases, evaluación oficial y certificado de finalización están disponibles en el aula.",
+          classroom_note_result: "La evaluación oficial y el certificado de finalización están disponibles en el aula.",
           nav_eyebrow: "Estructura del Curso", nav_title: "Módulos de Aprendizaje",
           m1_title: "Fundamentos de los Incoterms", m1_desc: "Origen, propósito y cómo leer los términos correctamente.",
           m2_title: "Grupo E — Salida", m2_desc: "EXW: mínima responsabilidad del vendedor.",
@@ -891,10 +625,13 @@ O design, o sistema trilingue, o botão de certificado e o link do rodapé foram
           dap_desc: "El vendedor entrega en el destino, listo para la descarga. Importación por cuenta del comprador.",
           dpu_desc: "Único término donde el vendedor es responsable de la DESCARGA en el destino.", dpu_new: "Cambio Incoterms 2020", dpu_new_text: "El DPU reemplazó al DAT. El vendedor es responsable de la descarga, a diferencia del DAP.",
           ddp_desc: "Máxima obligación del vendedor. Incluye todos los impuestos de importación en el destino.", ddp_br: "DDP en Brasil — Atención", ddp_br_text: "El DDP es complejo para vendedores extranjeros. En Brasil, el importador necesita tener un CNPJ activo para realizar el despacho aduanero.",
-          quiz_eyebrow: "Módulo 06", quiz_h2: "Quiz de Fijación", quiz_sub: "Ponga a prueba sus conocimientos con situaciones prácticas del día a día del comercio exterior.",
+          quiz_eyebrow: "Módulo 06 · Ensayo", quiz_h2: "Quiz de Fijación", quiz_sub: "Ponga a prueba sus conocimientos con situaciones prácticas del día a día del comercio exterior. Este es un ensayo — la evaluación oficial está en Google Classroom.",
           quiz_q: "Pregunta", quiz_of: "de", btn_next: "Siguiente →", btn_retry: "Rehacer Quiz", btn_review: "Revisar Módulos",
           gloss_eyebrow: "Referencia Rápida", gloss_h2: "Glosario", gloss_sub: "Términos esenciales del comercio exterior relacionados con los Incoterms.",
-          footer_copy: "© 2026 Sanitary Intelligence. Todos los derechos reservados.", footer_secure: "Plataforma educativa segura y certificada."
+          footer_copy: "© 2026 Sanitary Intelligence. Todos los derechos reservados.", footer_secure: "Plataforma educativa segura y certificada.",
+          result_msg_high: "🏆 ¡Excelente dominio de los Incoterms! Continúe en Classroom para la evaluación oficial y su certificado.",
+          result_msg_mid: "👍 ¡Buen resultado! Revise los módulos donde se equivocó y continúe en Classroom para la evaluación oficial.",
+          result_msg_low: "📚 Recomendamos revisar el material de este ensayo antes de continuar con el curso completo en Classroom."
       }
   };
 
@@ -1049,26 +786,26 @@ O design, o sistema trilingue, o botão de certificado e o link do rodapé foram
   function showResult() {
       const lang = localStorage.getItem('si_incoterms_lang') || 'pt';
       const pct = Math.round((score / questions[lang].length) * 100);
-      const msg = pct >= 80 ? (lang === 'pt' ? '🏆 Excelente domínio dos Incoterms!' : lang === 'en' ? '🏆 Excellent mastery of Incoterms!' : '🏆 ¡Excelente dominio de los Incoterms!') : 
-                  pct >= 60 ? (lang === 'pt' ? '👍 Bom resultado! Revise os módulos onde errou.' : lang === 'en' ? '👍 Good result! Review the modules where you made mistakes.' : '👍 ¡Buen resultado! Revise los módulos donde se equivocó.') : 
-                  (lang === 'pt' ? '📚 Recomenda-se revisar o material antes de aplicar.' : lang === 'en' ? '📚 It is recommended to review the material before applying.' : '📚 Se recomienda revisar el material antes de aplicar.');
-      
+      const t = translations[lang];
+      const msg = pct >= 80 ? t.result_msg_high : pct >= 60 ? t.result_msg_mid : t.result_msg_low;
+      const emoji = pct >= 80 ? '🏆' : pct >= 60 ? '👍' : '📚';
+
       document.getElementById('quizContainer').innerHTML = `
           <div class="text-center">
-              <div class="text-5xl mb-4">${pct >= 80 ? '🏆' : pct >= 60 ? '👍' : '📚'}</div>
+              <div class="text-5xl mb-4">${emoji}</div>
               <h3 class="text-2xl font-bold mb-2">${msg}</h3>
               <div class="text-4xl font-bold text-si-gold font-mono my-6">${score}<span class="text-xl text-white/40"> / ${questions[lang].length}</span></div>
               <div class="text-sm text-white/60 mb-8">${pct}% ${lang === 'pt' ? 'de aproveitamento' : lang === 'en' ? 'success rate' : 'de aprovechamiento'}</div>
               
-              <a href="#" class="btn-test-cert inline-flex items-center gap-3 bg-si-gold hover:bg-si-goldLight text-si-dark font-bold py-4 px-8 rounded-xl shadow-lg shadow-si-gold/20 transition-all transform hover:scale-[1.02] mb-6 w-full justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                  <span data-i18n="cert_button">${translations[lang].cert_button}</span>
+              <a href="https://classroom.google.com/c/Nzk4MjAyNzU5ODQ4?cjc=435wf53k" target="_blank" rel="noopener" class="btn-test-cert inline-flex items-center gap-3 bg-si-gold hover:bg-si-goldLight text-si-dark font-bold py-4 px-8 rounded-xl shadow-lg shadow-si-gold/20 transition-all transform hover:scale-[1.02] mb-4 w-full justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" /></svg>
+                  <span>${t.cert_button}</span>
               </a>
-              <p class="text-[10px] text-white/40 font-mono mb-8">⚠️ LINK DO TESTE A SER INSERIDO</p>
+              <p class="text-[10px] text-white/40 mb-8">${t.classroom_note_result}</p>
 
               <div class="flex gap-3 justify-center flex-wrap">
-                  <button onclick="restartQuiz()" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-2.5 rounded-lg font-semibold text-sm transition-all">${translations[lang].btn_retry}</button>
-                  <button onclick="scrollTo('mod1')" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-2.5 rounded-lg font-semibold text-sm transition-all">${translations[lang].btn_review}</button>
+                  <button onclick="restartQuiz()" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-2.5 rounded-lg font-semibold text-sm transition-all">${t.btn_retry}</button>
+                  <button onclick="scrollTo('mod1')" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-2.5 rounded-lg font-semibold text-sm transition-all">${t.btn_review}</button>
               </div>
           </div>
       `;
