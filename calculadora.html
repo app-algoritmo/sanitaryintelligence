@@ -87,6 +87,15 @@ body{
 .field-rate{width:160px;}
 .field-currency{width:110px;}
 .rate-hint{font-size:12.5px; color:var(--muted-soft); margin-top:10px;}
+.profile-grid{
+  display:grid; grid-template-columns:1fr 1fr; gap:16px 14px;
+}
+.profile-grid .field{width:100%;}
+.profile-grid .field.full{grid-column:1/3;}
+@media (max-width:560px){
+  .profile-grid{grid-template-columns:1fr;}
+  .profile-grid .field.full{grid-column:1/2;}
+}
 #activityList{display:flex; flex-direction:column; gap:14px;}
 .activity{
   border:1.5px solid var(--line); border-radius:10px; padding:18px;
@@ -210,6 +219,7 @@ body{
   .wrap{max-width:100%;}
   .card{break-inside:avoid; border:none; padding:0;}
   .detail-item{break-inside:avoid;}
+  #profileSummary{display:none !important;}
 }
 .print-only{display:none;}
 @media print{
@@ -310,7 +320,51 @@ body{
   </div>
 
   <div class="card input-card">
-    <h2><span class="num">2</span>Atividades realizadas</h2>
+    <h2><span class="num">2</span>Dados do responsável</h2>
+    <div class="profile-grid">
+      <div class="field">
+        <label for="profName">Nome</label>
+        <input type="text" id="profName" placeholder="Nome completo">
+      </div>
+      <div class="field">
+        <label for="profDate">Data da atividade</label>
+        <input type="date" id="profDate">
+      </div>
+      <div class="field">
+        <label for="profDept">Departamento</label>
+        <select id="profDept">
+          <option value="">Selecione...</option>
+          <option value="Internacional">Internacional</option>
+          <option value="Gerência">Gerência</option>
+          <option value="Diretoria">Diretoria</option>
+          <option value="Administrativo">Administrativo</option>
+          <option value="Comercial">Comercial</option>
+          <option value="Financeiro">Financeiro</option>
+          <option value="Jurídico">Jurídico</option>
+          <option value="Regulatório">Regulatório</option>
+          <option value="Produção">Produção</option>
+          <option value="Outro">Outro</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="profRole">Função no departamento</label>
+        <select id="profRole">
+          <option value="">Selecione...</option>
+          <option value="Diretor(a)">Diretor(a)</option>
+          <option value="Gerente">Gerente</option>
+          <option value="Coordenador(a)">Coordenador(a)</option>
+          <option value="Analista">Analista</option>
+          <option value="Assistente">Assistente</option>
+          <option value="Consultor(a)">Consultor(a)</option>
+          <option value="Estagiário(a)">Estagiário(a)</option>
+          <option value="Outro">Outro</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="card input-card">
+    <h2><span class="num">3</span>Atividades realizadas</h2>
     <div id="activityList"></div>
     <button class="add-row" id="addActivityBtn" type="button">+ Adicionar atividade</button>
     <div class="error-msg" id="errorMsg"></div>
@@ -321,7 +375,18 @@ body{
     <div class="print-only">
       <h1>Cálculo de Valor por Atividade</h1>
       <p id="printDate"></p>
+      <p id="printProfile" style="margin-top:6px;"></p>
     </div>
+
+    <div class="card" id="profileSummary" style="margin-bottom:16px; padding:18px 22px; display:none;">
+      <div style="display:flex; gap:24px; flex-wrap:wrap; font-size:13.5px; color:var(--muted);">
+        <div><b style="color:var(--navy-deep);">Responsável:</b> <span id="sumName">—</span></div>
+        <div><b style="color:var(--navy-deep);">Data:</b> <span id="sumDate">—</span></div>
+        <div><b style="color:var(--navy-deep);">Departamento:</b> <span id="sumDept">—</span></div>
+        <div><b style="color:var(--navy-deep);">Função:</b> <span id="sumRole">—</span></div>
+      </div>
+    </div>
+
     <div class="total-banner">
       <div>
         <div class="tb-label">Valor total calculado</div>
@@ -334,7 +399,7 @@ body{
     </div>
 
     <div class="card">
-      <h2><span class="num">3</span>Detalhamento por atividade</h2>
+      <h2><span class="num">4</span>Detalhamento por atividade</h2>
       <div class="detail-list" id="detailList"></div>
 
       <div class="how-box">
@@ -462,6 +527,12 @@ body{
     clearError();
     const rate = parseFloat(document.getElementById('rateInput').value);
     const currency = document.getElementById('currencySelect').value;
+    const profile = {
+      name: document.getElementById('profName').value.trim(),
+      date: document.getElementById('profDate').value,
+      dept: document.getElementById('profDept').value,
+      role: document.getElementById('profRole').value
+    };
 
     if (!rate || rate <= 0){
       showError('Informe uma taxa horária válida, maior que zero, antes de calcular.');
@@ -508,6 +579,25 @@ body{
     document.getElementById('totalValue').textContent = fmt(totalValue, currency);
     document.getElementById('totalHours').textContent = totalHours.toLocaleString('pt-BR', {maximumFractionDigits:2}) + ' horas';
 
+    const hasProfile = profile.name || profile.date || profile.dept || profile.role;
+    const profileSummary = document.getElementById('profileSummary');
+    if (hasProfile){
+      document.getElementById('sumName').textContent = profile.name || '—';
+      document.getElementById('sumDate').textContent = formatDateBR(profile.date) || '—';
+      document.getElementById('sumDept').textContent = profile.dept || '—';
+      document.getElementById('sumRole').textContent = profile.role || '—';
+      profileSummary.style.display = 'block';
+      const profParts = [];
+      if (profile.name) profParts.push(profile.name);
+      if (profile.role) profParts.push(profile.role);
+      if (profile.dept) profParts.push(profile.dept);
+      if (profile.date) profParts.push(formatDateBR(profile.date));
+      document.getElementById('printProfile').textContent = profParts.join(' · ');
+    } else {
+      profileSummary.style.display = 'none';
+      document.getElementById('printProfile').textContent = '';
+    }
+
     const detailList = document.getElementById('detailList');
     detailList.innerHTML = '';
     activities.forEach(function(a){
@@ -524,15 +614,30 @@ body{
       detailList.appendChild(item);
     });
 
-    lastResult = {rate, currency, activities, totalHours, totalValue};
+    lastResult = {rate, currency, activities, totalHours, totalValue, profile};
     document.getElementById('results').classList.add('show');
     document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
   });
 
+  function formatDateBR(isoDate){
+    if (!isoDate) return '';
+    const parts = isoDate.split('-');
+    if (parts.length !== 3) return isoDate;
+    return parts[2] + '/' + parts[1] + '/' + parts[0];
+  }
+
   document.getElementById('exportXlsxBtn').addEventListener('click', function(){
     if (!lastResult) return;
-    const {rate, currency, activities, totalHours, totalValue} = lastResult;
-    const data = [['Atividade Realizada', 'Descrição da Atividade Realizada', 'Horas Dedicadas', 'Valor Calculado']];
+    const {rate, currency, activities, totalHours, totalValue, profile} = lastResult;
+    const data = [];
+    if (profile && (profile.name || profile.date || profile.dept || profile.role)){
+      data.push(['Responsável', profile.name || '—']);
+      data.push(['Data da atividade', formatDateBR(profile.date) || '—']);
+      data.push(['Departamento', profile.dept || '—']);
+      data.push(['Função', profile.role || '—']);
+      data.push([]);
+    }
+    data.push(['Atividade Realizada', 'Descrição da Atividade Realizada', 'Horas Dedicadas', 'Valor Calculado']);
     activities.forEach(a => data.push([a.name, a.desc, a.hours, a.value]));
     data.push([]);
     data.push(['', '', 'Total de horas', totalHours]);
