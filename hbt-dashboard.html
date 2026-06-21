@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBT Espanha — Estratégia Comercial 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        :root{--navy:#0f1c2e;--nm:#16283d;--nl:#1e3550;--blue:#2563eb;--bg:#60a5fa;--gold:#c9a84c;--gl:#e4c97b;--tx:#e8eef6;--mu:#7fa4c4;--di:#4a6b87;--bo:rgba(37,99,235,.22);--bh:rgba(96,165,250,.45);--ca:rgba(22,40,61,.7);--ch:rgba(30,53,80,.85);--sw:270px;}
+        *{box-sizing:border-box;margin:0;padding:0;}
+        body{font-family:'Sora',sans-serif;background:var(--navy);color:var(--tx);min-height:100vh;display:flex;}
+
+        #login{position:fixed;inset:0;z-index:999;background:linear-gradient(135deg,#080f1a,#0f1c2e,#0b1622);display:flex;align-items:center;justify-content:center;}
+        #login.gone{display:none;}
+        .lo{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none;}
+        .lo1{width:500px;height:500px;background:rgba(37,99,235,.1);top:-120px;right:-100px;}
+        .lo2{width:350px;height:350px;background:rgba(96,165,250,.07);bottom:-80px;left:-80px;}
+        .lc{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;background:rgba(15,28,46,.85);border:1px solid rgba(37,99,235,.25);border-radius:24px;padding:36px 32px 28px;width:300px;backdrop-filter:blur(20px);box-shadow:0 32px 80px rgba(0,0,0,.5);}
+        .lf{font-size:36px;margin-bottom:12px;}
+        .lt{font-size:17px;font-weight:700;color:#e8eef6;margin-bottom:2px;}
+        .ls{font-size:10px;font-family:'DM Mono',monospace;color:#4a6b87;letter-spacing:.1em;text-transform:uppercase;margin-bottom:24px;}
+        .ld{display:flex;gap:12px;margin-bottom:20px;}
+        .ldot{width:13px;height:13px;border-radius:50%;border:2px solid #2a4a6b;transition:all .15s;}
+        .ldot.on{background:var(--bg);border-color:var(--bg);box-shadow:0 0 10px rgba(96,165,250,.6);}
+        .ldot.er{background:#f87171;border-color:#f87171;}
+        .lp{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;margin-bottom:8px;}
+        .lk{background:rgba(30,53,80,.7);border:1px solid rgba(37,99,235,.2);border-radius:12px;color:#e8eef6;font-size:18px;font-weight:600;padding:16px 0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .12s;user-select:none;}
+        .lk:hover{background:rgba(37,99,235,.25);border-color:rgba(96,165,250,.4);transform:scale(1.04);}
+        .lk:active{transform:scale(.95);}
+        .lk.ast{font-size:13px;color:#4a6b87;cursor:default;}
+        .lk.ast:hover{background:rgba(30,53,80,.7);border-color:rgba(37,99,235,.2);transform:none;}
+        .lk.del{font-size:14px;color:#7fa4c4;}
+        .lk.del:hover{color:#f87171;border-color:rgba(248,113,113,.3);background:rgba(248,113,113,.08);}
+        .le{font-size:11px;font-family:'DM Mono',monospace;color:#f87171;letter-spacing:.04em;margin-top:10px;opacity:0;transition:opacity .2s;min-height:16px;}
+        .le.show{opacity:1;}
+        .lft{margin-top:20px;font-size:10px;font-family:'DM Mono',monospace;color:#2a4a6b;}
+        @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+        .shake{animation:shake .35s ease;}
+
+        #hbg{display:none;position:fixed;top:12px;left:12px;z-index:300;width:42px;height:42px;background:var(--nm);border:1px solid var(--bo);border-radius:10px;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.4);}
+        #hbg span{display:block;width:20px;height:2px;background:var(--mu);border-radius:2px;transition:all .25s;}
+        #hbg.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+        #hbg.open span:nth-child(2){opacity:0;}
+        #hbg.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+        #sbo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:98;backdrop-filter:blur(2px);}
+        #sbo.open{display:block;}
+
+        #sidebar{width:var(--sw);height:100vh;background:linear-gradient(180deg,#0b1622,#0f1c2e);border-right:1px solid var(--bo);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:100;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+        .sbl{padding:24px 20px 18px;border-bottom:1px solid var(--bo);}
+        .sbb{display:inline-flex;align-items:center;gap:10px;margin-bottom:6px;}
+        .sbi{width:34px;height:34px;background:linear-gradient(135deg,var(--blue),var(--bg));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+        .sbn{font-size:16px;font-weight:700;color:var(--tx);}
+        .sbs{font-size:9.5px;color:var(--di);letter-spacing:.08em;text-transform:uppercase;font-family:'DM Mono',monospace;margin-top:2px;}
+        .sbsc{padding:14px 16px 6px;font-size:9px;font-family:'DM Mono',monospace;letter-spacing:.1em;color:var(--di);text-transform:uppercase;}
+        .sbl2{display:flex;align-items:center;gap:10px;padding:10px 18px;margin:2px 6px;border-radius:9px;font-size:13px;color:var(--mu);cursor:pointer;border:1px solid transparent;transition:all .2s;user-select:none;}
+        .sbl2:hover{background:var(--nm);color:var(--tx);border-color:var(--bo);}
+        .sbl2.act{background:linear-gradient(135deg,rgba(37,99,235,.25),rgba(96,165,250,.12));color:var(--bg);border-color:rgba(37,99,235,.4);font-weight:500;}
+        .sbl2 .ico{width:16px;text-align:center;font-size:12px;flex-shrink:0;}
+        .sbc2{display:flex;align-items:center;gap:8px;padding:8px 18px 8px 40px;margin:1px 6px;border-radius:8px;font-size:12px;color:var(--di);cursor:pointer;transition:all .18s;border:1px solid transparent;}
+        .sbc2:hover{background:rgba(37,99,235,.1);color:var(--mu);border-color:rgba(37,99,235,.15);}
+        .sbc2.act{color:var(--bg);background:rgba(37,99,235,.12);border-color:rgba(37,99,235,.2);}
+        .sbf{margin-top:auto;padding:16px;border-top:1px solid var(--bo);}
+        .sbu{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);border-radius:9px;padding:10px 12px;display:flex;align-items:center;gap:10px;}
+        .sbav{width:32px;height:32px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;color:#1a1a1a;flex-shrink:0;}
+        .sbun{font-size:11.5px;font-weight:600;color:var(--gl);}
+        .sbur{font-size:9.5px;color:var(--di);margin-top:1px;}
+
+        .wmo{position:fixed;inset:0;pointer-events:none;z-index:9998;overflow:hidden;}
+        .wmt{position:absolute;inset:-50%;width:200%;height:200%;display:flex;flex-wrap:wrap;align-items:center;opacity:0.042;transform:rotate(-35deg);user-select:none;}
+        .wmi{font-family:'DM Mono',monospace;font-size:13px;color:#60a5fa;white-space:nowrap;padding:28px 40px;}
+        .mwm{position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:4px;z-index:10;}
+        .mwt{position:absolute;inset:-50%;width:200%;height:200%;display:flex;flex-wrap:wrap;align-items:center;opacity:0.038;transform:rotate(-35deg);}
+        .mwi{font-family:'DM Mono',monospace;font-size:11px;color:#1e40af;white-space:nowrap;padding:22px 32px;}
+
+        #main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;}
+        #topbar{padding:14px 36px;border-bottom:1px solid var(--bo);display:flex;align-items:center;justify-content:space-between;background:rgba(10,16,28,.85);backdrop-filter:blur(12px);position:sticky;top:0;z-index:50;}
+        .tbb{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--di);}
+        .tbb span{color:var(--mu);}
+        .tbr{display:flex;align-items:center;gap:16px;}
+        .tbc{display:flex;align-items:center;gap:6px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:20px;padding:4px 12px;font-size:11px;color:#4ade80;font-family:'DM Mono',monospace;}
+        .tbd{width:6px;height:6px;background:#4ade80;border-radius:50%;animation:bk 2s infinite;}
+        @keyframes bk{0%,100%{opacity:1}50%{opacity:.4}}
+        .tbt{font-size:11px;color:var(--di);font-family:'DM Mono',monospace;}
+
+        #content{padding:40px 36px 60px;max-width:1060px;margin:0 auto;}
+        .pgh{margin-bottom:32px;}
+        .pgh h1{font-size:26px;font-weight:700;letter-spacing:-.02em;color:var(--tx);margin-bottom:8px;}
+        .pgh p{font-size:14px;color:var(--mu);line-height:1.6;max-width:620px;}
+        .mr{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap;}
+        .pi{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-family:'DM Mono',monospace;padding:4px 10px;border-radius:20px;border:1px solid var(--bo);color:var(--di);}
+        .pi.bl{background:rgba(37,99,235,.1);border-color:rgba(37,99,235,.3);color:var(--bg);}
+        .pi.go{background:rgba(201,168,76,.08);border-color:rgba(201,168,76,.25);color:var(--gl);}
+
+        .sts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px;}
+        .st{background:var(--ca);border:1px solid var(--bo);border-radius:11px;padding:16px 18px;backdrop-filter:blur(8px);}
+        .stl{font-size:10px;font-family:'DM Mono',monospace;color:var(--di);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;}
+        .stv{font-size:19px;font-weight:700;color:var(--tx);letter-spacing:-.02em;line-height:1;}
+        .sts2{font-size:11px;color:var(--mu);margin-top:4px;}
+        .st.bl .stv{color:var(--bg);}
+        .st.go .stv{color:var(--gl);}
+        .st.gr .stv{color:#4ade80;}
+        .st.rd .stv{color:#fca5a5;}
+
+        .ph{display:flex;align-items:center;gap:12px;margin:28px 0 14px;}
+        .ph span{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-family:'DM Mono',monospace;color:var(--di);white-space:nowrap;}
+        .ph::after{content:'';flex:1;height:1px;background:var(--bo);}
+
+        .gr{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+        .cd{background:var(--ca);border:1px solid var(--bo);border-radius:14px;padding:22px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;backdrop-filter:blur(8px);}
+        .cd::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--bg));opacity:0;transition:opacity .25s;}
+        .cd:hover{background:var(--ch);border-color:var(--bh);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.35);}
+        .cd:hover::before{opacity:1;}
+        .cd.gc{border-color:rgba(201,168,76,.3);background:linear-gradient(135deg,rgba(201,168,76,.06),rgba(22,40,61,.7));}
+        .cd.gc::before{background:linear-gradient(90deg,var(--gold),var(--gl));opacity:.6;}
+        .cd.gc:hover{border-color:rgba(201,168,76,.5);}
+        .ci{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px;}
+        .ib{background:rgba(37,99,235,.15);color:var(--bg);border:1px solid rgba(37,99,235,.25);}
+        .ig{background:rgba(34,197,94,.1);color:#4ade80;border:1px solid rgba(34,197,94,.2);}
+        .io{background:rgba(201,168,76,.12);color:var(--gl);border:1px solid rgba(201,168,76,.25);}
+        .ip{background:rgba(167,139,250,.1);color:#c4b5fd;border:1px solid rgba(167,139,250,.2);}
+        .ir{background:rgba(248,113,113,.1);color:#fca5a5;border:1px solid rgba(248,113,113,.2);}
+        .it{background:rgba(45,212,191,.1);color:#5eead4;border:1px solid rgba(45,212,191,.2);}
+        .ia{background:rgba(251,191,36,.1);color:#fbbf24;border:1px solid rgba(251,191,36,.2);}
+        .cp{position:absolute;top:14px;right:14px;font-size:9.5px;font-family:'DM Mono',monospace;color:var(--di);background:rgba(255,255,255,.04);border:1px solid var(--bo);border-radius:5px;padding:2px 7px;}
+        .ct{font-size:14px;font-weight:600;color:var(--tx);margin-bottom:6px;}
+        .cdesc{font-size:12px;color:var(--mu);line-height:1.6;margin-bottom:14px;}
+        .ctg{display:inline-block;font-size:10px;font-family:'DM Mono',monospace;padding:3px 8px;border-radius:5px;text-transform:uppercase;background:rgba(37,99,235,.15);color:var(--bg);border:1px solid rgba(37,99,235,.3);}
+        .ctg.pend{background:rgba(251,191,36,.15);color:#fbbf24;border-color:rgba(251,191,36,.35);}
+
+        #ov{display:none;position:fixed;inset:0;background:rgba(10,20,40,.55);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:40px 20px 60px;align-items:flex-start;justify-content:center;}
+        #ov.open{display:flex;}
+        @keyframes mi{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+        #modal{background:#fff;border-radius:4px;width:100%;max-width:720px;position:relative;box-shadow:0 8px 48px rgba(0,0,0,.22);animation:mi .28s ease;overflow:hidden;}
+        #mtop{display:flex;align-items:center;justify-content:flex-end;padding:10px 16px;background:#f8fafc;border-bottom:1px solid #e9eef5;}
+        #mcls{display:flex;align-items:center;background:none;border:none;color:#94a3b8;font-size:12px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.04em;transition:color .15s;}
+        #mcls:hover{color:#334155;}
+        #mcls::before{content:'×';font-size:18px;line-height:1;margin-right:4px;}
+        #mhdr{padding:32px 44px 0;}
+        .dc{font-size:10.5px;font-family:'DM Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#94a3b8;margin-bottom:12px;}
+        .dt{font-size:24px;font-weight:700;color:#0f172a;line-height:1.25;letter-spacing:-.02em;}
+        .db{height:3px;width:60px;background:var(--blue);margin:12px 0 18px;border-radius:2px;}
+        .dl{font-size:13.5px;color:#475569;line-height:1.7;padding-bottom:22px;border-bottom:1px solid #e9eef5;}
+        #mbdy{padding:24px 44px 8px;}
+        .ds{margin-bottom:24px;}
+        .dst{font-size:14.5px;font-weight:600;color:var(--blue);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+        .dst .n{font-family:'DM Mono',monospace;font-size:12px;color:#94a3b8;font-weight:400;}
+        #mbdy ul{list-style:none;display:flex;flex-direction:column;}
+        #mbdy ul li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#334155;line-height:1.6;padding:6px 0;border-bottom:1px solid #f1f5f9;}
+        #mbdy ul li:last-child{border-bottom:none;}
+        #mbdy ul li::before{content:'•';color:var(--blue);flex-shrink:0;margin-top:2px;font-size:15px;line-height:1;}
+        #mbdy table{width:100%;border-collapse:collapse;margin-top:8px;font-size:12.5px;}
+        #mbdy table th{background:#f1f5f9;color:#475569;font-size:10px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.07em;padding:9px 13px;text-align:left;border-bottom:2px solid #e2e8f0;font-weight:500;}
+        #mbdy table td{padding:10px 13px;color:#334155;border-bottom:1px solid #f1f5f9;}
+        #mbdy table tr:hover td{background:#fafbfc;}
+        #mbdy .hl td{color:#16a34a;font-weight:600;background:#f0fdf4;}
+        .dn{display:flex;align-items:flex-start;gap:10px;border-radius:3px;padding:12px 15px;font-size:13px;line-height:1.6;margin:18px 0;}
+        .dn.bl{background:#eff6ff;border:1px solid #bfdbfe;border-left:3px solid var(--blue);color:#1e40af;}
+        .dn.gr{background:#f0fdf4;border:1px solid #bbf7d0;border-left:3px solid #16a34a;color:#166534;}
+        .dn.am{background:#fffbeb;border:1px solid #fde68a;border-left:3px solid #d97706;color:#92400e;}
+        .dn.rd{background:#fef2f2;border:1px solid #fecaca;border-left:3px solid #dc2626;color:#991b1b;}
+        #mftr{display:flex;align-items:center;justify-content:space-between;padding:18px 44px;margin-top:14px;border-top:1px solid #e9eef5;background:#fafbfc;}
+        .mfb{font-size:12px;color:#64748b;cursor:pointer;font-family:'DM Mono',monospace;background:none;border:none;transition:color .15s;}
+        .mfb:hover{color:var(--blue);}
+        .cbar{background:#fef2f2;border-top:1px solid #fecaca;padding:8px 44px;font-size:10.5px;font-family:'DM Mono',monospace;color:#991b1b;display:flex;align-items:center;justify-content:space-between;}
+        .src{font-size:10px;color:#94a3b8;margin-top:4px;font-style:italic;}
+        #mbdy,#mhdr{user-select:none;-webkit-user-select:none;}
+
+        .cw{font-family:'Sora',sans-serif;}
+        .csc{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+        .ccol{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;}
+        .cctl{font-size:11px;font-family:'DM Mono',monospace;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#2563eb;margin-bottom:14px;display:flex;align-items:center;gap:6px;}
+        .cctl span{display:inline-block;width:8px;height:8px;border-radius:50%;}
+        .sa{background:#2563eb;}.sb2{background:#16a34a;}.sc2{background:#d97706;}
+        .cf{margin-bottom:11px;}
+        .cfl{font-size:10.5px;color:#64748b;margin-bottom:4px;font-family:'DM Mono',monospace;}
+        .cfi{width:100%;padding:7px 10px;border:1px solid #e2e8f0;border-radius:7px;font-size:13px;font-family:'Sora',sans-serif;color:#0f172a;background:#fff;outline:none;transition:border-color .15s;}
+        .cfi:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.1);}
+        .cfs{width:100%;padding:7px 10px;border:1px solid #e2e8f0;border-radius:7px;font-size:12.5px;font-family:'Sora',sans-serif;color:#0f172a;background:#fff;outline:none;cursor:pointer;}
+        .crt{overflow-x:auto;margin-bottom:20px;}
+        .crt table{width:100%;border-collapse:collapse;font-size:12.5px;}
+        .crt th{background:#1e293b;color:#e2e8f0;font-size:10px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.07em;padding:10px 12px;text-align:left;}
+        .crt th.ha{background:#1e3a8a;}.crt th.hb{background:#14532d;}.crt th.hc{background:#78350f;}
+        .crt td{padding:9px 12px;color:#334155;border-bottom:1px solid #f1f5f9;font-size:12.5px;}
+        .crt .rt td{font-weight:700;color:#0f172a;background:#f1f5f9;border-top:2px solid #e2e8f0;}
+        .cbg{display:flex;align-items:flex-end;gap:8px;height:120px;padding:0 4px;border-bottom:2px solid #e2e8f0;margin-bottom:20px;}
+        .cbw{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;}
+        .cbar2{width:100%;border-radius:5px 5px 0 0;min-height:4px;transition:height .4s ease;position:relative;}
+        .cbl{font-size:9.5px;font-family:'DM Mono',monospace;color:#64748b;text-align:center;margin-top:6px;}
+        .cbv{font-size:9px;color:#fff;position:absolute;top:4px;left:0;right:0;text-align:center;font-family:'DM Mono',monospace;font-weight:600;}
+        .crg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px;}
+        .crc{border-radius:9px;padding:14px;text-align:center;}
+        .crc.ra{background:#eff6ff;border:1px solid #bfdbfe;}
+        .crc.rb{background:#f0fdf4;border:1px solid #bbf7d0;}
+        .crc.rc{background:#fffbeb;border:1px solid #fde68a;}
+        .crl{font-size:9.5px;font-family:'DM Mono',monospace;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;}
+        .crv{font-size:20px;font-weight:700;}
+        .crc.ra .crv{color:#1d4ed8;}.crc.rb .crv{color:#15803d;}.crc.rc .crv{color:#b45309;}
+        .crs{font-size:10px;color:#94a3b8;margin-top:2px;}
+        .ceb{display:flex;align-items:center;gap:8px;background:#16a34a;border:none;color:#fff;font-size:13px;font-weight:600;font-family:'Sora',sans-serif;padding:11px 20px;border-radius:9px;cursor:pointer;transition:opacity .15s;}
+        .ceb:hover{opacity:.85;}
+        .cht{font-size:10.5px;font-family:'DM Mono',monospace;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;}
+
+        @media(max-width:900px){
+            #hbg{display:flex;}
+            #sidebar{transform:translateX(-100%);transition:transform .3s ease;box-shadow:4px 0 32px rgba(0,0,0,.5);}
+            #sidebar.mo{transform:translateX(0);}
+            #main{margin-left:0;}
+            #topbar{padding:12px 16px 12px 64px;}
+            .tbt{display:none;}
+            #content{padding:24px 16px 48px;}
+            .sts{grid-template-columns:repeat(2,1fr);gap:10px;}
+            .gr{grid-template-columns:1fr;}
+            .pgh h1{font-size:20px;}
+            .pgh p{font-size:13px;}
+            .csc{grid-template-columns:1fr;}
+            .crg{grid-template-columns:1fr;}
+        }
+        @media(max-width:540px){
+            #ov{padding:0;align-items:flex-end;}
+            #modal{border-radius:18px 18px 0 0;max-height:88vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+            #mhdr{padding:20px 16px 0;}
+            .dt{font-size:17px;}
+            .dl{font-size:12px;}
+            #mbdy{padding:16px 16px 8px;}
+            #mbdy table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:11px;}
+            #mbdy table th{padding:7px 8px;font-size:9px;}
+            #mbdy table td{padding:7px 8px;font-size:11px;}
+            #mbdy ul li{font-size:12px;}
+            .dn{font-size:11.5px;padding:10px 12px;}
+            .dst{font-size:13px;}
+            #mftr{padding:12px 16px;}
+            .cbar{padding:8px 16px;font-size:9.5px;flex-direction:column;gap:2px;text-align:center;}
+            #mtop{padding:8px 12px;}
+            .csc{grid-template-columns:1fr;}
+            .crg{grid-template-columns:1fr;}
+            .crt table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+        }
+        @media(min-width:901px){#sidebar{transform:translateX(0)!important;}}
+        ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}
+        ::-webkit-scrollbar-thumb{background:var(--nl);border-radius:10px;}
+        #sidebar::-webkit-scrollbar{width:3px;}
+    </style>
+</head>
+<body>
+
+<div class="wmo"><div class="wmt" id="bwm"></div></div>
+
+<div id="login">
+    <div class="lo lo1"></div><div class="lo lo2"></div>
+    <div class="lc">
+        <div class="lf">🇪🇸</div>
+        <div class="lt">HBT Espanha</div>
+        <div class="ls">acesso restrito · confidencial</div>
+        <div class="ld" id="ldots">
+            <div class="ldot" id="d0"></div><div class="ldot" id="d1"></div>
+            <div class="ldot" id="d2"></div><div class="ldot" id="d3"></div>
+        </div>
+        <div class="lp" id="lpad">
+            <div class="lk" data-k="1">1</div><div class="lk" data-k="2">2</div><div class="lk" data-k="3">3</div>
+            <div class="lk" data-k="4">4</div><div class="lk" data-k="5">5</div><div class="lk" data-k="6">6</div>
+            <div class="lk" data-k="7">7</div><div class="lk" data-k="8">8</div><div class="lk" data-k="9">9</div>
+            <div class="lk ast" data-k="">✱</div><div class="lk" data-k="0">0</div><div class="lk del" data-k="del">⌫</div>
+        </div>
+        <div class="le" id="lerr">Senha incorreta</div>
+        <div class="lft">hbt-espana.estrategia</div>
+    </div>
+</div>
+
+<button id="hbg"><span></span><span></span><span></span></button>
+<div id="sbo"></div>
+
+<aside id="sidebar">
+    <div class="sbl">
+        <div class="sbb"><div class="sbi">🇪🇸</div><div class="sbn">HBT Espanha</div></div>
+        <div class="sbs">Estratégia Comercial · 2026</div>
+    </div>
+    <div class="sbsc">Visão Geral</div>
+    <div class="sbl2 act" data-modal="resumo"><i class="ico fa-solid fa-layer-group"></i> Documentação Completa</div>
+    <div class="sbsc">Mercado</div>
+    <div class="sbl2" data-modal="mercado"><i class="ico fa-solid fa-magnifying-glass-chart"></i> Mercado de Tabaco para Enrolar (RYO)</div>
+    <div class="sbl2" data-modal="distribuicao"><i class="ico fa-solid fa-truck-fast"></i> Sistema de Distribuição (Estancos)</div>
+    <div class="sbl2" data-modal="concorrencia"><i class="ico fa-solid fa-chess"></i> Cenário Competitivo</div>
+    <div class="sbsc">Regulatório &amp; Fiscal</div>
+    <div class="sbl2" data-modal="regulatorio"><i class="ico fa-solid fa-scale-balanced"></i> TPD e Notificação de Produto</div>
+    <div class="sbl2" data-modal="impostos"><i class="ico fa-solid fa-receipt"></i> Impuesto Especial — Tabaco para Enrolar (RYO)</div>
+    <div class="sbsc">Modelo de Entrada</div>
+    <div class="sbl2" data-modal="modelo"><i class="ico fa-solid fa-handshake"></i> Estrutura via Distribuidor</div>
+    <div class="sbl2" data-modal="cronograma"><i class="ico fa-solid fa-calendar-check"></i> Cronograma de Entrada</div>
+    <div class="sbsc">Riscos</div>
+    <div class="sbl2" data-modal="riscos"><i class="ico fa-solid fa-shield-halved"></i> Riscos e Mitigação</div>
+    <div class="sbl2" data-modal="conclusao"><i class="ico fa-solid fa-flag-checkered"></i> Conclusão e Próximos Passos</div>
+    <div class="sbsc">Gestão do Projeto</div>
+    <div class="sbl2" style="cursor:default;color:var(--bg);font-weight:600;"><i class="ico fa-solid fa-triangle-exclamation"></i> Tríplice Constante</div>
+    <div class="sbc2" data-modal="tc_visao"><i class="fa-solid fa-circle-nodes"></i> Visão Geral TC</div>
+    <div class="sbc2" data-modal="tc_escopo"><i class="fa-solid fa-bullseye"></i> Escopo</div>
+    <div class="sbc2" data-modal="tc_tempo"><i class="fa-solid fa-clock"></i> Tempo</div>
+    <div class="sbc2" data-modal="tc_custo"><i class="fa-solid fa-euro-sign"></i> Custo</div>
+    <div class="sbc2" data-modal="tc_tradeoff"><i class="fa-solid fa-arrow-right-arrow-left"></i> Trade-off</div>
+    <div class="sbc2" data-modal="tc_kpis"><i class="fa-solid fa-gauge-high"></i> Dashboard KPIs</div>
+    <div class="sbc2" data-modal="tc_roi"><i class="fa-solid fa-arrow-trend-up"></i> ROI</div>
+    <div class="sbsc">Ferramenta</div>
+    <div class="sbl2" data-modal="calculadora"><i class="ico fa-solid fa-table-cells"></i> Calculadora de Cenários</div>
+    <div class="sbf">
+        <div class="sbu">
+            <div class="sbav">PB</div>
+            <div><div class="sbun">Paulo F. De Barros</div><div class="sbur">Diretor de Operações Globais</div></div>
+        </div>
+    </div>
+</aside>
+
+<div id="main">
+    <div id="topbar">
+        <div class="tbb"><i class="fa-solid fa-folder-open" style="color:#2563eb"></i><span id="tbs">Estratégia Espanha</span><span style="color:#4a6b87">/</span><span id="tbp">Documentação Completa</span></div>
+        <div class="tbr"><div class="tbc"><div class="tbd"></div>CONFIDENCIAL</div><div class="tbt">Junho 2026</div></div>
+    </div>
+    <div id="content">
+        <div class="pgh">
+            <h1>Entrada Comercial na Espanha — Tabaco para Enrolar</h1>
+            <p>Estratégia de entrada via distribuidor local, com base em dados reais do mercado espanhol de tabaco para enrolar (RYO) e na estrutura fiscal e de distribuição vigente em 2026.</p>
+            <div class="mr">
+                <span class="pi bl"><i class="fa-solid fa-flag"></i> Espanha · Mercado UE</span>
+                <span class="pi go"><i class="fa-solid fa-star"></i> Entrada via Distribuidor</span>
+                <span class="pi"><i class="fa-solid fa-clock"></i> Horizonte 18–24 meses</span>
+            </div>
+        </div>
+        <div class="sts">
+            <div class="st bl"><div class="stl">Mercado Tabaco para Enrolar (RYO)</div><div class="stv">≈6.500 t/ano</div><div class="sts2">12,2% do volume total de tabaco</div></div>
+            <div class="st go"><div class="stl">Tendência</div><div class="stv">Crescente</div><div class="sts2">Substituição de cigarrillo por preço</div></div>
+            <div class="st rd"><div class="stl">Carga Fiscal</div><div class="stv">37,68% + €33,40/kg</div><div class="sts2">Mínimo €112,50/kg (2025–26)</div></div>
+            <div class="st"><div class="stl">Canal de Venda</div><div class="stv">Monopólio Estatal</div><div class="sts2">Rede de estancos licenciados</div></div>
+        </div>
+
+        <div class="ph"><span>Mercado</span></div>
+        <div class="gr">
+            <div class="cd" data-modal="mercado"><span class="cp">M-01</span><div class="ci ib"><i class="fa-solid fa-magnifying-glass-chart"></i></div><div class="ct">Mercado de Tabaco para Enrolar (RYO) na Espanha</div><div class="cdesc">~6.500 toneladas/ano, 12,2% do volume nacional de tabaco, em crescimento por substituição ao cigarrillo tradicional.</div><span class="ctg">PT</span></div>
+            <div class="cd" data-modal="distribuicao"><span class="cp">M-02</span><div class="ci it"><i class="fa-solid fa-truck-fast"></i></div><div class="ct">Sistema de Distribuição — Estancos</div><div class="cdesc">Monopólio estatal via Comisionado para el Mercado de Tabacos. Entrada exige distribuidor majorista autorizado.</div><span class="ctg">PT</span></div>
+            <div class="cd gc" data-modal="concorrencia"><span class="cp">M-03</span><div class="ci io"><i class="fa-solid fa-chess"></i></div><div class="ct">Cenário Competitivo</div><div class="cdesc">Mercado concentrado em poucas marcas multinacionais — espaço real para entrante com proposta de valor clara.</div><span class="ctg">PT</span></div>
+        </div>
+
+        <div class="ph"><span>Regulatório e Fiscal</span></div>
+        <div class="gr">
+            <div class="cd" data-modal="regulatorio"><span class="cp">R-01</span><div class="ci ip"><i class="fa-solid fa-scale-balanced"></i></div><div class="ct">TPD e Notificação de Produto</div><div class="cdesc">Diretiva 2014/40/UE aplica-se diretamente — notificação obrigatória antes da comercialização, sem camada de adaptação.</div><span class="ctg">PT</span></div>
+            <div class="cd gc" data-modal="impostos"><span class="cp">R-02</span><div class="ci ir"><i class="fa-solid fa-percent"></i></div><div class="ct">Impuesto Especial — Tabaco para Enrolar (RYO)</div><div class="cdesc">37,68% sobre PVP + €33,40/kg, com mínimo de €112,50/kg. Base de cálculo central para a precificação do produto.</div><span class="ctg">PT</span></div>
+        </div>
+
+        <div class="ph"><span>Modelo de Entrada</span></div>
+        <div class="gr">
+            <div class="cd gc" data-modal="modelo"><span class="cp">E-01</span><div class="ci io"><i class="fa-solid fa-handshake"></i></div><div class="ct">Estrutura via Distribuidor Local</div><div class="cdesc">Entrada através de distribuidor/importador majorista, reduzindo capital inicial e acelerando acesso à rede de estancos.</div><span class="ctg">PT</span></div>
+            <div class="cd" data-modal="cronograma"><span class="cp">E-02</span><div class="ci ib"><i class="fa-solid fa-calendar-days"></i></div><div class="ct">Cronograma de Entrada</div><div class="cdesc">Da due diligence do distribuidor à ativação em pontos de venda piloto — fases e marcos macro.</div><span class="ctg">PT</span></div>
+        </div>
+
+        <div class="ph"><span>Riscos e Conclusão</span></div>
+        <div class="gr">
+            <div class="cd" data-modal="riscos"><span class="cp">RK-01</span><div class="ci ir"><i class="fa-solid fa-shield-halved"></i></div><div class="ct">Riscos e Mitigação</div><div class="cdesc">Concentração em distribuidor único, pressão fiscal, mercado ilícito — com estratégias de mitigação para cada um.</div><span class="ctg">PT</span></div>
+            <div class="cd gc" data-modal="conclusao"><span class="cp">RK-02</span><div class="ci io"><i class="fa-solid fa-flag-checkered"></i></div><div class="ct">Conclusão e Próximos Passos</div><div class="cdesc">Síntese executiva e decisões que a diretoria precisa validar antes da Fase 0.</div><span class="ctg">PT</span></div>
+        </div>
+
+        <div class="ph"><span>Gestão do Projeto · Tríplice Constante</span></div>
+        <div class="gr">
+            <div class="cd gc" data-modal="tc_visao"><span class="cp">TC-00</span><div class="ci ia"><i class="fa-solid fa-circle-nodes"></i></div><div class="ct">Visão Geral — Tríplice Constante</div><div class="cdesc">Escopo × Tempo × Custo aplicados à entrada comercial na Espanha. Estrutura pronta, valores a preencher quando os dados de custo e cronograma reais estiverem disponíveis.</div><span class="ctg pend">A PREENCHER</span></div>
+            <div class="cd" data-modal="tc_escopo"><span class="cp">TC-01</span><div class="ci ib"><i class="fa-solid fa-bullseye"></i></div><div class="ct">Escopo — O que será e não será entregue</div><div class="cdesc">Definição do que está dentro e fora do projeto de entrada comercial via distribuidor.</div><span class="ctg">PT</span></div>
+            <div class="cd" data-modal="tc_tempo"><span class="cp">TC-02</span><div class="ci it"><i class="fa-solid fa-clock"></i></div><div class="ct">Tempo — Cronograma Macro</div><div class="cdesc">Fases e marcos do cronograma de entrada, com datas a confirmar conforme decisão de origem do produto.</div><span class="ctg pend">A PREENCHER</span></div>
+            <div class="cd" data-modal="tc_custo"><span class="cp">TC-03</span><div class="ci ig"><i class="fa-solid fa-euro-sign"></i></div><div class="ct">Custo — Orçamento Base</div><div class="cdesc">Estrutura de orçamento da entrada comercial, com fórmulas prontas e valores a preencher com custo real de produção e exportação.</div><span class="ctg pend">A PREENCHER</span></div>
+            <div class="cd" data-modal="tc_tradeoff"><span class="cp">TC-04</span><div class="ci ip"><i class="fa-solid fa-arrow-right-arrow-left"></i></div><div class="ct">Matriz de Trade-off</div><div class="cdesc">Como alterações em escopo, tempo ou custo se afetam mutuamente — ferramenta de decisão executiva.</div><span class="ctg">PT</span></div>
+            <div class="cd" data-modal="tc_kpis"><span class="cp">TC-05</span><div class="ci ia"><i class="fa-solid fa-gauge-high"></i></div><div class="ct">Dashboard KPIs &amp; Monitoramento</div><div class="cdesc">SPI, CPI, CV, ROI — fórmulas prontas, metas e alertas a definir com a diretoria.</div><span class="ctg pend">A PREENCHER</span></div>
+            <div class="cd" data-modal="tc_roi"><span class="cp">TC-06</span><div class="ci ig"><i class="fa-solid fa-arrow-trend-up"></i></div><div class="ct">ROI — Retorno sobre o Investimento</div><div class="cdesc">Fórmula pronta: lucro líquido anual ÷ investimento total. Valores a preencher com dados reais de custo e volume.</div><span class="ctg pend">A PREENCHER</span></div>
+        </div>
+
+        <div class="ph"><span>Ferramenta · Calculadora de Cenários</span></div>
+        <div class="gr">
+            <div class="cd gc" data-modal="calculadora" style="grid-column:1/-1"><span class="cp">TOOL</span><div class="ci ig"><i class="fa-solid fa-table-cells"></i></div><div class="ct">Calculadora Interativa — Carga Fiscal e Margem por Cenário de Preço</div><div class="cdesc">Compare até 3 cenários de preço de venda ao público (PVP) e veja o impacto do imposto especial, IVA e margem do distribuidor sobre a margem líquida por kg.</div><span class="ctg">PT</span></div>
+        </div>
+    </div>
+</div>
+
+<div id="ov">
+    <div id="modal">
+        <div class="mwm"><div class="mwt" id="mwm"></div></div>
+        <div id="mtop"><button id="mcls">Fechar documento</button></div>
+        <div id="mhdr"></div>
+        <div id="mbdy"></div>
+        <div id="mftr">
+            <button class="mfb" id="mbk">← Voltar</button>
+            <button class="mfb" id="mpr">🖨 Imprimir</button>
+        </div>
+        <div class="cbar"><span>🔒 CONFIDENCIAL · Uso exclusivo da Diretoria · HBT Espanha 2026</span><span id="cts"></span></div>
+    </div>
+</div>
+
+<script>
+var M = {
+resumo:{c:'VISÃO GERAL · DOC-01',t:'Resumo Executivo — Entrada Comercial na Espanha',l:'A HBT avalia a entrada no mercado espanhol de tabaco para enrolar (RYO) via distribuidor local, com base em dados reais de mercado, fiscalidade e distribuição vigentes em 2026.',b:`<div class="dn bl">📋 Documento base do projeto comercial. Os dados de mercado e fiscalidade citados têm fonte oficial (BOE, Comisionado para el Mercado de Tabacos) e devem ser revalidados periodicamente, pois alíquotas e volumes são atualizados com frequência.</div><div class="ds"><div class="dst"><span class="n">1.</span> Contexto e Objetivo</div><ul><li>Produto: tabaco para enrolar (RYO) — categoria distinta de cigarrillo, snus ou tabaco aquecido</li><li>Mercado-alvo: Espanha, via distribuidor/importador majorista licenciado</li><li>Canal de venda: rede de estancos, sob monopólio estatal de distribuição</li><li>Objetivo: estabelecer presença comercial sustentável em 18–24 meses</li></ul></div><div class="ds"><div class="dst"><span class="n">2.</span> Por que o Tabaco para Enrolar</div><ul><li>Categoria em crescimento de volume — ganha espaço sobre o cigarrillo tradicional por motivo de preço</li><li>Representa ~12,2% do volume total de tabaco vendido na Espanha (2024)</li><li>Canal de distribuição já existe e é bem definido (estancos), reduzindo incerteza de acesso ao mercado</li></ul></div><div class="dn am">⚠️ A carga fiscal sobre tabaco para enrolar (RYO) é elevada e crescente — ver seção de Impuesto Especial. Isso deve ser incorporado à precificação desde o primeiro modelo financeiro, não tratado como detalhe posterior.</div>`},
+
+mercado:{c:'MERCADO · M-01',t:'Mercado de Tabaco para Enrolar (RYO) na Espanha',l:'Dados oficiais de volume e tendência do mercado espanhol de tabaco para enrolar.',b:`<div class="ds"><div class="dst"><span class="n">1.</span> Tamanho e Estrutura (dados 2024)</div><ul><li>Volume total de labores de tabaco vendidas na Espanha: 53.299 toneladas (+0,99% vs. 2023)</li><li>Tabaco para enrolar (RYO): 12,19% do volume total — aproximadamente 6.500 toneladas/ano</li><li>Em valor de venda, tabaco para enrolar (RYO) representa 10,19% do total comercializado</li><li>Cigarrillos ainda dominam (80,43% do volume), mas crescem mais lentamente que o tabaco para enrolar</li></ul></div><div class="ds"><div class="dst"><span class="n">2.</span> Tendência e Motivo do Crescimento</div><ul><li>Substituição de cigarrillo por tabaco para enrolar (RYO) motivada por preço — o consumidor percebe maior rendimento por euro gasto</li><li>Tendência consistente desde pelo menos 2022–2024, com aceleração em períodos de pressão inflacionária</li><li>Em mercados regionais acompanhados (ex. Pontevedra), o tabaco para enrolar cresceu 16,4% em unidades e 18% em faturamento em um único ano</li></ul></div><div class="dn gr">✅ Esta é uma categoria estruturalmente em ganho de participação, não um nicho marginal — o que sustenta a tese de entrada.</div><div class="src">Fontes: BOE-A-2024-21709 (Comisionado para el Mercado de Tabacos); Infobae/EFE, fev. 2025; Diario de Pontevedra.</div>`},
+
+distribuicao:{c:'MERCADO · M-02',t:'Sistema de Distribuição — Rede de Estancos',l:'A distribuição de tabaco na Espanha opera sob monopólio estatal histórico, com regras específicas de acesso ao mercado.',b:`<div class="dn bl">📋 A Espanha mantém, desde a Ley 13/1998 de Ordenación del Mercado de Tabacos, um sistema de monopólio estatal de distribuição — diferente da maioria dos mercados europeus.</div><div class="ds"><div class="dst"><span class="n">1.</span> Como Funciona</div><ul><li>Toda venda legal de tabaco ocorre via "Expendedurías de Tabaco y Timbre" (estancos), licenciadas pelo Estado</li><li>O Comisionado para el Mercado de Tabacos fixa os preços máximos de venda ao público (PVP) por resolução — não é livre precificação</li><li>Fabricantes/importadores não vendem diretamente ao estanco — a cadeia passa por distribuidores majoristas autorizados</li></ul></div><div class="ds"><div class="dst"><span class="n">2.</span> Implicação para a Entrada da HBT</div><ul><li>Não é possível "vender direto" no modelo espanhol — um distribuidor majorista licenciado é estrutural, não apenas estratégico</li><li>O preço final ao consumidor (PVP) é comunicado e fixado oficialmente — a margem da HBT deve ser calculada a partir do PVP definido, não de uma precificação livre</li><li>Due diligence do distribuidor deve confirmar licenciamento ativo junto ao Comisionado antes de qualquer contrato</li></ul></div><div class="src">Fonte: Ley 13/1998 de Ordenación del Mercado de Tabacos; Resoluciones del Comisionado para el Mercado de Tabacos, BOE 2026.</div>`},
+
+concorrencia:{c:'MERCADO · M-03',t:'Cenário Competitivo',l:'Visão geral da estrutura competitiva no segmento de tabaco para enrolar (RYO).',b:`<div class="ds"><div class="dst"><span class="n">1.</span> Estrutura do Mercado</div><ul><li>Mercado de labores de tabaco na Espanha é concentrado em poucas multinacionais estabelecidas no segmento de cigarrillo</li><li>O segmento de tabaco para enrolar (RYO) tem menor concentração de marca do que o de cigarrillo, com espaço para marcas de valor/preço competitivo</li><li>Crescimento da categoria atrai novos entrantes — janela de oportunidade tende a se estreitar com o tempo</li></ul></div><div class="ds"><div class="dst"><span class="n">2.</span> Implicação Estratégica</div><ul><li>Entrada com proposta de preço/qualidade competitiva tem racional real neste segmento especificamente — diferente do segmento de cigarrillo, mais fechado</li><li>Velocidade de entrada importa: cronograma de 18–24 meses é razoável, mas não deve se estender sem necessidade</li></ul></div><div class="dn am">⚠️ Dados detalhados de market share por marca em tabaco para enrolar (RYO) estão disponíveis em bases pagas (Statista/Comisionado) e devem ser adquiridos antes da negociação final com o distribuidor, para evitar negociar "no escuro".</div>`},
+
+regulatorio:{c:'REGULATÓRIO · R-01',t:'TPD e Notificação de Produto',l:'A Diretiva de Produtos do Tabaco da UE aplica-se diretamente à Espanha, sem camada de adaptação nacional.',b:`<div class="dn bl">📋 Diferente de uma jurisdição EEE/EFTA, a Espanha aplica a TPD (2014/40/UE) diretamente como Estado-membro pleno da UE.</div><div class="ds"><div class="dst"><span class="n">1.</span> Exigências Centrais</div><ul><li>Notificação obrigatória do produto às autoridades antes da comercialização (sistema EU-CEG)</li><li>Advertências sanitárias ocupando percentual definido da embalagem, sem espaço para elementos que sugiram menor nocividade</li><li>Sistema de rastreabilidade (track &amp; trace) obrigatório na cadeia de distribuição</li><li>Restrições de ingredientes e aromatizantes característicos</li></ul></div><div class="ds"><div class="dst"><span class="n">2.</span> Implicação para o Cronograma</div><ul><li>A notificação de produto deve iniciar em paralelo à negociação comercial com o distribuidor, não depois — atrasos aqui propagam-se para todo o cronograma</li><li>O projeto de embalagem ("trunfo" em desenvolvimento) deve nascer já dentro das restrições de rotulagem da TPD</li></ul></div><div class="dn am">⚠️ Validar com assessoria jurídica espanhola/UE os prazos reais de notificação e homologação antes de fixar o cronograma de Fase 1.</div>`},
+
+impostos:{c:'REGULATÓRIO · R-02',t:'Impuesto Especial — Tabaco para Enrolar (RYO)',l:'A carga fiscal sobre tabaco para enrolar (RYO) é estruturada em duplo critério (proporcional + específico), com piso mínimo — base central de qualquer modelo de precificação.',b:`<div class="ds"><div class="dst"><span class="n">1.</span> Estrutura do Imposto (vigente 2025–2026)</div><table><thead><tr><th>Componente</th><th>Valor</th><th>Observação</th></tr></thead><tbody><tr><td>Tipo proporcional</td><td>37,68%</td><td>Sobre o PVP (preço de venda ao público)</td></tr><tr><td>Tipo específico</td><td>€33,40 / 1.000 cigarrillos equiv.</td><td>Componente fixo por unidade de referência</td></tr><tr class="hl"><td>Mínimo do imposto</td><td>€112,50 / kg</td><td>Piso absoluto, independente do PVP</td></tr><tr><td>IVA</td><td>21%</td><td>Aplicado sobre o preço com imposto especial já incluído</td></tr></tbody></table></div><div class="ds"><div class="dst"><span class="n">2.</span> Implicação Direta</div><ul><li>O imposto mínimo de €112,50/kg significa que, abaixo de determinado PVP, a carga fiscal por kg não cai — isso define um piso de preço abaixo do qual a operação não é viável</li><li>Qualquer modelo financeiro da HBT para a Espanha deve partir desta estrutura tributária, não de uma margem genérica estimada</li></ul></div><div class="dn rd">🔴 Esta é a variável que mais frequentemente é subestimada em planos de entrada apressados — a estrutura mista (% + valor fixo + piso) é mais punitiva para produtos de menor PVP do que parece à primeira vista.</div><div class="src">Fonte: Ley 7/2024 e Real Decreto-ley 9/2024/10/2024 (reforma fiscal do tabaco); BOE; Ineaf Business School.</div>`},
+
+modelo:{c:'MODELO DE ENTRADA · E-01',t:'Estrutura via Distribuidor Local',l:'Entrada através de distribuidor/importador majorista licenciado, reduzindo capital inicial e risco regulatório direto.',b:`<div class="ds"><div class="dst"><span class="n">1.</span> Por que este Modelo</div><ul><li>O sistema espanhol de monopólio de distribuição torna o distribuidor majorista um elo estrutural, não apenas uma opção de conveniência</li><li>Reduz necessidade de capital fixo e licenciamento direto de importação na fase inicial</li><li>Acelera acesso à rede de estancos, que o distribuidor já opera</li></ul></div><div class="ds"><div class="dst"><span class="n">2.</span> Pontos a Negociar no Contrato</div><ul><li>Exclusividade territorial limitada (24–36 meses, renovável por performance)</li><li>Metas mínimas de volume, com cláusula de revisão</li><li>Transparência sobre a margem do distribuidor dentro da estrutura de PVP fixado</li><li>Direito de auditoria sobre licenciamento e conformidade do distribuidor junto ao Comisionado</li></ul></div><div class="dn gr">✅ Preserva a opção futura de migrar para subsidiária própria caso o volume e a margem justifiquem.</div>`},
+
+cronograma:{c:'MODELO DE ENTRADA · E-02',t:'Cronograma de Entrada',l:'Marcos macro da entrada comercial, da seleção do distribuidor à ativação em pontos de venda.',b:`<div class="ds"><div class="dst"><span class="n">1.</span> Fases</div><table><thead><tr><th>Fase</th><th>Atividade</th><th>Marco de Saída</th></tr></thead><tbody><tr><td>1</td><td>Due diligence e seleção de distribuidor</td><td>Distribuidor selecionado e validado junto ao Comisionado</td></tr><tr><td>2</td><td>Notificação de produto (TPD) e contrato</td><td>Produto notificado; contrato assinado</td></tr><tr><td>3</td><td>Adequação de embalagem e primeiro lote</td><td>Embalagem aprovada; lote pronto para expedição</td></tr><tr class="hl"><td>4</td><td>Ativação em estancos-piloto</td><td>Primeiras vendas registradas</td></tr></tbody></table></div><div class="dn am">⚠️ Datas específicas dependem da decisão ainda pendente sobre origem do produto (Brasil/China/híbrido) — ver Business Plan completo, Seção 4.2.</div>`},
+
+riscos:{c:'RISCOS · RK-01',t:'Riscos e Mitigação',l:'Principais riscos da entrada comercial e estratégias de mitigação correspondentes.',b:`<div class="ds"><div class="dst"><span class="n">1.</span> Matriz de Riscos</div><table><thead><tr><th>Risco</th><th>Mitigação</th></tr></thead><tbody><tr><td>Concentração em distribuidor único</td><td>Cláusulas de performance; manter due diligence de alternativas</td></tr><tr><td>Piso fiscal (€112,50/kg) comprime margem em PVP baixo</td><td>Modelo financeiro deve testar sensibilidade de margem a diferentes PVPs antes de fixar posicionamento</td></tr><tr><td>Atraso na notificação TPD</td><td>Iniciar notificação em paralelo à negociação comercial</td></tr><tr><td>Mercado ilícito de tabaco para enrolar (160 toneladas apreendidas em 2024)</td><td>Documentação de cadeia de custódia impecável; distribuidor com histórico 100% lícito</td></tr></tbody></table></div><div class="dn gr">✅ Nenhum destes riscos é inviabilizante — todos são geridos com planejamento e documentação adequados.</div><div class="src">Fonte sobre apreensões: Memoria de la Mesa del Tabaco 2024 (EFE/Infobae, maio 2025).</div>`},
+
+conclusao:{c:'CONCLUSÃO · RK-02',t:'Conclusão e Próximos Passos',l:'Síntese executiva da oportunidade e decisões que a diretoria precisa validar.',b:`<div class="dn bl">📋 A tabaco para enrolar (RYO) é um segmento real, em crescimento estrutural, com canal de distribuição claro — mas com carga fiscal elevada que deve moldar a precificação desde o início.</div><div class="ds"><div class="dst"><span class="n">1.</span> Síntese</div><ul><li>Mercado de ~6.500 t/ano, crescendo por substituição de categoria</li><li>Canal de distribuição estruturado, ainda que via monopólio estatal — reduz incerteza, não elimina a necessidade de um bom distribuidor</li><li>Carga fiscal (37,68% + €33,40/kg, mínimo €112,50/kg) é a variável que mais define viabilidade de margem</li></ul></div><div class="ds"><div class="dst"><span class="n">2.</span> Decisões Pendentes para a Diretoria</div><table><thead><tr><th>#</th><th>Decisão</th></tr></thead><tbody><tr><td>1</td><td>Validar modelo financeiro com a estrutura fiscal real (não estimativa genérica)</td></tr><tr><td>2</td><td>Aprovar início de due diligence de distribuidores na Espanha</td></tr><tr><td>3</td><td>Confirmar decisão de origem do produto (Brasil/China) antes da notificação TPD</td></tr></tbody></table></div>`},
+
+tc_visao:{c:'TRÍPLICE CONSTANTE · TC-00',t:'Visão Geral — Tríplice Constante',l:'Aplicação do Triângulo de Ferro (Escopo × Tempo × Custo) à entrada comercial da HBT na Espanha. Estrutura e fórmulas prontas — valores a preencher quando os dados reais estiverem disponíveis.',b:`<div class="dn am">⚠️ Esta seção está estruturada, mas os valores ainda não foram preenchidos. Os campos marcados com "A PREENCHER" dependem de dados que a HBT ainda precisa levantar — custo real de produção/exportação, capacidade de volume e cronograma de origem do produto.</div><div class="ds"><div class="dst"><span class="n">1.</span> As Três Restrições</div><table><thead><tr><th>Restrição</th><th>Definição</th><th>Prioridade</th><th>Status</th></tr></thead><tbody><tr><td>Escopo</td><td>Entrada comercial via distribuidor na Espanha</td><td>Alta — fixo</td><td>Definido (ver TC-01)</td></tr><tr><td>Tempo</td><td>Cronograma de entrada (due diligence → ativação)</td><td>Média — flexível</td><td>A PREENCHER</td></tr><tr class="hl"><td>Custo</td><td>Orçamento total de entrada (Ano 1)</td><td>Alta — controlado</td><td>A PREENCHER</td></tr></tbody></table></div><div class="dn bl">📋 Recomendação: preencher Tempo e Custo com base no due diligence do distribuidor e na decisão de origem do produto (Brasil/China), antes de levar este painel à diretoria como compromisso de prazo e orçamento.</div>`},
+
+tc_escopo:{c:'TRÍPLICE CONSTANTE · TC-01',t:'Escopo — O que será e não será entregue',l:'O escopo é a restrição de maior prioridade nesta fase. Nenhuma alteração sem aprovação executiva formal.',b:`<div class="ds"><div class="dst"><span class="n">1.</span> In Scope</div><ul><li>Due diligence e seleção de distribuidor majorista licenciado na Espanha</li><li>Notificação do produto junto às autoridades (TPD/EU-CEG)</li><li>Adequação de embalagem aos requisitos de rotulagem da UE</li><li>Ativação comercial em estancos-piloto</li><li>Modelo de precificação baseado na estrutura fiscal real (impuesto especial + IVA)</li></ul></div><div class="ds"><div class="dst"><span class="n">2.</span> Out of Scope (nesta fase)</div><ul><li>Constituição de subsidiária própria na Espanha — fica como opção futura, não compromisso desta fase</li><li>Decisão sobre sede da frente regulatória (Oslo vs. Espanha) — tratada separadamente no Business Plan</li><li>Expansão para outros mercados europeus além da Espanha</li></ul></div><div class="ds"><div class="dst"><span class="n">3.</span> Critério de Aceitação</div><ul><li>Distribuidor contratado e validado junto ao Comisionado para el Mercado de Tabacos</li><li>Produto notificado e aprovado conforme TPD</li><li>Primeiras vendas registradas em pontos de venda piloto</li></ul></div><div class="dn gr">✅ Qualquer expansão de escopo (ex.: segundo mercado, subsidiária própria) deve passar por aprovação formal da diretoria, com análise de impacto em tempo e custo.</div>`},
+
+tc_tempo:{c:'TRÍPLICE CONSTANTE · TC-02',t:'Tempo — Cronograma Macro',l:'Estrutura de fases pronta. Datas e durações a preencher após a decisão de origem do produto e o início do due diligence do distribuidor.',b:`<div class="dn am">⚠️ As datas abaixo estão em branco propositalmente — preencher após a Fase 0 (due diligence e decisão de origem do produto) ser iniciada.</div><div class="ds"><div class="dst"><span class="n">1.</span> Fases e Duração</div><table><thead><tr><th>Fase</th><th>Atividade</th><th>Duração estimada</th><th>Data de início</th></tr></thead><tbody><tr><td>1</td><td>Due diligence e seleção de distribuidor</td><td>[ A PREENCHER ]</td><td>[ A PREENCHER ]</td></tr><tr><td>2</td><td>Notificação de produto (TPD) e contrato</td><td>[ A PREENCHER ]</td><td>[ A PREENCHER ]</td></tr><tr><td>3</td><td>Adequação de embalagem e primeiro lote</td><td>[ A PREENCHER ]</td><td>[ A PREENCHER ]</td></tr><tr class="hl"><td>4</td><td>Ativação em estancos-piloto</td><td>[ A PREENCHER ]</td><td>[ A PREENCHER ]</td></tr></tbody></table></div><div class="ds"><div class="dst"><span class="n">2.</span> Dependências Críticas</div><ul><li>Decisão de origem do produto (Brasil/China/híbrido) condiciona o prazo de homologação aduaneira e logística — deve ser resolvida antes de fixar a Fase 1</li><li>Notificação TPD (Fase 2) deve iniciar em paralelo à negociação comercial, não depois</li></ul></div>`},
+
+tc_custo:{c:'TRÍPLICE CONSTANTE · TC-03',t:'Custo — Orçamento Base',l:'Estrutura de custo pronta com as linhas corretas; valores a preencher com dados reais de produção, exportação e negociação com o distribuidor.',b:`<div class="dn am">⚠️ Valores abaixo ainda não preenchidos — usar como checklist de levantamento de custo real, não como orçamento aprovado.</div><div class="ds"><div class="dst"><span class="n">1.</span> Linhas de Custo (Ano 1)</div><table><thead><tr><th>Item</th><th>Valor estimado</th><th>Fonte do dado</th></tr></thead><tbody><tr><td>Custo de produção/exportação (€/kg)</td><td>[ A PREENCHER ]</td><td>Área de produção — origem Brasil/China</td></tr><tr><td>Logística internacional até a Espanha</td><td>[ A PREENCHER ]</td><td>Cotação de frete conforme origem</td></tr><tr><td>Notificação de produto (TPD)</td><td>[ A PREENCHER ]</td><td>Taxas variam por Estado-membro</td></tr><tr><td>Adequação de embalagem (design + impressão)</td><td>[ A PREENCHER ]</td><td>Fornecedor de embalagem</td></tr><tr><td>Margem do distribuidor (% sobre base)</td><td>[ A PREENCHER ]</td><td>Negociação contratual</td></tr><tr class="hl"><td>TOTAL ANO 1</td><td>[ A PREENCHER ]</td><td>Soma das linhas acima</td></tr></tbody></table></div><div class="ds"><div class="dst"><span class="n">2.</span> Fórmula de Margem Líquida (já validada, ver Calculadora)</div><ul><li>Imposto especial = MAX(PVP × 37,68%, €112,50/kg)</li><li>IVA = (PVP − Imposto especial) × 21% / 1,21</li><li>Margem líquida HBT = PVP − Imposto especial − IVA − Margem distribuidor − Custo de produção</li></ul></div><div class="dn bl">📋 Esta fórmula já está implementada e funcional na Calculadora de Cenários — falta apenas substituir o custo de produção (premissa atual: €25/kg) pelo valor real.</div>`},
+
+tc_tradeoff:{c:'TRÍPLICE CONSTANTE · TC-04',t:'Matriz de Trade-off — Impactos entre Restrições',l:'Alterar uma restrição impacta obrigatoriamente pelo menos uma das outras duas.',b:`<div class="ds"><div class="dst"><span class="n">1.</span> Matriz de Impactos</div><table><thead><tr><th>Se aumentar...</th><th>Escopo</th><th>Tempo</th><th>Custo</th></tr></thead><tbody><tr><td>Escopo (ex.: 2º distribuidor regional)</td><td>—</td><td>Aumenta</td><td>Aumenta</td></tr><tr><td>Tempo (ex.: acelerar homologação TPD)</td><td>Reduz ligeiramente</td><td>—</td><td>Aumenta (assessoria premium)</td></tr><tr class="hl"><td>Custo (ex.: PVP mais alto para sustentar margem)</td><td>Pode expandir</td><td>Neutro</td><td>—</td></tr></tbody></table></div><div class="ds"><div class="dst"><span class="n">2.</span> Cenários de Decisão (qualitativos — quantificar quando houver dados)</div><ul><li>PVP baixo (~€140/kg): escopo de margem inviável conforme calculadora — não é trade-off, é restrição dura do piso fiscal</li><li>Acelerar notificação TPD: tipicamente implica custo de assessoria especializada maior</li><li>Expandir para 2º distribuidor regional antes da consolidação do 1º: aumenta complexidade de gestão sem necessariamente aumentar proporcionalmente o volume</li></ul></div><div class="dn bl">📋 Qualquer alteração de escopo, tempo ou custo deve ser formalizada como decisão da diretoria, com esta matriz como referência de impacto cruzado.</div>`},
+
+tc_kpis:{c:'TRÍPLICE CONSTANTE · TC-05',t:'Dashboard KPIs &amp; Plano de Monitoramento',l:'Fórmulas de acompanhamento de projeto prontas; metas e alertas a definir com a diretoria após o orçamento e cronograma serem preenchidos (TC-02 e TC-03).',b:`<div class="ds"><div class="dst"><span class="n">1.</span> KPIs do Projeto</div><table><thead><tr><th>KPI</th><th>Fórmula</th><th>Meta</th><th>Alerta</th></tr></thead><tbody><tr><td>% Escopo concluído</td><td>Entregas realizadas / Total planejado</td><td>[ A PREENCHER ]</td><td>[ A PREENCHER ]</td></tr><tr><td>SPI (Schedule Performance Index)</td><td>Valor Agregado / Valor Planejado</td><td>&gt; 1,0</td><td>&lt; 0,85</td></tr><tr><td>CPI (Cost Performance Index)</td><td>Valor Agregado / Custo Real</td><td>&gt; 1,0</td><td>&lt; 0,90</td></tr><tr><td>Margem líquida por kg</td><td>Ver fórmula em TC-03 / Calculadora</td><td>[ A PREENCHER ]</td><td>Margem ≤ €0 (ver Cenário A da calculadora)</td></tr><tr class="hl"><td>Volume vendido vs. meta</td><td>Toneladas vendidas / Meta anual</td><td>[ A PREENCHER ]</td><td>[ A PREENCHER ]</td></tr></tbody></table></div><div class="ds"><div class="dst"><span class="n">2.</span> Cadência de Revisão (proposta)</div><ul><li>Revisão mensal de status comercial com o distribuidor</li><li>Relatório trimestral à diretoria — status das 3 restrições + KPIs preenchidos</li></ul></div><div class="dn am">⚠️ As metas de SPI/CPI já têm referência de mercado padrão (&gt;1,0 saudável); as metas de margem e volume dependem dos valores reais de custo e capacidade de produção a serem preenchidos em TC-03.</div>`},
+
+tc_roi:{c:'TRÍPLICE CONSTANTE · TC-06',t:'ROI — Retorno sobre o Investimento',l:'Fórmula de ROI pronta para a entrada comercial na Espanha. Valores a preencher quando o investimento total e o lucro líquido anual estiverem validados com dados reais.',b:`<div class="dn am">⚠️ Nenhum valor de ROI está calculado ainda. Diferente do documento de referência anterior (que apresentava um múltiplo de ROI sem metodologia visível), este módulo só deve ser preenchido com números rastreáveis às seções TC-02 (Tempo/Cronograma) e TC-03 (Custo).</div><div class="ds"><div class="dst"><span class="n">1.</span> Fórmula</div><table><thead><tr><th>Componente</th><th>Definição</th><th>Fonte</th></tr></thead><tbody><tr><td>Investimento total</td><td>Soma de todas as linhas de custo do Ano 1</td><td>TC-03 — Orçamento Base</td></tr><tr><td>Lucro líquido anual</td><td>Margem líquida por kg × Volume anual vendido (kg)</td><td>Calculadora de Cenários + volume real a confirmar</td></tr><tr class="hl"><td>ROI</td><td>Lucro líquido anual ÷ Investimento total</td><td>Cálculo direto</td></tr></tbody></table></div><div class="ds"><div class="dst"><span class="n">2.</span> Valores do Projeto</div><table><thead><tr><th>Item</th><th>Valor</th></tr></thead><tbody><tr><td>Investimento total (Ano 1)</td><td>A PREENCHER</td></tr><tr><td>Volume anual vendido (toneladas)</td><td>A PREENCHER</td></tr><tr><td>Margem líquida por kg (€)</td><td>A PREENCHER — ver Calculadora de Cenários</td></tr><tr><td>Lucro líquido anual (€)</td><td>A PREENCHER</td></tr><tr class="hl"><td>ROI (Ano 1)</td><td>A PREENCHER</td></tr></tbody></table></div><div class="dn bl">📋 Sugestão de leitura: uma vez preenchido, o ROI deve ser apresentado com a faixa de incerteza do dado de origem (ex.: "ROI estimado entre X× e Y×, conforme volume confirmado entre A e B toneladas"), não como número único — para não repetir o problema do documento anterior, que apresentava uma faixa larga (2,5× a 6×) sem explicar a origem dos extremos.</div>`},
+
+calculadora:{c:'FERRAMENTA · CALCULADORA DE CENÁRIOS',t:'Calculadora de Carga Fiscal e Margem',l:'Compare até 3 cenários de PVP (preço de venda ao público) e veja o impacto real do imposto especial, IVA e margem do distribuidor sobre a margem líquida por kg.',b:`
+<div class="cw" id="calcWrap">
+<div class="csc">
+  <div class="ccol">
+    <div class="cctl"><span class="sa"></span> Cenário A</div>
+    <div class="cf"><div class="cfl">PVP (€/kg)</div><input class="cfi" id="cA_pvp" type="number" value="140" step="1"></div>
+    <div class="cf"><div class="cfl">Custo de produção (€/kg)</div><input class="cfi" id="cA_cost" type="number" value="25" step="1"></div>
+    <div class="cf"><div class="cfl">Margem do distribuidor (%)</div><input class="cfi" id="cA_dist" type="number" value="12" step="1"></div>
+  </div>
+  <div class="ccol">
+    <div class="cctl"><span class="sb2"></span> Cenário B</div>
+    <div class="cf"><div class="cfl">PVP (€/kg)</div><input class="cfi" id="cB_pvp" type="number" value="165" step="1"></div>
+    <div class="cf"><div class="cfl">Custo de produção (€/kg)</div><input class="cfi" id="cB_cost" type="number" value="25" step="1"></div>
+    <div class="cf"><div class="cfl">Margem do distribuidor (%)</div><input class="cfi" id="cB_dist" type="number" value="12" step="1"></div>
+  </div>
+  <div class="ccol">
+    <div class="cctl"><span class="sc2"></span> Cenário C</div>
+    <div class="cf"><div class="cfl">PVP (€/kg)</div><input class="cfi" id="cC_pvp" type="number" value="190" step="1"></div>
+    <div class="cf"><div class="cfl">Custo de produção (€/kg)</div><input class="cfi" id="cC_cost" type="number" value="25" step="1"></div>
+    <div class="cf"><div class="cfl">Margem do distribuidor (%)</div><input class="cfi" id="cC_dist" type="number" value="12" step="1"></div>
+  </div>
+</div>
+<div class="dn am" style="margin-top:0">⚠️ Modelo simplificado para discussão direcional. Tipo proporcional 37,68% + específico €33,40/kg equivalente, piso de €112,50/kg, IVA 21% sobre base com imposto especial incluído. Não substitui cálculo fiscal formal.</div>
+<div class="crt"><table><thead><tr><th>Item</th><th class="ha">Cenário A</th><th class="hb">Cenário B</th><th class="hc">Cenário C</th></tr></thead><tbody id="ctb"></tbody></table></div>
+<div class="cht">Margem Líquida HBT por kg (€)</div>
+<div class="cbg" id="cch"></div>
+<div class="crg" id="croi"></div>
+<button class="ceb" id="cxl"><i class="fa-solid fa-file-excel"></i> Exportar para Excel (.xlsx)</button>
+</div>`}
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    var ts  = new Date();
+    var tss = ts.toLocaleDateString('pt-BR') + ' ' + ts.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    var wml = 'CONFIDENCIAL \u00b7 HBT ESPANHA \u00b7 ' + tss + '   ';
+    var cts = document.getElementById('cts');
+    if (cts) cts.textContent = 'Acesso registado \u00b7 ' + tss;
+    function buildWm(el, line, cls) {
+        if (!el) return;
+        var h = '';
+        for (var i = 0; i < 120; i++) h += '<div class="' + cls + '">' + line + '</div>';
+        el.innerHTML = h;
+    }
+    buildWm(document.getElementById('bwm'), wml, 'wmi');
+    buildWm(document.getElementById('mwm'), wml, 'mwi');
+
+    document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+    document.addEventListener('keydown', function(e){
+        var m = e.ctrlKey || e.metaKey;
+        if (m && 'spua'.indexOf(e.key.toLowerCase()) > -1) e.preventDefault();
+        if (e.key === 'F12') e.preventDefault();
+    });
+    document.addEventListener('dragstart', function(e){ e.preventDefault(); });
+
+    var pin = '', pwd = '2026';
+    function dotUp() {
+        for (var i = 0; i < 4; i++) {
+            var d = document.getElementById('d' + i);
+            if (!d) continue;
+            d.classList.remove('er');
+            i < pin.length ? d.classList.add('on') : d.classList.remove('on');
+        }
+    }
+    function pinOk() {
+        var sc = document.getElementById('login');
+        sc.style.transition = 'opacity .4s';
+        sc.style.opacity = '0';
+        setTimeout(function(){ sc.classList.add('gone'); }, 400);
+    }
+    function pinFail() {
+        var dt = document.getElementById('ldots');
+        for (var i = 0; i < 4; i++) { var d = document.getElementById('d'+i); if(d) d.classList.add('er'); }
+        dt.classList.add('shake');
+        var er = document.getElementById('lerr'); if(er) er.classList.add('show');
+        setTimeout(function(){ pin=''; dotUp(); dt.classList.remove('shake'); }, 700);
+    }
+    function pinPress(n) { if(pin.length>=4) return; pin+=n; dotUp(); if(pin.length===4) setTimeout(function(){ pin===pwd ? pinOk() : pinFail(); },150); }
+    function pinDel()   { pin=pin.slice(0,-1); dotUp(); var er=document.getElementById('lerr'); if(er) er.classList.remove('show'); }
+
+    var pad = document.getElementById('lpad');
+    if (pad) {
+        pad.addEventListener('click', function(e){
+            var el = e.target;
+            while (el && el !== pad) {
+                var k = el.getAttribute('data-k');
+                if (k !== null) { k==='del' ? pinDel() : (k!=='' && pinPress(k)); return; }
+                el = el.parentElement;
+            }
+        });
+    }
+    document.addEventListener('keydown', function(e){
+        if (document.getElementById('login').classList.contains('gone')) return;
+        if (e.key>='0' && e.key<='9') pinPress(e.key);
+        if (e.key==='Backspace') { e.preventDefault(); pinDel(); }
+    });
+
+    var hbg = document.getElementById('hbg');
+    var sbo = document.getElementById('sbo');
+    var sb  = document.getElementById('sidebar');
+    function openSb()  { sb.classList.add('mo'); sbo.classList.add('open'); hbg.classList.add('open'); }
+    function closeSb() { sb.classList.remove('mo'); sbo.classList.remove('open'); hbg.classList.remove('open'); }
+    if (hbg) hbg.addEventListener('click', function(){ sb.classList.contains('mo') ? closeSb() : openSb(); });
+    if (sbo) sbo.addEventListener('click', closeSb);
+
+    function openModal(key) {
+        var m = M[key]; if (!m) return;
+        document.getElementById('mhdr').innerHTML =
+            '<div class="dc">'+m.c+'</div><div class="dt">'+m.t+'</div><div class="db"></div><div class="dl">'+m.l+'</div>';
+        document.getElementById('mbdy').innerHTML = m.b;
+        var ov = document.getElementById('ov');
+        ov.classList.add('open'); ov.scrollTop = 0;
+        var s = m.c.split(' \u00b7 ');
+        document.getElementById('tbs').textContent = s[0] || 'Estrat\u00e9gia Espanha';
+        document.getElementById('tbp').textContent = m.t.replace(/&amp;/g,'&');
+        if (key === 'calculadora') {
+            setTimeout(calcUpdate, 80);
+            setTimeout(function(){
+                var b = document.getElementById('cxl');
+                if (b) { b.removeEventListener('click', calcExport); b.addEventListener('click', calcExport); }
+            }, 100);
+        }
+    }
+    function closeModal() {
+        document.getElementById('ov').classList.remove('open');
+        document.getElementById('tbs').textContent = 'Estrat\u00e9gia Espanha';
+        document.getElementById('tbp').textContent = 'Documenta\u00e7\u00e3o Completa';
+    }
+
+    document.querySelectorAll('.cd[data-modal]').forEach(function(el){
+        el.addEventListener('click', function(){ openModal(this.getAttribute('data-modal')); });
+    });
+    document.querySelectorAll('.sbl2[data-modal], .sbc2[data-modal]').forEach(function(el){
+        el.addEventListener('click', function(){
+            openModal(this.getAttribute('data-modal'));
+            if (window.innerWidth <= 900) setTimeout(closeSb, 200);
+        });
+    });
+    document.getElementById('mcls').addEventListener('click', closeModal);
+    document.getElementById('mbk').addEventListener('click', closeModal);
+    document.getElementById('mpr').addEventListener('click', function(){ window.print(); });
+    document.getElementById('ov').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+
+    /* ── CALCULATOR: real Spanish tax structure for tabaco para enrolar (RYO) ── */
+    var PROP_RATE = 0.3768;      // tipo proporcional sobre PVP
+    var MIN_TAX_KG = 112.50;     // piso minimo del impuesto especial por kg
+    var VAT = 0.21;              // IVA
+
+    function gv(id){ var e=document.getElementById(id); return e?e.value:''; }
+    function sc(p){
+        var pvp = parseFloat(gv(p+'_pvp'))||0;
+        var cost = parseFloat(gv(p+'_cost'))||0;
+        var distPct = parseFloat(gv(p+'_dist'))||0;
+
+        // PVP inclui impuesto especial + IVA. Calculamos el impuesto especial real (proporcional vs minimo).
+        var propTax = pvp * PROP_RATE;
+        var specialTax = Math.max(propTax, MIN_TAX_KG);
+        var basePreTax = pvp - specialTax;
+        var vatAmount = basePreTax > 0 ? (basePreTax * VAT / (1+VAT)) : 0;
+        var netBase = basePreTax - vatAmount; // base neta antes de impuestos, repartida entre fabricante+distribuidor
+        var distMargin = netBase * (distPct/100);
+        var hbtRevenue = netBase - distMargin;
+        var hbtMargin = hbtRevenue - cost;
+        var marginPct = pvp > 0 ? (hbtMargin/pvp*100) : 0;
+
+        return {pvp:pvp,cost:cost,distPct:distPct,specialTax:specialTax,vatAmount:vatAmount,
+                distMargin:distMargin,hbtRevenue:hbtRevenue,hbtMargin:hbtMargin,marginPct:marginPct,
+                taxFloorHit: propTax < MIN_TAX_KG};
+    }
+    function fe(n){ return '\u20ac'+n.toFixed(2).replace('.',','); }
+
+    function calcUpdate(){
+        if (!document.getElementById('calcWrap')) return;
+        var A=sc('cA'), B=sc('cB'), C=sc('cC');
+        var rows=[
+            ['PVP (€/kg)',fe(A.pvp),fe(B.pvp),fe(C.pvp)],
+            ['Impuesto especial (€/kg)',fe(A.specialTax)+(A.taxFloorHit?' (piso)':''),fe(B.specialTax)+(B.taxFloorHit?' (piso)':''),fe(C.specialTax)+(C.taxFloorHit?' (piso)':'')],
+            ['IVA (€/kg)',fe(A.vatAmount),fe(B.vatAmount),fe(C.vatAmount)],
+            ['Margem distribuidor (€/kg)',fe(A.distMargin),fe(B.distMargin),fe(C.distMargin)],
+            ['Custo de produção (€/kg)',fe(A.cost),fe(B.cost),fe(C.cost)],
+            ['MARGEM LÍQUIDA HBT (€/kg)',fe(A.hbtMargin),fe(B.hbtMargin),fe(C.hbtMargin)],
+            ['Margem líquida (% do PVP)',A.marginPct.toFixed(1)+'%',B.marginPct.toFixed(1)+'%',C.marginPct.toFixed(1)+'%']
+        ];
+        var tb=document.getElementById('ctb');
+        if(tb){ tb.innerHTML=''; rows.forEach(function(r,i){ var tr=document.createElement('tr'); if(i===5)tr.className='rt'; r.forEach(function(v){var td=document.createElement('td');td.textContent=v;tr.appendChild(td);}); tb.appendChild(tr); }); }
+        var mx=Math.max(A.hbtMargin,B.hbtMargin,C.hbtMargin,1);
+        var mn=Math.min(A.hbtMargin,B.hbtMargin,C.hbtMargin,0);
+        var range = (mx-mn)||1;
+        var ch=document.getElementById('cch');
+        if(ch){ ch.innerHTML=[{v:A.hbtMargin,l:'A',cl:'#2563eb'},{v:B.hbtMargin,l:'B',cl:'#16a34a'},{v:C.hbtMargin,l:'C',cl:'#d97706'}].map(function(b){
+            var h=Math.max(4,Math.round(((b.v-mn)/range)*110));
+            var color = b.v < 0 ? '#dc2626' : b.cl;
+            return '<div class="cbw"><div class="cbar2" style="height:'+h+'px;background:'+color+'"><span class="cbv">'+fe(b.v)+'</span></div><div class="cbl">Cen\u00e1rio '+b.l+'</div></div>'; }).join(''); }
+        var rg=document.getElementById('croi');
+        if(rg){ rg.innerHTML=[{s:A,c:'ra',l:'A'},{s:B,c:'rb',l:'B'},{s:C,c:'rc',l:'C'}].map(function(x){
+            return '<div class="crc '+x.c+'"><div class="crl">Cen\u00e1rio '+x.l+' \u00b7 Margem/kg</div><div class="crv">'+fe(x.s.hbtMargin)+'</div><div class="crs">'+x.s.marginPct.toFixed(1)+'% do PVP \u00b7 PVP '+fe(x.s.pvp)+'</div></div>'; }).join(''); }
+        window._cd={A:A,B:B,C:C,rows:rows};
+    }
+
+    function calcExport(){
+        var d=window._cd; if(!d||typeof XLSX==='undefined'){alert('Abra a calculadora primeiro.');return;}
+        var wb=XLSX.utils.book_new();
+        var hd=['Item','Cenário A','Cenário B','Cenário C'];
+        var data=[hd]; d.rows.forEach(function(r){data.push(r);}); data.push([]);
+        data.push(['Estrutura fiscal aplicada','Tipo proporcional 37,68% sobre PVP; piso €112,50/kg; IVA 21%','','']);
+        var ws=XLSX.utils.aoa_to_sheet(data); ws['!cols']=[{wch:32},{wch:24},{wch:24},{wch:24}];
+        XLSX.utils.book_append_sheet(wb,ws,'Cenários HBT Espanha');
+        XLSX.writeFile(wb,'HBT_Espanha_Cenarios_'+new Date().toISOString().slice(0,10)+'.xlsx');
+    }
+
+    document.addEventListener('change', function(e){
+        if (e.target && e.target.closest && e.target.closest('#calcWrap')) calcUpdate();
+    });
+    document.addEventListener('input', function(e){
+        if (e.target && e.target.closest && e.target.closest('#calcWrap')) calcUpdate();
+    });
+
+});
+</script>
+</body>
+</html>
