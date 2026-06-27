@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>SI Assuntos Regulatórios - HBT</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: #fafaf8;
+  }
+  #wrap {
+    position: relative;
+    overflow: auto;
+    width: 100%;
+    height: 100vh;
+  }
+  #canvas {
+    position: relative;
+  }
+  svg { position: absolute; top: 0; left: 0; pointer-events: none; }
+
+  .node {
+    position: absolute;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 12.5px;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: left 0.25s ease, top 0.25s ease;
+  }
+  .node.leaf { cursor: default; box-shadow: none; }
+  .node .arrow {
+    font-size: 10px;
+    width: 10px;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+  .node .label { font-weight: 500; }
+  .node a { color: inherit; text-decoration: underline; }
+
+  .root {
+    background: #2c2c2a;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 14px 18px;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .toolbar {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12.5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    z-index: 50;
+    display: flex;
+    gap: 8px;
+  }
+  .toolbar button {
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #f5f5f3;
+    cursor: pointer;
+  }
+  .toolbar button:hover { background: #ececea; }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button onclick="expandAll()">Expandir tudo</button>
+  <button onclick="collapseAll()">Recolher tudo</button>
+</div>
+
+<div id="wrap">
+  <div id="canvas">
+    <svg id="lines"></svg>
+  </div>
+</div>
+
+<script>
+/* ---------- Paleta de cores por ramo principal ---------- */
+const palette = {
+  label: "#5F5E5A",
+  "1":  "#185fa5",
+  "2":  "#534ab7",
+  "3":  "#993556",
+  "4":  "#993c1d",
+  "5":  "#854f0b",
+  "6":  "#0f6e56",
+  "7":  "#3b6d11",
+  "8":  "#a32d2d",
+  "9":  "#444441",
+  "10": "#185fa5",
+  "11": "#0f6e56"
+};
+const paletteBg = {
+  label: "#f1efe8",
+  "1":  "#e6f1fb",
+  "2":  "#eeedfe",
+  "3":  "#fbeaf0",
+  "4":  "#faece7",
+  "5":  "#faeeda",
+  "6":  "#e1f5ee",
+  "7":  "#eaf3de",
+  "8":  "#fcebeb",
+  "9":  "#f1efe8",
+  "10": "#e6f1fb",
+  "11": "#e1f5ee"
+};
+
+/* ---------- Estrutura de dados (extraída do documento) ---------- */
+function leaf(t){ return { title: t, children: [] }; }
+
+const data = {
+  title: "SI Assuntos\nRegulatórios — HBT",
+  branch: "root",
+  children: [
+    { title: "Dr Natália Bellan, Sanitary intelligence", branch: "label", children: [] },
+
+    { title: "1. Pesquisa de Mercado e necessidades", branch: "1", children: [
+      { title: "1.1 Identificação de clientes", branch:"1", children:[
+        leaf("Farmacêuticas"), leaf("Hospitais"), leaf("Profissionais da saúde")
+      ]},
+      { title: "1.2 Necessidades específicas", branch:"1", children:[
+        leaf("Regulamentação"), leaf("Aprovação de Produtos"), leaf("Compliance")
+      ]},
+      { title: "1.3 Agências Reguladoras da Noruega", branch:"1", children:[
+        { title:"Norwegian Medicines Agency (NoMA) — dmp.no/en", branch:"1", children:[
+          leaf("Funções e Responsabilidades"), leaf("Processos de aprovação")
+        ]},
+        { title:"Norwegian Institute of Public Health (NIPH)", branch:"1", children:[
+          leaf("Funções e Responsabilidades"), leaf("Diretrizes Sanitárias")
+        ]},
+        { title:"Norwegian Food Safety Authority (Mattilsynet)", branch:"1", children:[
+          leaf("Funções e Responsabilidades"), leaf("Regulamentação de Produtos Relacionados à Saúde")
+        ]}
+      ]},
+      { title: "1.4 Laboratórios e Empresas Dedicadas a Fármacos", branch:"1", children:[
+        { title:"Laboratórios", branch:"1", children:[
+          leaf("Nomes e Perfis dos Principais Laboratórios"), leaf("Áreas de Pesquisa e Desenvolvimento")
+        ]},
+        { title:"Empresas Farmacêuticas", branch:"1", children:[
+          leaf("Principais Empresas no Mercado"), leaf("Produtos e Serviços Oferecidos"), leaf("Parcerias Estratégicas")
+        ]}
+      ]}
+    ]},
+
+    { title: "2. Desenvolvimento de Conteúdo", branch: "2", children: [
+      { title:"2.1 Materiais Educacionais", branch:"2", children:[
+        leaf("Manuais e Guias"), leaf("Vídeos Didáticos"), leaf("Apresentações")
+      ]},
+      { title:"2.2 Workshops e Webinars", branch:"2", children:[
+        leaf("Organização e Planejamento"), leaf("Agendamento"), leaf("Recursos Necessários")
+      ]}
+    ]},
+
+    { title: "3. Estrutura do Programa de Treinamento", branch: "3", children: [
+      { title:"3.1 Módulos de Treinamento", branch:"3", children:[
+        leaf("Introdução à Regulamentação"), leaf("Procedimentos de Aprovação"), leaf("Compliance"), leaf("Farmacovigilância")
+      ]},
+      { title:"3.2 Certificação", branch:"3", children:[
+        leaf("Critérios de Avaliação"), leaf("Emissão de Certificados")
+      ]}
+    ]},
+
+    { title: "4. Estratégia de Marketing e Promoção", branch: "4", children: [
+      { title:"4.1 Parcerias e Colaborações", branch:"4", children:[
+        leaf("Organizações Locais"), leaf("Organizações Internacionais")
+      ]},
+      { title:"4.2 Campanhas Publicitárias", branch:"4", children:[
+        leaf("Marketing Digital"), leaf("Marketing Offline")
+      ]}
+    ]},
+
+    { title: "5. Implementação e Avaliação", branch: "5", children: [
+      { title:"5.1 Plataformas de Ensino", branch:"5", children:[
+        leaf("Moodle"), leaf("Canvas"), leaf("Google Classroom")
+      ]},
+      { title:"5.2 Feedback e Melhoria Contínua", branch:"5", children:[
+        leaf("Coleta de Feedback"), leaf("Análise e Melhoria")
+      ]}
+    ]},
+
+    { title: "6. Utilidades", branch: "6", children: [
+      { title:"Registro e pesquisa de empresas e serviços", branch:"6", children:[
+        leaf("Brønnøysundregistrene — brreg.no")
+      ]},
+      { title:"Homologação de diplomas e certificados internacionais", branch:"6", children:[
+        leaf("HKDIR — hkdir.no/utdanning-fra-utlandet")
+      ]},
+      { title:"Tradução Juramentada", branch:"6", children:[
+        leaf("Elo Cultural — elocultural.no")
+      ]},
+      { title:"Universidade Norueguesa de Ciência e Tecnologia", branch:"6", children:[
+        leaf("NTNU — ntnu.no/om")
+      ]}
+    ]},
+
+    { title: "7. Acessos", branch: "7", children: [
+      leaf("ExtranetCRM"), leaf("Intranet")
+    ]},
+
+    { title: "8. Propriedade Intelectual", branch: "8", children: [
+      leaf("Direitos autorais — lexolve.com/ressurser/ipr/opphavsrett")
+    ]},
+
+    { title: "9. Projetos", branch: "9", children: [
+      leaf("Medicina Quântica")
+    ]},
+
+    { title: "10. Agenda ISO 9001 — Qualidade", branch: "10", children: [
+      { title:"Fase 1 — Diagnóstico (Mês 1-2)", branch:"10", children:[
+        leaf("Análise de gap (situação atual x requisitos da norma)"),
+        leaf("Mapeamento de processos de produção (cultivo, beneficiamento, embalagem)"),
+        leaf("Definição do escopo do SGQ"),
+        leaf("Designação do Representante da Direção")
+      ]},
+      { title:"Fase 2 — Planejamento (Mês 2-3)", branch:"10", children:[
+        leaf("Política da Qualidade"),
+        leaf("Requisitos legais e regulatórios (ANVISA, normas de tabaco)"),
+        leaf("Objetivos da qualidade e indicadores (KPIs)"),
+        leaf("Matriz de riscos e oportunidades")
+      ]},
+      { title:"Fase 3 — Documentação (Mês 3-5)", branch:"10", children:[
+        leaf("Manual da Qualidade"),
+        leaf("Procedimentos obrigatórios (documentos, não conformidades, ação corretiva)"),
+        leaf("Procedimentos operacionais (qualidade do produto, rastreabilidade)"),
+        leaf("Critérios de aceitação de matéria-prima e fornecedores")
+      ]},
+      { title:"Fase 4 — Implementação (Mês 5-7)", branch:"10", children:[
+        leaf("Treinamento de colaboradores"),
+        leaf("Controles de processo e inspeção"),
+        leaf("Gestão de fornecedores"),
+        leaf("Pesquisa de satisfação do cliente")
+      ]},
+      { title:"Fase 5 — Verificação (Mês 7-9)", branch:"10", children:[
+        leaf("Auditoria interna da Qualidade"),
+        leaf("Análise crítica pela direção"),
+        leaf("Ações corretivas")
+      ]},
+      { title:"Fase 6 — Certificação (Mês 9-11)", branch:"10", children:[
+        leaf("Seleção do organismo certificador"),
+        leaf("Auditoria Estágio 1 e Estágio 2"),
+        leaf("Obtenção do certificado ISO 9001")
+      ]},
+      { title:"Fase 7 — Manutenção (Contínuo)", branch:"10", children:[
+        leaf("Auditorias anuais"),
+        leaf("Recertificação (ciclo de 3 anos)")
+      ]}
+    ]},
+
+    { title: "11. Agenda ISO 14001 — Sustentabilidade e Meio Ambiente", branch: "11", children: [
+      { title:"Fase 1 — Diagnóstico (Mês 1-2)", branch:"11", children:[
+        leaf("Levantamento da situação ambiental atual"),
+        leaf("Mapeamento de aspectos e impactos ambientais (cultivo, agroquímicos, resíduos, embalagens)"),
+        leaf("Definição do escopo do SGA"),
+        leaf("Designação do responsável ambiental")
+      ]},
+      { title:"Fase 2 — Planejamento (Mês 2-4)", branch:"11", children:[
+        leaf("Política Ambiental"),
+        leaf("Requisitos legais ambientais (licenças, resíduos, emissões)"),
+        leaf("Avaliação de aspectos significativos"),
+        leaf("Objetivos e metas ambientais (KPIs)")
+      ]},
+      { title:"Fase 3 — Documentação (Mês 4-6)", branch:"11", children:[
+        leaf("Manual de Gestão Ambiental"),
+        leaf("Procedimentos de controle operacional (água, energia, agroquímicos)"),
+        leaf("Plano de gestão de resíduos"),
+        leaf("Plano de emergência ambiental (derramamentos, contaminação)")
+      ]},
+      { title:"Fase 4 — Implementação (Mês 6-9)", branch:"11", children:[
+        leaf("Treinamento de conscientização ambiental"),
+        leaf("Controles operacionais (insumos agrícolas, efluentes, resíduos sólidos)"),
+        leaf("Programa de eficiência energética e hídrica"),
+        leaf("Engajamento com fornecedores rurais/cadeia de cultivo")
+      ]},
+      { title:"Fase 5 — Verificação (Mês 9-11)", branch:"11", children:[
+        leaf("Auditoria interna Ambiental"),
+        leaf("Monitoramento de indicadores ambientais"),
+        leaf("Análise crítica pela direção"),
+        leaf("Ações corretivas")
+      ]},
+      { title:"Fase 6 — Certificação (Mês 11-13)", branch:"11", children:[
+        leaf("Seleção do organismo certificador"),
+        leaf("Auditoria Estágio 1 e Estágio 2"),
+        leaf("Obtenção do certificado ISO 14001")
+      ]},
+      { title:"Fase 7 — Manutenção (Contínuo)", branch:"11", children:[
+        leaf("Auditorias anuais"),
+        leaf("Recertificação (ciclo de 3 anos)"),
+        leaf("Melhoria contínua de desempenho ambiental")
+      ]}
+    ]}
+  ]
+};
+
+/* ---------- Estado: todos começam fechados (exceto root) ---------- */
+let idCounter = 0;
+function tagNodes(node, depth) {
+  node.id = idCounter++;
+  node.depth = depth;
+  node.expanded = (depth === 0); // só a raiz começa "aberta" (mostra ramos nível 1)
+  node.children.forEach(c => tagNodes(c, depth + 1));
+}
+tagNodes(data, 0);
+
+/* ---------- Layout ---------- */
+const ROW_H = 34;
+const GAP = 8;
+const COL_W = 300;
+const START_X = 40;
+
+function layout(node, depth, yOffset) {
+  node.x = START_X + depth * COL_W;
+  const hasChildren = node.children.length > 0;
+  if (!hasChildren || !node.expanded) {
+    node.y = yOffset + ROW_H / 2;
+    return ROW_H;
+  }
+  let cursor = yOffset;
+  let total = 0;
+  node.children.forEach((child, i) => {
+    const h = layout(child, depth + 1, cursor);
+    cursor += h + GAP;
+    total += h + (i < node.children.length - 1 ? GAP : 0);
+  });
+  node.y = yOffset + total / 2;
+  return Math.max(total, ROW_H);
+}
+
+/* ---------- Render ---------- */
+function collectVisible(node, list) {
+  list.push(node);
+  if (node.expanded) {
+    node.children.forEach(c => collectVisible(c, list));
+  }
+  return list;
+}
+
+function render() {
+  const totalHeight = layout(data, 0, 20) + 40;
+  const canvas = document.getElementById('canvas');
+  const visible = collectVisible(data, []);
+  let maxX = 0;
+  visible.forEach(n => { if (n.x > maxX) maxX = n.x; });
+  const totalWidth = maxX + COL_W + 60;
+
+  canvas.style.width = totalWidth + "px";
+  canvas.style.height = totalHeight + "px";
+
+  // limpa nós antigos
+  canvas.querySelectorAll('.node').forEach(el => el.remove());
+
+  visible.forEach(n => {
+    const el = document.createElement('div');
+    el.className = 'node' + (n.depth === 0 ? ' root' : (n.children.length === 0 ? ' leaf' : ''));
+    const color = palette[n.branch] || "#444";
+    const bg = paletteBg[n.branch] || "#f1efe8";
+
+    if (n.depth === 0) {
+      el.style.left = n.x + "px";
+      el.style.top = n.y - 30 + "px";
+      el.style.maxWidth = "220px";
+      el.innerHTML = n.title.replace("\n", "<br>");
+    } else {
+      el.style.left = n.x + "px";
+      el.style.top = (n.y - ROW_H / 2) + "px";
+      el.style.maxWidth = (COL_W - 40) + "px";
+      el.style.background = bg;
+      el.style.border = "1px solid " + color;
+      el.style.color = color;
+      const hasKids = n.children.length > 0;
+      const arrow = hasKids ? (n.expanded ? "▾" : "▸") : "•";
+      el.innerHTML = '<span class="arrow">' + arrow + '</span><span class="label">' + n.title + '</span>';
+      if (hasKids) {
+        el.onclick = (e) => { e.stopPropagation(); n.expanded = !n.expanded; render(); };
+      }
+    }
+    canvas.appendChild(el);
+  });
+
+  drawLines(visible);
+}
+
+function drawLines(visible) {
+  const svg = document.getElementById('lines');
+  const canvas = document.getElementById('canvas');
+  svg.setAttribute('width', canvas.style.width);
+  svg.setAttribute('height', canvas.style.height);
+  svg.innerHTML = "";
+
+  function connect(parent, child) {
+    const color = palette[child.branch] || "#888";
+    const x1 = parent.depth === 0 ? parent.x + 200 : parent.x + COL_W - 40;
+    const y1 = parent.depth === 0 ? parent.y : parent.y;
+    const x2 = child.x;
+    const y2 = child.y;
+    const midX = (x1 + x2) / 2;
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", `M ${x1} ${y1} C ${midX} ${y1}, ${midX} ${y2}, ${x2} ${y2}`);
+    path.setAttribute("stroke", color);
+    path.setAttribute("stroke-width", parent.depth === 0 ? "2" : "1.5");
+    path.setAttribute("fill", "none");
+    path.setAttribute("opacity", "0.8");
+    svg.appendChild(path);
+  }
+
+  function walk(node) {
+    if (node.expanded) {
+      node.children.forEach(child => {
+        connect(node, child);
+        walk(child);
+      });
+    }
+  }
+  walk(data);
+}
+
+function expandAll() {
+  function rec(n) { n.expanded = true; n.children.forEach(rec); }
+  rec(data);
+  render();
+}
+function collapseAll() {
+  function rec(n, depth) {
+    n.expanded = (depth === 0);
+    n.children.forEach(c => rec(c, depth + 1));
+  }
+  rec(data, 0);
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
