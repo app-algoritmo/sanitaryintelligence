@@ -117,7 +117,8 @@ const palette = {
   "9":  "#444441",
   "10": "#185fa5",
   "11": "#0f6e56",
-  "12": "#705a3d"
+  "12": "#705a3d",
+  "13": "#993556"
 };
 const paletteBg = {
   label: "#f1efe8",
@@ -132,7 +133,8 @@ const paletteBg = {
   "9":  "#f1efe8",
   "10": "#e6f1fb",
   "11": "#e1f5ee",
-  "12": "#f1ede4"
+  "12": "#f1ede4",
+  "13": "#fbeaf0"
 };
 
 /* ---------- Estrutura de dados (extraída do documento) ---------- */
@@ -246,7 +248,7 @@ const data = {
         leaf("Designação do Representante da Direção")
       ]},
       { title:"Fase 2 — Planejamento (Mês 2-3)", branch:"10", children:[
-        leaf("Política da Qualidade"),
+        leaf("Política da Qualidade — ver Regimento Interno"),
         leaf("Requisitos legais e regulatórios (ANVISA, normas de tabaco)"),
         leaf("Objetivos da qualidade e indicadores (KPIs)"),
         leaf("Matriz de riscos e oportunidades")
@@ -287,7 +289,7 @@ const data = {
         leaf("Designação do responsável ambiental")
       ]},
       { title:"Fase 2 — Planejamento (Mês 2-4)", branch:"11", children:[
-        leaf("Política Ambiental"),
+        leaf("Política Ambiental — ver Regimento Interno"),
         leaf("Requisitos legais ambientais (licenças, resíduos, emissões)"),
         leaf("Avaliação de aspectos significativos"),
         leaf("Objetivos e metas ambientais (KPIs)")
@@ -322,7 +324,16 @@ const data = {
       ]}
     ]},
 
-    { title: "12. Próximos Projetos", branch: "12", children: [
+    { title: "12. Regimento Interno", branch: "12", children: [
+      leaf("Código de Conduta"),
+      leaf("Políticas de RH (jornada, férias, benefícios)"),
+      leaf("Política de Compliance e Anticorrupção"),
+      leaf("Política de Segurança da Informação / LGPD"),
+      leaf("Normas Disciplinares"),
+      leaf("Política de Uso de Recursos (e-mail, equipamentos, redes sociais)")
+    ]},
+
+    { title: "13. Próximos Projetos", branch: "13", children: [
       leaf("Medicina Quântica")
     ]}
   ]
@@ -348,7 +359,7 @@ const ROOT_H = 80;
 let colOffset = { "-1": {}, "1": {} }; // recalculado a cada render()
 
 // Ramos que ficam à esquerda do centro (igual à imagem de referência)
-const LEFT_BRANCHES = ["label", "6", "7", "8", "9", "10", "11", "12"];
+const LEFT_BRANCHES = ["label", "6", "7", "8", "9", "10", "11", "12", "13"];
 
 function nodeWidth(n) {
   return (n.depth === 0) ? ROOT_W : (n.w || 200);
