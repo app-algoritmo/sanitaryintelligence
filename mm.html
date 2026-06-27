@@ -116,7 +116,8 @@ const palette = {
   "8":  "#a32d2d",
   "9":  "#444441",
   "10": "#185fa5",
-  "11": "#0f6e56"
+  "11": "#0f6e56",
+  "12": "#705a3d"
 };
 const paletteBg = {
   label: "#f1efe8",
@@ -130,7 +131,8 @@ const paletteBg = {
   "8":  "#fcebeb",
   "9":  "#f1efe8",
   "10": "#e6f1fb",
-  "11": "#e1f5ee"
+  "11": "#e1f5ee",
+  "12": "#f1ede4"
 };
 
 /* ---------- Estrutura de dados (extraída do documento) ---------- */
@@ -229,8 +231,11 @@ const data = {
       leaf("Direitos autorais — lexolve.com/ressurser/ipr/opphavsrett")
     ]},
 
-    { title: "9. Projetos", branch: "9", children: [
-      leaf("Medicina Quântica")
+    { title: "9. Expansão Internacional HBT", branch: "9", children: [
+      leaf("Mercado (Espanha)"),
+      leaf("Marco Fiscal"),
+      leaf("Modelo de Margem"),
+      leaf("Indicadores de Projeto")
     ]},
 
     { title: "10. Agenda ISO 9001 — Qualidade", branch: "10", children: [
@@ -315,6 +320,10 @@ const data = {
         leaf("Recertificação (ciclo de 3 anos)"),
         leaf("Melhoria contínua de desempenho ambiental")
       ]}
+    ]},
+
+    { title: "12. Próximos Projetos", branch: "12", children: [
+      leaf("Medicina Quântica")
     ]}
   ]
 };
@@ -339,7 +348,7 @@ const ROOT_H = 80;
 let colOffset = { "-1": {}, "1": {} }; // recalculado a cada render()
 
 // Ramos que ficam à esquerda do centro (igual à imagem de referência)
-const LEFT_BRANCHES = ["label", "6", "7", "8", "9", "10", "11"];
+const LEFT_BRANCHES = ["label", "6", "7", "8", "9", "10", "11", "12"];
 
 function nodeWidth(n) {
   return (n.depth === 0) ? ROOT_W : (n.w || 200);
