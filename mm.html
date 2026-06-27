@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>SI Assuntos Regulatórios - HBT</title>
+<title>SI Assuntos Regulatórios</title>
 <style>
   * { box-sizing: border-box; }
   html, body {
@@ -15,23 +15,27 @@
     overflow: auto;
     width: 100%;
     height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   #canvas {
     position: relative;
+    flex-shrink: 0;
   }
   svg { position: absolute; top: 0; left: 0; pointer-events: none; }
 
   .node {
     position: absolute;
     border-radius: 8px;
-    padding: 6px 10px;
-    font-size: 12.5px;
+    padding: 9px 14px;
+    font-size: 15px;
     cursor: pointer;
     user-select: none;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12);
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -39,8 +43,8 @@
   }
   .node.leaf { cursor: default; box-shadow: none; }
   .node .arrow {
-    font-size: 10px;
-    width: 10px;
+    font-size: 11px;
+    width: 12px;
     flex-shrink: 0;
     opacity: 0.7;
   }
@@ -48,14 +52,17 @@
   .node a { color: inherit; text-decoration: underline; }
 
   .root {
-    background: #2c2c2a;
-    color: #fff;
-    font-size: 16px;
-    font-weight: 600;
-    border-radius: 10px;
-    padding: 14px 18px;
+    background: #ffffff;
+    color: #1a1a1a;
+    font-size: 22px;
+    font-weight: 700;
+    border-radius: 12px;
+    padding: 18px 26px;
     white-space: normal;
     text-align: center;
+    border: 2px solid #2c2c2a;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    cursor: default;
   }
 
   .toolbar {
@@ -131,7 +138,7 @@ const paletteBg = {
 function leaf(t){ return { title: t, children: [] }; }
 
 const data = {
-  title: "SI Assuntos\nRegulatórios — HBT",
+  title: "SI Assuntos\nRegulatórios",
   branch: "root",
   children: [
     { title: "Dr Natália Bellan, Sanitary intelligence", branch: "label", children: [] },
@@ -323,14 +330,36 @@ function tagNodes(node, depth) {
 }
 tagNodes(data, 0);
 
-/* ---------- Layout ---------- */
-const ROW_H = 34;
-const GAP = 8;
-const COL_W = 300;
-const START_X = 40;
+/* ---------- Layout radial (esquerda / direita a partir do centro) ---------- */
+const ROW_H = 40;
+const GAP = 10;
+const COL_W = 290;
+const ROOT_W = 260;
+const ROOT_H = 80;
 
-function layout(node, depth, yOffset) {
-  node.x = START_X + depth * COL_W;
+// Ramos que ficam à esquerda do centro (igual à imagem de referência)
+const LEFT_BRANCHES = ["label", "6", "7", "8", "9", "10", "11"];
+
+function nodeWidth(n) {
+  if (n.depth === 0) return ROOT_W;
+  return COL_W - 30;
+}
+
+/* mede a altura necessária para um nó (e sua subárvore, se expandido) */
+function measure(node) {
+  const hasChildren = node.children.length > 0;
+  if (!hasChildren || !node.expanded) return ROW_H;
+  let total = 0;
+  node.children.forEach((c, i) => {
+    total += measure(c) + (i < node.children.length - 1 ? GAP : 0);
+  });
+  return Math.max(total, ROW_H);
+}
+
+/* posiciona um nó e sua subárvore. side = +1 (direita) ou -1 (esquerda) */
+function layout(node, depth, yOffset, side) {
+  node.side = side;
+  node.x = side * depth * COL_W; // relativo ao centro (root em x=0)
   const hasChildren = node.children.length > 0;
   if (!hasChildren || !node.expanded) {
     node.y = yOffset + ROW_H / 2;
@@ -339,7 +368,7 @@ function layout(node, depth, yOffset) {
   let cursor = yOffset;
   let total = 0;
   node.children.forEach((child, i) => {
-    const h = layout(child, depth + 1, cursor);
+    const h = layout(child, depth + 1, cursor, side);
     cursor += h + GAP;
     total += h + (i < node.children.length - 1 ? GAP : 0);
   });
@@ -357,17 +386,56 @@ function collectVisible(node, list) {
 }
 
 function render() {
-  const totalHeight = layout(data, 0, 20) + 40;
-  const canvas = document.getElementById('canvas');
+  const leftList = data.children.filter(c => LEFT_BRANCHES.includes(c.branch));
+  const rightList = data.children.filter(c => !LEFT_BRANCHES.includes(c.branch));
+
+  const leftHeight = leftList.reduce((sum, n, i) => sum + measure(n) + (i < leftList.length - 1 ? GAP : 0), 0);
+  const rightHeight = rightList.reduce((sum, n, i) => sum + measure(n) + (i < rightList.length - 1 ? GAP : 0), 0);
+
+  const maxHeight = Math.max(leftHeight, rightHeight, ROOT_H);
+  const margin = 60;
+  const canvasHeight = maxHeight + margin * 2;
+
+  let cursorL = margin + (maxHeight - leftHeight) / 2;
+  leftList.forEach(n => {
+    const h = layout(n, 1, cursorL, -1);
+    cursorL += h + GAP;
+  });
+
+  let cursorR = margin + (maxHeight - rightHeight) / 2;
+  rightList.forEach(n => {
+    const h = layout(n, 1, cursorR, 1);
+    cursorR += h + GAP;
+  });
+
+  data.x = 0;
+  data.y = canvasHeight / 2;
+  data.side = 0;
+
   const visible = collectVisible(data, []);
-  let maxX = 0;
-  visible.forEach(n => { if (n.x > maxX) maxX = n.x; });
-  const totalWidth = maxX + COL_W + 60;
 
-  canvas.style.width = totalWidth + "px";
-  canvas.style.height = totalHeight + "px";
+  // calcula extensão horizontal real (considerando largura das caixas)
+  let minLeftEdge = 0, maxRightEdge = 0;
+  visible.forEach(n => {
+    if (n.depth === 0) return;
+    const w = nodeWidth(n);
+    if (n.side === -1) {
+      const leftEdge = n.x - w;
+      if (leftEdge < minLeftEdge) minLeftEdge = leftEdge;
+    } else {
+      const rightEdge = n.x + w;
+      if (rightEdge > maxRightEdge) maxRightEdge = rightEdge;
+    }
+  });
 
-  // limpa nós antigos
+  const padding = 50;
+  const shiftX = -minLeftEdge + padding; // desloca tudo para coordenadas positivas
+  const canvasWidth = shiftX + maxRightEdge + padding;
+
+  const canvas = document.getElementById('canvas');
+  canvas.style.width = canvasWidth + "px";
+  canvas.style.height = canvasHeight + "px";
+
   canvas.querySelectorAll('.node').forEach(el => el.remove());
 
   visible.forEach(n => {
@@ -375,19 +443,24 @@ function render() {
     el.className = 'node' + (n.depth === 0 ? ' root' : (n.children.length === 0 ? ' leaf' : ''));
     const color = palette[n.branch] || "#444";
     const bg = paletteBg[n.branch] || "#f1efe8";
+    const absX = n.x + shiftX;
 
     if (n.depth === 0) {
-      el.style.left = n.x + "px";
-      el.style.top = n.y - 30 + "px";
-      el.style.maxWidth = "220px";
+      el.style.left = (absX - ROOT_W / 2) + "px";
+      el.style.top = (n.y - ROOT_H / 2) + "px";
+      el.style.width = ROOT_W + "px";
+      el.style.justifyContent = "center";
       el.innerHTML = n.title.replace("\n", "<br>");
     } else {
-      el.style.left = n.x + "px";
+      const w = nodeWidth(n);
+      const boxLeft = (n.side === -1) ? (absX - w) : absX;
+      el.style.left = boxLeft + "px";
       el.style.top = (n.y - ROW_H / 2) + "px";
-      el.style.maxWidth = (COL_W - 40) + "px";
+      el.style.maxWidth = w + "px";
       el.style.background = bg;
       el.style.border = "1px solid " + color;
       el.style.color = color;
+      if (n.side === -1) { el.style.flexDirection = "row-reverse"; el.style.justifyContent = "flex-end"; }
       const hasKids = n.children.length > 0;
       const arrow = hasKids ? (n.expanded ? "▾" : "▸") : "•";
       el.innerHTML = '<span class="arrow">' + arrow + '</span><span class="label">' + n.title + '</span>';
@@ -398,10 +471,10 @@ function render() {
     canvas.appendChild(el);
   });
 
-  drawLines(visible);
+  drawLines(visible, shiftX);
 }
 
-function drawLines(visible) {
+function drawLines(visible, shiftX) {
   const svg = document.getElementById('lines');
   const canvas = document.getElementById('canvas');
   svg.setAttribute('width', canvas.style.width);
@@ -410,15 +483,26 @@ function drawLines(visible) {
 
   function connect(parent, child) {
     const color = palette[child.branch] || "#888";
-    const x1 = parent.depth === 0 ? parent.x + 200 : parent.x + COL_W - 40;
-    const y1 = parent.depth === 0 ? parent.y : parent.y;
-    const x2 = child.x;
+    const side = child.side;
+    const parentAbsX = parent.x + shiftX;
+    const childAbsX = child.x + shiftX;
+
+    let x1;
+    if (parent.depth === 0) {
+      x1 = parentAbsX + (side === -1 ? -ROOT_W / 2 : ROOT_W / 2);
+    } else {
+      const pw = nodeWidth(parent);
+      x1 = (parent.side === -1) ? (parentAbsX - pw) : (parentAbsX + pw);
+    }
+    const y1 = parent.y;
+    const x2 = childAbsX;
     const y2 = child.y;
     const midX = (x1 + x2) / 2;
+
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     path.setAttribute("d", `M ${x1} ${y1} C ${midX} ${y1}, ${midX} ${y2}, ${x2} ${y2}`);
     path.setAttribute("stroke", color);
-    path.setAttribute("stroke-width", parent.depth === 0 ? "2" : "1.5");
+    path.setAttribute("stroke-width", parent.depth === 0 ? "2.5" : "1.5");
     path.setAttribute("fill", "none");
     path.setAttribute("opacity", "0.8");
     svg.appendChild(path);
