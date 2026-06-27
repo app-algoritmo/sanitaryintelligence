@@ -37,8 +37,6 @@
     align-items: center;
     gap: 8px;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     transition: left 0.25s ease, top 0.25s ease;
   }
   .node.leaf { cursor: default; box-shadow: none; }
@@ -93,6 +91,7 @@
 <body>
 
 <div class="toolbar">
+  <a href="access.html" style="font-size:12px;padding:5px 10px;border-radius:6px;border:1px solid #ccc;background:#f5f5f3;text-decoration:none;color:#1a1a1a;display:flex;align-items:center;">&larr; Voltar</a>
   <button onclick="expandAll()">Expandir tudo</button>
   <button onclick="collapseAll()">Recolher tudo</button>
 </div>
@@ -333,16 +332,33 @@ tagNodes(data, 0);
 /* ---------- Layout radial (esquerda / direita a partir do centro) ---------- */
 const ROW_H = 40;
 const GAP = 10;
-const COL_W = 290;
+const GAP_COL = 50;
+const GAP_ROOT = 40;
 const ROOT_W = 260;
 const ROOT_H = 80;
+let colOffset = { "-1": {}, "1": {} }; // recalculado a cada render()
 
 // Ramos que ficam à esquerda do centro (igual à imagem de referência)
 const LEFT_BRANCHES = ["label", "6", "7", "8", "9", "10", "11"];
 
 function nodeWidth(n) {
-  if (n.depth === 0) return ROOT_W;
-  return COL_W - 30;
+  return (n.depth === 0) ? ROOT_W : (n.w || 200);
+}
+
+/* mede a largura real do texto renderizado, para a caixa nunca cortar o conteúdo */
+function measureNodeWidth(html) {
+  const probe = document.createElement('div');
+  probe.className = 'node';
+  probe.style.position = 'fixed';
+  probe.style.visibility = 'hidden';
+  probe.style.left = '-9999px';
+  probe.style.top = '0';
+  probe.style.whiteSpace = 'nowrap';
+  probe.innerHTML = html;
+  document.body.appendChild(probe);
+  const w = probe.offsetWidth + 2; // pequena margem de segurança
+  document.body.removeChild(probe);
+  return Math.max(w, 90);
 }
 
 /* mede a altura necessária para um nó (e sua subárvore, se expandido) */
@@ -359,7 +375,7 @@ function measure(node) {
 /* posiciona um nó e sua subárvore. side = +1 (direita) ou -1 (esquerda) */
 function layout(node, depth, yOffset, side) {
   node.side = side;
-  node.x = side * depth * COL_W; // relativo ao centro (root em x=0)
+  node.x = side * (colOffset[side][depth] || depth * 300); // relativo ao centro (root em x=0)
   const hasChildren = node.children.length > 0;
   if (!hasChildren || !node.expanded) {
     node.y = yOffset + ROW_H / 2;
@@ -388,6 +404,38 @@ function collectVisible(node, list) {
 function render() {
   const leftList = data.children.filter(c => LEFT_BRANCHES.includes(c.branch));
   const rightList = data.children.filter(c => !LEFT_BRANCHES.includes(c.branch));
+
+  // ---- mede larguras reais e calcula offsets de coluna por profundidade/lado ----
+  const widthMaxByDepth = { "-1": {}, "1": {} };
+  function measureSide(list, side) {
+    function walk(node) {
+      if (node.depth > 0) {
+        const hasKids = node.children.length > 0;
+        const arrow = hasKids ? (node.expanded ? "▾" : "▸") : "•";
+        const html = '<span class="arrow">' + arrow + '</span><span class="label">' + node.title + '</span>';
+        node.w = measureNodeWidth(html);
+        const d = node.depth;
+        if (!widthMaxByDepth[side][d] || node.w > widthMaxByDepth[side][d]) widthMaxByDepth[side][d] = node.w;
+      }
+      if (node.expanded) node.children.forEach(walk);
+    }
+    list.forEach(walk);
+  }
+  measureSide(leftList, "-1");
+  measureSide(rightList, "1");
+
+  [-1, 1].forEach(side => {
+    const key = side;
+    colOffset[key] = {};
+    let prevEdge = ROOT_W / 2 + GAP_ROOT;
+    let depth = 1;
+    while (widthMaxByDepth[side][depth] !== undefined || depth === 1) {
+      colOffset[key][depth] = prevEdge;
+      prevEdge = prevEdge + (widthMaxByDepth[side][depth] || 200) + GAP_COL;
+      depth++;
+      if (depth > 6) break;
+    }
+  });
 
   const leftHeight = leftList.reduce((sum, n, i) => sum + measure(n) + (i < leftList.length - 1 ? GAP : 0), 0);
   const rightHeight = rightList.reduce((sum, n, i) => sum + measure(n) + (i < rightList.length - 1 ? GAP : 0), 0);
@@ -456,7 +504,7 @@ function render() {
       const boxLeft = (n.side === -1) ? (absX - w) : absX;
       el.style.left = boxLeft + "px";
       el.style.top = (n.y - ROW_H / 2) + "px";
-      el.style.maxWidth = w + "px";
+      el.style.width = w + "px";
       el.style.background = bg;
       el.style.border = "1px solid " + color;
       el.style.color = color;
