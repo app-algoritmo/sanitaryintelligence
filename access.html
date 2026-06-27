@@ -161,6 +161,31 @@
       .hero{padding:44px 18px 20px;}
       .tools-wrap{padding:24px 18px 60px;}
     }
+
+    /* ===== MODAL (Mapa Mental) ===== */
+    .modal-ov{
+      position:fixed; inset:0; z-index:900; background:rgba(26,26,46,.55);
+      backdrop-filter:blur(4px); display:none; align-items:center; justify-content:center; padding:24px;
+    }
+    .modal-ov.open{display:flex;}
+    .modal-box{
+      position:relative; width:100%; max-width:1280px; height:88vh; background:var(--white);
+      border-radius:18px; overflow:hidden; box-shadow:0 32px 80px rgba(0,0,0,.4);
+      display:flex; flex-direction:column;
+    }
+    .modal-head{
+      display:flex; align-items:center; justify-content:space-between; padding:14px 20px;
+      border-bottom:1px solid var(--border); background:var(--off-white); flex-shrink:0;
+    }
+    .modal-head .mt{font-weight:700; font-size:.95rem;}
+    .modal-head .ms{font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:.08em; text-transform:uppercase;}
+    .modal-close{
+      width:32px; height:32px; border-radius:50%; border:1px solid var(--border); background:var(--white);
+      color:var(--muted); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+      transition:all .15s;
+    }
+    .modal-close:hover{background:#fde8e8; color:#c0392b; border-color:#f5c2c2;}
+    .modal-box iframe{flex:1; width:100%; border:none; background:#fafaf8;}
   </style>
 </head>
 <body>
@@ -250,8 +275,33 @@
         <span class="tool-arrow">Acessar →</span>
       </div>
     </a>
+  <div class="section-label">Regulatório</div>
+  <div class="tools-grid">
+    <div class="tool-card" onclick="openMindMap()">
+      <div class="tool-icon">🧠</div>
+      <h3>Mapa Mental</h3>
+      <p>Estrutura completa de SI Assuntos Regulatórios — mercado, treinamento, marketing, acessos, projetos e as agendas de implantação ISO 9001 e ISO 14001.</p>
+      <div class="tool-meta">
+        <span class="tool-tag">Regulatório</span>
+        <span class="tool-arrow">Acessar →</span>
+      </div>
+    </div>
   </div>
 
+</div>
+
+<!-- MODAL: MAPA MENTAL -->
+<div class="modal-ov" id="mmModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div>
+        <div class="mt">Mapa Mental</div>
+        <div class="ms">SI Assuntos Regulatórios</div>
+      </div>
+      <button class="modal-close" id="mmClose" aria-label="Fechar">✕</button>
+    </div>
+    <iframe id="mmFrame" src="" title="Mapa Mental - SI Assuntos Regulatórios"></iframe>
+  </div>
 </div>
 
 <footer>
@@ -311,6 +361,26 @@
   });
 
   document.getElementById('fyear').textContent = new Date().getFullYear();
+
+  // ===== MODAL MAPA MENTAL =====
+  window.openMindMap = function(){
+    var modal = document.getElementById('mmModal');
+    var frame = document.getElementById('mmFrame');
+    if (!frame.src || frame.src === 'about:blank') frame.src = 'mm.html';
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+  function closeMindMap(){
+    document.getElementById('mmModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('mmClose').addEventListener('click', closeMindMap);
+  document.getElementById('mmModal').addEventListener('click', function(e){
+    if (e.target === this) closeMindMap();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeMindMap();
+  });
 })();
 </script>
 </body>
