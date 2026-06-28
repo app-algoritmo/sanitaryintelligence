@@ -7,7 +7,7 @@
 <title>Extranet CRM · Sanitary Intelligence</title>
 <style>
   :root{
-    --primary:#667eea; --primary-d:#5a6fd6; --secondary:#764ba2;
+    --primary:#667eea; --secondary:#764ba2;
     --grad:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
     --white:#ffffff; --off-white:#f8f9ff; --light:#eef0ff; --border:#e2e5f5;
     --text:#1a1a2e; --muted:#6b7280;
@@ -19,87 +19,67 @@
     --r:16px;
   }
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
   body{font-family:var(--font);background:var(--off-white);color:var(--text);line-height:1.6;min-height:100vh;}
 
-  /* ===== LOGIN (PIN) ===== */
-  #login{position:fixed;inset:0;z-index:999;background:linear-gradient(160deg,#1a1a2e 0%,#2d2150 55%,#1a1a2e 100%);display:flex;align-items:center;justify-content:center;}
-  #login.gone{display:none;}
-  .lc{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:38px 34px 30px;width:300px;backdrop-filter:blur(20px);box-shadow:0 32px 80px rgba(0,0,0,.45);}
-  .lc .lf{font-size:34px;margin-bottom:10px;}
-  .lc .lt{font-size:18px;font-weight:800;color:#fff;margin-bottom:2px;}
-  .lc .ls{font-family:var(--mono);font-size:10px;color:#b9bdd4;letter-spacing:.1em;text-transform:uppercase;margin-bottom:22px;text-align:center;}
-  .ld{display:flex;gap:10px;margin-bottom:20px;}
-  .ldot{width:12px;height:12px;border-radius:50%;border:2px solid rgba(255,255,255,.25);transition:all .15s;}
-  .ldot.on{background:#8b9bf5;border-color:#8b9bf5;box-shadow:0 0 10px rgba(139,155,245,.7);}
-  .ldot.er{background:#e36a6a;border-color:#e36a6a;}
-  .lp{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;width:100%;margin-bottom:8px;}
-  .lk{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:11px;color:#fff;font-family:var(--font);font-size:17px;font-weight:600;padding:15px 0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .12s;user-select:none;}
-  .lk:hover{background:rgba(102,126,234,.4);border-color:rgba(102,126,234,.6);transform:scale(1.04);}
-  .lk:active{transform:scale(.95);}
-  .lk.ast{font-size:13px;color:#6b7395;cursor:default;}
-  .lk.ast:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14);transform:none;}
-  .lk.del{font-size:13px;color:#b9bdd4;}
-  .lk.del:hover{color:#e36a6a;border-color:rgba(227,106,106,.4);background:rgba(227,106,106,.1);}
-  .le{font-family:var(--mono);font-size:11px;color:#e36a6a;letter-spacing:.03em;margin-top:10px;opacity:0;transition:opacity .2s;min-height:16px;}
-  .le.show{opacity:1;}
-  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
-  .shake{animation:shake .35s ease;}
+  /* ===== AUTH SCREEN ===== */
+  #authScreen{position:fixed;inset:0;z-index:999;background:linear-gradient(160deg,#1a1a2e 0%,#2d2150 55%,#1a1a2e 100%);display:flex;align-items:center;justify-content:center;padding:20px;}
+  #authScreen.gone{display:none;}
+  .ac{position:relative;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:36px 32px;width:360px;max-width:100%;backdrop-filter:blur(20px);box-shadow:0 32px 80px rgba(0,0,0,.45);}
+  .ac .af{font-size:30px;margin-bottom:6px;text-align:center;}
+  .ac h1{font-size:18px;font-weight:800;color:#fff;text-align:center;margin-bottom:2px;}
+  .ac .as{font-family:var(--mono);font-size:10px;color:#b9bdd4;letter-spacing:.1em;text-transform:uppercase;text-align:center;margin-bottom:20px;}
+  .ac input, .ac select{width:100%;padding:11px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;font-size:14px;margin-bottom:12px;font-family:var(--font);}
+  .ac input::placeholder{color:#80849c;}
+  .ac button.primary{width:100%;padding:12px;border:none;border-radius:10px;background:var(--grad);color:#fff;font-weight:700;font-size:14px;cursor:pointer;margin-top:4px;}
+  .ac .switcher{display:flex;gap:6px;margin-bottom:18px;background:rgba(255,255,255,.06);border-radius:10px;padding:4px;}
+  .ac .switcher button{flex:1;padding:8px;border:none;border-radius:8px;background:transparent;color:#b9bdd4;font-size:12.5px;font-weight:700;cursor:pointer;}
+  .ac .switcher button.active{background:rgba(255,255,255,.14);color:#fff;}
+  .ac .link{display:block;text-align:center;color:#9fb0f5;font-size:12px;margin-top:12px;cursor:pointer;text-decoration:underline;background:none;border:none;}
+  .ac .msg{font-family:var(--mono);font-size:11.5px;text-align:center;margin-top:10px;min-height:14px;}
+  .ac .msg.err{color:#e36a6a;}
+  .ac .msg.ok{color:#7fd99a;}
+  .ac .form{display:none;}
+  .ac .form.active{display:block;}
+  .auth-lang{display:flex;justify-content:center;gap:6px;margin-bottom:18px;}
+  .auth-lang button{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);color:#b9bdd4;font-size:11px;font-weight:700;padding:5px 10px;border-radius:20px;cursor:pointer;}
+  .auth-lang button.active{background:var(--grad);color:#fff;border-color:transparent;}
 
-  #namegate{position:fixed;inset:0;z-index:998;background:linear-gradient(160deg,#1a1a2e 0%,#2d2150 55%,#1a1a2e 100%);display:none;align-items:center;justify-content:center;}
-  #namegate.show{display:flex;}
-  .ngc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:34px 32px;width:300px;text-align:center;backdrop-filter:blur(20px);}
-  .ngc .nf{font-size:30px;margin-bottom:10px;}
-  .ngc h2{color:#fff;font-size:17px;font-weight:800;margin-bottom:4px;}
-  .ngc p{color:#b9bdd4;font-size:11px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;margin-bottom:20px;}
-  .ngc input{width:100%;padding:11px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;font-size:14px;margin-bottom:14px;}
-  .ngc input::placeholder{color:#80849c;}
-  .ngc button{width:100%;padding:11px;border:none;border-radius:10px;background:var(--grad);color:#fff;font-weight:700;font-size:14px;cursor:pointer;}
-
+  /* ===== HEADER ===== */
   header{background:rgba(255,255,255,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;}
-  .hdr-inner{max-width:1180px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-  .brand{font-size:1.2rem;font-weight:800;letter-spacing:-.01em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-  .brand-sub{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:1px;}
-  .hdr-right{display:flex;align-items:center;gap:14px;}
-  .who{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text);}
-  .who-av{width:28px;height:28px;border-radius:50%;background:var(--light);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;}
+  .hdr-inner{max-width:1180px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  .brand{font-size:1.15rem;font-weight:800;letter-spacing:-.01em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .brand-sub{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+  .hdr-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .pref-select{font-size:12px;padding:6px 8px;border-radius:8px;border:1px solid var(--border);background:var(--white);font-family:var(--font);}
+  .who{display:flex;align-items:center;gap:8px;font-size:13px;}
+  .who-av{width:26px;height:26px;border-radius:50%;background:var(--light);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;}
   .signout{font-family:var(--mono);font-size:11px;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline;}
-  a.back{font-size:13px;color:var(--primary);text-decoration:none;font-weight:600;}
+  a.back{font-size:12.5px;color:var(--primary);text-decoration:none;font-weight:600;}
 
-  .wrap{max-width:1180px;margin:0 auto;padding:28px 28px 70px;}
-
-  .tabs{display:flex;gap:8px;margin-bottom:26px;flex-wrap:wrap;}
-  .tab{font-family:var(--font);font-size:13.5px;font-weight:700;padding:9px 18px;border-radius:20px;border:1px solid var(--border);background:var(--white);color:var(--muted);cursor:pointer;transition:all .2s;}
+  .wrap{max-width:1180px;margin:0 auto;padding:26px 28px 70px;}
+  .tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;}
+  .tab{font-family:var(--font);font-size:13.5px;font-weight:700;padding:9px 18px;border-radius:20px;border:1px solid var(--border);background:var(--white);color:var(--muted);cursor:pointer;}
   .tab.active{background:var(--grad);color:#fff;border-color:transparent;box-shadow:var(--shadow);}
-  .tab:hover:not(.active){border-color:rgba(102,126,234,.4);color:var(--primary);}
-
   .view{display:none;} .view.active{display:block;}
 
-  h2.page-title{font-size:1.5rem;font-weight:800;letter-spacing:-.01em;margin-bottom:18px;}
+  h2.page-title{font-size:1.4rem;font-weight:800;margin-bottom:18px;}
   .page-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
-  .head-actions{display:flex;gap:8px;flex-wrap:wrap;}
-
   .btn{font-family:var(--font);font-size:13.5px;font-weight:700;padding:10px 18px;border-radius:10px;border:none;background:var(--grad);color:#fff;cursor:pointer;box-shadow:var(--shadow);}
-  .btn:hover{filter:brightness(1.05);}
   .btn-ghost{background:var(--white);color:var(--primary);border:1px solid var(--border);box-shadow:none;}
-
-  .search-input{width:100%;max-width:320px;padding:9px 12px;border-radius:10px;border:1px solid var(--border);font-size:13.5px;font-family:var(--font);background:var(--white);}
+  .search-input{width:100%;max-width:320px;padding:9px 12px;border-radius:10px;border:1px solid var(--border);font-size:13.5px;background:var(--white);}
   .search-row{margin-bottom:16px;}
 
   .metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:8px;}
-  .metric{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;cursor:pointer;transition:transform .2s var(--ease),box-shadow .2s;}
-  .metric:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+  .metric{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;cursor:pointer;}
   .metric .ml{font-size:12.5px;color:var(--muted);}
-  .metric .mv{font-size:1.7rem;font-weight:800;margin-top:6px;}
-
+  .metric .mv{font-size:1.6rem;font-weight:800;margin-top:6px;}
   .panel{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-top:22px;}
-  .panel h3{font-size:14.5px;font-weight:800;margin-bottom:14px;}
+  .panel h3{font-size:14px;font-weight:800;margin-bottom:14px;}
   .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13px;}
-  .bar-label{width:130px;color:var(--muted);flex-shrink:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .bar-label{width:130px;color:var(--muted);flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .bar-track{flex:1;height:8px;background:var(--light);border-radius:6px;overflow:hidden;}
   .bar-fill{height:100%;background:var(--grad);border-radius:6px;}
-  .bar-val{width:46px;text-align:right;font-weight:700;flex-shrink:0;}
-
+  .bar-val{width:40px;text-align:right;font-weight:700;flex-shrink:0;}
   .activity{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:6px;margin-top:22px;}
   .activity-row{display:flex;align-items:center;gap:10px;padding:11px 14px;font-size:13.5px;border-bottom:1px solid var(--border);}
   .activity-row:last-child{border-bottom:none;}
@@ -114,19 +94,18 @@
   .col-body{display:flex;flex-direction:column;gap:9px;}
   .card-item{background:var(--white);border-radius:11px;padding:13px;border:1px solid var(--border);cursor:pointer;}
   .ci-num{font-family:var(--mono);font-size:10.5px;color:var(--muted);}
-  .ci-title{font-size:13.5px;font-weight:700;margin-top:2px;}
+  .ci-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--light);color:var(--primary);margin-top:4px;}
+  .ci-title{font-size:13.5px;font-weight:700;margin-top:4px;}
   .ci-sub{font-size:12px;color:var(--muted);margin-top:2px;}
   .ci-value{font-size:12.5px;font-weight:700;color:var(--good);margin-top:7px;}
   .ci-date{font-size:11px;color:var(--muted);margin-top:5px;font-family:var(--mono);}
-  .ci-foot{display:flex;align-items:center;gap:6px;margin-top:10px;}
-  select.sm{font-size:12px;padding:5px 7px;border-radius:7px;border:1px solid var(--border);flex:1;font-family:var(--font);}
-  .icon-x{background:none;border:none;color:#a8acc4;font-size:18px;cursor:pointer;line-height:1;}
-  .icon-x:hover{color:var(--bad);}
+  .ci-foot{margin-top:10px;}
+  select.sm{font-size:12px;padding:5px 7px;border-radius:7px;border:1px solid var(--border);width:100%;font-family:var(--font);}
   .col-empty{color:#a8acc4;font-size:12.5px;text-align:center;padding:14px 0;}
   .prio{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:6px;}
-  .prio-Alta{background:#fcebeb;color:#a32d2d;}
-  .prio-Média{background:#faeeda;color:#854f0b;}
-  .prio-Baixa{background:#eaf3de;color:#3b6d11;}
+  .prio-Alta,.prio-High,.prio-Alta_es{background:#fcebeb;color:#a32d2d;}
+  .prio-Média,.prio-Medium,.prio-Media{background:#faeeda;color:#854f0b;}
+  .prio-Baixa,.prio-Low{background:#eaf3de;color:#3b6d11;}
 
   .list{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:4px;}
   .list-row{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--border);cursor:pointer;}
@@ -134,186 +113,234 @@
   .av{width:34px;height:34px;border-radius:50%;background:var(--light);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;}
   .lr-title{font-size:14px;font-weight:700;}
   .lr-sub{font-size:12px;color:var(--muted);}
-
   .empty-msg{color:var(--muted);font-size:13.5px;padding:22px 0;}
 
   .modal-overlay{position:fixed;inset:0;background:rgba(20,20,40,.5);display:none;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(2px);padding:20px;overflow-y:auto;}
   .modal-overlay.show{display:flex;}
   .modal-card{background:var(--white);border-radius:18px;padding:26px;width:360px;max-width:90vw;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto;}
-  .modal-card.wide{width:560px;}
-  .modal-card.wide .two-col{display:grid; grid-template-columns:1fr 1fr; gap:0 16px;}
-  .modal-card.wide .two-col > div{display:flex; flex-direction:column;}
+  .modal-card.wide{width:600px;}
+  .modal-card.wide .two-col{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;}
+  .modal-card.wide .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 12px;}
+  .modal-card.wide .two-col>div, .modal-card.wide .three-col>div{display:flex;flex-direction:column;}
   .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
   .modal-title{font-size:17px;font-weight:800;}
   label.f-label{display:block;font-size:12.5px;color:var(--muted);margin:14px 0 5px;font-weight:600;}
   input.f-input,select.f-input,textarea.f-input{width:100%;padding:10px 11px;border-radius:9px;border:1px solid var(--border);font-size:14px;font-family:var(--font);}
   .modal-card form .btn{width:100%;margin-top:20px;}
+  .field-with-unit{display:flex;gap:6px;}
+  .field-with-unit input{flex:2;}
+  .field-with-unit select{flex:1;}
 
-  .cv-row{display:flex; justify-content:space-between; gap:14px; padding:9px 0; border-bottom:1px solid var(--border); font-size:13.5px;}
+  .cv-row{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13.5px;}
   .cv-row:last-child{border-bottom:none;}
-  .cv-label{color:var(--muted); font-weight:600;}
-  .cv-value{text-align:right; font-weight:600;}
-  .cv-num{font-family:var(--mono); font-size:12px; color:var(--muted); margin-bottom:8px;}
-  .hist-row{display:flex; align-items:center; gap:8px; padding:8px 0; border-bottom:1px solid var(--border); font-size:13px;}
+  .cv-label{color:var(--muted);font-weight:600;}
+  .cv-value{text-align:right;font-weight:600;}
+  .cv-num{font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:8px;}
+  .hist-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;}
   .hist-row:last-child{border-bottom:none;}
 
-  footer{border-top:1px solid var(--border);padding:28px;text-align:center;font-size:.82rem;color:var(--muted);margin-top:20px;}
+  footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:.8rem;color:var(--muted);margin-top:20px;}
 
   @media print{
     body *{visibility:hidden;}
     .printable, .printable *{visibility:visible;}
-    .printable{position:absolute; left:0; top:0; width:100%; box-shadow:none; border:none; max-height:none; overflow:visible;}
+    .printable{position:absolute;left:0;top:0;width:100%;box-shadow:none;border:none;max-height:none;overflow:visible;}
     .no-print, [data-close]{display:none !important;}
   }
-
   @media(max-width:640px){
-    .hdr-inner{padding:14px 18px;}
     .wrap{padding:18px 18px 60px;}
     .modal-card.wide{width:90vw;}
-    .modal-card.wide .two-col{grid-template-columns:1fr;}
+    .modal-card.wide .two-col,.modal-card.wide .three-col{grid-template-columns:1fr;}
   }
 </style>
 </head>
 <body>
 
-<!-- LOGIN PIN -->
-<div id="login">
-  <div class="lc">
-    <div class="lf">🗂️</div>
-    <div class="lt">Extranet CRM</div>
-    <div class="ls">Sanitary Intelligence · Gestão Comercial</div>
-    <div class="ld" id="ldots">
-      <div class="ldot" id="d0"></div><div class="ldot" id="d1"></div><div class="ldot" id="d2"></div>
-      <div class="ldot" id="d3"></div><div class="ldot" id="d4"></div><div class="ldot" id="d5"></div>
+<!-- ===== AUTH SCREEN (login / registro / recuperação) ===== -->
+<div id="authScreen">
+  <div class="ac">
+    <div class="auth-lang" id="authLangSwitch">
+      <button data-lang="pt">PT</button><button data-lang="en">EN</button><button data-lang="es">ES</button>
     </div>
-    <div class="lp" id="lpad">
-      <div class="lk" data-k="1">1</div><div class="lk" data-k="2">2</div><div class="lk" data-k="3">3</div>
-      <div class="lk" data-k="4">4</div><div class="lk" data-k="5">5</div><div class="lk" data-k="6">6</div>
-      <div class="lk" data-k="7">7</div><div class="lk" data-k="8">8</div><div class="lk" data-k="9">9</div>
-      <div class="lk ast" data-k="">✱</div><div class="lk" data-k="0">0</div><div class="lk del" data-k="del">⌫</div>
-    </div>
-    <div class="le" id="lerr">PIN incorreto</div>
-  </div>
-</div>
+    <div class="af">🗂️</div>
+    <h1 data-i18n="appName">Extranet CRM</h1>
+    <div class="as" data-i18n="appTag">Sanitary Intelligence · Gestão Comercial</div>
 
-<!-- NOME DO USUÁRIO -->
-<div id="namegate">
-  <div class="ngc">
-    <div class="nf">👤</div>
-    <h2>Identifique-se</h2>
-    <p>Para registrar quem cadastra cada item</p>
-    <form id="nameform">
-      <input id="namein" placeholder="Seu nome" autocomplete="off" />
-      <button type="submit">Entrar</button>
+    <div class="switcher">
+      <button id="swLogin" class="active" data-i18n="loginTab">Entrar</button>
+      <button id="swRegister" data-i18n="registerTab">Criar conta</button>
+    </div>
+
+    <form class="form active" id="formLoginAuth">
+      <input type="email" id="loginEmail" data-i18n-ph="emailPh" placeholder="E-mail" required />
+      <input type="password" id="loginPassword" data-i18n-ph="passwordPh" placeholder="Senha" required />
+      <button class="primary" type="submit" data-i18n="loginBtn">Entrar</button>
+      <button type="button" class="link" id="goForgot" data-i18n="forgotLink">Esqueci minha senha</button>
     </form>
+
+    <form class="form" id="formRegisterAuth">
+      <input type="text" id="regName" data-i18n-ph="namePh" placeholder="Nome completo" required />
+      <input type="email" id="regEmail" data-i18n-ph="emailPh" placeholder="E-mail" required />
+      <input type="password" id="regPassword" data-i18n-ph="passwordMinPh" placeholder="Senha (mín. 8 caracteres)" required />
+      <button class="primary" type="submit" data-i18n="registerBtn">Criar conta</button>
+    </form>
+
+    <form class="form" id="formForgotAuth">
+      <input type="email" id="forgotEmail" data-i18n-ph="emailPh" placeholder="E-mail" required />
+      <button class="primary" type="submit" data-i18n="sendLinkBtn">Enviar link de redefinição</button>
+      <button type="button" class="link" id="backToLogin" data-i18n="backToLoginLink">Voltar ao login</button>
+    </form>
+
+    <form class="form" id="formResetAuth">
+      <input type="password" id="resetPassword" data-i18n-ph="passwordMinPh" placeholder="Nova senha (mín. 8 caracteres)" required />
+      <button class="primary" type="submit" data-i18n="resetBtn">Redefinir senha</button>
+    </form>
+
+    <div class="msg" id="authMsg"></div>
   </div>
 </div>
 
-<!-- HEADER -->
+<!-- ===== HEADER ===== -->
 <header>
   <div class="hdr-inner">
     <div>
-      <div class="brand">Extranet CRM</div>
-      <div class="brand-sub">Sanitary Intelligence · Gestão Comercial</div>
+      <div class="brand" data-i18n="appName">Extranet CRM</div>
+      <div class="brand-sub" data-i18n="appTag">Sanitary Intelligence · Gestão Comercial</div>
     </div>
     <div class="hdr-right">
-      <a class="back" href="access.html">← Central de ferramentas</a>
+      <a class="back" href="access.html" data-i18n="backToHub">← Central de ferramentas</a>
+      <select class="pref-select" id="langSelect">
+        <option value="pt">Português</option>
+        <option value="en">English</option>
+        <option value="es">Español</option>
+      </select>
+      <select class="pref-select" id="currencySelect">
+        <option value="USD">USD $</option>
+        <option value="CNY">CNY ¥</option>
+        <option value="EUR">EUR €</option>
+        <option value="BRL">BRL R$</option>
+      </select>
       <div class="who"><div class="who-av" id="whoAv"></div><span id="whoName"></span></div>
-      <button class="signout" id="signOutBtn">sair</button>
+      <button class="signout" id="signOutBtn" data-i18n="signOut">sair</button>
     </div>
   </div>
 </header>
 
-<div class="wrap">
+<!-- ===== APP ===== -->
+<div class="wrap" id="appWrap" style="display:none;">
   <div class="tabs" id="tabs">
-    <button class="tab active" data-tab="dashboard">Painel</button>
-    <button class="tab" data-tab="leads">Vendas</button>
-    <button class="tab" data-tab="clients">Clientes</button>
-    <button class="tab" data-tab="tickets">Suporte</button>
+    <button class="tab active" data-tab="dashboard" data-i18n="tabDashboard">Painel</button>
+    <button class="tab" data-tab="leads" data-i18n="tabLeads">Vendas</button>
+    <button class="tab" data-tab="clients" data-i18n="tabClients">Clientes</button>
+    <button class="tab" data-tab="tickets" data-i18n="tabTickets">Suporte</button>
   </div>
 
-  <!-- DASHBOARD -->
   <div class="view active" id="view-dashboard">
     <div class="page-head">
-      <h2 class="page-title" style="margin:0;">Painel</h2>
-      <button class="btn btn-ghost no-print" id="printDashboardBtn">Imprimir relatório</button>
+      <h2 class="page-title" data-i18n="dashboardTitle" style="margin:0;">Painel</h2>
+      <button class="btn btn-ghost no-print" id="printDashboardBtn" data-i18n="printReport">Imprimir relatório</button>
     </div>
     <div id="dashboardPrintable" class="printable">
       <div class="metric-grid" id="metricGrid"></div>
-
-      <div class="panel">
-        <h3>Ranking de vendas por responsável</h3>
-        <div id="rankLeads"></div>
-      </div>
-
-      <div class="panel">
-        <h3>Chamados por responsável</h3>
-        <div id="rankTickets"></div>
-      </div>
-
+      <div class="panel"><h3 data-i18n="rankSalesTitle">Ranking de vendas por responsável</h3><div id="rankLeads"></div></div>
+      <div class="panel"><h3 data-i18n="rankTicketsTitle">Chamados por responsável</h3><div id="rankTickets"></div></div>
       <div class="activity" id="activityList"></div>
     </div>
   </div>
 
-  <!-- LEADS -->
   <div class="view" id="view-leads">
     <div class="page-head">
-      <h2 class="page-title" style="margin:0;">Funil de vendas</h2>
-      <div class="head-actions"><button class="btn" id="addLeadBtn">+ Novo lead</button></div>
+      <h2 class="page-title" data-i18n="leadsTitle" style="margin:0;">Funil de vendas</h2>
+      <button class="btn" id="addLeadBtn" data-i18n="newLead">+ Novo lead</button>
     </div>
-    <div class="search-row"><input class="search-input" id="leadSearch" placeholder="Buscar por título, empresa ou responsável…" /></div>
+    <div class="search-row"><input class="search-input" id="leadSearch" data-i18n-ph="searchLeadsPh" placeholder="Buscar por título, empresa ou responsável…" /></div>
     <div class="board" id="leadsBoard"></div>
   </div>
 
-  <!-- CLIENTS -->
   <div class="view" id="view-clients">
     <div class="page-head">
-      <h2 class="page-title" style="margin:0;">Clientes</h2>
-      <div class="head-actions"><button class="btn" id="addClientBtn">+ Novo cliente</button></div>
+      <h2 class="page-title" data-i18n="clientsTitle" style="margin:0;">Clientes</h2>
+      <button class="btn" id="addClientBtn" data-i18n="newClient">+ Novo cliente</button>
     </div>
-    <div class="search-row"><input class="search-input" id="clientSearch" placeholder="Buscar por nome, empresa ou e-mail…" /></div>
+    <div class="search-row"><input class="search-input" id="clientSearch" data-i18n-ph="searchClientsPh" placeholder="Buscar por nome, empresa ou e-mail…" /></div>
     <div class="list" id="clientsList"></div>
   </div>
 
-  <!-- TICKETS -->
   <div class="view" id="view-tickets">
     <div class="page-head">
-      <h2 class="page-title" style="margin:0;">Chamados de suporte</h2>
-      <div class="head-actions"><button class="btn" id="addTicketBtn">+ Novo chamado</button></div>
+      <h2 class="page-title" data-i18n="ticketsTitle" style="margin:0;">Chamados de suporte</h2>
+      <button class="btn" id="addTicketBtn" data-i18n="newTicket">+ Novo chamado</button>
     </div>
-    <div class="search-row"><input class="search-input" id="ticketSearch" placeholder="Buscar por assunto, cliente ou responsável…" /></div>
+    <div class="search-row"><input class="search-input" id="ticketSearch" data-i18n-ph="searchTicketsPh" placeholder="Buscar por assunto, cliente ou responsável…" /></div>
     <div class="board" id="ticketsBoard"></div>
   </div>
 </div>
 
-<footer><p>© <span id="fyear"></span> Sanitary Intelligence. Ambiente de uso interno e restrito.</p></footer>
+<footer id="appFooter" style="display:none;"><p>© <span id="fyear"></span> Sanitary Intelligence.</p></footer>
 
 <!-- MODAL: lead form -->
 <div class="modal-overlay" id="modalLead">
   <div class="modal-card wide">
-    <div class="modal-head"><span class="modal-title" id="leadModalTitle">Novo lead</span><button class="icon-x" data-close="modalLead">×</button></div>
+    <div class="modal-head"><span class="modal-title" id="leadModalTitle" data-i18n="newLead">Novo lead</span><button class="icon-x" data-close="modalLead" style="background:none;border:none;font-size:18px;cursor:pointer;">×</button></div>
     <form id="formLead">
       <div class="two-col">
         <div>
-          <label class="f-label">Título do negócio</label>
-          <input class="f-input" id="leadTitle" placeholder="ex: Licença anual - Acme" required />
+          <label class="f-label" data-i18n="dealTitle">Título do negócio</label>
+          <input class="f-input" id="leadTitle" required />
         </div>
         <div>
-          <label class="f-label">Empresa</label>
-          <input class="f-input" id="leadCompany" placeholder="ex: Acme Ltda" list="clientDatalist" />
+          <label class="f-label" data-i18n="dealType">Tipo de negócio</label>
+          <select class="f-input" id="leadDealType">
+            <option value="Produto" data-i18n="dtProduct">Produto</option>
+            <option value="Serviço" data-i18n="dtService">Serviço</option>
+            <option value="Consultoria" data-i18n="dtConsulting">Consultoria</option>
+            <option value="Outro" data-i18n="dtOther">Outro</option>
+          </select>
         </div>
         <div>
-          <label class="f-label">Valor estimado (€)</label>
-          <input class="f-input" id="leadValue" type="number" placeholder="0" />
+          <label class="f-label" data-i18n="company">Empresa</label>
+          <input class="f-input" id="leadCompany" list="clientDatalist" />
         </div>
         <div>
-          <label class="f-label">Data prevista de fechamento</label>
+          <label class="f-label" data-i18n="estimatedValue">Valor estimado</label>
+          <div class="field-with-unit">
+            <input class="f-input" id="leadValue" type="number" placeholder="0" />
+            <select class="f-input" id="leadCurrency">
+              <option value="USD">USD</option><option value="CNY">CNY</option><option value="EUR">EUR</option><option value="BRL">BRL</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="f-label" data-i18n="expectedCloseDate">Previsão de fechamento</label>
           <input class="f-input" id="leadCloseDate" type="date" />
         </div>
+        <div>
+          <label class="f-label" data-i18n="unitSystem">Sistema de unidades</label>
+          <select class="f-input" id="leadUnitSystem">
+            <option value="metric" data-i18n="metric">Métrico (kg, cm)</option>
+            <option value="imperial" data-i18n="imperial">Imperial (lb, in)</option>
+          </select>
+        </div>
+        <div>
+          <label class="f-label" data-i18n="weight">Peso</label>
+          <div class="field-with-unit">
+            <input class="f-input" id="leadWeight" type="number" placeholder="0" />
+            <select class="f-input" id="leadWeightUnit"><option value="kg">kg</option><option value="lb">lb</option></select>
+          </div>
+        </div>
+        <div>
+          <label class="f-label" data-i18n="dimensions">Dimensões (C × L × A)</label>
+          <div class="field-with-unit">
+            <input class="f-input" id="leadDimL" type="number" placeholder="C" />
+            <input class="f-input" id="leadDimW" type="number" placeholder="L" />
+            <input class="f-input" id="leadDimH" type="number" placeholder="A" />
+            <select class="f-input" id="leadDimUnit"><option value="cm">cm</option><option value="in">in</option></select>
+          </div>
+        </div>
       </div>
-      <label class="f-label" id="leadLostLabel" style="display:none;">Motivo da perda</label>
-      <input class="f-input" id="leadLostReason" style="display:none;" placeholder="ex: Optou por concorrente" />
-      <button class="btn" type="submit" id="leadSubmitBtn">Adicionar lead</button>
+      <label class="f-label" id="leadLostLabel" style="display:none;" data-i18n="lostReason">Motivo da perda</label>
+      <input class="f-input" id="leadLostReason" style="display:none;" />
+      <button class="btn" type="submit" id="leadSubmitBtn" data-i18n="addLead">Adicionar lead</button>
     </form>
   </div>
 </div>
@@ -321,64 +348,40 @@
 <!-- MODAL: lead view -->
 <div class="modal-overlay" id="modalViewLead">
   <div class="modal-card printable" id="leadViewCard">
-    <div class="modal-head"><span class="modal-title">Ficha do negócio</span><button class="icon-x no-print" data-close="modalViewLead">×</button></div>
+    <div class="modal-head"><span class="modal-title" data-i18n="dealRecord">Ficha do negócio</span><button class="icon-x no-print" data-close="modalViewLead" style="background:none;border:none;font-size:18px;cursor:pointer;">×</button></div>
     <div id="leadViewBody" style="margin-top:6px;"></div>
-    <div class="no-print" style="display:flex; gap:10px; margin-top:22px;">
-      <button class="btn btn-ghost" type="button" data-close="modalViewLead" style="flex:1;">Fechar</button>
-      <button class="btn btn-ghost" type="button" id="editLeadBtn" style="flex:1;">Editar</button>
-      <button class="btn" type="button" id="printLeadBtn" style="flex:1;">Imprimir</button>
+    <div class="no-print" style="display:flex;gap:10px;margin-top:22px;">
+      <button class="btn btn-ghost" type="button" data-close="modalViewLead" style="flex:1;" data-i18n="close">Fechar</button>
+      <button class="btn btn-ghost" type="button" id="editLeadBtn" style="flex:1;" data-i18n="edit">Editar</button>
+      <button class="btn" type="button" id="printLeadBtn" style="flex:1;" data-i18n="print">Imprimir</button>
     </div>
-    <button type="button" id="deleteLeadBtn" class="no-print" style="display:block; margin:14px auto 0; background:none; border:none; color:var(--muted); font-size:12px; text-decoration:underline; cursor:pointer;">Eliminar registro</button>
+    <button type="button" id="deleteLeadBtn" class="no-print" style="display:block;margin:14px auto 0;background:none;border:none;color:var(--muted);font-size:12px;text-decoration:underline;cursor:pointer;" data-i18n="deleteRecord">Eliminar registro</button>
   </div>
 </div>
 
 <!-- MODAL: client form -->
 <div class="modal-overlay" id="modalClient">
   <div class="modal-card wide">
-    <div class="modal-head"><span class="modal-title" id="clientModalTitle">Novo cliente</span><button class="icon-x" data-close="modalClient">×</button></div>
+    <div class="modal-head"><span class="modal-title" id="clientModalTitle" data-i18n="newClient">Novo cliente</span><button class="icon-x" data-close="modalClient" style="background:none;border:none;font-size:18px;cursor:pointer;">×</button></div>
     <form id="formClient">
       <div class="two-col">
-        <div>
-          <label class="f-label">Nome do contato</label>
-          <input class="f-input" id="clientName" placeholder="ex: João Pereira" required />
-        </div>
-        <div>
-          <label class="f-label">Empresa</label>
-          <input class="f-input" id="clientCompany" placeholder="ex: Acme Ltda" />
-        </div>
-        <div>
-          <label class="f-label">E-mail</label>
-          <input class="f-input" id="clientEmail" placeholder="joao@acme.com" />
-        </div>
-        <div>
-          <label class="f-label">Telefone</label>
-          <input class="f-input" id="clientPhone" placeholder="+55 11 90000-0000" />
-        </div>
-        <div>
-          <label class="f-label">Endereço</label>
-          <input class="f-input" id="clientAddress" placeholder="Rua, número, cidade" />
-        </div>
-        <div>
-          <label class="f-label">País</label>
-          <input class="f-input" id="clientCountry" placeholder="ex: Brasil" />
-        </div>
-        <div>
-          <label class="f-label">URL</label>
-          <input class="f-input" id="clientUrl" placeholder="https://acme.com" />
-        </div>
-        <div>
-          <label class="f-label">Imagem <span style="font-weight:400; color:var(--muted);">(PNG/JPG, máx. 1200×670)</span></label>
-          <input class="f-input" id="clientImageInput" type="file" accept="image/png,image/jpeg" style="padding:8px;" />
-        </div>
+        <div><label class="f-label" data-i18n="contactName">Nome do contato</label><input class="f-input" id="clientName" required /></div>
+        <div><label class="f-label" data-i18n="company">Empresa</label><input class="f-input" id="clientCompany" /></div>
+        <div><label class="f-label" data-i18n="email">E-mail</label><input class="f-input" id="clientEmail" /></div>
+        <div><label class="f-label" data-i18n="phone">Telefone</label><input class="f-input" id="clientPhone" /></div>
+        <div><label class="f-label" data-i18n="address">Endereço</label><input class="f-input" id="clientAddress" /></div>
+        <div><label class="f-label" data-i18n="country">País</label><input class="f-input" id="clientCountry" /></div>
+        <div><label class="f-label">URL</label><input class="f-input" id="clientUrl" /></div>
+        <div><label class="f-label" data-i18n="image">Imagem (PNG/JPG, máx. 1200×670)</label><input class="f-input" id="clientImageInput" type="file" accept="image/png,image/jpeg" style="padding:8px;" /></div>
       </div>
-      <div id="clientImagePreviewWrap" style="display:none; margin-top:10px;">
-        <img id="clientImagePreview" style="max-width:100%; max-height:140px; border-radius:9px; border:1px solid var(--border); display:block;" />
-        <button type="button" id="removeImageBtn" style="margin-top:6px; background:none; border:none; color:var(--muted); font-size:12px; text-decoration:underline; cursor:pointer;">Remover imagem</button>
+      <div id="clientImagePreviewWrap" style="display:none;margin-top:10px;">
+        <img id="clientImagePreview" style="max-width:100%;max-height:140px;border-radius:9px;border:1px solid var(--border);display:block;" />
+        <button type="button" id="removeImageBtn" style="margin-top:6px;background:none;border:none;color:var(--muted);font-size:12px;text-decoration:underline;cursor:pointer;" data-i18n="removeImage">Remover imagem</button>
       </div>
-      <p id="imageError" style="color:#dc2626; font-size:12px; margin-top:6px; display:none;"></p>
-      <label class="f-label">Anotações <span id="notesCounter" style="font-weight:400; color:var(--muted);">(0/500 palavras)</span></label>
-      <textarea class="f-input" id="clientNotes" rows="6" placeholder="Observações sobre o cliente" style="resize:vertical; font-family:var(--font); width:100%;"></textarea>
-      <button class="btn" type="submit" id="clientSubmitBtn">Adicionar cliente</button>
+      <p id="imageError" style="color:#dc2626;font-size:12px;margin-top:6px;display:none;"></p>
+      <label class="f-label" data-i18n="notes">Anotações <span id="notesCounter" style="font-weight:400;color:var(--muted);">(0/500)</span></label>
+      <textarea class="f-input" id="clientNotes" rows="6" style="resize:vertical;width:100%;"></textarea>
+      <button class="btn" type="submit" id="clientSubmitBtn" data-i18n="addClient">Adicionar cliente</button>
     </form>
   </div>
 </div>
@@ -386,44 +389,38 @@
 <!-- MODAL: view client -->
 <div class="modal-overlay" id="modalViewClient">
   <div class="modal-card printable" id="clientViewCard">
-    <div class="modal-head"><span class="modal-title">Ficha do cliente</span><button class="icon-x no-print" data-close="modalViewClient">×</button></div>
+    <div class="modal-head"><span class="modal-title" data-i18n="clientRecord">Ficha do cliente</span><button class="icon-x no-print" data-close="modalViewClient" style="background:none;border:none;font-size:18px;cursor:pointer;">×</button></div>
     <div id="clientViewBody" style="margin-top:10px;"></div>
-    <div class="no-print" style="display:flex; gap:10px; margin-top:22px;">
-      <button class="btn btn-ghost" type="button" data-close="modalViewClient" style="flex:1;">Fechar</button>
-      <button class="btn btn-ghost" type="button" id="editClientBtn" style="flex:1;">Editar</button>
-      <button class="btn" type="button" id="printClientBtn" style="flex:1;">Imprimir</button>
+    <div class="no-print" style="display:flex;gap:10px;margin-top:22px;">
+      <button class="btn btn-ghost" type="button" data-close="modalViewClient" style="flex:1;" data-i18n="close">Fechar</button>
+      <button class="btn btn-ghost" type="button" id="editClientBtn" style="flex:1;" data-i18n="edit">Editar</button>
+      <button class="btn" type="button" id="printClientBtn" style="flex:1;" data-i18n="print">Imprimir</button>
     </div>
-    <button type="button" id="deleteClientBtn" class="no-print" style="display:block; margin:14px auto 0; background:none; border:none; color:var(--muted); font-size:12px; text-decoration:underline; cursor:pointer;">Eliminar registro</button>
+    <button type="button" id="deleteClientBtn" class="no-print" style="display:block;margin:14px auto 0;background:none;border:none;color:var(--muted);font-size:12px;text-decoration:underline;cursor:pointer;" data-i18n="deleteRecord">Eliminar registro</button>
   </div>
 </div>
 
 <!-- MODAL: ticket form -->
 <div class="modal-overlay" id="modalTicket">
   <div class="modal-card wide">
-    <div class="modal-head"><span class="modal-title" id="ticketModalTitle">Novo chamado</span><button class="icon-x" data-close="modalTicket">×</button></div>
+    <div class="modal-head"><span class="modal-title" id="ticketModalTitle" data-i18n="newTicket">Novo chamado</span><button class="icon-x" data-close="modalTicket" style="background:none;border:none;font-size:18px;cursor:pointer;">×</button></div>
     <form id="formTicket">
       <div class="two-col">
+        <div><label class="f-label" data-i18n="subject">Assunto</label><input class="f-input" id="ticketSubject" required /></div>
+        <div><label class="f-label" data-i18n="client">Cliente</label><input class="f-input" id="ticketClient" list="clientDatalist" /></div>
         <div>
-          <label class="f-label">Assunto</label>
-          <input class="f-input" id="ticketSubject" placeholder="ex: Erro ao gerar relatório" required />
-        </div>
-        <div>
-          <label class="f-label">Cliente</label>
-          <input class="f-input" id="ticketClient" placeholder="ex: Acme Ltda" list="clientDatalist" />
-        </div>
-        <div>
-          <label class="f-label">Prioridade</label>
+          <label class="f-label" data-i18n="priority">Prioridade</label>
           <select class="f-input" id="ticketPriority">
-            <option value="Baixa">Baixa</option>
-            <option value="Média" selected>Média</option>
-            <option value="Alta">Alta</option>
+            <option value="Baixa" data-i18n="prioLow">Baixa</option>
+            <option value="Média" selected data-i18n="prioMed">Média</option>
+            <option value="Alta" data-i18n="prioHigh">Alta</option>
           </select>
         </div>
       </div>
-      <label class="f-label">Descrição</label>
-      <textarea class="f-input" id="ticketDescription" rows="4" placeholder="Detalhe o que está acontecendo" style="resize:vertical; width:100%;"></textarea>
+      <label class="f-label" data-i18n="description">Descrição</label>
+      <textarea class="f-input" id="ticketDescription" rows="4" style="resize:vertical;width:100%;"></textarea>
       <datalist id="clientDatalist"></datalist>
-      <button class="btn" type="submit" id="ticketSubmitBtn">Abrir chamado</button>
+      <button class="btn" type="submit" id="ticketSubmitBtn" data-i18n="openTicket">Abrir chamado</button>
     </form>
   </div>
 </div>
@@ -431,274 +428,442 @@
 <!-- MODAL: ticket view -->
 <div class="modal-overlay" id="modalViewTicket">
   <div class="modal-card printable" id="ticketViewCard">
-    <div class="modal-head"><span class="modal-title">Ficha do chamado</span><button class="icon-x no-print" data-close="modalViewTicket">×</button></div>
+    <div class="modal-head"><span class="modal-title" data-i18n="ticketRecord">Ficha do chamado</span><button class="icon-x no-print" data-close="modalViewTicket" style="background:none;border:none;font-size:18px;cursor:pointer;">×</button></div>
     <div id="ticketViewBody" style="margin-top:6px;"></div>
-    <div class="no-print" style="display:flex; gap:10px; margin-top:22px;">
-      <button class="btn btn-ghost" type="button" data-close="modalViewTicket" style="flex:1;">Fechar</button>
-      <button class="btn btn-ghost" type="button" id="editTicketBtn" style="flex:1;">Editar</button>
-      <button class="btn" type="button" id="printTicketBtn" style="flex:1;">Imprimir</button>
+    <div class="no-print" style="display:flex;gap:10px;margin-top:22px;">
+      <button class="btn btn-ghost" type="button" data-close="modalViewTicket" style="flex:1;" data-i18n="close">Fechar</button>
+      <button class="btn btn-ghost" type="button" id="editTicketBtn" style="flex:1;" data-i18n="edit">Editar</button>
+      <button class="btn" type="button" id="printTicketBtn" style="flex:1;" data-i18n="print">Imprimir</button>
     </div>
-    <button type="button" id="deleteTicketBtn" class="no-print" style="display:block; margin:14px auto 0; background:none; border:none; color:var(--muted); font-size:12px; text-decoration:underline; cursor:pointer;">Eliminar registro</button>
+    <button type="button" id="deleteTicketBtn" class="no-print" style="display:block;margin:14px auto 0;background:none;border:none;color:var(--muted);font-size:12px;text-decoration:underline;cursor:pointer;" data-i18n="deleteRecord">Eliminar registro</button>
   </div>
 </div>
 
 <script>
 (function(){
-  // ===================== PIN LOGIN =====================
-  var pin = '', PIN_CODE = '202600';
-  function dotUp(){
-    for (var i=0;i<6;i++){
-      var d = document.getElementById('d'+i);
-      if(!d) continue;
-      d.classList.remove('er');
-      i < pin.length ? d.classList.add('on') : d.classList.remove('on');
+
+  // ===================== TRADUÇÕES =====================
+  var I18N = {
+    pt: {
+      appName:'Extranet CRM', appTag:'Sanitary Intelligence · Gestão Comercial', backToHub:'← Central de ferramentas',
+      loginTab:'Entrar', registerTab:'Criar conta', emailPh:'E-mail', passwordPh:'Senha', passwordMinPh:'Senha (mín. 8 caracteres)', namePh:'Nome completo',
+      loginBtn:'Entrar', registerBtn:'Criar conta', forgotLink:'Esqueci minha senha', sendLinkBtn:'Enviar link de redefinição',
+      backToLoginLink:'Voltar ao login', resetBtn:'Redefinir senha', signOut:'sair',
+      tabDashboard:'Painel', tabLeads:'Vendas', tabClients:'Clientes', tabTickets:'Suporte',
+      dashboardTitle:'Painel', printReport:'Imprimir relatório', rankSalesTitle:'Ranking de vendas por responsável', rankTicketsTitle:'Chamados por responsável',
+      leadsTitle:'Funil de vendas', newLead:'+ Novo lead', searchLeadsPh:'Buscar por título, empresa ou responsável…',
+      clientsTitle:'Clientes', newClient:'+ Novo cliente', searchClientsPh:'Buscar por nome, empresa ou e-mail…',
+      ticketsTitle:'Chamados de suporte', newTicket:'+ Novo chamado', searchTicketsPh:'Buscar por assunto, cliente ou responsável…',
+      dealTitle:'Título do negócio', dealType:'Tipo de negócio', dtProduct:'Produto', dtService:'Serviço', dtConsulting:'Consultoria', dtOther:'Outro',
+      company:'Empresa', estimatedValue:'Valor estimado', expectedCloseDate:'Previsão de fechamento',
+      unitSystem:'Sistema de unidades', metric:'Métrico (kg, cm)', imperial:'Imperial (lb, in)',
+      weight:'Peso', dimensions:'Dimensões (C × L × A)', lostReason:'Motivo da perda', addLead:'Adicionar lead',
+      dealRecord:'Ficha do negócio', close:'Fechar', edit:'Editar', print:'Imprimir', deleteRecord:'Eliminar registro',
+      contactName:'Nome do contato', email:'E-mail', phone:'Telefone', address:'Endereço', country:'País', image:'Imagem (PNG/JPG, máx. 1200×670)',
+      removeImage:'Remover imagem', notes:'Anotações', addClient:'Adicionar cliente', clientRecord:'Ficha do cliente',
+      subject:'Assunto', client:'Cliente', priority:'Prioridade', prioLow:'Baixa', prioMed:'Média', prioHigh:'Alta',
+      description:'Descrição', openTicket:'Abrir chamado', ticketRecord:'Ficha do chamado',
+      stageNovo:'Novo', stageQualificado:'Qualificado', stageProposta:'Proposta', stageNegociacao:'Negociação', stageFechado:'Fechado', stagePerdido:'Perdido',
+      statusAberto:'Aberto', statusAndamento:'Em andamento', statusResolvido:'Resolvido',
+      activeLeads:'Leads ativos', conversionRate:'Taxa de conversão', weightedPipeline:'Pipeline ponderado', grossPipeline:'Em pipeline (bruto)',
+      openTickets:'Chamados abertos', avgResolution:'Tempo médio resolução', days:'dias', clientsCount:'Clientes',
+      noActivity:'Nenhuma atividade ainda. Cadastre um lead para começar.', noData:'Sem dados ainda.',
+      noClientsFound:'Nenhum cliente encontrado.', history:'Histórico', noHistory:'Nenhum lead ou chamado vinculado a este cliente ainda.',
+      confirmDelete:'Deseja realmente eliminar esse registro? Essa ação não pode ser desfeita.',
+      errInvalidCredentials:'E-mail ou senha incorretos.', errEmailNotVerified:'Confirme seu e-mail antes de entrar (verifique a caixa de entrada).',
+      errEmailInUse:'Este e-mail já está cadastrado.', errWeakPassword:'A senha precisa ter pelo menos 8 caracteres.',
+      okCheckEmail:'Cadastro criado! Verifique seu e-mail para confirmar a conta.', okResetSent:'Se o e-mail existir, enviamos um link de redefinição.',
+      okPasswordReset:'Senha redefinida com sucesso. Faça login.', errGeneric:'Algo deu errado. Tente novamente.',
+      verifiedBanner:'E-mail confirmado! Faça login para continuar.',
+      title:'Título', stage:'Estágio', probability:'Probabilidade', closedAt:'Resolvido em', owner:'Responsável', createdAt:'Criado em', openedAt:'Aberto em', status:'Status'
+    },
+    en: {
+      appName:'Extranet CRM', appTag:'Sanitary Intelligence · Sales Management', backToHub:'← Tools hub',
+      loginTab:'Log in', registerTab:'Sign up', emailPh:'Email', passwordPh:'Password', passwordMinPh:'Password (min. 8 characters)', namePh:'Full name',
+      loginBtn:'Log in', registerBtn:'Sign up', forgotLink:'Forgot my password', sendLinkBtn:'Send reset link',
+      backToLoginLink:'Back to login', resetBtn:'Reset password', signOut:'sign out',
+      tabDashboard:'Dashboard', tabLeads:'Sales', tabClients:'Clients', tabTickets:'Support',
+      dashboardTitle:'Dashboard', printReport:'Print report', rankSalesTitle:'Sales ranking by owner', rankTicketsTitle:'Tickets by owner',
+      leadsTitle:'Sales pipeline', newLead:'+ New lead', searchLeadsPh:'Search by title, company or owner…',
+      clientsTitle:'Clients', newClient:'+ New client', searchClientsPh:'Search by name, company or email…',
+      ticketsTitle:'Support tickets', newTicket:'+ New ticket', searchTicketsPh:'Search by subject, client or owner…',
+      dealTitle:'Deal title', dealType:'Deal type', dtProduct:'Product', dtService:'Service', dtConsulting:'Consulting', dtOther:'Other',
+      company:'Company', estimatedValue:'Estimated value', expectedCloseDate:'Expected close date',
+      unitSystem:'Unit system', metric:'Metric (kg, cm)', imperial:'Imperial (lb, in)',
+      weight:'Weight', dimensions:'Dimensions (L × W × H)', lostReason:'Loss reason', addLead:'Add lead',
+      dealRecord:'Deal record', close:'Close', edit:'Edit', print:'Print', deleteRecord:'Delete record',
+      contactName:'Contact name', email:'Email', phone:'Phone', address:'Address', country:'Country', image:'Image (PNG/JPG, max 1200×670)',
+      removeImage:'Remove image', notes:'Notes', addClient:'Add client', clientRecord:'Client record',
+      subject:'Subject', client:'Client', priority:'Priority', prioLow:'Low', prioMed:'Medium', prioHigh:'High',
+      description:'Description', openTicket:'Open ticket', ticketRecord:'Ticket record',
+      stageNovo:'New', stageQualificado:'Qualified', stageProposta:'Proposal', stageNegociacao:'Negotiation', stageFechado:'Closed', stagePerdido:'Lost',
+      statusAberto:'Open', statusAndamento:'In progress', statusResolvido:'Resolved',
+      activeLeads:'Active leads', conversionRate:'Conversion rate', weightedPipeline:'Weighted pipeline', grossPipeline:'Pipeline (gross)',
+      openTickets:'Open tickets', avgResolution:'Avg. resolution time', days:'days', clientsCount:'Clients',
+      noActivity:'No activity yet. Add a lead to get started.', noData:'No data yet.',
+      noClientsFound:'No clients found.', history:'History', noHistory:'No leads or tickets linked to this client yet.',
+      confirmDelete:'Do you really want to delete this record? This action cannot be undone.',
+      errInvalidCredentials:'Incorrect email or password.', errEmailNotVerified:'Please confirm your email before logging in (check your inbox).',
+      errEmailInUse:'This email is already registered.', errWeakPassword:'Password must be at least 8 characters.',
+      okCheckEmail:'Account created! Check your email to confirm it.', okResetSent:'If the email exists, we sent a reset link.',
+      okPasswordReset:'Password reset successfully. Please log in.', errGeneric:'Something went wrong. Please try again.',
+      verifiedBanner:'Email confirmed! Please log in to continue.',
+      title:'Title', stage:'Stage', probability:'Probability', closedAt:'Resolved at', owner:'Owner', createdAt:'Created at', openedAt:'Opened at', status:'Status'
+    },
+    es: {
+      appName:'Extranet CRM', appTag:'Sanitary Intelligence · Gestión Comercial', backToHub:'← Centro de herramientas',
+      loginTab:'Entrar', registerTab:'Crear cuenta', emailPh:'Correo electrónico', passwordPh:'Contraseña', passwordMinPh:'Contraseña (mín. 8 caracteres)', namePh:'Nombre completo',
+      loginBtn:'Entrar', registerBtn:'Crear cuenta', forgotLink:'Olvidé mi contraseña', sendLinkBtn:'Enviar enlace de restablecimiento',
+      backToLoginLink:'Volver al inicio', resetBtn:'Restablecer contraseña', signOut:'salir',
+      tabDashboard:'Panel', tabLeads:'Ventas', tabClients:'Clientes', tabTickets:'Soporte',
+      dashboardTitle:'Panel', printReport:'Imprimir informe', rankSalesTitle:'Ranking de ventas por responsable', rankTicketsTitle:'Tickets por responsable',
+      leadsTitle:'Embudo de ventas', newLead:'+ Nuevo lead', searchLeadsPh:'Buscar por título, empresa o responsable…',
+      clientsTitle:'Clientes', newClient:'+ Nuevo cliente', searchClientsPh:'Buscar por nombre, empresa o correo…',
+      ticketsTitle:'Tickets de soporte', newTicket:'+ Nuevo ticket', searchTicketsPh:'Buscar por asunto, cliente o responsable…',
+      dealTitle:'Título del negocio', dealType:'Tipo de negocio', dtProduct:'Producto', dtService:'Servicio', dtConsulting:'Consultoría', dtOther:'Otro',
+      company:'Empresa', estimatedValue:'Valor estimado', expectedCloseDate:'Fecha prevista de cierre',
+      unitSystem:'Sistema de unidades', metric:'Métrico (kg, cm)', imperial:'Imperial (lb, in)',
+      weight:'Peso', dimensions:'Dimensiones (L × A × A)', lostReason:'Motivo de pérdida', addLead:'Agregar lead',
+      dealRecord:'Ficha del negocio', close:'Cerrar', edit:'Editar', print:'Imprimir', deleteRecord:'Eliminar registro',
+      contactName:'Nombre del contacto', email:'Correo electrónico', phone:'Teléfono', address:'Dirección', country:'País', image:'Imagen (PNG/JPG, máx. 1200×670)',
+      removeImage:'Quitar imagen', notes:'Notas', addClient:'Agregar cliente', clientRecord:'Ficha del cliente',
+      subject:'Asunto', client:'Cliente', priority:'Prioridad', prioLow:'Baja', prioMed:'Media', prioHigh:'Alta',
+      description:'Descripción', openTicket:'Abrir ticket', ticketRecord:'Ficha del ticket',
+      stageNovo:'Nuevo', stageQualificado:'Calificado', stageProposta:'Propuesta', stageNegociacao:'Negociación', stageFechado:'Cerrado', stagePerdido:'Perdido',
+      statusAberto:'Abierto', statusAndamento:'En curso', statusResolvido:'Resuelto',
+      activeLeads:'Leads activos', conversionRate:'Tasa de conversión', weightedPipeline:'Pipeline ponderado', grossPipeline:'Pipeline (bruto)',
+      openTickets:'Tickets abiertos', avgResolution:'Tiempo medio de resolución', days:'días', clientsCount:'Clientes',
+      noActivity:'Aún no hay actividad. Agrega un lead para comenzar.', noData:'Aún no hay datos.',
+      noClientsFound:'No se encontraron clientes.', history:'Historial', noHistory:'Ningún lead o ticket vinculado a este cliente todavía.',
+      confirmDelete:'¿Deseas realmente eliminar este registro? Esta acción no se puede deshacer.',
+      errInvalidCredentials:'Correo o contraseña incorrectos.', errEmailNotVerified:'Confirma tu correo antes de iniciar sesión (revisa tu bandeja de entrada).',
+      errEmailInUse:'Este correo ya está registrado.', errWeakPassword:'La contraseña debe tener al menos 8 caracteres.',
+      okCheckEmail:'¡Cuenta creada! Revisa tu correo para confirmarla.', okResetSent:'Si el correo existe, enviamos un enlace de restablecimiento.',
+      okPasswordReset:'Contraseña restablecida con éxito. Inicia sesión.', errGeneric:'Algo salió mal. Inténtalo de nuevo.',
+      verifiedBanner:'¡Correo confirmado! Inicia sesión para continuar.',
+      title:'Título', stage:'Etapa', probability:'Probabilidad', closedAt:'Resuelto el', owner:'Responsable', createdAt:'Creado el', openedAt:'Abierto el', status:'Estado'
     }
-  }
-  function pinOk(){
-    var sc = document.getElementById('login');
-    sc.style.transition = 'opacity .4s';
-    sc.style.opacity = '0';
-    setTimeout(function(){
-      sc.classList.add('gone');
-      afterPin();
-    }, 400);
-  }
-  function pinFail(){
-    var dt = document.getElementById('ldots');
-    for (var i=0;i<6;i++){ var d=document.getElementById('d'+i); if(d) d.classList.add('er'); }
-    dt.classList.add('shake');
-    var er = document.getElementById('lerr'); if(er) er.classList.add('show');
-    setTimeout(function(){ pin=''; dotUp(); dt.classList.remove('shake'); }, 700);
-  }
-  function pinPress(n){
-    if (pin.length>=6) return;
-    pin += n; dotUp();
-    if (pin.length===6) setTimeout(function(){ pin===PIN_CODE ? pinOk() : pinFail(); }, 150);
-  }
-  function pinDel(){
-    pin = pin.slice(0,-1); dotUp();
-    var er = document.getElementById('lerr'); if(er) er.classList.remove('show');
-  }
-  var pad = document.getElementById('lpad');
-  pad.addEventListener('click', function(e){
-    var el = e.target;
-    while (el && el !== pad){
-      var k = el.getAttribute('data-k');
-      if (k !== null){ k==='del' ? pinDel() : (k!=='' && pinPress(k)); return; }
-      el = el.parentElement;
-    }
-  });
-  document.addEventListener('keydown', function(e){
-    var loginEl = document.getElementById('login');
-    if (!loginEl || loginEl.classList.contains('gone')) return;
-    if (e.key>='0' && e.key<='9') pinPress(e.key);
-    if (e.key==='Backspace'){ e.preventDefault(); pinDel(); }
-  });
-  document.getElementById('fyear').textContent = new Date().getFullYear();
-
-  // ===================== ESTADO / STORAGE =====================
-  var DB_KEY = 'si_crm_db_v2';
-  var OLD_DB_KEY = 'si_crm_db_v1';
-  function loadDB(){
-    try{
-      var raw = localStorage.getItem(DB_KEY);
-      if (raw) return JSON.parse(raw);
-      var old = localStorage.getItem(OLD_DB_KEY);
-      if (old){
-        var d = JSON.parse(old);
-        d.counters = d.counters || { lead: (d.leads||[]).length, ticket: (d.tickets||[]).length };
-        return d;
-      }
-      return { leads:[], clients:[], tickets:[], counters:{ lead:0, ticket:0 } };
-    }catch(e){ return { leads:[], clients:[], tickets:[], counters:{ lead:0, ticket:0 } }; }
-  }
-  function saveDB(db){ localStorage.setItem(DB_KEY, JSON.stringify(db)); }
-  var db = loadDB();
-  if (!db.counters) db.counters = { lead: (db.leads||[]).length, ticket: (db.tickets||[]).length };
-  var currentUser = null;
-  var editingClientId = null, viewingClientId = null, pendingImage = null;
-  var editingLeadId = null, viewingLeadId = null;
-  var editingTicketId = null, viewingTicketId = null;
-
-  function uid(){ return Math.random().toString(36).slice(2,10); }
-  function pad4(n){ return String(n).padStart(4,'0'); }
-  function fmtDate(ts){ if(!ts) return ''; var d = new Date(ts); return d.toLocaleDateString('pt-BR'); }
-  function fmtDateTime(ts){ if(!ts) return ''; var d = new Date(ts); return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}); }
-  function esc(s){ return (s||'').toString().replace(/[&<>"']/g, function(c){
-    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-  }); }
-
-  // ===================== NOME DO USUÁRIO =====================
-  function afterPin(){
-    var saved = sessionStorage.getItem('si_crm_user');
-    if (saved){ currentUser = saved; boot(); }
-    else { document.getElementById('namegate').classList.add('show'); }
-  }
-  document.getElementById('nameform').addEventListener('submit', function(e){
-    e.preventDefault();
-    var v = document.getElementById('namein').value.trim();
-    if (!v) return;
-    currentUser = v;
-    sessionStorage.setItem('si_crm_user', v);
-    document.getElementById('namegate').classList.remove('show');
-    boot();
-  });
-  document.getElementById('signOutBtn').addEventListener('click', function(){
-    sessionStorage.removeItem('si_crm_user');
-    location.reload();
-  });
-
-  function boot(){
-    document.getElementById('whoName').textContent = currentUser;
-    document.getElementById('whoAv').textContent = currentUser.charAt(0).toUpperCase();
+  };
+  var lang = localStorage.getItem('si_crm_lang') || 'pt';
+  function t(key){ return (I18N[lang] && I18N[lang][key]) || (I18N.pt[key]) || key; }
+  function applyI18n(){
+    document.documentElement.lang = lang === 'pt' ? 'pt-BR' : (lang === 'es' ? 'es-ES' : 'en-US');
+    document.querySelectorAll('[data-i18n]').forEach(function(el){ el.textContent = t(el.getAttribute('data-i18n')); });
+    document.querySelectorAll('[data-i18n-ph]').forEach(function(el){ el.placeholder = t(el.getAttribute('data-i18n-ph')); });
+    document.getElementById('langSelect').value = lang;
+    document.querySelectorAll('#authLangSwitch button').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-lang')===lang); });
     renderAll();
+  }
+  document.getElementById('langSelect').addEventListener('change', function(){
+    lang = this.value; localStorage.setItem('si_crm_lang', lang); applyI18n();
+    savePrefs();
+  });
+  document.getElementById('authLangSwitch').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    lang = b.getAttribute('data-lang'); localStorage.setItem('si_crm_lang', lang); applyI18n();
+  });
+
+  // ===================== MOEDA =====================
+  var CURRENCY_SYMBOL = { USD:'$', CNY:'¥', EUR:'€', BRL:'R$' };
+  var currency = localStorage.getItem('si_crm_currency') || 'USD';
+  var fxRates = { USD:1, CNY:7.2, EUR:0.92, BRL:5.4 }; // fallback até /api/fx.php responder
+
+  function convert(value, fromCur, toCur){
+    value = Number(value)||0;
+    if (!fromCur) fromCur = 'USD';
+    var usd = fromCur==='USD' ? value : value / (fxRates[fromCur]||1);
+    return toCur==='USD' ? usd : usd * (fxRates[toCur]||1);
+  }
+  function fmtMoney(value, fromCur){
+    var converted = convert(value, fromCur, currency);
+    return CURRENCY_SYMBOL[currency] + ' ' + converted.toLocaleString(lang==='en'?'en-US':(lang==='es'?'es-ES':'pt-BR'), {maximumFractionDigits:0});
+  }
+  document.getElementById('currencySelect').addEventListener('change', function(){
+    currency = this.value; localStorage.setItem('si_crm_currency', currency); renderAll(); savePrefs();
+  });
+  function loadFx(){
+    apiFetch('fx.php', null, 'GET').then(function(res){
+      if (res && res.rates) fxRates = res.rates;
+      renderAll();
+    }).catch(function(){});
+  }
+
+  // ===================== API HELPER =====================
+  var API_BASE = 'api/';
+  function apiFetch(path, body, method){
+    method = method || (body ? 'POST' : 'GET');
+    return fetch(API_BASE + path, {
+      method: method,
+      credentials: 'include',
+      headers: body ? {'Content-Type':'application/json'} : {},
+      body: body ? JSON.stringify(body) : undefined
+    }).then(function(r){ return r.json().then(function(j){ return {status:r.status, body:j}; }); })
+      .then(function(res){ return res.body; });
+  }
+
+  // ===================== ESTADO =====================
+  var currentUser = null;
+  var db = { leads: [], clients: [], tickets: [] };
+  var editingClientId=null, viewingClientId=null, pendingImagePath=null;
+  var editingLeadId=null, viewingLeadId=null;
+  var editingTicketId=null, viewingTicketId=null;
+
+  function pad4(n){ return String(n).padStart(4,'0'); }
+  function fmtDate(ts){ if(!ts) return ''; var d=new Date(ts); return d.toLocaleDateString(lang==='en'?'en-US':(lang==='es'?'es-ES':'pt-BR')); }
+  function fmtDateTime(ts){ if(!ts) return ''; var d=new Date(ts); return fmtDate(ts)+' '+d.toLocaleTimeString(lang==='en'?'en-US':(lang==='es'?'es-ES':'pt-BR'), {hour:'2-digit',minute:'2-digit'}); }
+  function esc(s){ return (s||'').toString().replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  // ===================== AUTENTICAÇÃO =====================
+  var authMsgEl = document.getElementById('authMsg');
+  function showAuthMsg(text, ok){
+    authMsgEl.textContent = text;
+    authMsgEl.className = 'msg ' + (ok ? 'ok' : 'err');
+  }
+  function switchAuthForm(which){
+    document.querySelectorAll('.ac .form').forEach(function(f){ f.classList.remove('active'); });
+    document.getElementById('form'+which+'Auth').classList.add('active');
+    authMsgEl.textContent=''; authMsgEl.className='msg';
+    document.getElementById('swLogin').classList.toggle('active', which==='Login');
+    document.getElementById('swRegister').classList.toggle('active', which==='Register');
+  }
+  document.getElementById('swLogin').addEventListener('click', function(){ switchAuthForm('Login'); });
+  document.getElementById('swRegister').addEventListener('click', function(){ switchAuthForm('Register'); });
+  document.getElementById('goForgot').addEventListener('click', function(){ switchAuthForm('Forgot'); });
+  document.getElementById('backToLogin').addEventListener('click', function(){ switchAuthForm('Login'); });
+
+  document.getElementById('formLoginAuth').addEventListener('submit', function(e){
+    e.preventDefault();
+    var email = document.getElementById('loginEmail').value.trim();
+    var password = document.getElementById('loginPassword').value;
+    apiFetch('auth.php?action=login', {email:email, password:password}).then(function(res){
+      if (res.error === 'invalid_credentials') return showAuthMsg(t('errInvalidCredentials'), false);
+      if (res.error === 'email_not_verified') return showAuthMsg(t('errEmailNotVerified'), false);
+      if (res.error) return showAuthMsg(t('errGeneric'), false);
+      onLoggedIn(res.user);
+    }).catch(function(){ showAuthMsg(t('errGeneric'), false); });
+  });
+
+  document.getElementById('formRegisterAuth').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('regName').value.trim();
+    var email = document.getElementById('regEmail').value.trim();
+    var password = document.getElementById('regPassword').value;
+    apiFetch('auth.php?action=register', {name:name, email:email, password:password}).then(function(res){
+      if (res.error === 'email_in_use') return showAuthMsg(t('errEmailInUse'), false);
+      if (res.error === 'weak_password') return showAuthMsg(t('errWeakPassword'), false);
+      if (res.error) return showAuthMsg(t('errGeneric'), false);
+      showAuthMsg(t('okCheckEmail'), true);
+      document.getElementById('formRegisterAuth').reset();
+    }).catch(function(){ showAuthMsg(t('errGeneric'), false); });
+  });
+
+  document.getElementById('formForgotAuth').addEventListener('submit', function(e){
+    e.preventDefault();
+    var email = document.getElementById('forgotEmail').value.trim();
+    apiFetch('auth.php?action=forgot', {email:email}).then(function(){
+      showAuthMsg(t('okResetSent'), true);
+    }).catch(function(){ showAuthMsg(t('errGeneric'), false); });
+  });
+
+  var resetToken = null;
+  document.getElementById('formResetAuth').addEventListener('submit', function(e){
+    e.preventDefault();
+    var password = document.getElementById('resetPassword').value;
+    apiFetch('auth.php?action=reset', {token:resetToken, password:password}).then(function(res){
+      if (res.error) return showAuthMsg(t('errGeneric'), false);
+      showAuthMsg(t('okPasswordReset'), true);
+      setTimeout(function(){ switchAuthForm('Login'); }, 1500);
+    }).catch(function(){ showAuthMsg(t('errGeneric'), false); });
+  });
+
+  document.getElementById('signOutBtn').addEventListener('click', function(){
+    apiFetch('auth.php?action=logout', {}).then(function(){ location.reload(); });
+  });
+
+  function savePrefs(){
+    if (!currentUser) return;
+    apiFetch('auth.php?action=preferences', {lang:lang, currency:currency}).catch(function(){});
+  }
+
+  function onLoggedIn(user){
+    currentUser = user;
+    document.getElementById('authScreen').classList.add('gone');
+    document.getElementById('appWrap').style.display = 'block';
+    document.getElementById('appFooter').style.display = 'block';
+    document.getElementById('whoName').textContent = user.name;
+    document.getElementById('whoAv').textContent = user.name.charAt(0).toUpperCase();
+    if (user.lang){ lang = user.lang; localStorage.setItem('si_crm_lang', lang); }
+    if (user.currency){ currency = user.currency; localStorage.setItem('si_crm_currency', currency); }
+    applyI18n();
+    document.getElementById('currencySelect').value = currency;
+    loadFx();
+    loadAllData();
+  }
+
+  function checkSession(){
+    var params = new URLSearchParams(location.search);
+    if (params.get('verified') === '1') showAuthMsg(t('verifiedBanner'), true);
+    if (params.get('reset')) {
+      resetToken = params.get('reset');
+      switchAuthForm('Reset');
+    }
+    apiFetch('auth.php?action=me', null, 'GET').then(function(res){
+      if (res && res.user) onLoggedIn(res.user);
+    }).catch(function(){});
   }
 
   // ===================== TABS =====================
   document.getElementById('tabs').addEventListener('click', function(e){
-    var btn = e.target.closest('.tab');
-    if (!btn) return;
-    goTab(btn.getAttribute('data-tab'));
+    var btn = e.target.closest('.tab'); if (!btn) return; goTab(btn.getAttribute('data-tab'));
   });
   function goTab(tab){
-    document.querySelectorAll('.tab').forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-tab')===tab); });
+    document.querySelectorAll('.tab').forEach(function(t2){ t2.classList.toggle('active', t2.getAttribute('data-tab')===tab); });
     document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
     document.getElementById('view-'+tab).classList.add('active');
   }
 
   // ===================== CONSTANTES =====================
   var STAGES = ['Novo','Qualificado','Proposta','Negociação','Fechado','Perdido'];
+  var STAGE_KEY = {'Novo':'stageNovo','Qualificado':'stageQualificado','Proposta':'stageProposta','Negociação':'stageNegociacao','Fechado':'stageFechado','Perdido':'stagePerdido'};
   var STAGE_COLOR = {'Novo':'#667eea','Qualificado':'#d97706','Proposta':'#764ba2','Negociação':'#dc6a3a','Fechado':'#16a34a','Perdido':'#9ca3af'};
   var STAGE_PROB = {'Novo':10,'Qualificado':30,'Proposta':50,'Negociação':75,'Fechado':100,'Perdido':0};
   var TSTATUS = ['Aberto','Em andamento','Resolvido'];
+  var TSTATUS_KEY = {'Aberto':'statusAberto','Em andamento':'statusAndamento','Resolvido':'statusResolvido'};
   var TSTATUS_COLOR = {'Aberto':'#dc2626','Em andamento':'#d97706','Resolvido':'#16a34a'};
+  var DEALTYPE_KEY = {'Produto':'dtProduct','Serviço':'dtService','Consultoria':'dtConsulting','Outro':'dtOther'};
+  var PRIO_KEY = {'Baixa':'prioLow','Média':'prioMed','Alta':'prioHigh'};
 
-  var leadSearchTerm = '', clientSearchTerm = '', ticketSearchTerm = '';
-  document.getElementById('leadSearch').addEventListener('input', function(){ leadSearchTerm = this.value.toLowerCase(); renderLeads(); });
-  document.getElementById('clientSearch').addEventListener('input', function(){ clientSearchTerm = this.value.toLowerCase(); renderClients(); });
-  document.getElementById('ticketSearch').addEventListener('input', function(){ ticketSearchTerm = this.value.toLowerCase(); renderTickets(); });
+  var leadSearchTerm='', clientSearchTerm='', ticketSearchTerm='';
+  document.getElementById('leadSearch').addEventListener('input', function(){ leadSearchTerm=this.value.toLowerCase(); renderLeads(); });
+  document.getElementById('clientSearch').addEventListener('input', function(){ clientSearchTerm=this.value.toLowerCase(); renderClients(); });
+  document.getElementById('ticketSearch').addEventListener('input', function(){ ticketSearchTerm=this.value.toLowerCase(); renderTickets(); });
+  function matches(term, parts){ if(!term) return true; return parts.some(function(p){ return (p||'').toString().toLowerCase().indexOf(term)!==-1; }); }
 
-  function matches(term, parts){
-    if (!term) return true;
-    return parts.some(function(p){ return (p||'').toString().toLowerCase().indexOf(term) !== -1; });
+  // ===================== CARREGAR DADOS =====================
+  function loadAllData(){
+    Promise.all([
+      apiFetch('clients.php?action=list', null, 'GET'),
+      apiFetch('leads.php?action=list', null, 'GET'),
+      apiFetch('tickets.php?action=list', null, 'GET')
+    ]).then(function(results){
+      db.clients = results[0].clients || [];
+      db.leads = results[1].leads || [];
+      db.tickets = results[2].tickets || [];
+      renderAll();
+    });
   }
 
   // ===================== DASHBOARD =====================
   function renderDashboard(){
-    var leads = db.leads, clients = db.clients, tickets = db.tickets;
-    var openTickets = tickets.filter(function(t){ return t.status!=='Resolvido'; }).length;
-    var closedLeads = leads.filter(function(l){ return l.stage==='Fechado'; }).length;
-    var lostLeads = leads.filter(function(l){ return l.stage==='Perdido'; }).length;
-    var decided = closedLeads + lostLeads;
-    var convRate = decided > 0 ? Math.round((closedLeads/decided)*100) : 0;
-    var pipelineValue = leads.filter(function(l){ return l.stage!=='Fechado' && l.stage!=='Perdido'; })
-      .reduce(function(s,l){ return s + (Number(l.value)||0); }, 0);
-    var weightedValue = leads.filter(function(l){ return l.stage!=='Fechado' && l.stage!=='Perdido'; })
-      .reduce(function(s,l){ return s + (Number(l.value)||0) * ((STAGE_PROB[l.stage]||0)/100); }, 0);
+    var leads=db.leads, clients=db.clients, tickets=db.tickets;
+    var openTk = tickets.filter(function(t){return t.status!=='Resolvido';}).length;
+    var closedLeads = leads.filter(function(l){return l.stage==='Fechado';}).length;
+    var lostLeads = leads.filter(function(l){return l.stage==='Perdido';}).length;
+    var decided = closedLeads+lostLeads;
+    var convRate = decided>0 ? Math.round((closedLeads/decided)*100) : 0;
+    var openLeads = leads.filter(function(l){return l.stage!=='Fechado'&&l.stage!=='Perdido';});
+    var pipelineValue = openLeads.reduce(function(s,l){ return s+convert(l.value,l.currency,currency); },0);
+    var weightedValue = openLeads.reduce(function(s,l){ return s+convert(l.value,l.currency,currency)*((STAGE_PROB[l.stage]||0)/100); },0);
 
-    var resolved = tickets.filter(function(t){ return t.status==='Resolvido' && t.resolvedAt; });
-    var avgResMs = resolved.length ? resolved.reduce(function(s,t){ return s + (t.resolvedAt - t.createdAt); }, 0) / resolved.length : 0;
-    var avgResDays = avgResMs ? (avgResMs / (1000*60*60*24)).toFixed(1) : '—';
+    var resolved = tickets.filter(function(t){return t.status==='Resolvido' && t.resolved_at;});
+    var avgResMs = resolved.length ? resolved.reduce(function(s,t){ return s+(new Date(t.resolved_at)-new Date(t.created_at)); },0)/resolved.length : 0;
+    var avgResDays = avgResMs ? (avgResMs/(1000*60*60*24)).toFixed(1) : '—';
 
+    var sym = CURRENCY_SYMBOL[currency];
     var metrics = [
-      ['Leads ativos', leads.filter(function(l){return l.stage!=='Fechado' && l.stage!=='Perdido';}).length, 'leads'],
-      ['Taxa de conversão', convRate + '%', 'leads'],
-      ['Pipeline ponderado', '€ ' + Math.round(weightedValue).toLocaleString('pt-BR'), 'leads'],
-      ['Em pipeline (bruto)', '€ ' + pipelineValue.toLocaleString('pt-BR'), 'leads'],
-      ['Chamados abertos', openTickets, 'tickets'],
-      ['Tempo médio resolução', avgResDays + (avgResDays!=='—' ? ' dias' : ''), 'tickets'],
-      ['Clientes', clients.length, 'clients']
+      [t('activeLeads'), openLeads.length, 'leads'],
+      [t('conversionRate'), convRate+'%', 'leads'],
+      [t('weightedPipeline'), sym+' '+Math.round(weightedValue).toLocaleString(), 'leads'],
+      [t('grossPipeline'), sym+' '+Math.round(pipelineValue).toLocaleString(), 'leads'],
+      [t('openTickets'), openTk, 'tickets'],
+      [t('avgResolution'), avgResDays + (avgResDays!=='—' ? ' '+t('days') : ''), 'tickets'],
+      [t('clientsCount'), clients.length, 'clients']
     ];
     document.getElementById('metricGrid').innerHTML = metrics.map(function(m){
       return '<div class="metric" data-go="'+m[2]+'"><div class="ml">'+m[0]+'</div><div class="mv">'+m[1]+'</div></div>';
     }).join('');
-    document.querySelectorAll('.metric').forEach(function(el){
-      el.addEventListener('click', function(){ goTab(el.getAttribute('data-go')); });
-    });
+    document.querySelectorAll('.metric').forEach(function(el){ el.addEventListener('click', function(){ goTab(el.getAttribute('data-go')); }); });
 
-    renderRanking('rankLeads', leads.filter(function(l){return l.stage==='Fechado';}), 'owner');
-    renderRanking('rankTickets', tickets, 'owner');
+    renderRanking('rankLeads', leads.filter(function(l){return l.stage==='Fechado';}), 'owner_name');
+    renderRanking('rankTickets', tickets, 'owner_name');
 
-    var activity = leads.concat(tickets).sort(function(a,b){ return b.createdAt - a.createdAt; }).slice(0,6);
+    var activity = leads.concat(tickets).sort(function(a,b){ return new Date(b.created_at)-new Date(a.created_at); }).slice(0,6);
     var html = activity.map(function(item){
-      var label = item.title || item.subject || 'Sem título';
-      var meta = (item.stage || item.status) + ' · ' + item.owner;
+      var label = item.title || item.subject || '—';
+      var stageLabel = item.stage ? t(STAGE_KEY[item.stage]) : t(TSTATUS_KEY[item.status]);
+      var meta = stageLabel+' · '+(item.owner_name||'');
       return '<div class="activity-row"><span class="dot"></span><span style="flex:1;">'+esc(label)+'</span><span class="activity-meta">'+esc(meta)+'</span></div>';
     }).join('');
-    document.getElementById('activityList').innerHTML = html || '<p class="empty-msg" style="padding:20px;">Nenhuma atividade ainda. Cadastre um lead para começar.</p>';
+    document.getElementById('activityList').innerHTML = html || '<p class="empty-msg" style="padding:20px;">'+t('noActivity')+'</p>';
   }
-
   function renderRanking(containerId, items, groupField){
-    var counts = {};
-    items.forEach(function(it){
-      var k = it[groupField] || 'Sem responsável';
-      counts[k] = (counts[k]||0) + 1;
-    });
-    var entries = Object.keys(counts).map(function(k){ return [k, counts[k]]; }).sort(function(a,b){ return b[1]-a[1]; }).slice(0,5);
-    var max = entries.length ? entries[0][1] : 1;
+    var counts={};
+    items.forEach(function(it){ var k=it[groupField]||'—'; counts[k]=(counts[k]||0)+1; });
+    var entries = Object.keys(counts).map(function(k){return [k,counts[k]];}).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
+    var max = entries.length?entries[0][1]:1;
     var html = entries.map(function(e){
       var pct = Math.round((e[1]/max)*100);
       return '<div class="bar-row"><span class="bar-label">'+esc(e[0])+'</span><div class="bar-track"><div class="bar-fill" style="width:'+pct+'%;"></div></div><span class="bar-val">'+e[1]+'</span></div>';
     }).join('');
-    document.getElementById(containerId).innerHTML = html || '<p class="empty-msg">Sem dados ainda.</p>';
+    document.getElementById(containerId).innerHTML = html || '<p class="empty-msg">'+t('noData')+'</p>';
   }
-
   document.getElementById('printDashboardBtn').addEventListener('click', function(){ window.print(); });
 
   // ===================== LEADS =====================
+  document.getElementById('leadUnitSystem').addEventListener('change', function(){
+    var imperial = this.value==='imperial';
+    document.getElementById('leadWeightUnit').value = imperial?'lb':'kg';
+    document.getElementById('leadDimUnit').value = imperial?'in':'cm';
+  });
+
   function renderLeads(){
     var html = STAGES.map(function(stage){
-      var items = db.leads.filter(function(l){ return l.stage===stage && matches(leadSearchTerm, [l.title, l.company, l.owner]); });
+      var items = db.leads.filter(function(l){ return l.stage===stage && matches(leadSearchTerm,[l.title,l.company,l.owner_name]); });
       var c = STAGE_COLOR[stage];
       var cards = items.map(function(lead){
+        var dims = (lead.dim_l||lead.dim_w||lead.dim_h) ? ((lead.dim_l||'-')+'×'+(lead.dim_w||'-')+'×'+(lead.dim_h||'-')+' '+(lead.dim_unit||'cm')) : '';
         return '<div class="card-item" data-view-lead="'+lead.id+'">'+
           '<div class="ci-num">#'+pad4(lead.num)+'</div>'+
+          '<span class="ci-tag">'+t(DEALTYPE_KEY[lead.deal_type]||'dtOther')+'</span>'+
           '<div class="ci-title">'+esc(lead.title)+'</div>'+
-          (lead.company ? '<div class="ci-sub">'+esc(lead.company)+'</div>' : '')+
-          (lead.value ? '<div class="ci-value">€ '+Number(lead.value).toLocaleString('pt-BR')+'</div>' : '')+
-          (lead.expectedClose ? '<div class="ci-date">Previsão: '+fmtDate(new Date(lead.expectedClose).getTime())+'</div>' : '')+
+          (lead.company?'<div class="ci-sub">'+esc(lead.company)+'</div>':'')+
+          (lead.value?'<div class="ci-value">'+fmtMoney(lead.value, lead.currency)+'</div>':'')+
+          (lead.expected_close?'<div class="ci-date">'+fmtDate(lead.expected_close)+'</div>':'')+
           '<div class="ci-foot" onclick="event.stopPropagation();">'+
             '<select class="sm" data-move-lead="'+lead.id+'">'+
-              STAGES.map(function(s){ return '<option value="'+s+'" '+(s===lead.stage?'selected':'')+'>'+s+'</option>'; }).join('')+
+              STAGES.map(function(s){ return '<option value="'+s+'" '+(s===lead.stage?'selected':'')+'>'+t(STAGE_KEY[s])+'</option>'; }).join('')+
             '</select>'+
           '</div></div>';
       }).join('') || '<p class="col-empty">—</p>';
-      return '<div class="col"><div class="col-head"><span class="pill" style="background:'+c+'22;color:'+c+';">'+stage+'</span><span class="col-count">'+items.length+'</span></div><div class="col-body">'+cards+'</div></div>';
+      return '<div class="col"><div class="col-head"><span class="pill" style="background:'+c+'22;color:'+c+';">'+t(STAGE_KEY[stage])+'</span><span class="col-count">'+items.length+'</span></div><div class="col-body">'+cards+'</div></div>';
     }).join('');
     document.getElementById('leadsBoard').innerHTML = html;
-
     document.querySelectorAll('[data-move-lead]').forEach(function(sel){
-      sel.addEventListener('change', function(){
-        var id = sel.getAttribute('data-move-lead');
-        moveLeadStage(id, sel.value);
-      });
+      sel.addEventListener('change', function(){ moveLeadStage(sel.getAttribute('data-move-lead'), sel.value); });
     });
     document.querySelectorAll('[data-view-lead]').forEach(function(card){
       card.addEventListener('click', function(){
         var id = card.getAttribute('data-view-lead');
-        var l = db.leads.find(function(x){ return x.id===id; });
+        var l = db.leads.find(function(x){ return String(x.id)===String(id); });
         if (l) openLeadView(l);
       });
     });
   }
 
   function moveLeadStage(id, stage){
-    db.leads = db.leads.map(function(l){
-      if (l.id!==id) return l;
-      var upd = Object.assign({}, l, {stage: stage});
-      if (stage !== 'Perdido') upd.lostReason = '';
-      return upd;
-    });
-    saveDB(db); renderAll();
+    var reason = '';
+    if (stage==='Perdido') reason = prompt(t('lostReason')+'?') || '';
+    apiFetch('leads.php?action=move_stage', {id:id, stage:stage, lost_reason:reason}).then(function(){ loadAllData(); });
   }
 
   document.getElementById('addLeadBtn').addEventListener('click', function(){
     editingLeadId = null;
-    document.getElementById('leadModalTitle').textContent = 'Novo lead';
-    document.getElementById('leadSubmitBtn').textContent = 'Adicionar lead';
+    document.getElementById('leadModalTitle').textContent = t('newLead');
+    document.getElementById('leadSubmitBtn').textContent = t('addLead');
     document.getElementById('formLead').reset();
-    document.getElementById('leadLostLabel').style.display = 'none';
-    document.getElementById('leadLostReason').style.display = 'none';
+    document.getElementById('leadLostLabel').style.display='none';
+    document.getElementById('leadLostReason').style.display='none';
+    document.getElementById('leadCurrency').value = currency;
     openModal('modalLead');
   });
 
@@ -707,88 +872,102 @@
     var title = document.getElementById('leadTitle').value.trim();
     if (!title) return;
     var fields = {
-      title: title,
+      title:title,
+      deal_type: document.getElementById('leadDealType').value,
       company: document.getElementById('leadCompany').value.trim(),
       value: document.getElementById('leadValue').value,
-      expectedClose: document.getElementById('leadCloseDate').value
+      currency: document.getElementById('leadCurrency').value,
+      weight: document.getElementById('leadWeight').value,
+      weight_unit: document.getElementById('leadWeightUnit').value,
+      dim_l: document.getElementById('leadDimL').value,
+      dim_w: document.getElementById('leadDimW').value,
+      dim_h: document.getElementById('leadDimH').value,
+      dim_unit: document.getElementById('leadDimUnit').value,
+      expected_close: document.getElementById('leadCloseDate').value
     };
     if (editingLeadId){
-      if (document.getElementById('leadLostReason').style.display !== 'none'){
-        fields.lostReason = document.getElementById('leadLostReason').value.trim();
-      }
-      db.leads = db.leads.map(function(l){ return l.id===editingLeadId ? Object.assign({}, l, fields) : l; });
-      editingLeadId = null;
+      fields.id = editingLeadId;
+      if (document.getElementById('leadLostReason').style.display!=='none'){ fields.lost_reason = document.getElementById('leadLostReason').value.trim(); }
+      apiFetch('leads.php?action=update', fields).then(function(){ editingLeadId=null; closeModal('modalLead'); loadAllData(); });
     } else {
-      db.counters.lead = (db.counters.lead||0) + 1;
-      db.leads.push(Object.assign({ id: uid(), num: db.counters.lead, stage:'Novo', createdAt: Date.now(), owner: currentUser, lostReason:'' }, fields));
+      apiFetch('leads.php?action=create', fields).then(function(){ closeModal('modalLead'); loadAllData(); });
     }
-    saveDB(db); e.target.reset(); closeModal('modalLead'); renderAll();
+    e.target.reset();
   });
 
   function openLeadView(l){
     viewingLeadId = l.id;
+    var dims = (l.dim_l||l.dim_w||l.dim_h) ? ((l.dim_l||'-')+' × '+(l.dim_w||'-')+' × '+(l.dim_h||'-')+' '+(l.dim_unit||'cm')) : '';
     var rows = [
-      ['Título', l.title],
-      ['Empresa', l.company],
-      ['Valor estimado', l.value ? '€ '+Number(l.value).toLocaleString('pt-BR') : ''],
-      ['Estágio', l.stage],
-      ['Probabilidade', (STAGE_PROB[l.stage]||0)+'%'],
-      ['Previsão de fechamento', l.expectedClose ? fmtDate(new Date(l.expectedClose).getTime()) : ''],
-      ['Responsável', l.owner],
-      ['Criado em', fmtDateTime(l.createdAt)],
-      ['Motivo da perda', l.stage==='Perdido' ? l.lostReason : '']
+      [t('title'), l.title],
+      [t('dealType'), t(DEALTYPE_KEY[l.deal_type]||'dtOther')],
+      [t('company'), l.company],
+      [t('estimatedValue'), l.value ? fmtMoney(l.value, l.currency) : ''],
+      [t('stage'), t(STAGE_KEY[l.stage])],
+      [t('probability'), (STAGE_PROB[l.stage]||0)+'%'],
+      [t('weight'), l.weight ? (l.weight+' '+l.weight_unit) : ''],
+      [t('dimensions'), dims],
+      [t('expectedCloseDate'), l.expected_close ? fmtDate(l.expected_close) : ''],
+      [t('owner'), l.owner_name],
+      [t('createdAt'), fmtDateTime(l.created_at)],
+      [t('lostReason'), l.stage==='Perdido' ? l.lost_reason : '']
     ];
-    document.getElementById('leadViewBody').innerHTML = '<div class="cv-num">#'+pad4(l.num)+'</div>' +
-      rows.filter(function(r){ return r[1]; }).map(function(r){
-        return '<div class="cv-row"><span class="cv-label">'+r[0]+'</span><span class="cv-value">'+esc(r[1])+'</span></div>';
-      }).join('');
+    document.getElementById('leadViewBody').innerHTML = '<div class="cv-num">#'+pad4(l.num)+'</div>'+
+      rows.filter(function(r){return r[1];}).map(function(r){ return '<div class="cv-row"><span class="cv-label">'+r[0]+'</span><span class="cv-value">'+esc(r[1])+'</span></div>'; }).join('');
     openModal('modalViewLead');
   }
 
   document.getElementById('editLeadBtn').addEventListener('click', function(){
     if (!viewingLeadId) return;
-    var l = db.leads.find(function(x){ return x.id===viewingLeadId; });
+    var l = db.leads.find(function(x){ return String(x.id)===String(viewingLeadId); });
     if (!l) return;
     editingLeadId = l.id;
-    document.getElementById('leadModalTitle').textContent = 'Editar lead';
-    document.getElementById('leadSubmitBtn').textContent = 'Salvar alterações';
-    document.getElementById('leadTitle').value = l.title || '';
-    document.getElementById('leadCompany').value = l.company || '';
-    document.getElementById('leadValue').value = l.value || '';
-    document.getElementById('leadCloseDate').value = l.expectedClose || '';
+    document.getElementById('leadModalTitle').textContent = t('edit');
+    document.getElementById('leadSubmitBtn').textContent = t('edit');
+    document.getElementById('leadTitle').value = l.title||'';
+    document.getElementById('leadDealType').value = l.deal_type||'Produto';
+    document.getElementById('leadCompany').value = l.company||'';
+    document.getElementById('leadValue').value = l.value||'';
+    document.getElementById('leadCurrency').value = l.currency||'USD';
+    document.getElementById('leadWeight').value = l.weight||'';
+    document.getElementById('leadWeightUnit').value = l.weight_unit||'kg';
+    document.getElementById('leadDimL').value = l.dim_l||'';
+    document.getElementById('leadDimW').value = l.dim_w||'';
+    document.getElementById('leadDimH').value = l.dim_h||'';
+    document.getElementById('leadDimUnit').value = l.dim_unit||'cm';
+    document.getElementById('leadCloseDate').value = l.expected_close||'';
+    document.getElementById('leadUnitSystem').value = (l.weight_unit==='lb') ? 'imperial' : 'metric';
     if (l.stage==='Perdido'){
-      document.getElementById('leadLostLabel').style.display = 'block';
-      document.getElementById('leadLostReason').style.display = 'block';
-      document.getElementById('leadLostReason').value = l.lostReason || '';
+      document.getElementById('leadLostLabel').style.display='block';
+      document.getElementById('leadLostReason').style.display='block';
+      document.getElementById('leadLostReason').value = l.lost_reason||'';
     } else {
-      document.getElementById('leadLostLabel').style.display = 'none';
-      document.getElementById('leadLostReason').style.display = 'none';
+      document.getElementById('leadLostLabel').style.display='none';
+      document.getElementById('leadLostReason').style.display='none';
     }
-    closeModal('modalViewLead');
-    openModal('modalLead');
+    closeModal('modalViewLead'); openModal('modalLead');
   });
   document.getElementById('printLeadBtn').addEventListener('click', function(){ window.print(); });
   document.getElementById('deleteLeadBtn').addEventListener('click', function(){
     if (!viewingLeadId) return;
-    if (!confirm('Deseja realmente eliminar esse registro? Essa ação não pode ser desfeita.')) return;
-    db.leads = db.leads.filter(function(l){ return l.id!==viewingLeadId; });
-    saveDB(db); viewingLeadId = null; closeModal('modalViewLead'); renderAll();
+    if (!confirm(t('confirmDelete'))) return;
+    apiFetch('leads.php?action=delete', {id:viewingLeadId}).then(function(){ viewingLeadId=null; closeModal('modalViewLead'); loadAllData(); });
   });
 
   // ===================== CLIENTS =====================
   function renderClients(){
-    var filtered = db.clients.filter(function(c){ return matches(clientSearchTerm, [c.name, c.company, c.email]); });
+    var filtered = db.clients.filter(function(c){ return matches(clientSearchTerm,[c.name,c.company,c.email]); });
     var html = filtered.map(function(c){
       return '<div class="list-row" data-view-client="'+c.id+'">'+
-        '<div class="av">'+esc(c.name.charAt(0).toUpperCase())+'</div>'+
-        '<div style="flex:1;"><div class="lr-title">'+esc(c.name)+'</div><div class="lr-sub">'+esc(c.company||'')+(c.email ? ' · '+esc(c.email) : '')+'</div></div>'+
+        '<div class="av">'+esc((c.name||'?').charAt(0).toUpperCase())+'</div>'+
+        '<div style="flex:1;"><div class="lr-title">'+esc(c.name)+'</div><div class="lr-sub">'+esc(c.company||'')+(c.email?' · '+esc(c.email):'')+'</div></div>'+
       '</div>';
     }).join('');
-    document.getElementById('clientsList').innerHTML = html || '<p class="empty-msg" style="padding:20px;">Nenhum cliente encontrado.</p>';
+    document.getElementById('clientsList').innerHTML = html || '<p class="empty-msg" style="padding:20px;">'+t('noClientsFound')+'</p>';
     document.querySelectorAll('[data-view-client]').forEach(function(row){
       row.addEventListener('click', function(){
         var id = row.getAttribute('data-view-client');
-        var c = db.clients.find(function(x){ return x.id===id; });
+        var c = db.clients.find(function(x){ return String(x.id)===String(id); });
         if (c) openClientView(c);
       });
     });
@@ -797,104 +976,66 @@
   }
 
   document.getElementById('addClientBtn').addEventListener('click', function(){
-    editingClientId = null;
-    pendingImage = null;
-    document.getElementById('clientModalTitle').textContent = 'Novo cliente';
-    document.getElementById('clientSubmitBtn').textContent = 'Adicionar cliente';
+    editingClientId=null; pendingImagePath=null;
+    document.getElementById('clientModalTitle').textContent = t('newClient');
+    document.getElementById('clientSubmitBtn').textContent = t('addClient');
     document.getElementById('formClient').reset();
-    document.getElementById('clientImagePreviewWrap').style.display = 'none';
-    document.getElementById('imageError').style.display = 'none';
+    document.getElementById('clientImagePreviewWrap').style.display='none';
+    document.getElementById('imageError').style.display='none';
     updateNotesCounter();
     openModal('modalClient');
   });
   document.getElementById('editClientBtn').addEventListener('click', function(){
     if (!viewingClientId) return;
-    var c = db.clients.find(function(x){ return x.id===viewingClientId; });
+    var c = db.clients.find(function(x){ return String(x.id)===String(viewingClientId); });
     if (!c) return;
     editingClientId = c.id;
-    document.getElementById('clientModalTitle').textContent = 'Editar cliente';
-    document.getElementById('clientSubmitBtn').textContent = 'Salvar alterações';
-    document.getElementById('clientName').value = c.name || '';
-    document.getElementById('clientCompany').value = c.company || '';
-    document.getElementById('clientEmail').value = c.email || '';
-    document.getElementById('clientPhone').value = c.phone || '';
-    document.getElementById('clientAddress').value = c.address || '';
-    document.getElementById('clientCountry').value = c.country || '';
-    document.getElementById('clientUrl').value = c.url || '';
-    document.getElementById('clientNotes').value = c.notes || '';
+    document.getElementById('clientModalTitle').textContent = t('edit');
+    document.getElementById('clientSubmitBtn').textContent = t('edit');
+    document.getElementById('clientName').value = c.name||'';
+    document.getElementById('clientCompany').value = c.company||'';
+    document.getElementById('clientEmail').value = c.email||'';
+    document.getElementById('clientPhone').value = c.phone||'';
+    document.getElementById('clientAddress').value = c.address||'';
+    document.getElementById('clientCountry').value = c.country||'';
+    document.getElementById('clientUrl').value = c.url||'';
+    document.getElementById('clientNotes').value = c.notes||'';
     updateNotesCounter();
-    pendingImage = c.image || null;
-    if (c.image){
-      document.getElementById('clientImagePreview').src = c.image;
-      document.getElementById('clientImagePreviewWrap').style.display = 'block';
-    } else {
-      document.getElementById('clientImagePreviewWrap').style.display = 'none';
-    }
-    document.getElementById('imageError').style.display = 'none';
-    closeModal('modalViewClient');
-    openModal('modalClient');
+    pendingImagePath = c.image_path||null;
+    if (c.image_path){ document.getElementById('clientImagePreview').src = c.image_path; document.getElementById('clientImagePreviewWrap').style.display='block'; }
+    else document.getElementById('clientImagePreviewWrap').style.display='none';
+    closeModal('modalViewClient'); openModal('modalClient');
   });
 
-  function countWords(text){
-    var t = text.trim();
-    if (!t) return 0;
-    return t.split(/\s+/).length;
-  }
-  function updateNotesCounter(){
-    var ta = document.getElementById('clientNotes');
-    var n = countWords(ta.value);
-    document.getElementById('notesCounter').textContent = '('+n+'/500 palavras)';
-  }
+  function countWords(text){ var t2=text.trim(); return t2? t2.split(/\s+/).length : 0; }
+  function updateNotesCounter(){ var n = countWords(document.getElementById('clientNotes').value); document.getElementById('notesCounter').textContent='('+n+'/500)'; }
   document.getElementById('clientNotes').addEventListener('input', function(){
     var words = this.value.trim().split(/\s+/);
-    if (words.length > 500 && this.value.trim()!==''){
-      this.value = words.slice(0,500).join(' ');
-    }
+    if (words.length>500 && this.value.trim()!=='') this.value = words.slice(0,500).join(' ');
     updateNotesCounter();
   });
 
-  function showImageError(msg){
-    var el = document.getElementById('imageError');
-    el.textContent = msg;
-    el.style.display = 'block';
-  }
   document.getElementById('clientImageInput').addEventListener('change', function(e){
     var file = e.target.files[0];
-    document.getElementById('imageError').style.display = 'none';
+    var errEl = document.getElementById('imageError'); errEl.style.display='none';
     if (!file) return;
     if (file.type!=='image/png' && file.type!=='image/jpeg'){
-      showImageError('Formato não suportado. Envie um arquivo PNG ou JPG.');
-      e.target.value = '';
-      return;
+      errEl.textContent='PNG/JPG only.'; errEl.style.display='block'; e.target.value=''; return;
     }
-    var reader = new FileReader();
-    reader.onload = function(ev){
-      var img = new Image();
-      img.onload = function(){
-        var w = img.width, h = img.height;
-        var maxW = 1200, maxH = 670;
-        if (w > maxW || h > maxH){
-          var ratio = Math.min(maxW / w, maxH / h);
-          w = Math.round(w * ratio);
-          h = Math.round(h * ratio);
-        }
-        var canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        var outType = file.type==='image/png' ? 'image/png' : 'image/jpeg';
-        pendingImage = canvas.toDataURL(outType, 0.9);
-        document.getElementById('clientImagePreview').src = pendingImage;
-        document.getElementById('clientImagePreviewWrap').style.display = 'block';
-      };
-      img.onerror = function(){ showImageError('Não foi possível ler essa imagem.'); };
-      img.src = ev.target.result;
-    };
-    reader.readAsDataURL(file);
+    var fd = new FormData(); fd.append('image', file);
+    fetch(API_BASE+'upload.php', {method:'POST', credentials:'include', body:fd})
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.error){ errEl.textContent = t('errGeneric'); errEl.style.display='block'; return; }
+        pendingImagePath = res.path;
+        document.getElementById('clientImagePreview').src = res.path;
+        document.getElementById('clientImagePreviewWrap').style.display='block';
+      }).catch(function(){ errEl.textContent = t('errGeneric'); errEl.style.display='block'; });
   });
   document.getElementById('removeImageBtn').addEventListener('click', function(){
-    pendingImage = null;
-    document.getElementById('clientImageInput').value = '';
-    document.getElementById('clientImagePreviewWrap').style.display = 'none';
+    pendingImagePath=null;
+    document.getElementById('clientImageInput').value='';
+    document.getElementById('clientImagePreviewWrap').style.display='none';
   });
 
   document.getElementById('formClient').addEventListener('submit', function(e){
@@ -902,116 +1043,84 @@
     var name = document.getElementById('clientName').value.trim();
     if (!name) return;
     var fields = {
-      name: name,
-      company: document.getElementById('clientCompany').value.trim(),
-      email: document.getElementById('clientEmail').value.trim(),
-      phone: document.getElementById('clientPhone').value.trim(),
-      address: document.getElementById('clientAddress').value.trim(),
-      country: document.getElementById('clientCountry').value.trim(),
-      url: document.getElementById('clientUrl').value.trim(),
-      notes: document.getElementById('clientNotes').value.trim(),
-      image: pendingImage
+      name:name, company:document.getElementById('clientCompany').value.trim(), email:document.getElementById('clientEmail').value.trim(),
+      phone:document.getElementById('clientPhone').value.trim(), address:document.getElementById('clientAddress').value.trim(),
+      country:document.getElementById('clientCountry').value.trim(), url:document.getElementById('clientUrl').value.trim(),
+      notes:document.getElementById('clientNotes').value.trim(), image_path: pendingImagePath
     };
     if (editingClientId){
-      db.clients = db.clients.map(function(c){
-        return c.id===editingClientId ? Object.assign({}, c, fields) : c;
-      });
-      editingClientId = null;
+      fields.id = editingClientId;
+      apiFetch('clients.php?action=update', fields).then(function(){ editingClientId=null; closeModal('modalClient'); loadAllData(); });
     } else {
-      db.clients.push(Object.assign({ id: uid(), createdAt: Date.now() }, fields));
+      apiFetch('clients.php?action=create', fields).then(function(){ closeModal('modalClient'); loadAllData(); });
     }
-    saveDB(db); e.target.reset(); pendingImage = null; document.getElementById('clientImagePreviewWrap').style.display = 'none'; closeModal('modalClient'); renderAll();
+    e.target.reset(); pendingImagePath=null; document.getElementById('clientImagePreviewWrap').style.display='none';
   });
 
   function openClientView(c){
     viewingClientId = c.id;
-    var rows = [
-      ['Nome', c.name],
-      ['Empresa', c.company],
-      ['E-mail', c.email],
-      ['Telefone', c.phone],
-      ['Endereço', c.address],
-      ['País', c.country],
-      ['URL', c.url]
-    ];
-    var rowsHtml = rows.filter(function(r){ return r[1]; }).map(function(r){
-      return '<div class="cv-row"><span class="cv-label">'+r[0]+'</span><span class="cv-value">'+esc(r[1])+'</span></div>';
-    }).join('') || '<p class="empty-msg">Sem dados adicionais.</p>';
-    var imgHtml = c.image ? '<img src="'+c.image+'" style="max-width:100%; border-radius:10px; margin-bottom:14px; display:block;" />' : '';
-    var notesHtml = c.notes ? '<div style="margin-top:14px;"><div class="cv-label" style="margin-bottom:6px;">Anotações</div><p style="font-size:13.5px; white-space:pre-wrap;">'+esc(c.notes)+'</p></div>' : '';
+    var rows = [[t('contactName'),c.name],[t('company'),c.company],[t('email'),c.email],[t('phone'),c.phone],[t('address'),c.address],[t('country'),c.country],['URL',c.url]];
+    var rowsHtml = rows.filter(function(r){return r[1];}).map(function(r){ return '<div class="cv-row"><span class="cv-label">'+r[0]+'</span><span class="cv-value">'+esc(r[1])+'</span></div>'; }).join('') || '';
+    var imgHtml = c.image_path ? '<img src="'+c.image_path+'" style="max-width:100%;border-radius:10px;margin-bottom:14px;display:block;" />' : '';
+    var notesHtml = c.notes ? '<div style="margin-top:14px;"><div class="cv-label" style="margin-bottom:6px;">'+t('notes')+'</div><p style="font-size:13.5px;white-space:pre-wrap;">'+esc(c.notes)+'</p></div>' : '';
 
-    var key = (c.company || c.name || '').toLowerCase();
+    var key = (c.company||c.name||'').toLowerCase();
     var relLeads = key ? db.leads.filter(function(l){ return (l.company||'').toLowerCase()===key; }) : [];
-    var relTickets = key ? db.tickets.filter(function(t){ return (t.client||'').toLowerCase()===key; }) : [];
-    var histItems = relLeads.map(function(l){ return {label:'Lead #'+pad4(l.num)+' · '+l.title, meta:l.stage, ts:l.createdAt}; })
-      .concat(relTickets.map(function(t){ return {label:'Chamado #'+pad4(t.num)+' · '+t.subject, meta:t.status, ts:t.createdAt}; }))
-      .sort(function(a,b){ return b.ts-a.ts; });
-    var histHtml = histItems.length ? histItems.map(function(h){
-      return '<div class="hist-row"><span class="dot"></span><span style="flex:1;">'+esc(h.label)+'</span><span class="activity-meta">'+esc(h.meta)+'</span></div>';
-    }).join('') : '<p class="empty-msg" style="padding:8px 0;">Nenhum lead ou chamado vinculado a este cliente ainda.</p>';
+    var relTickets = key ? db.tickets.filter(function(tk){ return (tk.client||'').toLowerCase()===key; }) : [];
+    var histItems = relLeads.map(function(l){ return {label:'#'+pad4(l.num)+' · '+l.title, meta:t(STAGE_KEY[l.stage]), ts:l.created_at}; })
+      .concat(relTickets.map(function(tk){ return {label:'#'+pad4(tk.num)+' · '+tk.subject, meta:t(TSTATUS_KEY[tk.status]), ts:tk.created_at}; }))
+      .sort(function(a,b){ return new Date(b.ts)-new Date(a.ts); });
+    var histHtml = histItems.length ? histItems.map(function(h){ return '<div class="hist-row"><span class="dot"></span><span style="flex:1;">'+esc(h.label)+'</span><span class="activity-meta">'+esc(h.meta)+'</span></div>'; }).join('') : '<p class="empty-msg" style="padding:8px 0;">'+t('noHistory')+'</p>';
 
-    document.getElementById('clientViewBody').innerHTML = imgHtml + rowsHtml + notesHtml +
-      '<div style="margin-top:18px;"><div class="cv-label" style="margin-bottom:6px;">Histórico</div>' + histHtml + '</div>';
+    document.getElementById('clientViewBody').innerHTML = imgHtml + rowsHtml + notesHtml + '<div style="margin-top:18px;"><div class="cv-label" style="margin-bottom:6px;">'+t('history')+'</div>'+histHtml+'</div>';
     openModal('modalViewClient');
   }
-
   document.getElementById('printClientBtn').addEventListener('click', function(){ window.print(); });
   document.getElementById('deleteClientBtn').addEventListener('click', function(){
     if (!viewingClientId) return;
-    if (!confirm('Deseja realmente eliminar esse registro? Essa ação não pode ser desfeita.')) return;
-    db.clients = db.clients.filter(function(c){ return c.id!==viewingClientId; });
-    saveDB(db); viewingClientId = null; closeModal('modalViewClient'); renderAll();
+    if (!confirm(t('confirmDelete'))) return;
+    apiFetch('clients.php?action=delete', {id:viewingClientId}).then(function(){ viewingClientId=null; closeModal('modalViewClient'); loadAllData(); });
   });
 
   // ===================== TICKETS =====================
   function renderTickets(){
     var html = TSTATUS.map(function(status){
-      var items = db.tickets.filter(function(t){ return t.status===status && matches(ticketSearchTerm, [t.subject, t.client, t.owner]); });
+      var items = db.tickets.filter(function(tk){ return tk.status===status && matches(ticketSearchTerm,[tk.subject,tk.client,tk.owner_name]); });
       var c = TSTATUS_COLOR[status];
-      var cards = items.map(function(t){
-        return '<div class="card-item" data-view-ticket="'+t.id+'">'+
-          '<div class="ci-num">#'+pad4(t.num)+'</div>'+
-          '<div class="ci-title">'+esc(t.subject)+'</div>'+
-          (t.client ? '<div class="ci-sub">'+esc(t.client)+'</div>' : '')+
-          '<span class="prio prio-'+t.priority+'">'+t.priority+'</span>'+
-          '<div class="ci-date">Aberto em '+fmtDate(t.createdAt)+'</div>'+
+      var cards = items.map(function(tk){
+        return '<div class="card-item" data-view-ticket="'+tk.id+'">'+
+          '<div class="ci-num">#'+pad4(tk.num)+'</div>'+
+          '<div class="ci-title">'+esc(tk.subject)+'</div>'+
+          (tk.client?'<div class="ci-sub">'+esc(tk.client)+'</div>':'')+
+          '<span class="prio prio-'+tk.priority+'">'+t(PRIO_KEY[tk.priority])+'</span>'+
+          '<div class="ci-date">'+fmtDate(tk.created_at)+'</div>'+
           '<div class="ci-foot" onclick="event.stopPropagation();">'+
-            '<select class="sm" data-move-ticket="'+t.id+'">'+
-              TSTATUS.map(function(s){ return '<option value="'+s+'" '+(s===t.status?'selected':'')+'>'+s+'</option>'; }).join('')+
+            '<select class="sm" data-move-ticket="'+tk.id+'">'+
+              TSTATUS.map(function(s){ return '<option value="'+s+'" '+(s===tk.status?'selected':'')+'>'+t(TSTATUS_KEY[s])+'</option>'; }).join('')+
             '</select>'+
           '</div></div>';
       }).join('') || '<p class="col-empty">—</p>';
-      return '<div class="col"><div class="col-head"><span class="pill" style="background:'+c+'22;color:'+c+';">'+status+'</span><span class="col-count">'+items.length+'</span></div><div class="col-body">'+cards+'</div></div>';
+      return '<div class="col"><div class="col-head"><span class="pill" style="background:'+c+'22;color:'+c+';">'+t(TSTATUS_KEY[status])+'</span><span class="col-count">'+items.length+'</span></div><div class="col-body">'+cards+'</div></div>';
     }).join('');
     document.getElementById('ticketsBoard').innerHTML = html;
-
     document.querySelectorAll('[data-move-ticket]').forEach(function(sel){
       sel.addEventListener('change', function(){
-        var id = sel.getAttribute('data-move-ticket');
-        var status = sel.value;
-        db.tickets = db.tickets.map(function(t){
-          if (t.id!==id) return t;
-          var upd = Object.assign({}, t, {status: status});
-          if (status==='Resolvido' && !t.resolvedAt) upd.resolvedAt = Date.now();
-          if (status!=='Resolvido') upd.resolvedAt = null;
-          return upd;
-        });
-        saveDB(db); renderAll();
+        apiFetch('tickets.php?action=move_status', {id:sel.getAttribute('data-move-ticket'), status:sel.value}).then(function(){ loadAllData(); });
       });
     });
     document.querySelectorAll('[data-view-ticket]').forEach(function(card){
       card.addEventListener('click', function(){
         var id = card.getAttribute('data-view-ticket');
-        var t = db.tickets.find(function(x){ return x.id===id; });
-        if (t) openTicketView(t);
+        var tk = db.tickets.find(function(x){ return String(x.id)===String(id); });
+        if (tk) openTicketView(tk);
       });
     });
   }
 
   document.getElementById('addTicketBtn').addEventListener('click', function(){
-    editingTicketId = null;
-    document.getElementById('ticketModalTitle').textContent = 'Novo chamado';
-    document.getElementById('ticketSubmitBtn').textContent = 'Abrir chamado';
+    editingTicketId=null;
+    document.getElementById('ticketModalTitle').textContent = t('newTicket');
+    document.getElementById('ticketSubmitBtn').textContent = t('openTicket');
     document.getElementById('formTicket').reset();
     openModal('modalTicket');
   });
@@ -1020,80 +1129,60 @@
     e.preventDefault();
     var subject = document.getElementById('ticketSubject').value.trim();
     if (!subject) return;
-    var fields = {
-      subject: subject,
-      client: document.getElementById('ticketClient').value.trim(),
-      priority: document.getElementById('ticketPriority').value,
-      description: document.getElementById('ticketDescription').value.trim()
-    };
+    var fields = { subject:subject, client:document.getElementById('ticketClient').value.trim(),
+      priority:document.getElementById('ticketPriority').value, description:document.getElementById('ticketDescription').value.trim() };
     if (editingTicketId){
-      db.tickets = db.tickets.map(function(t){ return t.id===editingTicketId ? Object.assign({}, t, fields) : t; });
-      editingTicketId = null;
+      fields.id = editingTicketId;
+      apiFetch('tickets.php?action=update', fields).then(function(){ editingTicketId=null; closeModal('modalTicket'); loadAllData(); });
     } else {
-      db.counters.ticket = (db.counters.ticket||0) + 1;
-      db.tickets.push(Object.assign({ id: uid(), num: db.counters.ticket, status:'Aberto', createdAt: Date.now(), resolvedAt: null, owner: currentUser }, fields));
+      apiFetch('tickets.php?action=create', fields).then(function(){ closeModal('modalTicket'); loadAllData(); });
     }
-    saveDB(db); e.target.reset(); closeModal('modalTicket'); renderAll();
+    e.target.reset();
   });
 
-  function openTicketView(t){
-    viewingTicketId = t.id;
-    var rows = [
-      ['Assunto', t.subject],
-      ['Cliente', t.client],
-      ['Prioridade', t.priority],
-      ['Status', t.status],
-      ['Responsável', t.owner],
-      ['Aberto em', fmtDateTime(t.createdAt)],
-      ['Resolvido em', t.resolvedAt ? fmtDateTime(t.resolvedAt) : '']
-    ];
-    var rowsHtml = rows.filter(function(r){ return r[1]; }).map(function(r){
-      return '<div class="cv-row"><span class="cv-label">'+r[0]+'</span><span class="cv-value">'+esc(r[1])+'</span></div>';
-    }).join('');
-    var descHtml = t.description ? '<div style="margin-top:14px;"><div class="cv-label" style="margin-bottom:6px;">Descrição</div><p style="font-size:13.5px; white-space:pre-wrap;">'+esc(t.description)+'</p></div>' : '';
-    document.getElementById('ticketViewBody').innerHTML = '<div class="cv-num">#'+pad4(t.num)+'</div>' + rowsHtml + descHtml;
+  function openTicketView(tk){
+    viewingTicketId = tk.id;
+    var rows = [[t('subject'),tk.subject],[t('client'),tk.client],[t('priority'),t(PRIO_KEY[tk.priority])],[t('status'),t(TSTATUS_KEY[tk.status])],
+      [t('owner'),tk.owner_name],[t('openedAt'),fmtDateTime(tk.created_at)],[t('closedAt'), tk.resolved_at?fmtDateTime(tk.resolved_at):'']];
+    var rowsHtml = rows.filter(function(r){return r[1];}).map(function(r){ return '<div class="cv-row"><span class="cv-label">'+r[0]+'</span><span class="cv-value">'+esc(r[1])+'</span></div>'; }).join('');
+    var descHtml = tk.description ? '<div style="margin-top:14px;"><div class="cv-label" style="margin-bottom:6px;">'+t('description')+'</div><p style="font-size:13.5px;white-space:pre-wrap;">'+esc(tk.description)+'</p></div>' : '';
+    document.getElementById('ticketViewBody').innerHTML = '<div class="cv-num">#'+pad4(tk.num)+'</div>'+rowsHtml+descHtml;
     openModal('modalViewTicket');
   }
-
   document.getElementById('editTicketBtn').addEventListener('click', function(){
     if (!viewingTicketId) return;
-    var t = db.tickets.find(function(x){ return x.id===viewingTicketId; });
-    if (!t) return;
-    editingTicketId = t.id;
-    document.getElementById('ticketModalTitle').textContent = 'Editar chamado';
-    document.getElementById('ticketSubmitBtn').textContent = 'Salvar alterações';
-    document.getElementById('ticketSubject').value = t.subject || '';
-    document.getElementById('ticketClient').value = t.client || '';
-    document.getElementById('ticketPriority').value = t.priority || 'Média';
-    document.getElementById('ticketDescription').value = t.description || '';
-    closeModal('modalViewTicket');
-    openModal('modalTicket');
+    var tk = db.tickets.find(function(x){ return String(x.id)===String(viewingTicketId); });
+    if (!tk) return;
+    editingTicketId = tk.id;
+    document.getElementById('ticketModalTitle').textContent = t('edit');
+    document.getElementById('ticketSubmitBtn').textContent = t('edit');
+    document.getElementById('ticketSubject').value = tk.subject||'';
+    document.getElementById('ticketClient').value = tk.client||'';
+    document.getElementById('ticketPriority').value = tk.priority||'Média';
+    document.getElementById('ticketDescription').value = tk.description||'';
+    closeModal('modalViewTicket'); openModal('modalTicket');
   });
   document.getElementById('printTicketBtn').addEventListener('click', function(){ window.print(); });
   document.getElementById('deleteTicketBtn').addEventListener('click', function(){
     if (!viewingTicketId) return;
-    if (!confirm('Deseja realmente eliminar esse registro? Essa ação não pode ser desfeita.')) return;
-    db.tickets = db.tickets.filter(function(t){ return t.id!==viewingTicketId; });
-    saveDB(db); viewingTicketId = null; closeModal('modalViewTicket'); renderAll();
+    if (!confirm(t('confirmDelete'))) return;
+    apiFetch('tickets.php?action=delete', {id:viewingTicketId}).then(function(){ viewingTicketId=null; closeModal('modalViewTicket'); loadAllData(); });
   });
 
   // ===================== MODAIS (genérico) =====================
   function openModal(id){ document.getElementById(id).classList.add('show'); }
   function closeModal(id){ document.getElementById(id).classList.remove('show'); }
-  document.querySelectorAll('[data-close]').forEach(function(btn){
-    btn.addEventListener('click', function(){ closeModal(btn.getAttribute('data-close')); });
-  });
-  document.querySelectorAll('.modal-overlay').forEach(function(ov){
-    ov.addEventListener('click', function(e){ if (e.target===ov) ov.classList.remove('show'); });
-  });
+  document.querySelectorAll('[data-close]').forEach(function(btn){ btn.addEventListener('click', function(){ closeModal(btn.getAttribute('data-close')); }); });
+  document.querySelectorAll('.modal-overlay').forEach(function(ov){ ov.addEventListener('click', function(e){ if (e.target===ov) ov.classList.remove('show'); }); });
 
   function renderAll(){
-    renderDashboard();
-    renderLeads();
-    renderClients();
-    renderTickets();
+    if (!currentUser) return;
+    renderDashboard(); renderLeads(); renderClients(); renderTickets();
   }
 
+  document.getElementById('fyear').textContent = new Date().getFullYear();
+  applyI18n();
+  checkSession();
 })();
 </script>
 </body>
