@@ -285,6 +285,15 @@
       <input class="f-input" id="clientCountry" placeholder="ex: Brasil" />
       <label class="f-label">URL</label>
       <input class="f-input" id="clientUrl" placeholder="https://acme.com" />
+      <label class="f-label">Anotações <span id="notesCounter" style="font-weight:400; color:var(--muted);">(0/500 palavras)</span></label>
+      <textarea class="f-input" id="clientNotes" rows="4" placeholder="Observações sobre o cliente" style="resize:vertical; font-family:var(--font);"></textarea>
+      <label class="f-label">Imagem <span style="font-weight:400; color:var(--muted);">(PNG ou JPG, máx. 1200×670)</span></label>
+      <input class="f-input" id="clientImageInput" type="file" accept="image/png,image/jpeg" style="padding:8px;" />
+      <div id="clientImagePreviewWrap" style="display:none; margin-top:10px;">
+        <img id="clientImagePreview" style="max-width:100%; max-height:140px; border-radius:9px; border:1px solid var(--border); display:block;" />
+        <button type="button" id="removeImageBtn" style="margin-top:6px; background:none; border:none; color:var(--muted); font-size:12px; text-decoration:underline; cursor:pointer;">Remover imagem</button>
+      </div>
+      <p id="imageError" style="color:#dc2626; font-size:12px; margin-top:6px; display:none;"></p>
       <button class="btn" type="submit" id="clientSubmitBtn">Adicionar cliente</button>
     </form>
   </div>
@@ -386,6 +395,7 @@
   var currentUser = null;
   var editingClientId = null;
   var viewingClientId = null;
+  var pendingImage = null;
 
   function uid(){ return Math.random().toString(36).slice(2,10); }
 
@@ -541,11 +551,76 @@
       ['País', c.country],
       ['URL', c.url]
     ];
-    document.getElementById('clientViewBody').innerHTML = rows.filter(function(r){ return r[1]; }).map(function(r){
+    var rowsHtml = rows.filter(function(r){ return r[1]; }).map(function(r){
       return '<div class="cv-row"><span class="cv-label">'+r[0]+'</span><span class="cv-value">'+esc(r[1])+'</span></div>';
     }).join('') || '<p class="empty-msg">Sem dados adicionais.</p>';
+    var imgHtml = c.image ? '<img src="'+c.image+'" style="max-width:100%; border-radius:10px; margin-bottom:14px; display:block;" />' : '';
+    var notesHtml = c.notes ? '<div style="margin-top:14px;"><div class="cv-label" style="margin-bottom:6px;">Anotações</div><p style="font-size:13.5px; white-space:pre-wrap;">'+esc(c.notes)+'</p></div>' : '';
+    document.getElementById('clientViewBody').innerHTML = imgHtml + rowsHtml + notesHtml;
     openModal('modalViewClient');
   }
+  function countWords(text){
+    var t = text.trim();
+    if (!t) return 0;
+    return t.split(/\s+/).length;
+  }
+  function updateNotesCounter(){
+    var ta = document.getElementById('clientNotes');
+    var n = countWords(ta.value);
+    document.getElementById('notesCounter').textContent = '('+n+'/500 palavras)';
+  }
+  document.getElementById('clientNotes').addEventListener('input', function(){
+    var words = this.value.trim().split(/\s+/);
+    if (words.length > 500 && this.value.trim()!==''){
+      this.value = words.slice(0,500).join(' ');
+    }
+    updateNotesCounter();
+  });
+
+  function showImageError(msg){
+    var el = document.getElementById('imageError');
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+  document.getElementById('clientImageInput').addEventListener('change', function(e){
+    var file = e.target.files[0];
+    document.getElementById('imageError').style.display = 'none';
+    if (!file) return;
+    if (file.type!=='image/png' && file.type!=='image/jpeg'){
+      showImageError('Formato não suportado. Envie um arquivo PNG ou JPG.');
+      e.target.value = '';
+      return;
+    }
+    var reader = new FileReader();
+    reader.onload = function(ev){
+      var img = new Image();
+      img.onload = function(){
+        var w = img.width, h = img.height;
+        var maxW = 1200, maxH = 670;
+        if (w > maxW || h > maxH){
+          var ratio = Math.min(maxW / w, maxH / h);
+          w = Math.round(w * ratio);
+          h = Math.round(h * ratio);
+        }
+        var canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        var outType = file.type==='image/png' ? 'image/png' : 'image/jpeg';
+        pendingImage = canvas.toDataURL(outType, 0.9);
+        document.getElementById('clientImagePreview').src = pendingImage;
+        document.getElementById('clientImagePreviewWrap').style.display = 'block';
+      };
+      img.onerror = function(){ showImageError('Não foi possível ler essa imagem.'); };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+  document.getElementById('removeImageBtn').addEventListener('click', function(){
+    pendingImage = null;
+    document.getElementById('clientImageInput').value = '';
+    document.getElementById('clientImagePreviewWrap').style.display = 'none';
+  });
+
   document.getElementById('printClientBtn').addEventListener('click', function(){ window.print(); });
   document.getElementById('deleteClientBtn').addEventListener('click', function(){
     if (!viewingClientId) return;
@@ -614,9 +689,13 @@
   document.getElementById('addLeadBtn').addEventListener('click', function(){ openModal('modalLead'); });
   document.getElementById('addClientBtn').addEventListener('click', function(){
     editingClientId = null;
+    pendingImage = null;
     document.getElementById('clientModalTitle').textContent = 'Novo cliente';
     document.getElementById('clientSubmitBtn').textContent = 'Adicionar cliente';
     document.getElementById('formClient').reset();
+    document.getElementById('clientImagePreviewWrap').style.display = 'none';
+    document.getElementById('imageError').style.display = 'none';
+    updateNotesCounter();
     openModal('modalClient');
   });
   document.getElementById('editClientBtn').addEventListener('click', function(){
@@ -633,6 +712,16 @@
     document.getElementById('clientAddress').value = c.address || '';
     document.getElementById('clientCountry').value = c.country || '';
     document.getElementById('clientUrl').value = c.url || '';
+    document.getElementById('clientNotes').value = c.notes || '';
+    updateNotesCounter();
+    pendingImage = c.image || null;
+    if (c.image){
+      document.getElementById('clientImagePreview').src = c.image;
+      document.getElementById('clientImagePreviewWrap').style.display = 'block';
+    } else {
+      document.getElementById('clientImagePreviewWrap').style.display = 'none';
+    }
+    document.getElementById('imageError').style.display = 'none';
     closeModal('modalViewClient');
     openModal('modalClient');
   });
@@ -662,7 +751,9 @@
       phone: document.getElementById('clientPhone').value.trim(),
       address: document.getElementById('clientAddress').value.trim(),
       country: document.getElementById('clientCountry').value.trim(),
-      url: document.getElementById('clientUrl').value.trim()
+      url: document.getElementById('clientUrl').value.trim(),
+      notes: document.getElementById('clientNotes').value.trim(),
+      image: pendingImage
     };
     if (editingClientId){
       db.clients = db.clients.map(function(c){
@@ -672,7 +763,7 @@
     } else {
       db.clients.push(Object.assign({ id: uid(), createdAt: Date.now() }, fields));
     }
-    saveDB(db); e.target.reset(); closeModal('modalClient'); renderAll();
+    saveDB(db); e.target.reset(); pendingImage = null; document.getElementById('clientImagePreviewWrap').style.display = 'none'; closeModal('modalClient'); renderAll();
   });
 
   document.getElementById('formTicket').addEventListener('submit', function(e){
