@@ -129,6 +129,9 @@
   .modal-overlay{position:fixed;inset:0;background:rgba(20,20,40,.5);display:none;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(2px);}
   .modal-overlay.show{display:flex;}
   .modal-card{background:var(--white);border-radius:18px;padding:26px;width:360px;max-width:90vw;box-shadow:var(--shadow-lg);}
+  .modal-card.wide{width:560px;}
+  .modal-card.wide .two-col{display:grid; grid-template-columns:1fr 1fr; gap:0 16px;}
+  .modal-card.wide .two-col > div{display:flex; flex-direction:column;}
   .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
   .modal-title{font-size:17px;font-weight:800;}
   label.f-label{display:block;font-size:12.5px;color:var(--muted);margin:14px 0 5px;font-weight:600;}
@@ -140,6 +143,8 @@
   @media(max-width:640px){
     .hdr-inner{padding:14px 18px;}
     .wrap{padding:18px 18px 60px;}
+    .modal-card.wide{width:90vw;}
+    .modal-card.wide .two-col{grid-template-columns:1fr;}
   }
 
   .cv-row{display:flex; justify-content:space-between; gap:14px; padding:9px 0; border-bottom:1px solid var(--border); font-size:13.5px;}
@@ -268,32 +273,50 @@
 
 <!-- MODAL: client -->
 <div class="modal-overlay" id="modalClient">
-  <div class="modal-card">
+  <div class="modal-card wide">
     <div class="modal-head"><span class="modal-title" id="clientModalTitle">Novo cliente</span><button class="icon-x" data-close="modalClient">×</button></div>
     <form id="formClient">
-      <label class="f-label">Nome do contato</label>
-      <input class="f-input" id="clientName" placeholder="ex: João Pereira" required />
-      <label class="f-label">Empresa</label>
-      <input class="f-input" id="clientCompany" placeholder="ex: Acme Ltda" />
-      <label class="f-label">E-mail</label>
-      <input class="f-input" id="clientEmail" placeholder="joao@acme.com" />
-      <label class="f-label">Telefone</label>
-      <input class="f-input" id="clientPhone" placeholder="+55 11 90000-0000" />
-      <label class="f-label">Endereço</label>
-      <input class="f-input" id="clientAddress" placeholder="Rua, número, cidade" />
-      <label class="f-label">País</label>
-      <input class="f-input" id="clientCountry" placeholder="ex: Brasil" />
-      <label class="f-label">URL</label>
-      <input class="f-input" id="clientUrl" placeholder="https://acme.com" />
-      <label class="f-label">Anotações <span id="notesCounter" style="font-weight:400; color:var(--muted);">(0/500 palavras)</span></label>
-      <textarea class="f-input" id="clientNotes" rows="4" placeholder="Observações sobre o cliente" style="resize:vertical; font-family:var(--font);"></textarea>
-      <label class="f-label">Imagem <span style="font-weight:400; color:var(--muted);">(PNG ou JPG, máx. 1200×670)</span></label>
-      <input class="f-input" id="clientImageInput" type="file" accept="image/png,image/jpeg" style="padding:8px;" />
+      <div class="two-col">
+        <div>
+          <label class="f-label">Nome do contato</label>
+          <input class="f-input" id="clientName" placeholder="ex: João Pereira" required />
+        </div>
+        <div>
+          <label class="f-label">Empresa</label>
+          <input class="f-input" id="clientCompany" placeholder="ex: Acme Ltda" />
+        </div>
+        <div>
+          <label class="f-label">E-mail</label>
+          <input class="f-input" id="clientEmail" placeholder="joao@acme.com" />
+        </div>
+        <div>
+          <label class="f-label">Telefone</label>
+          <input class="f-input" id="clientPhone" placeholder="+55 11 90000-0000" />
+        </div>
+        <div>
+          <label class="f-label">Endereço</label>
+          <input class="f-input" id="clientAddress" placeholder="Rua, número, cidade" />
+        </div>
+        <div>
+          <label class="f-label">País</label>
+          <input class="f-input" id="clientCountry" placeholder="ex: Brasil" />
+        </div>
+        <div>
+          <label class="f-label">URL</label>
+          <input class="f-input" id="clientUrl" placeholder="https://acme.com" />
+        </div>
+        <div>
+          <label class="f-label">Imagem <span style="font-weight:400; color:var(--muted);">(PNG/JPG, máx. 1200×670)</span></label>
+          <input class="f-input" id="clientImageInput" type="file" accept="image/png,image/jpeg" style="padding:8px;" />
+        </div>
+      </div>
       <div id="clientImagePreviewWrap" style="display:none; margin-top:10px;">
         <img id="clientImagePreview" style="max-width:100%; max-height:140px; border-radius:9px; border:1px solid var(--border); display:block;" />
         <button type="button" id="removeImageBtn" style="margin-top:6px; background:none; border:none; color:var(--muted); font-size:12px; text-decoration:underline; cursor:pointer;">Remover imagem</button>
       </div>
       <p id="imageError" style="color:#dc2626; font-size:12px; margin-top:6px; display:none;"></p>
+      <label class="f-label">Anotações <span id="notesCounter" style="font-weight:400; color:var(--muted);">(0/500 palavras)</span></label>
+      <textarea class="f-input" id="clientNotes" rows="6" placeholder="Observações sobre o cliente" style="resize:vertical; font-family:var(--font); width:100%;"></textarea>
       <button class="btn" type="submit" id="clientSubmitBtn">Adicionar cliente</button>
     </form>
   </div>
