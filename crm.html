@@ -46,7 +46,6 @@
   @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
   .shake{animation:shake .35s ease;}
 
-  /* nome ao entrar */
   #namegate{position:fixed;inset:0;z-index:998;background:linear-gradient(160deg,#1a1a2e 0%,#2d2150 55%,#1a1a2e 100%);display:none;align-items:center;justify-content:center;}
   #namegate.show{display:flex;}
   .ngc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:34px 32px;width:300px;text-align:center;backdrop-filter:blur(20px);}
@@ -57,7 +56,6 @@
   .ngc input::placeholder{color:#80849c;}
   .ngc button{width:100%;padding:11px;border:none;border-radius:10px;background:var(--grad);color:#fff;font-weight:700;font-size:14px;cursor:pointer;}
 
-  /* ===== TOP BAR ===== */
   header{background:rgba(255,255,255,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;}
   .hdr-inner{max-width:1180px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
   .brand{font-size:1.2rem;font-weight:800;letter-spacing:-.01em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
@@ -70,7 +68,6 @@
 
   .wrap{max-width:1180px;margin:0 auto;padding:28px 28px 70px;}
 
-  /* tabs */
   .tabs{display:flex;gap:8px;margin-bottom:26px;flex-wrap:wrap;}
   .tab{font-family:var(--font);font-size:13.5px;font-weight:700;padding:9px 18px;border-radius:20px;border:1px solid var(--border);background:var(--white);color:var(--muted);cursor:pointer;transition:all .2s;}
   .tab.active{background:var(--grad);color:#fff;border-color:transparent;box-shadow:var(--shadow);}
@@ -80,44 +77,59 @@
 
   h2.page-title{font-size:1.5rem;font-weight:800;letter-spacing:-.01em;margin-bottom:18px;}
   .page-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+  .head-actions{display:flex;gap:8px;flex-wrap:wrap;}
 
   .btn{font-family:var(--font);font-size:13.5px;font-weight:700;padding:10px 18px;border-radius:10px;border:none;background:var(--grad);color:#fff;cursor:pointer;box-shadow:var(--shadow);}
   .btn:hover{filter:brightness(1.05);}
   .btn-ghost{background:var(--white);color:var(--primary);border:1px solid var(--border);box-shadow:none;}
 
-  /* metric cards */
+  .search-input{width:100%;max-width:320px;padding:9px 12px;border-radius:10px;border:1px solid var(--border);font-size:13.5px;font-family:var(--font);background:var(--white);}
+  .search-row{margin-bottom:16px;}
+
   .metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:8px;}
   .metric{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;cursor:pointer;transition:transform .2s var(--ease),box-shadow .2s;}
   .metric:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
   .metric .ml{font-size:12.5px;color:var(--muted);}
   .metric .mv{font-size:1.7rem;font-weight:800;margin-top:6px;}
 
-  .activity{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:6px;margin-top:30px;}
+  .panel{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-top:22px;}
+  .panel h3{font-size:14.5px;font-weight:800;margin-bottom:14px;}
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13px;}
+  .bar-label{width:130px;color:var(--muted);flex-shrink:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .bar-track{flex:1;height:8px;background:var(--light);border-radius:6px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--grad);border-radius:6px;}
+  .bar-val{width:46px;text-align:right;font-weight:700;flex-shrink:0;}
+
+  .activity{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:6px;margin-top:22px;}
   .activity-row{display:flex;align-items:center;gap:10px;padding:11px 14px;font-size:13.5px;border-bottom:1px solid var(--border);}
   .activity-row:last-child{border-bottom:none;}
   .dot{width:6px;height:6px;border-radius:50%;background:var(--primary);flex-shrink:0;}
   .activity-meta{font-size:11.5px;color:var(--muted);font-family:var(--mono);}
 
-  /* board (kanban) */
   .board{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
   .col{background:var(--light);border-radius:var(--r);padding:12px;min-height:120px;}
   .col-head{display:flex;justify-content:space-between;align-items:center;padding:2px 6px 12px;}
   .pill{font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:20px;}
   .col-count{font-size:12px;color:var(--muted);font-family:var(--mono);}
   .col-body{display:flex;flex-direction:column;gap:9px;}
-  .card-item{background:var(--white);border-radius:11px;padding:13px;border:1px solid var(--border);}
-  .ci-title{font-size:13.5px;font-weight:700;}
+  .card-item{background:var(--white);border-radius:11px;padding:13px;border:1px solid var(--border);cursor:pointer;}
+  .ci-num{font-family:var(--mono);font-size:10.5px;color:var(--muted);}
+  .ci-title{font-size:13.5px;font-weight:700;margin-top:2px;}
   .ci-sub{font-size:12px;color:var(--muted);margin-top:2px;}
   .ci-value{font-size:12.5px;font-weight:700;color:var(--good);margin-top:7px;}
+  .ci-date{font-size:11px;color:var(--muted);margin-top:5px;font-family:var(--mono);}
   .ci-foot{display:flex;align-items:center;gap:6px;margin-top:10px;}
   select.sm{font-size:12px;padding:5px 7px;border-radius:7px;border:1px solid var(--border);flex:1;font-family:var(--font);}
   .icon-x{background:none;border:none;color:#a8acc4;font-size:18px;cursor:pointer;line-height:1;}
   .icon-x:hover{color:var(--bad);}
   .col-empty{color:#a8acc4;font-size:12.5px;text-align:center;padding:14px 0;}
+  .prio{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:6px;}
+  .prio-Alta{background:#fcebeb;color:#a32d2d;}
+  .prio-Média{background:#faeeda;color:#854f0b;}
+  .prio-Baixa{background:#eaf3de;color:#3b6d11;}
 
-  /* list (clientes) */
   .list{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:4px;}
-  .list-row{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--border);}
+  .list-row{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--border);cursor:pointer;}
   .list-row:last-child{border-bottom:none;}
   .av{width:34px;height:34px;border-radius:50%;background:var(--light);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;}
   .lr-title{font-size:14px;font-weight:700;}
@@ -125,38 +137,40 @@
 
   .empty-msg{color:var(--muted);font-size:13.5px;padding:22px 0;}
 
-  /* modal */
-  .modal-overlay{position:fixed;inset:0;background:rgba(20,20,40,.5);display:none;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(2px);}
+  .modal-overlay{position:fixed;inset:0;background:rgba(20,20,40,.5);display:none;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(2px);padding:20px;overflow-y:auto;}
   .modal-overlay.show{display:flex;}
-  .modal-card{background:var(--white);border-radius:18px;padding:26px;width:360px;max-width:90vw;box-shadow:var(--shadow-lg);}
+  .modal-card{background:var(--white);border-radius:18px;padding:26px;width:360px;max-width:90vw;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto;}
   .modal-card.wide{width:560px;}
   .modal-card.wide .two-col{display:grid; grid-template-columns:1fr 1fr; gap:0 16px;}
   .modal-card.wide .two-col > div{display:flex; flex-direction:column;}
   .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
   .modal-title{font-size:17px;font-weight:800;}
   label.f-label{display:block;font-size:12.5px;color:var(--muted);margin:14px 0 5px;font-weight:600;}
-  input.f-input{width:100%;padding:10px 11px;border-radius:9px;border:1px solid var(--border);font-size:14px;font-family:var(--font);}
+  input.f-input,select.f-input,textarea.f-input{width:100%;padding:10px 11px;border-radius:9px;border:1px solid var(--border);font-size:14px;font-family:var(--font);}
   .modal-card form .btn{width:100%;margin-top:20px;}
 
+  .cv-row{display:flex; justify-content:space-between; gap:14px; padding:9px 0; border-bottom:1px solid var(--border); font-size:13.5px;}
+  .cv-row:last-child{border-bottom:none;}
+  .cv-label{color:var(--muted); font-weight:600;}
+  .cv-value{text-align:right; font-weight:600;}
+  .cv-num{font-family:var(--mono); font-size:12px; color:var(--muted); margin-bottom:8px;}
+  .hist-row{display:flex; align-items:center; gap:8px; padding:8px 0; border-bottom:1px solid var(--border); font-size:13px;}
+  .hist-row:last-child{border-bottom:none;}
+
   footer{border-top:1px solid var(--border);padding:28px;text-align:center;font-size:.82rem;color:var(--muted);margin-top:20px;}
+
+  @media print{
+    body *{visibility:hidden;}
+    .printable, .printable *{visibility:visible;}
+    .printable{position:absolute; left:0; top:0; width:100%; box-shadow:none; border:none; max-height:none; overflow:visible;}
+    .no-print, [data-close]{display:none !important;}
+  }
 
   @media(max-width:640px){
     .hdr-inner{padding:14px 18px;}
     .wrap{padding:18px 18px 60px;}
     .modal-card.wide{width:90vw;}
     .modal-card.wide .two-col{grid-template-columns:1fr;}
-  }
-
-  .cv-row{display:flex; justify-content:space-between; gap:14px; padding:9px 0; border-bottom:1px solid var(--border); font-size:13.5px;}
-  .cv-row:last-child{border-bottom:none;}
-  .cv-label{color:var(--muted); font-weight:600;}
-  .cv-value{text-align:right; font-weight:600;}
-
-  @media print{
-    body *{visibility:hidden;}
-    #clientViewCard, #clientViewCard *{visibility:visible;}
-    #clientViewCard{position:absolute; left:0; top:0; width:100%; box-shadow:none; border:none;}
-    #printClientBtn, #deleteClientBtn, #editClientBtn, [data-close]{display:none !important;}
   }
 </style>
 </head>
@@ -220,17 +234,34 @@
 
   <!-- DASHBOARD -->
   <div class="view active" id="view-dashboard">
-    <h2 class="page-title">Painel</h2>
-    <div class="metric-grid" id="metricGrid"></div>
-    <div class="activity" id="activityList"></div>
+    <div class="page-head">
+      <h2 class="page-title" style="margin:0;">Painel</h2>
+      <button class="btn btn-ghost no-print" id="printDashboardBtn">Imprimir relatório</button>
+    </div>
+    <div id="dashboardPrintable" class="printable">
+      <div class="metric-grid" id="metricGrid"></div>
+
+      <div class="panel">
+        <h3>Ranking de vendas por responsável</h3>
+        <div id="rankLeads"></div>
+      </div>
+
+      <div class="panel">
+        <h3>Chamados por responsável</h3>
+        <div id="rankTickets"></div>
+      </div>
+
+      <div class="activity" id="activityList"></div>
+    </div>
   </div>
 
   <!-- LEADS -->
   <div class="view" id="view-leads">
     <div class="page-head">
       <h2 class="page-title" style="margin:0;">Funil de vendas</h2>
-      <button class="btn" id="addLeadBtn">+ Novo lead</button>
+      <div class="head-actions"><button class="btn" id="addLeadBtn">+ Novo lead</button></div>
     </div>
+    <div class="search-row"><input class="search-input" id="leadSearch" placeholder="Buscar por título, empresa ou responsável…" /></div>
     <div class="board" id="leadsBoard"></div>
   </div>
 
@@ -238,8 +269,9 @@
   <div class="view" id="view-clients">
     <div class="page-head">
       <h2 class="page-title" style="margin:0;">Clientes</h2>
-      <button class="btn" id="addClientBtn">+ Novo cliente</button>
+      <div class="head-actions"><button class="btn" id="addClientBtn">+ Novo cliente</button></div>
     </div>
+    <div class="search-row"><input class="search-input" id="clientSearch" placeholder="Buscar por nome, empresa ou e-mail…" /></div>
     <div class="list" id="clientsList"></div>
   </div>
 
@@ -247,31 +279,60 @@
   <div class="view" id="view-tickets">
     <div class="page-head">
       <h2 class="page-title" style="margin:0;">Chamados de suporte</h2>
-      <button class="btn" id="addTicketBtn">+ Novo chamado</button>
+      <div class="head-actions"><button class="btn" id="addTicketBtn">+ Novo chamado</button></div>
     </div>
+    <div class="search-row"><input class="search-input" id="ticketSearch" placeholder="Buscar por assunto, cliente ou responsável…" /></div>
     <div class="board" id="ticketsBoard"></div>
   </div>
 </div>
 
 <footer><p>© <span id="fyear"></span> Sanitary Intelligence. Ambiente de uso interno e restrito.</p></footer>
 
-<!-- MODAL: lead -->
+<!-- MODAL: lead form -->
 <div class="modal-overlay" id="modalLead">
-  <div class="modal-card">
-    <div class="modal-head"><span class="modal-title">Novo lead</span><button class="icon-x" data-close="modalLead">×</button></div>
+  <div class="modal-card wide">
+    <div class="modal-head"><span class="modal-title" id="leadModalTitle">Novo lead</span><button class="icon-x" data-close="modalLead">×</button></div>
     <form id="formLead">
-      <label class="f-label">Título do negócio</label>
-      <input class="f-input" id="leadTitle" placeholder="ex: Licença anual - Acme" required />
-      <label class="f-label">Empresa</label>
-      <input class="f-input" id="leadCompany" placeholder="ex: Acme Ltda" />
-      <label class="f-label">Valor estimado (€)</label>
-      <input class="f-input" id="leadValue" type="number" placeholder="0" />
-      <button class="btn" type="submit">Adicionar lead</button>
+      <div class="two-col">
+        <div>
+          <label class="f-label">Título do negócio</label>
+          <input class="f-input" id="leadTitle" placeholder="ex: Licença anual - Acme" required />
+        </div>
+        <div>
+          <label class="f-label">Empresa</label>
+          <input class="f-input" id="leadCompany" placeholder="ex: Acme Ltda" list="clientDatalist" />
+        </div>
+        <div>
+          <label class="f-label">Valor estimado (€)</label>
+          <input class="f-input" id="leadValue" type="number" placeholder="0" />
+        </div>
+        <div>
+          <label class="f-label">Data prevista de fechamento</label>
+          <input class="f-input" id="leadCloseDate" type="date" />
+        </div>
+      </div>
+      <label class="f-label" id="leadLostLabel" style="display:none;">Motivo da perda</label>
+      <input class="f-input" id="leadLostReason" style="display:none;" placeholder="ex: Optou por concorrente" />
+      <button class="btn" type="submit" id="leadSubmitBtn">Adicionar lead</button>
     </form>
   </div>
 </div>
 
-<!-- MODAL: client -->
+<!-- MODAL: lead view -->
+<div class="modal-overlay" id="modalViewLead">
+  <div class="modal-card printable" id="leadViewCard">
+    <div class="modal-head"><span class="modal-title">Ficha do negócio</span><button class="icon-x no-print" data-close="modalViewLead">×</button></div>
+    <div id="leadViewBody" style="margin-top:6px;"></div>
+    <div class="no-print" style="display:flex; gap:10px; margin-top:22px;">
+      <button class="btn btn-ghost" type="button" data-close="modalViewLead" style="flex:1;">Fechar</button>
+      <button class="btn btn-ghost" type="button" id="editLeadBtn" style="flex:1;">Editar</button>
+      <button class="btn" type="button" id="printLeadBtn" style="flex:1;">Imprimir</button>
+    </div>
+    <button type="button" id="deleteLeadBtn" class="no-print" style="display:block; margin:14px auto 0; background:none; border:none; color:var(--muted); font-size:12px; text-decoration:underline; cursor:pointer;">Eliminar registro</button>
+  </div>
+</div>
+
+<!-- MODAL: client form -->
 <div class="modal-overlay" id="modalClient">
   <div class="modal-card wide">
     <div class="modal-head"><span class="modal-title" id="clientModalTitle">Novo cliente</span><button class="icon-x" data-close="modalClient">×</button></div>
@@ -322,32 +383,62 @@
   </div>
 </div>
 
-<!-- MODAL: ticket -->
-<div class="modal-overlay" id="modalTicket">
-  <div class="modal-card">
-    <div class="modal-head"><span class="modal-title">Novo chamado</span><button class="icon-x" data-close="modalTicket">×</button></div>
-    <form id="formTicket">
-      <label class="f-label">Assunto</label>
-      <input class="f-input" id="ticketSubject" placeholder="ex: Erro ao gerar relatório" required />
-      <label class="f-label">Cliente</label>
-      <input class="f-input" id="ticketClient" placeholder="ex: Acme Ltda" list="clientDatalist" />
-      <datalist id="clientDatalist"></datalist>
-      <button class="btn" type="submit">Abrir chamado</button>
-    </form>
-  </div>
-</div>
-
 <!-- MODAL: view client -->
 <div class="modal-overlay" id="modalViewClient">
-  <div class="modal-card" id="clientViewCard">
-    <div class="modal-head"><span class="modal-title">Ficha do cliente</span><button class="icon-x" data-close="modalViewClient">×</button></div>
+  <div class="modal-card printable" id="clientViewCard">
+    <div class="modal-head"><span class="modal-title">Ficha do cliente</span><button class="icon-x no-print" data-close="modalViewClient">×</button></div>
     <div id="clientViewBody" style="margin-top:10px;"></div>
-    <div style="display:flex; gap:10px; margin-top:22px;">
+    <div class="no-print" style="display:flex; gap:10px; margin-top:22px;">
       <button class="btn btn-ghost" type="button" data-close="modalViewClient" style="flex:1;">Fechar</button>
       <button class="btn btn-ghost" type="button" id="editClientBtn" style="flex:1;">Editar</button>
       <button class="btn" type="button" id="printClientBtn" style="flex:1;">Imprimir</button>
     </div>
-    <button type="button" id="deleteClientBtn" style="display:block; margin:14px auto 0; background:none; border:none; color:var(--muted); font-size:12px; text-decoration:underline; cursor:pointer;">Eliminar registro</button>
+    <button type="button" id="deleteClientBtn" class="no-print" style="display:block; margin:14px auto 0; background:none; border:none; color:var(--muted); font-size:12px; text-decoration:underline; cursor:pointer;">Eliminar registro</button>
+  </div>
+</div>
+
+<!-- MODAL: ticket form -->
+<div class="modal-overlay" id="modalTicket">
+  <div class="modal-card wide">
+    <div class="modal-head"><span class="modal-title" id="ticketModalTitle">Novo chamado</span><button class="icon-x" data-close="modalTicket">×</button></div>
+    <form id="formTicket">
+      <div class="two-col">
+        <div>
+          <label class="f-label">Assunto</label>
+          <input class="f-input" id="ticketSubject" placeholder="ex: Erro ao gerar relatório" required />
+        </div>
+        <div>
+          <label class="f-label">Cliente</label>
+          <input class="f-input" id="ticketClient" placeholder="ex: Acme Ltda" list="clientDatalist" />
+        </div>
+        <div>
+          <label class="f-label">Prioridade</label>
+          <select class="f-input" id="ticketPriority">
+            <option value="Baixa">Baixa</option>
+            <option value="Média" selected>Média</option>
+            <option value="Alta">Alta</option>
+          </select>
+        </div>
+      </div>
+      <label class="f-label">Descrição</label>
+      <textarea class="f-input" id="ticketDescription" rows="4" placeholder="Detalhe o que está acontecendo" style="resize:vertical; width:100%;"></textarea>
+      <datalist id="clientDatalist"></datalist>
+      <button class="btn" type="submit" id="ticketSubmitBtn">Abrir chamado</button>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: ticket view -->
+<div class="modal-overlay" id="modalViewTicket">
+  <div class="modal-card printable" id="ticketViewCard">
+    <div class="modal-head"><span class="modal-title">Ficha do chamado</span><button class="icon-x no-print" data-close="modalViewTicket">×</button></div>
+    <div id="ticketViewBody" style="margin-top:6px;"></div>
+    <div class="no-print" style="display:flex; gap:10px; margin-top:22px;">
+      <button class="btn btn-ghost" type="button" data-close="modalViewTicket" style="flex:1;">Fechar</button>
+      <button class="btn btn-ghost" type="button" id="editTicketBtn" style="flex:1;">Editar</button>
+      <button class="btn" type="button" id="printTicketBtn" style="flex:1;">Imprimir</button>
+    </div>
+    <button type="button" id="deleteTicketBtn" class="no-print" style="display:block; margin:14px auto 0; background:none; border:none; color:var(--muted); font-size:12px; text-decoration:underline; cursor:pointer;">Eliminar registro</button>
   </div>
 </div>
 
@@ -406,21 +497,36 @@
   document.getElementById('fyear').textContent = new Date().getFullYear();
 
   // ===================== ESTADO / STORAGE =====================
-  var DB_KEY = 'si_crm_db_v1';
+  var DB_KEY = 'si_crm_db_v2';
+  var OLD_DB_KEY = 'si_crm_db_v1';
   function loadDB(){
     try{
       var raw = localStorage.getItem(DB_KEY);
-      return raw ? JSON.parse(raw) : { leads:[], clients:[], tickets:[] };
-    }catch(e){ return { leads:[], clients:[], tickets:[] }; }
+      if (raw) return JSON.parse(raw);
+      var old = localStorage.getItem(OLD_DB_KEY);
+      if (old){
+        var d = JSON.parse(old);
+        d.counters = d.counters || { lead: (d.leads||[]).length, ticket: (d.tickets||[]).length };
+        return d;
+      }
+      return { leads:[], clients:[], tickets:[], counters:{ lead:0, ticket:0 } };
+    }catch(e){ return { leads:[], clients:[], tickets:[], counters:{ lead:0, ticket:0 } }; }
   }
   function saveDB(db){ localStorage.setItem(DB_KEY, JSON.stringify(db)); }
   var db = loadDB();
+  if (!db.counters) db.counters = { lead: (db.leads||[]).length, ticket: (db.tickets||[]).length };
   var currentUser = null;
-  var editingClientId = null;
-  var viewingClientId = null;
-  var pendingImage = null;
+  var editingClientId = null, viewingClientId = null, pendingImage = null;
+  var editingLeadId = null, viewingLeadId = null;
+  var editingTicketId = null, viewingTicketId = null;
 
   function uid(){ return Math.random().toString(36).slice(2,10); }
+  function pad4(n){ return String(n).padStart(4,'0'); }
+  function fmtDate(ts){ if(!ts) return ''; var d = new Date(ts); return d.toLocaleDateString('pt-BR'); }
+  function fmtDateTime(ts){ if(!ts) return ''; var d = new Date(ts); return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}); }
+  function esc(s){ return (s||'').toString().replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  }); }
 
   // ===================== NOME DO USUÁRIO =====================
   function afterPin(){
@@ -452,36 +558,55 @@
   document.getElementById('tabs').addEventListener('click', function(e){
     var btn = e.target.closest('.tab');
     if (!btn) return;
-    document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
-    btn.classList.add('active');
-    var tab = btn.getAttribute('data-tab');
+    goTab(btn.getAttribute('data-tab'));
+  });
+  function goTab(tab){
+    document.querySelectorAll('.tab').forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-tab')===tab); });
     document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
     document.getElementById('view-'+tab).classList.add('active');
-  });
+  }
 
   // ===================== CONSTANTES =====================
-  var STAGES = ['Novo','Qualificado','Proposta','Negociação','Fechado'];
-  var STAGE_COLOR = {'Novo':'#667eea','Qualificado':'#d97706','Proposta':'#764ba2','Negociação':'#dc6a3a','Fechado':'#16a34a'};
+  var STAGES = ['Novo','Qualificado','Proposta','Negociação','Fechado','Perdido'];
+  var STAGE_COLOR = {'Novo':'#667eea','Qualificado':'#d97706','Proposta':'#764ba2','Negociação':'#dc6a3a','Fechado':'#16a34a','Perdido':'#9ca3af'};
+  var STAGE_PROB = {'Novo':10,'Qualificado':30,'Proposta':50,'Negociação':75,'Fechado':100,'Perdido':0};
   var TSTATUS = ['Aberto','Em andamento','Resolvido'];
   var TSTATUS_COLOR = {'Aberto':'#dc2626','Em andamento':'#d97706','Resolvido':'#16a34a'};
 
-  function esc(s){ return (s||'').toString().replace(/[&<>"']/g, function(c){
-    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-  }); }
+  var leadSearchTerm = '', clientSearchTerm = '', ticketSearchTerm = '';
+  document.getElementById('leadSearch').addEventListener('input', function(){ leadSearchTerm = this.value.toLowerCase(); renderLeads(); });
+  document.getElementById('clientSearch').addEventListener('input', function(){ clientSearchTerm = this.value.toLowerCase(); renderClients(); });
+  document.getElementById('ticketSearch').addEventListener('input', function(){ ticketSearchTerm = this.value.toLowerCase(); renderTickets(); });
 
-  // ===================== RENDER: DASHBOARD =====================
+  function matches(term, parts){
+    if (!term) return true;
+    return parts.some(function(p){ return (p||'').toString().toLowerCase().indexOf(term) !== -1; });
+  }
+
+  // ===================== DASHBOARD =====================
   function renderDashboard(){
     var leads = db.leads, clients = db.clients, tickets = db.tickets;
     var openTickets = tickets.filter(function(t){ return t.status!=='Resolvido'; }).length;
     var closedLeads = leads.filter(function(l){ return l.stage==='Fechado'; }).length;
-    var pipelineValue = leads.filter(function(l){ return l.stage!=='Fechado'; })
+    var lostLeads = leads.filter(function(l){ return l.stage==='Perdido'; }).length;
+    var decided = closedLeads + lostLeads;
+    var convRate = decided > 0 ? Math.round((closedLeads/decided)*100) : 0;
+    var pipelineValue = leads.filter(function(l){ return l.stage!=='Fechado' && l.stage!=='Perdido'; })
       .reduce(function(s,l){ return s + (Number(l.value)||0); }, 0);
+    var weightedValue = leads.filter(function(l){ return l.stage!=='Fechado' && l.stage!=='Perdido'; })
+      .reduce(function(s,l){ return s + (Number(l.value)||0) * ((STAGE_PROB[l.stage]||0)/100); }, 0);
+
+    var resolved = tickets.filter(function(t){ return t.status==='Resolvido' && t.resolvedAt; });
+    var avgResMs = resolved.length ? resolved.reduce(function(s,t){ return s + (t.resolvedAt - t.createdAt); }, 0) / resolved.length : 0;
+    var avgResDays = avgResMs ? (avgResMs / (1000*60*60*24)).toFixed(1) : '—';
 
     var metrics = [
-      ['Leads ativos', leads.length, 'leads'],
-      ['Negócios fechados', closedLeads, 'leads'],
-      ['Em pipeline', '€ ' + pipelineValue.toLocaleString('pt-BR'), 'leads'],
+      ['Leads ativos', leads.filter(function(l){return l.stage!=='Fechado' && l.stage!=='Perdido';}).length, 'leads'],
+      ['Taxa de conversão', convRate + '%', 'leads'],
+      ['Pipeline ponderado', '€ ' + Math.round(weightedValue).toLocaleString('pt-BR'), 'leads'],
+      ['Em pipeline (bruto)', '€ ' + pipelineValue.toLocaleString('pt-BR'), 'leads'],
       ['Chamados abertos', openTickets, 'tickets'],
+      ['Tempo médio resolução', avgResDays + (avgResDays!=='—' ? ' dias' : ''), 'tickets'],
       ['Clientes', clients.length, 'clients']
     ];
     document.getElementById('metricGrid').innerHTML = metrics.map(function(m){
@@ -490,6 +615,9 @@
     document.querySelectorAll('.metric').forEach(function(el){
       el.addEventListener('click', function(){ goTab(el.getAttribute('data-go')); });
     });
+
+    renderRanking('rankLeads', leads.filter(function(l){return l.stage==='Fechado';}), 'owner');
+    renderRanking('rankTickets', tickets, 'owner');
 
     var activity = leads.concat(tickets).sort(function(a,b){ return b.createdAt - a.createdAt; }).slice(0,6);
     var html = activity.map(function(item){
@@ -500,27 +628,39 @@
     document.getElementById('activityList').innerHTML = html || '<p class="empty-msg" style="padding:20px;">Nenhuma atividade ainda. Cadastre um lead para começar.</p>';
   }
 
-  function goTab(tab){
-    document.querySelectorAll('.tab').forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-tab')===tab); });
-    document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
-    document.getElementById('view-'+tab).classList.add('active');
+  function renderRanking(containerId, items, groupField){
+    var counts = {};
+    items.forEach(function(it){
+      var k = it[groupField] || 'Sem responsável';
+      counts[k] = (counts[k]||0) + 1;
+    });
+    var entries = Object.keys(counts).map(function(k){ return [k, counts[k]]; }).sort(function(a,b){ return b[1]-a[1]; }).slice(0,5);
+    var max = entries.length ? entries[0][1] : 1;
+    var html = entries.map(function(e){
+      var pct = Math.round((e[1]/max)*100);
+      return '<div class="bar-row"><span class="bar-label">'+esc(e[0])+'</span><div class="bar-track"><div class="bar-fill" style="width:'+pct+'%;"></div></div><span class="bar-val">'+e[1]+'</span></div>';
+    }).join('');
+    document.getElementById(containerId).innerHTML = html || '<p class="empty-msg">Sem dados ainda.</p>';
   }
 
-  // ===================== RENDER: LEADS =====================
+  document.getElementById('printDashboardBtn').addEventListener('click', function(){ window.print(); });
+
+  // ===================== LEADS =====================
   function renderLeads(){
     var html = STAGES.map(function(stage){
-      var items = db.leads.filter(function(l){ return l.stage===stage; });
+      var items = db.leads.filter(function(l){ return l.stage===stage && matches(leadSearchTerm, [l.title, l.company, l.owner]); });
       var c = STAGE_COLOR[stage];
       var cards = items.map(function(lead){
-        return '<div class="card-item">'+
+        return '<div class="card-item" data-view-lead="'+lead.id+'">'+
+          '<div class="ci-num">#'+pad4(lead.num)+'</div>'+
           '<div class="ci-title">'+esc(lead.title)+'</div>'+
           (lead.company ? '<div class="ci-sub">'+esc(lead.company)+'</div>' : '')+
           (lead.value ? '<div class="ci-value">€ '+Number(lead.value).toLocaleString('pt-BR')+'</div>' : '')+
-          '<div class="ci-foot">'+
+          (lead.expectedClose ? '<div class="ci-date">Previsão: '+fmtDate(new Date(lead.expectedClose).getTime())+'</div>' : '')+
+          '<div class="ci-foot" onclick="event.stopPropagation();">'+
             '<select class="sm" data-move-lead="'+lead.id+'">'+
               STAGES.map(function(s){ return '<option value="'+s+'" '+(s===lead.stage?'selected':'')+'>'+s+'</option>'; }).join('')+
             '</select>'+
-            '<button class="icon-x" data-del-lead="'+lead.id+'">×</button>'+
           '</div></div>';
       }).join('') || '<p class="col-empty">—</p>';
       return '<div class="col"><div class="col-head"><span class="pill" style="background:'+c+'22;color:'+c+';">'+stage+'</span><span class="col-count">'+items.length+'</span></div><div class="col-body">'+cards+'</div></div>';
@@ -530,28 +670,121 @@
     document.querySelectorAll('[data-move-lead]').forEach(function(sel){
       sel.addEventListener('change', function(){
         var id = sel.getAttribute('data-move-lead');
-        db.leads = db.leads.map(function(l){ return l.id===id ? Object.assign({}, l, {stage: sel.value}) : l; });
-        saveDB(db); renderAll();
+        moveLeadStage(id, sel.value);
       });
     });
-    document.querySelectorAll('[data-del-lead]').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        var id = btn.getAttribute('data-del-lead');
-        db.leads = db.leads.filter(function(l){ return l.id!==id; });
-        saveDB(db); renderAll();
+    document.querySelectorAll('[data-view-lead]').forEach(function(card){
+      card.addEventListener('click', function(){
+        var id = card.getAttribute('data-view-lead');
+        var l = db.leads.find(function(x){ return x.id===id; });
+        if (l) openLeadView(l);
       });
     });
   }
 
-  // ===================== RENDER: CLIENTS =====================
+  function moveLeadStage(id, stage){
+    db.leads = db.leads.map(function(l){
+      if (l.id!==id) return l;
+      var upd = Object.assign({}, l, {stage: stage});
+      if (stage !== 'Perdido') upd.lostReason = '';
+      return upd;
+    });
+    saveDB(db); renderAll();
+  }
+
+  document.getElementById('addLeadBtn').addEventListener('click', function(){
+    editingLeadId = null;
+    document.getElementById('leadModalTitle').textContent = 'Novo lead';
+    document.getElementById('leadSubmitBtn').textContent = 'Adicionar lead';
+    document.getElementById('formLead').reset();
+    document.getElementById('leadLostLabel').style.display = 'none';
+    document.getElementById('leadLostReason').style.display = 'none';
+    openModal('modalLead');
+  });
+
+  document.getElementById('formLead').addEventListener('submit', function(e){
+    e.preventDefault();
+    var title = document.getElementById('leadTitle').value.trim();
+    if (!title) return;
+    var fields = {
+      title: title,
+      company: document.getElementById('leadCompany').value.trim(),
+      value: document.getElementById('leadValue').value,
+      expectedClose: document.getElementById('leadCloseDate').value
+    };
+    if (editingLeadId){
+      if (document.getElementById('leadLostReason').style.display !== 'none'){
+        fields.lostReason = document.getElementById('leadLostReason').value.trim();
+      }
+      db.leads = db.leads.map(function(l){ return l.id===editingLeadId ? Object.assign({}, l, fields) : l; });
+      editingLeadId = null;
+    } else {
+      db.counters.lead = (db.counters.lead||0) + 1;
+      db.leads.push(Object.assign({ id: uid(), num: db.counters.lead, stage:'Novo', createdAt: Date.now(), owner: currentUser, lostReason:'' }, fields));
+    }
+    saveDB(db); e.target.reset(); closeModal('modalLead'); renderAll();
+  });
+
+  function openLeadView(l){
+    viewingLeadId = l.id;
+    var rows = [
+      ['Título', l.title],
+      ['Empresa', l.company],
+      ['Valor estimado', l.value ? '€ '+Number(l.value).toLocaleString('pt-BR') : ''],
+      ['Estágio', l.stage],
+      ['Probabilidade', (STAGE_PROB[l.stage]||0)+'%'],
+      ['Previsão de fechamento', l.expectedClose ? fmtDate(new Date(l.expectedClose).getTime()) : ''],
+      ['Responsável', l.owner],
+      ['Criado em', fmtDateTime(l.createdAt)],
+      ['Motivo da perda', l.stage==='Perdido' ? l.lostReason : '']
+    ];
+    document.getElementById('leadViewBody').innerHTML = '<div class="cv-num">#'+pad4(l.num)+'</div>' +
+      rows.filter(function(r){ return r[1]; }).map(function(r){
+        return '<div class="cv-row"><span class="cv-label">'+r[0]+'</span><span class="cv-value">'+esc(r[1])+'</span></div>';
+      }).join('');
+    openModal('modalViewLead');
+  }
+
+  document.getElementById('editLeadBtn').addEventListener('click', function(){
+    if (!viewingLeadId) return;
+    var l = db.leads.find(function(x){ return x.id===viewingLeadId; });
+    if (!l) return;
+    editingLeadId = l.id;
+    document.getElementById('leadModalTitle').textContent = 'Editar lead';
+    document.getElementById('leadSubmitBtn').textContent = 'Salvar alterações';
+    document.getElementById('leadTitle').value = l.title || '';
+    document.getElementById('leadCompany').value = l.company || '';
+    document.getElementById('leadValue').value = l.value || '';
+    document.getElementById('leadCloseDate').value = l.expectedClose || '';
+    if (l.stage==='Perdido'){
+      document.getElementById('leadLostLabel').style.display = 'block';
+      document.getElementById('leadLostReason').style.display = 'block';
+      document.getElementById('leadLostReason').value = l.lostReason || '';
+    } else {
+      document.getElementById('leadLostLabel').style.display = 'none';
+      document.getElementById('leadLostReason').style.display = 'none';
+    }
+    closeModal('modalViewLead');
+    openModal('modalLead');
+  });
+  document.getElementById('printLeadBtn').addEventListener('click', function(){ window.print(); });
+  document.getElementById('deleteLeadBtn').addEventListener('click', function(){
+    if (!viewingLeadId) return;
+    if (!confirm('Deseja realmente eliminar esse registro? Essa ação não pode ser desfeita.')) return;
+    db.leads = db.leads.filter(function(l){ return l.id!==viewingLeadId; });
+    saveDB(db); viewingLeadId = null; closeModal('modalViewLead'); renderAll();
+  });
+
+  // ===================== CLIENTS =====================
   function renderClients(){
-    var html = db.clients.map(function(c){
-      return '<div class="list-row" data-view-client="'+c.id+'" style="cursor:pointer;">'+
+    var filtered = db.clients.filter(function(c){ return matches(clientSearchTerm, [c.name, c.company, c.email]); });
+    var html = filtered.map(function(c){
+      return '<div class="list-row" data-view-client="'+c.id+'">'+
         '<div class="av">'+esc(c.name.charAt(0).toUpperCase())+'</div>'+
         '<div style="flex:1;"><div class="lr-title">'+esc(c.name)+'</div><div class="lr-sub">'+esc(c.company||'')+(c.email ? ' · '+esc(c.email) : '')+'</div></div>'+
       '</div>';
     }).join('');
-    document.getElementById('clientsList').innerHTML = html || '<p class="empty-msg" style="padding:20px;">Nenhum cliente cadastrado.</p>';
+    document.getElementById('clientsList').innerHTML = html || '<p class="empty-msg" style="padding:20px;">Nenhum cliente encontrado.</p>';
     document.querySelectorAll('[data-view-client]').forEach(function(row){
       row.addEventListener('click', function(){
         var id = row.getAttribute('data-view-client');
@@ -563,25 +796,45 @@
     dl.innerHTML = db.clients.map(function(c){ return '<option value="'+esc(c.company||c.name)+'"></option>'; }).join('');
   }
 
-  function openClientView(c){
-    viewingClientId = c.id;
-    var rows = [
-      ['Nome', c.name],
-      ['Empresa', c.company],
-      ['E-mail', c.email],
-      ['Telefone', c.phone],
-      ['Endereço', c.address],
-      ['País', c.country],
-      ['URL', c.url]
-    ];
-    var rowsHtml = rows.filter(function(r){ return r[1]; }).map(function(r){
-      return '<div class="cv-row"><span class="cv-label">'+r[0]+'</span><span class="cv-value">'+esc(r[1])+'</span></div>';
-    }).join('') || '<p class="empty-msg">Sem dados adicionais.</p>';
-    var imgHtml = c.image ? '<img src="'+c.image+'" style="max-width:100%; border-radius:10px; margin-bottom:14px; display:block;" />' : '';
-    var notesHtml = c.notes ? '<div style="margin-top:14px;"><div class="cv-label" style="margin-bottom:6px;">Anotações</div><p style="font-size:13.5px; white-space:pre-wrap;">'+esc(c.notes)+'</p></div>' : '';
-    document.getElementById('clientViewBody').innerHTML = imgHtml + rowsHtml + notesHtml;
-    openModal('modalViewClient');
-  }
+  document.getElementById('addClientBtn').addEventListener('click', function(){
+    editingClientId = null;
+    pendingImage = null;
+    document.getElementById('clientModalTitle').textContent = 'Novo cliente';
+    document.getElementById('clientSubmitBtn').textContent = 'Adicionar cliente';
+    document.getElementById('formClient').reset();
+    document.getElementById('clientImagePreviewWrap').style.display = 'none';
+    document.getElementById('imageError').style.display = 'none';
+    updateNotesCounter();
+    openModal('modalClient');
+  });
+  document.getElementById('editClientBtn').addEventListener('click', function(){
+    if (!viewingClientId) return;
+    var c = db.clients.find(function(x){ return x.id===viewingClientId; });
+    if (!c) return;
+    editingClientId = c.id;
+    document.getElementById('clientModalTitle').textContent = 'Editar cliente';
+    document.getElementById('clientSubmitBtn').textContent = 'Salvar alterações';
+    document.getElementById('clientName').value = c.name || '';
+    document.getElementById('clientCompany').value = c.company || '';
+    document.getElementById('clientEmail').value = c.email || '';
+    document.getElementById('clientPhone').value = c.phone || '';
+    document.getElementById('clientAddress').value = c.address || '';
+    document.getElementById('clientCountry').value = c.country || '';
+    document.getElementById('clientUrl').value = c.url || '';
+    document.getElementById('clientNotes').value = c.notes || '';
+    updateNotesCounter();
+    pendingImage = c.image || null;
+    if (c.image){
+      document.getElementById('clientImagePreview').src = c.image;
+      document.getElementById('clientImagePreviewWrap').style.display = 'block';
+    } else {
+      document.getElementById('clientImagePreviewWrap').style.display = 'none';
+    }
+    document.getElementById('imageError').style.display = 'none';
+    closeModal('modalViewClient');
+    openModal('modalClient');
+  });
+
   function countWords(text){
     var t = text.trim();
     if (!t) return 0;
@@ -644,125 +897,6 @@
     document.getElementById('clientImagePreviewWrap').style.display = 'none';
   });
 
-  document.getElementById('printClientBtn').addEventListener('click', function(){ window.print(); });
-  document.getElementById('deleteClientBtn').addEventListener('click', function(){
-    if (!viewingClientId) return;
-    var ok = confirm('Deseja realmente eliminar esse registro? Essa ação não pode ser desfeita.');
-    if (!ok) return;
-    db.clients = db.clients.filter(function(c){ return c.id!==viewingClientId; });
-    saveDB(db);
-    viewingClientId = null;
-    closeModal('modalViewClient');
-    renderAll();
-  });
-
-  // ===================== RENDER: TICKETS =====================
-  function renderTickets(){
-    var html = TSTATUS.map(function(status){
-      var items = db.tickets.filter(function(t){ return t.status===status; });
-      var c = TSTATUS_COLOR[status];
-      var cards = items.map(function(t){
-        return '<div class="card-item">'+
-          '<div class="ci-title">'+esc(t.subject)+'</div>'+
-          (t.client ? '<div class="ci-sub">'+esc(t.client)+'</div>' : '')+
-          '<div class="ci-foot">'+
-            '<select class="sm" data-move-ticket="'+t.id+'">'+
-              TSTATUS.map(function(s){ return '<option value="'+s+'" '+(s===t.status?'selected':'')+'>'+s+'</option>'; }).join('')+
-            '</select>'+
-            '<button class="icon-x" data-del-ticket="'+t.id+'">×</button>'+
-          '</div></div>';
-      }).join('') || '<p class="col-empty">—</p>';
-      return '<div class="col"><div class="col-head"><span class="pill" style="background:'+c+'22;color:'+c+';">'+status+'</span><span class="col-count">'+items.length+'</span></div><div class="col-body">'+cards+'</div></div>';
-    }).join('');
-    document.getElementById('ticketsBoard').innerHTML = html;
-
-    document.querySelectorAll('[data-move-ticket]').forEach(function(sel){
-      sel.addEventListener('change', function(){
-        var id = sel.getAttribute('data-move-ticket');
-        db.tickets = db.tickets.map(function(t){ return t.id===id ? Object.assign({}, t, {status: sel.value}) : t; });
-        saveDB(db); renderAll();
-      });
-    });
-    document.querySelectorAll('[data-del-ticket]').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        var id = btn.getAttribute('data-del-ticket');
-        db.tickets = db.tickets.filter(function(t){ return t.id!==id; });
-        saveDB(db); renderAll();
-      });
-    });
-  }
-
-  function renderAll(){
-    renderDashboard();
-    renderLeads();
-    renderClients();
-    renderTickets();
-  }
-
-  // ===================== MODAIS =====================
-  function openModal(id){ document.getElementById(id).classList.add('show'); }
-  function closeModal(id){ document.getElementById(id).classList.remove('show'); }
-  document.querySelectorAll('[data-close]').forEach(function(btn){
-    btn.addEventListener('click', function(){ closeModal(btn.getAttribute('data-close')); });
-  });
-  document.querySelectorAll('.modal-overlay').forEach(function(ov){
-    ov.addEventListener('click', function(e){ if (e.target===ov) ov.classList.remove('show'); });
-  });
-
-  document.getElementById('addLeadBtn').addEventListener('click', function(){ openModal('modalLead'); });
-  document.getElementById('addClientBtn').addEventListener('click', function(){
-    editingClientId = null;
-    pendingImage = null;
-    document.getElementById('clientModalTitle').textContent = 'Novo cliente';
-    document.getElementById('clientSubmitBtn').textContent = 'Adicionar cliente';
-    document.getElementById('formClient').reset();
-    document.getElementById('clientImagePreviewWrap').style.display = 'none';
-    document.getElementById('imageError').style.display = 'none';
-    updateNotesCounter();
-    openModal('modalClient');
-  });
-  document.getElementById('editClientBtn').addEventListener('click', function(){
-    if (!viewingClientId) return;
-    var c = db.clients.find(function(x){ return x.id===viewingClientId; });
-    if (!c) return;
-    editingClientId = c.id;
-    document.getElementById('clientModalTitle').textContent = 'Editar cliente';
-    document.getElementById('clientSubmitBtn').textContent = 'Salvar alterações';
-    document.getElementById('clientName').value = c.name || '';
-    document.getElementById('clientCompany').value = c.company || '';
-    document.getElementById('clientEmail').value = c.email || '';
-    document.getElementById('clientPhone').value = c.phone || '';
-    document.getElementById('clientAddress').value = c.address || '';
-    document.getElementById('clientCountry').value = c.country || '';
-    document.getElementById('clientUrl').value = c.url || '';
-    document.getElementById('clientNotes').value = c.notes || '';
-    updateNotesCounter();
-    pendingImage = c.image || null;
-    if (c.image){
-      document.getElementById('clientImagePreview').src = c.image;
-      document.getElementById('clientImagePreviewWrap').style.display = 'block';
-    } else {
-      document.getElementById('clientImagePreviewWrap').style.display = 'none';
-    }
-    document.getElementById('imageError').style.display = 'none';
-    closeModal('modalViewClient');
-    openModal('modalClient');
-  });
-  document.getElementById('addTicketBtn').addEventListener('click', function(){ openModal('modalTicket'); });
-
-  document.getElementById('formLead').addEventListener('submit', function(e){
-    e.preventDefault();
-    var title = document.getElementById('leadTitle').value.trim();
-    if (!title) return;
-    db.leads.push({
-      id: uid(), title: title,
-      company: document.getElementById('leadCompany').value.trim(),
-      value: document.getElementById('leadValue').value,
-      stage: 'Novo', createdAt: Date.now(), owner: currentUser
-    });
-    saveDB(db); e.target.reset(); closeModal('modalLead'); renderAll();
-  });
-
   document.getElementById('formClient').addEventListener('submit', function(e){
     e.preventDefault();
     var name = document.getElementById('clientName').value.trim();
@@ -789,17 +923,176 @@
     saveDB(db); e.target.reset(); pendingImage = null; document.getElementById('clientImagePreviewWrap').style.display = 'none'; closeModal('modalClient'); renderAll();
   });
 
+  function openClientView(c){
+    viewingClientId = c.id;
+    var rows = [
+      ['Nome', c.name],
+      ['Empresa', c.company],
+      ['E-mail', c.email],
+      ['Telefone', c.phone],
+      ['Endereço', c.address],
+      ['País', c.country],
+      ['URL', c.url]
+    ];
+    var rowsHtml = rows.filter(function(r){ return r[1]; }).map(function(r){
+      return '<div class="cv-row"><span class="cv-label">'+r[0]+'</span><span class="cv-value">'+esc(r[1])+'</span></div>';
+    }).join('') || '<p class="empty-msg">Sem dados adicionais.</p>';
+    var imgHtml = c.image ? '<img src="'+c.image+'" style="max-width:100%; border-radius:10px; margin-bottom:14px; display:block;" />' : '';
+    var notesHtml = c.notes ? '<div style="margin-top:14px;"><div class="cv-label" style="margin-bottom:6px;">Anotações</div><p style="font-size:13.5px; white-space:pre-wrap;">'+esc(c.notes)+'</p></div>' : '';
+
+    var key = (c.company || c.name || '').toLowerCase();
+    var relLeads = key ? db.leads.filter(function(l){ return (l.company||'').toLowerCase()===key; }) : [];
+    var relTickets = key ? db.tickets.filter(function(t){ return (t.client||'').toLowerCase()===key; }) : [];
+    var histItems = relLeads.map(function(l){ return {label:'Lead #'+pad4(l.num)+' · '+l.title, meta:l.stage, ts:l.createdAt}; })
+      .concat(relTickets.map(function(t){ return {label:'Chamado #'+pad4(t.num)+' · '+t.subject, meta:t.status, ts:t.createdAt}; }))
+      .sort(function(a,b){ return b.ts-a.ts; });
+    var histHtml = histItems.length ? histItems.map(function(h){
+      return '<div class="hist-row"><span class="dot"></span><span style="flex:1;">'+esc(h.label)+'</span><span class="activity-meta">'+esc(h.meta)+'</span></div>';
+    }).join('') : '<p class="empty-msg" style="padding:8px 0;">Nenhum lead ou chamado vinculado a este cliente ainda.</p>';
+
+    document.getElementById('clientViewBody').innerHTML = imgHtml + rowsHtml + notesHtml +
+      '<div style="margin-top:18px;"><div class="cv-label" style="margin-bottom:6px;">Histórico</div>' + histHtml + '</div>';
+    openModal('modalViewClient');
+  }
+
+  document.getElementById('printClientBtn').addEventListener('click', function(){ window.print(); });
+  document.getElementById('deleteClientBtn').addEventListener('click', function(){
+    if (!viewingClientId) return;
+    if (!confirm('Deseja realmente eliminar esse registro? Essa ação não pode ser desfeita.')) return;
+    db.clients = db.clients.filter(function(c){ return c.id!==viewingClientId; });
+    saveDB(db); viewingClientId = null; closeModal('modalViewClient'); renderAll();
+  });
+
+  // ===================== TICKETS =====================
+  function renderTickets(){
+    var html = TSTATUS.map(function(status){
+      var items = db.tickets.filter(function(t){ return t.status===status && matches(ticketSearchTerm, [t.subject, t.client, t.owner]); });
+      var c = TSTATUS_COLOR[status];
+      var cards = items.map(function(t){
+        return '<div class="card-item" data-view-ticket="'+t.id+'">'+
+          '<div class="ci-num">#'+pad4(t.num)+'</div>'+
+          '<div class="ci-title">'+esc(t.subject)+'</div>'+
+          (t.client ? '<div class="ci-sub">'+esc(t.client)+'</div>' : '')+
+          '<span class="prio prio-'+t.priority+'">'+t.priority+'</span>'+
+          '<div class="ci-date">Aberto em '+fmtDate(t.createdAt)+'</div>'+
+          '<div class="ci-foot" onclick="event.stopPropagation();">'+
+            '<select class="sm" data-move-ticket="'+t.id+'">'+
+              TSTATUS.map(function(s){ return '<option value="'+s+'" '+(s===t.status?'selected':'')+'>'+s+'</option>'; }).join('')+
+            '</select>'+
+          '</div></div>';
+      }).join('') || '<p class="col-empty">—</p>';
+      return '<div class="col"><div class="col-head"><span class="pill" style="background:'+c+'22;color:'+c+';">'+status+'</span><span class="col-count">'+items.length+'</span></div><div class="col-body">'+cards+'</div></div>';
+    }).join('');
+    document.getElementById('ticketsBoard').innerHTML = html;
+
+    document.querySelectorAll('[data-move-ticket]').forEach(function(sel){
+      sel.addEventListener('change', function(){
+        var id = sel.getAttribute('data-move-ticket');
+        var status = sel.value;
+        db.tickets = db.tickets.map(function(t){
+          if (t.id!==id) return t;
+          var upd = Object.assign({}, t, {status: status});
+          if (status==='Resolvido' && !t.resolvedAt) upd.resolvedAt = Date.now();
+          if (status!=='Resolvido') upd.resolvedAt = null;
+          return upd;
+        });
+        saveDB(db); renderAll();
+      });
+    });
+    document.querySelectorAll('[data-view-ticket]').forEach(function(card){
+      card.addEventListener('click', function(){
+        var id = card.getAttribute('data-view-ticket');
+        var t = db.tickets.find(function(x){ return x.id===id; });
+        if (t) openTicketView(t);
+      });
+    });
+  }
+
+  document.getElementById('addTicketBtn').addEventListener('click', function(){
+    editingTicketId = null;
+    document.getElementById('ticketModalTitle').textContent = 'Novo chamado';
+    document.getElementById('ticketSubmitBtn').textContent = 'Abrir chamado';
+    document.getElementById('formTicket').reset();
+    openModal('modalTicket');
+  });
+
   document.getElementById('formTicket').addEventListener('submit', function(e){
     e.preventDefault();
     var subject = document.getElementById('ticketSubject').value.trim();
     if (!subject) return;
-    db.tickets.push({
-      id: uid(), subject: subject,
+    var fields = {
+      subject: subject,
       client: document.getElementById('ticketClient').value.trim(),
-      status: 'Aberto', createdAt: Date.now(), owner: currentUser
-    });
+      priority: document.getElementById('ticketPriority').value,
+      description: document.getElementById('ticketDescription').value.trim()
+    };
+    if (editingTicketId){
+      db.tickets = db.tickets.map(function(t){ return t.id===editingTicketId ? Object.assign({}, t, fields) : t; });
+      editingTicketId = null;
+    } else {
+      db.counters.ticket = (db.counters.ticket||0) + 1;
+      db.tickets.push(Object.assign({ id: uid(), num: db.counters.ticket, status:'Aberto', createdAt: Date.now(), resolvedAt: null, owner: currentUser }, fields));
+    }
     saveDB(db); e.target.reset(); closeModal('modalTicket'); renderAll();
   });
+
+  function openTicketView(t){
+    viewingTicketId = t.id;
+    var rows = [
+      ['Assunto', t.subject],
+      ['Cliente', t.client],
+      ['Prioridade', t.priority],
+      ['Status', t.status],
+      ['Responsável', t.owner],
+      ['Aberto em', fmtDateTime(t.createdAt)],
+      ['Resolvido em', t.resolvedAt ? fmtDateTime(t.resolvedAt) : '']
+    ];
+    var rowsHtml = rows.filter(function(r){ return r[1]; }).map(function(r){
+      return '<div class="cv-row"><span class="cv-label">'+r[0]+'</span><span class="cv-value">'+esc(r[1])+'</span></div>';
+    }).join('');
+    var descHtml = t.description ? '<div style="margin-top:14px;"><div class="cv-label" style="margin-bottom:6px;">Descrição</div><p style="font-size:13.5px; white-space:pre-wrap;">'+esc(t.description)+'</p></div>' : '';
+    document.getElementById('ticketViewBody').innerHTML = '<div class="cv-num">#'+pad4(t.num)+'</div>' + rowsHtml + descHtml;
+    openModal('modalViewTicket');
+  }
+
+  document.getElementById('editTicketBtn').addEventListener('click', function(){
+    if (!viewingTicketId) return;
+    var t = db.tickets.find(function(x){ return x.id===viewingTicketId; });
+    if (!t) return;
+    editingTicketId = t.id;
+    document.getElementById('ticketModalTitle').textContent = 'Editar chamado';
+    document.getElementById('ticketSubmitBtn').textContent = 'Salvar alterações';
+    document.getElementById('ticketSubject').value = t.subject || '';
+    document.getElementById('ticketClient').value = t.client || '';
+    document.getElementById('ticketPriority').value = t.priority || 'Média';
+    document.getElementById('ticketDescription').value = t.description || '';
+    closeModal('modalViewTicket');
+    openModal('modalTicket');
+  });
+  document.getElementById('printTicketBtn').addEventListener('click', function(){ window.print(); });
+  document.getElementById('deleteTicketBtn').addEventListener('click', function(){
+    if (!viewingTicketId) return;
+    if (!confirm('Deseja realmente eliminar esse registro? Essa ação não pode ser desfeita.')) return;
+    db.tickets = db.tickets.filter(function(t){ return t.id!==viewingTicketId; });
+    saveDB(db); viewingTicketId = null; closeModal('modalViewTicket'); renderAll();
+  });
+
+  // ===================== MODAIS (genérico) =====================
+  function openModal(id){ document.getElementById(id).classList.add('show'); }
+  function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+  document.querySelectorAll('[data-close]').forEach(function(btn){
+    btn.addEventListener('click', function(){ closeModal(btn.getAttribute('data-close')); });
+  });
+  document.querySelectorAll('.modal-overlay').forEach(function(ov){
+    ov.addEventListener('click', function(e){ if (e.target===ov) ov.classList.remove('show'); });
+  });
+
+  function renderAll(){
+    renderDashboard();
+    renderLeads();
+    renderClients();
+    renderTickets();
+  }
 
 })();
 </script>
