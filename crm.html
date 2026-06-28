@@ -269,7 +269,7 @@
 <!-- MODAL: client -->
 <div class="modal-overlay" id="modalClient">
   <div class="modal-card">
-    <div class="modal-head"><span class="modal-title">Novo cliente</span><button class="icon-x" data-close="modalClient">×</button></div>
+    <div class="modal-head"><span class="modal-title" id="clientModalTitle">Novo cliente</span><button class="icon-x" data-close="modalClient">×</button></div>
     <form id="formClient">
       <label class="f-label">Nome do contato</label>
       <input class="f-input" id="clientName" placeholder="ex: João Pereira" required />
@@ -285,7 +285,7 @@
       <input class="f-input" id="clientCountry" placeholder="ex: Brasil" />
       <label class="f-label">URL</label>
       <input class="f-input" id="clientUrl" placeholder="https://acme.com" />
-      <button class="btn" type="submit">Adicionar cliente</button>
+      <button class="btn" type="submit" id="clientSubmitBtn">Adicionar cliente</button>
     </form>
   </div>
 </div>
@@ -312,6 +312,7 @@
     <div id="clientViewBody" style="margin-top:10px;"></div>
     <div style="display:flex; gap:10px; margin-top:22px;">
       <button class="btn btn-ghost" type="button" data-close="modalViewClient" style="flex:1;">Fechar</button>
+      <button class="btn btn-ghost" type="button" id="editClientBtn" style="flex:1;">Editar</button>
       <button class="btn" type="button" id="printClientBtn" style="flex:1;">Imprimir</button>
     </div>
   </div>
@@ -382,6 +383,8 @@
   function saveDB(db){ localStorage.setItem(DB_KEY, JSON.stringify(db)); }
   var db = loadDB();
   var currentUser = null;
+  var editingClientId = null;
+  var viewingClientId = null;
 
   function uid(){ return Math.random().toString(36).slice(2,10); }
 
@@ -536,6 +539,7 @@
   }
 
   function openClientView(c){
+    viewingClientId = c.id;
     var rows = [
       ['Nome', c.name],
       ['Empresa', c.company],
@@ -606,7 +610,30 @@
   });
 
   document.getElementById('addLeadBtn').addEventListener('click', function(){ openModal('modalLead'); });
-  document.getElementById('addClientBtn').addEventListener('click', function(){ openModal('modalClient'); });
+  document.getElementById('addClientBtn').addEventListener('click', function(){
+    editingClientId = null;
+    document.getElementById('clientModalTitle').textContent = 'Novo cliente';
+    document.getElementById('clientSubmitBtn').textContent = 'Adicionar cliente';
+    document.getElementById('formClient').reset();
+    openModal('modalClient');
+  });
+  document.getElementById('editClientBtn').addEventListener('click', function(){
+    if (!viewingClientId) return;
+    var c = db.clients.find(function(x){ return x.id===viewingClientId; });
+    if (!c) return;
+    editingClientId = c.id;
+    document.getElementById('clientModalTitle').textContent = 'Editar cliente';
+    document.getElementById('clientSubmitBtn').textContent = 'Salvar alterações';
+    document.getElementById('clientName').value = c.name || '';
+    document.getElementById('clientCompany').value = c.company || '';
+    document.getElementById('clientEmail').value = c.email || '';
+    document.getElementById('clientPhone').value = c.phone || '';
+    document.getElementById('clientAddress').value = c.address || '';
+    document.getElementById('clientCountry').value = c.country || '';
+    document.getElementById('clientUrl').value = c.url || '';
+    closeModal('modalViewClient');
+    openModal('modalClient');
+  });
   document.getElementById('addTicketBtn').addEventListener('click', function(){ openModal('modalTicket'); });
 
   document.getElementById('formLead').addEventListener('submit', function(e){
@@ -626,16 +653,23 @@
     e.preventDefault();
     var name = document.getElementById('clientName').value.trim();
     if (!name) return;
-    db.clients.push({
-      id: uid(), name: name,
+    var fields = {
+      name: name,
       company: document.getElementById('clientCompany').value.trim(),
       email: document.getElementById('clientEmail').value.trim(),
       phone: document.getElementById('clientPhone').value.trim(),
       address: document.getElementById('clientAddress').value.trim(),
       country: document.getElementById('clientCountry').value.trim(),
-      url: document.getElementById('clientUrl').value.trim(),
-      createdAt: Date.now()
-    });
+      url: document.getElementById('clientUrl').value.trim()
+    };
+    if (editingClientId){
+      db.clients = db.clients.map(function(c){
+        return c.id===editingClientId ? Object.assign({}, c, fields) : c;
+      });
+      editingClientId = null;
+    } else {
+      db.clients.push(Object.assign({ id: uid(), createdAt: Date.now() }, fields));
+    }
     saveDB(db); e.target.reset(); closeModal('modalClient'); renderAll();
   });
 
