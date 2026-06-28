@@ -141,6 +141,18 @@
     .hdr-inner{padding:14px 18px;}
     .wrap{padding:18px 18px 60px;}
   }
+
+  .cv-row{display:flex; justify-content:space-between; gap:14px; padding:9px 0; border-bottom:1px solid var(--border); font-size:13.5px;}
+  .cv-row:last-child{border-bottom:none;}
+  .cv-label{color:var(--muted); font-weight:600;}
+  .cv-value{text-align:right; font-weight:600;}
+
+  @media print{
+    body *{visibility:hidden;}
+    #clientViewCard, #clientViewCard *{visibility:visible;}
+    #clientViewCard{position:absolute; left:0; top:0; width:100%; box-shadow:none; border:none;}
+    #printClientBtn, [data-close]{display:none !important;}
+  }
 </style>
 </head>
 <body>
@@ -247,7 +259,7 @@
       <input class="f-input" id="leadTitle" placeholder="ex: Licença anual - Acme" required />
       <label class="f-label">Empresa</label>
       <input class="f-input" id="leadCompany" placeholder="ex: Acme Ltda" />
-      <label class="f-label">Valor estimado (R$)</label>
+      <label class="f-label">Valor estimado (€)</label>
       <input class="f-input" id="leadValue" type="number" placeholder="0" />
       <button class="btn" type="submit">Adicionar lead</button>
     </form>
@@ -265,6 +277,14 @@
       <input class="f-input" id="clientCompany" placeholder="ex: Acme Ltda" />
       <label class="f-label">E-mail</label>
       <input class="f-input" id="clientEmail" placeholder="joao@acme.com" />
+      <label class="f-label">Telefone</label>
+      <input class="f-input" id="clientPhone" placeholder="+55 11 90000-0000" />
+      <label class="f-label">Endereço</label>
+      <input class="f-input" id="clientAddress" placeholder="Rua, número, cidade" />
+      <label class="f-label">País</label>
+      <input class="f-input" id="clientCountry" placeholder="ex: Brasil" />
+      <label class="f-label">URL</label>
+      <input class="f-input" id="clientUrl" placeholder="https://acme.com" />
       <button class="btn" type="submit">Adicionar cliente</button>
     </form>
   </div>
@@ -282,6 +302,18 @@
       <datalist id="clientDatalist"></datalist>
       <button class="btn" type="submit">Abrir chamado</button>
     </form>
+  </div>
+</div>
+
+<!-- MODAL: view client -->
+<div class="modal-overlay" id="modalViewClient">
+  <div class="modal-card" id="clientViewCard">
+    <div class="modal-head"><span class="modal-title">Ficha do cliente</span><button class="icon-x" data-close="modalViewClient">×</button></div>
+    <div id="clientViewBody" style="margin-top:10px;"></div>
+    <div style="display:flex; gap:10px; margin-top:22px;">
+      <button class="btn btn-ghost" type="button" data-close="modalViewClient" style="flex:1;">Fechar</button>
+      <button class="btn" type="button" id="printClientBtn" style="flex:1;">Imprimir</button>
+    </div>
   </div>
 </div>
 
@@ -411,7 +443,7 @@
     var metrics = [
       ['Leads ativos', leads.length, 'leads'],
       ['Negócios fechados', closedLeads, 'leads'],
-      ['Em pipeline', 'R$ ' + pipelineValue.toLocaleString('pt-BR'), 'leads'],
+      ['Em pipeline', '€ ' + pipelineValue.toLocaleString('pt-BR'), 'leads'],
       ['Chamados abertos', openTickets, 'tickets'],
       ['Clientes', clients.length, 'clients']
     ];
@@ -446,7 +478,7 @@
         return '<div class="card-item">'+
           '<div class="ci-title">'+esc(lead.title)+'</div>'+
           (lead.company ? '<div class="ci-sub">'+esc(lead.company)+'</div>' : '')+
-          (lead.value ? '<div class="ci-value">R$ '+Number(lead.value).toLocaleString('pt-BR')+'</div>' : '')+
+          (lead.value ? '<div class="ci-value">€ '+Number(lead.value).toLocaleString('pt-BR')+'</div>' : '')+
           '<div class="ci-foot">'+
             '<select class="sm" data-move-lead="'+lead.id+'">'+
               STAGES.map(function(s){ return '<option value="'+s+'" '+(s===lead.stage?'selected':'')+'>'+s+'</option>'; }).join('')+
@@ -477,7 +509,7 @@
   // ===================== RENDER: CLIENTS =====================
   function renderClients(){
     var html = db.clients.map(function(c){
-      return '<div class="list-row">'+
+      return '<div class="list-row" data-view-client="'+c.id+'" style="cursor:pointer;">'+
         '<div class="av">'+esc(c.name.charAt(0).toUpperCase())+'</div>'+
         '<div style="flex:1;"><div class="lr-title">'+esc(c.name)+'</div><div class="lr-sub">'+esc(c.company||'')+(c.email ? ' · '+esc(c.email) : '')+'</div></div>'+
         '<button class="icon-x" data-del-client="'+c.id+'">×</button>'+
@@ -485,15 +517,40 @@
     }).join('');
     document.getElementById('clientsList').innerHTML = html || '<p class="empty-msg" style="padding:20px;">Nenhum cliente cadastrado.</p>';
     document.querySelectorAll('[data-del-client]').forEach(function(btn){
-      btn.addEventListener('click', function(){
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
         var id = btn.getAttribute('data-del-client');
         db.clients = db.clients.filter(function(c){ return c.id!==id; });
         saveDB(db); renderAll();
       });
     });
+    document.querySelectorAll('[data-view-client]').forEach(function(row){
+      row.addEventListener('click', function(){
+        var id = row.getAttribute('data-view-client');
+        var c = db.clients.find(function(x){ return x.id===id; });
+        if (c) openClientView(c);
+      });
+    });
     var dl = document.getElementById('clientDatalist');
     dl.innerHTML = db.clients.map(function(c){ return '<option value="'+esc(c.company||c.name)+'"></option>'; }).join('');
   }
+
+  function openClientView(c){
+    var rows = [
+      ['Nome', c.name],
+      ['Empresa', c.company],
+      ['E-mail', c.email],
+      ['Telefone', c.phone],
+      ['Endereço', c.address],
+      ['País', c.country],
+      ['URL', c.url]
+    ];
+    document.getElementById('clientViewBody').innerHTML = rows.filter(function(r){ return r[1]; }).map(function(r){
+      return '<div class="cv-row"><span class="cv-label">'+r[0]+'</span><span class="cv-value">'+esc(r[1])+'</span></div>';
+    }).join('') || '<p class="empty-msg">Sem dados adicionais.</p>';
+    openModal('modalViewClient');
+  }
+  document.getElementById('printClientBtn').addEventListener('click', function(){ window.print(); });
 
   // ===================== RENDER: TICKETS =====================
   function renderTickets(){
@@ -573,6 +630,10 @@
       id: uid(), name: name,
       company: document.getElementById('clientCompany').value.trim(),
       email: document.getElementById('clientEmail').value.trim(),
+      phone: document.getElementById('clientPhone').value.trim(),
+      address: document.getElementById('clientAddress').value.trim(),
+      country: document.getElementById('clientCountry').value.trim(),
+      url: document.getElementById('clientUrl').value.trim(),
       createdAt: Date.now()
     });
     saveDB(db); e.target.reset(); closeModal('modalClient'); renderAll();
