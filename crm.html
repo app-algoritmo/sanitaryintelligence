@@ -151,7 +151,7 @@
     body *{visibility:hidden;}
     #clientViewCard, #clientViewCard *{visibility:visible;}
     #clientViewCard{position:absolute; left:0; top:0; width:100%; box-shadow:none; border:none;}
-    #printClientBtn, [data-close]{display:none !important;}
+    #printClientBtn, #deleteClientBtn, #editClientBtn, [data-close]{display:none !important;}
   }
 </style>
 </head>
@@ -315,6 +315,7 @@
       <button class="btn btn-ghost" type="button" id="editClientBtn" style="flex:1;">Editar</button>
       <button class="btn" type="button" id="printClientBtn" style="flex:1;">Imprimir</button>
     </div>
+    <button type="button" id="deleteClientBtn" style="display:block; margin:14px auto 0; background:none; border:none; color:var(--muted); font-size:12px; text-decoration:underline; cursor:pointer;">Eliminar registro</button>
   </div>
 </div>
 
@@ -515,18 +516,9 @@
       return '<div class="list-row" data-view-client="'+c.id+'" style="cursor:pointer;">'+
         '<div class="av">'+esc(c.name.charAt(0).toUpperCase())+'</div>'+
         '<div style="flex:1;"><div class="lr-title">'+esc(c.name)+'</div><div class="lr-sub">'+esc(c.company||'')+(c.email ? ' · '+esc(c.email) : '')+'</div></div>'+
-        '<button class="icon-x" data-del-client="'+c.id+'">×</button>'+
       '</div>';
     }).join('');
     document.getElementById('clientsList').innerHTML = html || '<p class="empty-msg" style="padding:20px;">Nenhum cliente cadastrado.</p>';
-    document.querySelectorAll('[data-del-client]').forEach(function(btn){
-      btn.addEventListener('click', function(e){
-        e.stopPropagation();
-        var id = btn.getAttribute('data-del-client');
-        db.clients = db.clients.filter(function(c){ return c.id!==id; });
-        saveDB(db); renderAll();
-      });
-    });
     document.querySelectorAll('[data-view-client]').forEach(function(row){
       row.addEventListener('click', function(){
         var id = row.getAttribute('data-view-client');
@@ -555,6 +547,16 @@
     openModal('modalViewClient');
   }
   document.getElementById('printClientBtn').addEventListener('click', function(){ window.print(); });
+  document.getElementById('deleteClientBtn').addEventListener('click', function(){
+    if (!viewingClientId) return;
+    var ok = confirm('Deseja realmente eliminar esse registro? Essa ação não pode ser desfeita.');
+    if (!ok) return;
+    db.clients = db.clients.filter(function(c){ return c.id!==viewingClientId; });
+    saveDB(db);
+    viewingClientId = null;
+    closeModal('modalViewClient');
+    renderAll();
+  });
 
   // ===================== RENDER: TICKETS =====================
   function renderTickets(){
