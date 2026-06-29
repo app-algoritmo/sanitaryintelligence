@@ -208,7 +208,7 @@
       <div class="brand-sub" data-i18n="appTag">Sanitary Intelligence · Gestão Comercial</div>
     </div>
     <div class="hdr-right">
-      <a class="back" href="https://sanitaryintelligence.com/access.html" data-i18n="backToHub">← Central de ferramentas</a>
+      <a class="back" href="access.html" data-i18n="backToHub">← Central de ferramentas</a>
       <select class="pref-select" id="langSelect">
         <option value="pt">Português</option>
         <option value="en">English</option>
@@ -233,6 +233,7 @@
     <button class="tab" data-tab="leads" data-i18n="tabLeads">Vendas</button>
     <button class="tab" data-tab="clients" data-i18n="tabClients">Clientes</button>
     <button class="tab" data-tab="tickets" data-i18n="tabTickets">Suporte</button>
+    <button class="tab" data-tab="users" id="usersTab" data-i18n="tabUsers" style="display:none;">Usuários</button>
   </div>
 
   <div class="view active" id="view-dashboard">
@@ -273,6 +274,14 @@
     </div>
     <div class="search-row"><input class="search-input" id="ticketSearch" data-i18n-ph="searchTicketsPh" placeholder="Buscar por assunto, cliente ou responsável…" /></div>
     <div class="board" id="ticketsBoard"></div>
+  </div>
+
+  <div class="view" id="view-users">
+    <div class="page-head">
+      <h2 class="page-title" data-i18n="usersTitle" style="margin:0;">Usuários</h2>
+    </div>
+    <p class="empty-msg" data-i18n="usersHint" style="padding:0 0 16px;">Defina o papel de cada pessoa. "Admin" tem acesso total e pode eliminar registros; os demais papéis têm permissões limitadas.</p>
+    <div class="list" id="usersList"></div>
   </div>
 </div>
 
@@ -379,7 +388,7 @@
         <button type="button" id="removeImageBtn" style="margin-top:6px;background:none;border:none;color:var(--muted);font-size:12px;text-decoration:underline;cursor:pointer;" data-i18n="removeImage">Remover imagem</button>
       </div>
       <p id="imageError" style="color:#dc2626;font-size:12px;margin-top:6px;display:none;"></p>
-      <label class="f-label" data-i18n="notes">Anotações <span id="notesCounter" style="font-weight:400;color:var(--muted);">(0/500)</span></label>
+      <label class="f-label"><span data-i18n="notes">Anotações</span> <span id="notesCounter" style="font-weight:400;color:var(--muted);">(0/500)</span></label>
       <textarea class="f-input" id="clientNotes" rows="6" style="resize:vertical;width:100%;"></textarea>
       <button class="btn" type="submit" id="clientSubmitBtn" data-i18n="addClient">Adicionar cliente</button>
     </form>
@@ -449,7 +458,9 @@
       loginTab:'Entrar', registerTab:'Criar conta', emailPh:'E-mail', passwordPh:'Senha', passwordMinPh:'Senha (mín. 8 caracteres)', namePh:'Nome completo',
       loginBtn:'Entrar', registerBtn:'Criar conta', forgotLink:'Esqueci minha senha', sendLinkBtn:'Enviar link de redefinição',
       backToLoginLink:'Voltar ao login', resetBtn:'Redefinir senha', signOut:'sair',
-      tabDashboard:'Painel', tabLeads:'Vendas', tabClients:'Clientes', tabTickets:'Suporte',
+      tabDashboard:'Painel', tabLeads:'Vendas', tabClients:'Clientes', tabTickets:'Suporte', tabUsers:'Usuários',
+      usersTitle:'Usuários', usersHint:'Defina o papel de cada pessoa. "Admin" tem acesso total e pode eliminar registros; os demais papéis têm permissões limitadas.',
+      roleAdmin:'Admin', roleVendedor:'Vendedor', roleSuporte:'Suporte', roleLeitura:'Leitura', you:'você',
       dashboardTitle:'Painel', printReport:'Imprimir relatório', rankSalesTitle:'Ranking de vendas por responsável', rankTicketsTitle:'Chamados por responsável',
       leadsTitle:'Funil de vendas', newLead:'+ Novo lead', searchLeadsPh:'Buscar por título, empresa ou responsável…',
       clientsTitle:'Clientes', newClient:'+ Novo cliente', searchClientsPh:'Buscar por nome, empresa ou e-mail…',
@@ -482,7 +493,9 @@
       loginTab:'Log in', registerTab:'Sign up', emailPh:'Email', passwordPh:'Password', passwordMinPh:'Password (min. 8 characters)', namePh:'Full name',
       loginBtn:'Log in', registerBtn:'Sign up', forgotLink:'Forgot my password', sendLinkBtn:'Send reset link',
       backToLoginLink:'Back to login', resetBtn:'Reset password', signOut:'sign out',
-      tabDashboard:'Dashboard', tabLeads:'Sales', tabClients:'Clients', tabTickets:'Support',
+      tabDashboard:'Dashboard', tabLeads:'Sales', tabClients:'Clients', tabTickets:'Support', tabUsers:'Users',
+      usersTitle:'Users', usersHint:'Set the role for each person. "Admin" has full access and can delete records; other roles have limited permissions.',
+      roleAdmin:'Admin', roleVendedor:'Sales', roleSuporte:'Support', roleLeitura:'Read-only', you:'you',
       dashboardTitle:'Dashboard', printReport:'Print report', rankSalesTitle:'Sales ranking by owner', rankTicketsTitle:'Tickets by owner',
       leadsTitle:'Sales pipeline', newLead:'+ New lead', searchLeadsPh:'Search by title, company or owner…',
       clientsTitle:'Clients', newClient:'+ New client', searchClientsPh:'Search by name, company or email…',
@@ -515,7 +528,9 @@
       loginTab:'Entrar', registerTab:'Crear cuenta', emailPh:'Correo electrónico', passwordPh:'Contraseña', passwordMinPh:'Contraseña (mín. 8 caracteres)', namePh:'Nombre completo',
       loginBtn:'Entrar', registerBtn:'Crear cuenta', forgotLink:'Olvidé mi contraseña', sendLinkBtn:'Enviar enlace de restablecimiento',
       backToLoginLink:'Volver al inicio', resetBtn:'Restablecer contraseña', signOut:'salir',
-      tabDashboard:'Panel', tabLeads:'Ventas', tabClients:'Clientes', tabTickets:'Soporte',
+      tabDashboard:'Panel', tabLeads:'Ventas', tabClients:'Clientes', tabTickets:'Soporte', tabUsers:'Usuarios',
+      usersTitle:'Usuarios', usersHint:'Define el rol de cada persona. "Admin" tiene acceso total y puede eliminar registros; los demás roles tienen permisos limitados.',
+      roleAdmin:'Admin', roleVendedor:'Ventas', roleSuporte:'Soporte', roleLeitura:'Solo lectura', you:'tú',
       dashboardTitle:'Panel', printReport:'Imprimir informe', rankSalesTitle:'Ranking de ventas por responsable', rankTicketsTitle:'Tickets por responsable',
       leadsTitle:'Embudo de ventas', newLead:'+ Nuevo lead', searchLeadsPh:'Buscar por título, empresa o responsable…',
       clientsTitle:'Clientes', newClient:'+ Nuevo cliente', searchClientsPh:'Buscar por nombre, empresa o correo…',
@@ -696,8 +711,37 @@
     if (user.currency){ currency = user.currency; localStorage.setItem('si_crm_currency', currency); }
     applyI18n();
     document.getElementById('currencySelect').value = currency;
+    applyRolePermissions();
     loadFx();
     loadAllData();
+  }
+
+  // ===================== PERMISSÕES POR PAPEL =====================
+  function hasRole(roles){ return currentUser && roles.indexOf(currentUser.role) !== -1; }
+  function applyRolePermissions(){
+    if (!currentUser) return;
+    var canClients = hasRole(['admin','vendedor']);
+    var canLeads = hasRole(['admin','vendedor']);
+    var canTickets = hasRole(['admin','suporte']);
+    var isAdmin = hasRole(['admin']);
+
+    document.getElementById('addClientBtn').style.display = canClients ? '' : 'none';
+    document.getElementById('addLeadBtn').style.display = canLeads ? '' : 'none';
+    document.getElementById('addTicketBtn').style.display = canTickets ? '' : 'none';
+
+    document.getElementById('editClientBtn').style.display = canClients ? '' : 'none';
+    document.getElementById('editLeadBtn').style.display = canLeads ? '' : 'none';
+    document.getElementById('editTicketBtn').style.display = canTickets ? '' : 'none';
+
+    document.getElementById('deleteClientBtn').style.display = isAdmin ? '' : 'none';
+    document.getElementById('deleteLeadBtn').style.display = isAdmin ? '' : 'none';
+    document.getElementById('deleteTicketBtn').style.display = isAdmin ? '' : 'none';
+
+    document.getElementById('usersTab').style.display = isAdmin ? '' : 'none';
+
+    // selects de mudança de estágio/status também exigem permissão de edição
+    document.querySelectorAll('[data-move-lead]').forEach(function(el){ el.disabled = !canLeads; });
+    document.querySelectorAll('[data-move-ticket]').forEach(function(el){ el.disabled = !canTickets; });
   }
 
   function checkSession(){
@@ -720,6 +764,7 @@
     document.querySelectorAll('.tab').forEach(function(t2){ t2.classList.toggle('active', t2.getAttribute('data-tab')===tab); });
     document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
     document.getElementById('view-'+tab).classList.add('active');
+    if (tab === 'users') renderUsers();
   }
 
   // ===================== CONSTANTES =====================
@@ -830,7 +875,7 @@
           (lead.value?'<div class="ci-value">'+fmtMoney(lead.value, lead.currency)+'</div>':'')+
           (lead.expected_close?'<div class="ci-date">'+fmtDate(lead.expected_close)+'</div>':'')+
           '<div class="ci-foot" onclick="event.stopPropagation();">'+
-            '<select class="sm" data-move-lead="'+lead.id+'">'+
+            '<select class="sm" data-move-lead="'+lead.id+'" '+(hasRole(['admin','vendedor'])?'':'disabled')+'>'+
               STAGES.map(function(s){ return '<option value="'+s+'" '+(s===lead.stage?'selected':'')+'>'+t(STAGE_KEY[s])+'</option>'; }).join('')+
             '</select>'+
           '</div></div>';
@@ -1095,7 +1140,7 @@
           '<span class="prio prio-'+tk.priority+'">'+t(PRIO_KEY[tk.priority])+'</span>'+
           '<div class="ci-date">'+fmtDate(tk.created_at)+'</div>'+
           '<div class="ci-foot" onclick="event.stopPropagation();">'+
-            '<select class="sm" data-move-ticket="'+tk.id+'">'+
+            '<select class="sm" data-move-ticket="'+tk.id+'" '+(hasRole(['admin','suporte'])?'':'disabled')+'>'+
               TSTATUS.map(function(s){ return '<option value="'+s+'" '+(s===tk.status?'selected':'')+'>'+t(TSTATUS_KEY[s])+'</option>'; }).join('')+
             '</select>'+
           '</div></div>';
@@ -1174,6 +1219,43 @@
   function closeModal(id){ document.getElementById(id).classList.remove('show'); }
   document.querySelectorAll('[data-close]').forEach(function(btn){ btn.addEventListener('click', function(){ closeModal(btn.getAttribute('data-close')); }); });
   document.querySelectorAll('.modal-overlay').forEach(function(ov){ ov.addEventListener('click', function(e){ if (e.target===ov) ov.classList.remove('show'); }); });
+
+  // ===================== USUÁRIOS (somente admin) =====================
+  var ROLE_KEY = {'admin':'roleAdmin','vendedor':'roleVendedor','suporte':'roleSuporte','leitura':'roleLeitura'};
+  function renderUsers(){
+    if (!hasRole(['admin'])) return;
+    apiFetch('users.php?action=list', null, 'GET').then(function(res){
+      var users = res.users || [];
+      var html = users.map(function(u){
+        var isSelf = currentUser && String(u.id) === String(currentUser.id);
+        var roleSelect = '<select class="sm" style="max-width:160px;" data-role-select="'+u.id+'" '+(isSelf?'disabled':'')+'>'+
+          Object.keys(ROLE_KEY).map(function(r){ return '<option value="'+r+'" '+(r===u.role?'selected':'')+'>'+t(ROLE_KEY[r])+'</option>'; }).join('')+
+          '</select>';
+        var delBtn = isSelf ? '' : '<button class="icon-x" data-del-user="'+u.id+'" title="'+t('deleteRecord')+'" style="background:none;border:none;font-size:18px;cursor:pointer;color:#a8acc4;">×</button>';
+        return '<div class="list-row" style="cursor:default;">'+
+          '<div class="av">'+esc((u.name||'?').charAt(0).toUpperCase())+'</div>'+
+          '<div style="flex:1;"><div class="lr-title">'+esc(u.name)+(isSelf?' ('+t('you')+')':'')+'</div><div class="lr-sub">'+esc(u.email)+'</div></div>'+
+          roleSelect+
+          '<div style="width:36px; text-align:center;">'+delBtn+'</div>'+
+        '</div>';
+      }).join('');
+      document.getElementById('usersList').innerHTML = html || '<p class="empty-msg" style="padding:20px;">'+t('noData')+'</p>';
+
+      document.querySelectorAll('[data-role-select]').forEach(function(sel){
+        sel.addEventListener('change', function(){
+          apiFetch('users.php?action=update_role', {id:sel.getAttribute('data-role-select'), role:sel.value}).then(function(r){
+            if (r && r.error) { renderUsers(); }
+          });
+        });
+      });
+      document.querySelectorAll('[data-del-user]').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          if (!confirm(t('confirmDelete'))) return;
+          apiFetch('users.php?action=delete', {id:btn.getAttribute('data-del-user')}).then(function(){ renderUsers(); });
+        });
+      });
+    });
+  }
 
   function renderAll(){
     if (!currentUser) return;
