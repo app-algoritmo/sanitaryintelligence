@@ -5,484 +5,315 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HBT · Dashboard Operacional</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Serif+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap');
 
-  :root {
-    --navy:    #1A2456;
-    --navy2:   #26336B;
-    --ink:     #1C1C1A;
-    --slate:   #4A5270;
-    --muted:   #8A8FA8;
-    --rule:    #DDD9D0;
-    --paper:   #F8F7F3;
-    --white:   #FFFFFF;
-    --teal:    #0F6E56;
-    --teal-lt: #E2F0EB;
-    --teal-bd: #5DCAA5;
-    --amber:   #854F0B;
-    --amber-lt:#FAEEDA;
-    --amber-bd:#EF9F27;
-    --purple:  #3C3489;
-    --purple-lt:#EEEDFE;
-    --purple-bd:#7F77DD;
-    --gold:    #B8922A;
-    --gold-lt: #FBF3E2;
-    --blue-lt: #E6F1FB;
-    --blue:    #185FA5;
-  }
+:root {
+  --navy:      #1A2456;
+  --ink:       #1C1C1A;
+  --slate:     #4A5270;
+  --muted:     #8A8FA8;
+  --rule:      #DDD9D0;
+  --paper:     #F8F7F3;
+  --white:     #FFFFFF;
+  --teal:      #0F6E56;
+  --teal-lt:   #E2F0EB;
+  --teal-bd:   #5DCAA5;
+  --amber:     #854F0B;
+  --amber-lt:  #FAEEDA;
+  --amber-bd:  #EF9F27;
+  --purple:    #3C3489;
+  --purple-lt: #EEEDFE;
+  --purple-bd: #7F77DD;
+  --gold:      #B8922A;
+  --gold-dk:   #D4AF37;
+}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
-  /* ── PIN SCREEN ── */
-  #pin-screen {
-    position: fixed; inset: 0;
-    background: var(--navy);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 1000;
-    flex-direction: column;
-    gap: 0;
-  }
-  #pin-screen.hidden { display: none; }
+/* ── PIN ── */
+#pin-screen {
+  position: fixed; inset: 0; z-index: 1000;
+  background: var(--navy);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0;
+}
+#pin-screen.hidden { display: none; }
 
-  .pin-logo {
-    font-family: 'DM Serif Display', serif;
-    font-size: 36px;
-    color: #fff;
-    letter-spacing: .04em;
-    margin-bottom: 6px;
-  }
-  .pin-sub {
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    color: rgba(255,255,255,.4);
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    margin-bottom: 48px;
-  }
-  .pin-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    color: rgba(255,255,255,.5);
-    margin-bottom: 16px;
-    letter-spacing: .06em;
-  }
-  .pin-dots {
-    display: flex; gap: 12px; margin-bottom: 24px;
-  }
-  .pin-dot {
-    width: 12px; height: 12px;
-    border-radius: 50%;
-    border: 1.5px solid rgba(255,255,255,.3);
-    transition: background .15s, border-color .15s;
-  }
-  .pin-dot.filled {
-    background: var(--gold);
-    border-color: var(--gold);
-  }
-  .pin-pad {
-    display: grid;
-    grid-template-columns: repeat(3, 64px);
-    gap: 10px;
-  }
-  .pin-btn {
-    height: 64px;
-    background: rgba(255,255,255,.07);
-    border: 1px solid rgba(255,255,255,.1);
-    border-radius: 12px;
-    color: #fff;
-    font-family: 'Inter', sans-serif;
-    font-size: 20px;
-    font-weight: 400;
-    cursor: pointer;
-    transition: background .12s;
-  }
-  .pin-btn:hover { background: rgba(255,255,255,.13); }
-  .pin-btn:active { background: rgba(255,255,255,.2); transform: scale(.97); }
-  .pin-btn.del { font-size: 14px; color: rgba(255,255,255,.5); }
-  .pin-error {
-    margin-top: 16px;
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    color: #F09595;
-    height: 18px;
-    text-align: center;
-  }
+.pin-logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(32px, 5vw, 52px);
+  color: #fff; letter-spacing: .04em; margin-bottom: 6px;
+}
+.pin-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(11px, 1.5vw, 14px);
+  color: rgba(255,255,255,.4);
+  letter-spacing: .14em; text-transform: uppercase; margin-bottom: 52px;
+}
+.pin-label {
+  font-size: 14px; color: rgba(255,255,255,.5);
+  margin-bottom: 18px; letter-spacing: .06em;
+}
+.pin-dots { display: flex; gap: 14px; margin-bottom: 28px; }
+.pin-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.3);
+  transition: background .15s, border-color .15s;
+}
+.pin-dot.filled { background: var(--gold-dk); border-color: var(--gold-dk); }
+.pin-pad { display: grid; grid-template-columns: repeat(3, 72px); gap: 12px; }
+.pin-btn {
+  height: 72px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 14px; color: #fff;
+  font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 400;
+  cursor: pointer; transition: background .12s;
+}
+.pin-btn:hover { background: rgba(255,255,255,.14); }
+.pin-btn:active { background: rgba(255,255,255,.22); transform: scale(.97); }
+.pin-btn.del { font-size: 15px; color: rgba(255,255,255,.5); }
+.pin-error {
+  margin-top: 18px; font-size: 13px; color: #F09595;
+  height: 20px; text-align: center; letter-spacing: .02em;
+}
 
-  /* ── DASHBOARD ── */
-  #dashboard {
-    display: none;
-    font-family: 'Inter', sans-serif;
-    color: var(--ink);
-    background: var(--paper);
-    min-height: 100vh;
-  }
-  #dashboard.visible { display: block; }
+/* ── DASHBOARD ── */
+#dashboard { display: none; font-family: 'Inter', sans-serif; color: var(--ink); background: var(--paper); min-height: 100vh; }
+#dashboard.visible { display: block; }
 
-  header {
-    background: var(--navy);
-    padding: 28px 48px 24px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-  }
-  .hdr-left h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 28px;
-    color: #fff;
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-  .hdr-left p {
-    font-size: 13px;
-    color: rgba(255,255,255,.45);
-    letter-spacing: .04em;
-  }
-  .hdr-right {
-    font-size: 12px;
-    color: rgba(255,255,255,.35);
-    text-align: right;
-    line-height: 1.7;
-  }
+/* HEADER */
+header {
+  background: var(--navy);
+  padding: clamp(20px, 3vw, 36px) clamp(24px, 5vw, 64px);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.hdr-left h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(22px, 3.5vw, 38px);
+  color: #fff; line-height: 1.1; margin-bottom: 6px;
+}
+.hdr-left p { font-size: clamp(12px, 1.5vw, 15px); color: rgba(255,255,255,.45); letter-spacing: .03em; }
+.hdr-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.btn-back {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+  border-radius: 8px; padding: 9px 18px;
+  color: rgba(255,255,255,.85); font-size: clamp(12px, 1.2vw, 14px);
+  font-weight: 500; text-decoration: none; transition: background .15s;
+}
+.btn-back:hover { background: rgba(255,255,255,.2); color: #fff; }
 
-  main { max-width: 1100px; margin: 0 auto; padding: 40px 48px 80px; }
+/* MAIN */
+main { max-width: 1400px; margin: 0 auto; padding: clamp(28px, 4vw, 60px) clamp(20px, 5vw, 64px) 80px; }
+section { margin-bottom: clamp(48px, 6vw, 80px); }
 
-  .section-eyebrow {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 16px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--rule);
-  }
+.section-eyebrow {
+  font-size: clamp(11px, 1vw, 13px);
+  font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: clamp(20px, 2.5vw, 32px);
+  padding-bottom: 12px; border-bottom: 1.5px solid var(--rule);
+}
 
-  section { margin-bottom: 52px; }
+/* ── ONBOARDING PHASES ── */
+.phase-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 28px);
+}
+.phase-card {
+  border-radius: 20px;
+  padding: clamp(24px, 3vw, 44px) clamp(22px, 2.5vw, 38px);
+  border: 1.5px solid;
+  display: flex; flex-direction: column; gap: clamp(16px, 2vw, 24px);
+}
+.phase-card.teal   { background: var(--teal-lt);   border-color: var(--teal-bd); }
+.phase-card.amber  { background: var(--amber-lt);  border-color: var(--amber-bd); }
+.phase-card.purple { background: var(--purple-lt); border-color: var(--purple-bd); }
 
-  /* ── ONBOARDING ── */
-  .phase-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-  .phase-card {
-    border-radius: 14px;
-    padding: 20px 22px;
-    border: 1px solid;
-  }
-  .phase-card.teal { background: var(--teal-lt); border-color: var(--teal-bd); }
-  .phase-card.amber { background: var(--amber-lt); border-color: var(--amber-bd); }
-  .phase-card.purple { background: var(--purple-lt); border-color: var(--purple-bd); }
+.phase-tag {
+  display: inline-block;
+  font-size: clamp(10px, 1vw, 13px);
+  font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 20px;
+  width: fit-content;
+}
+.teal   .phase-tag { background: var(--teal);   color: #fff; }
+.amber  .phase-tag { background: var(--amber);  color: #fff; }
+.purple .phase-tag { background: var(--purple); color: #fff; }
 
-  .phase-head { margin-bottom: 14px; }
-  .phase-period {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    margin-bottom: 3px;
-  }
-  .teal .phase-period { color: var(--teal); }
-  .amber .phase-period { color: var(--amber); }
-  .purple .phase-period { color: var(--purple); }
+.phase-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(26px, 3.5vw, 46px);
+  line-height: 1.1;
+}
+.teal   .phase-title { color: var(--teal); }
+.amber  .phase-title { color: var(--amber); }
+.purple .phase-title { color: var(--purple); }
 
-  .phase-title { font-size: 15px; font-weight: 600; }
-  .teal .phase-title { color: var(--teal); }
-  .amber .phase-title { color: var(--amber); }
-  .purple .phase-title { color: var(--purple); }
+.phase-items { display: flex; flex-direction: column; gap: clamp(10px, 1.2vw, 16px); }
+.phase-item {
+  background: rgba(255,255,255,.6);
+  border-radius: 12px;
+  padding: clamp(12px, 1.5vw, 18px) clamp(14px, 1.8vw, 22px);
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.phase-item-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  flex-shrink: 0; margin-top: 7px;
+}
+.teal   .phase-item-dot { background: var(--teal); }
+.amber  .phase-item-dot { background: var(--amber); }
+.purple .phase-item-dot { background: var(--purple); }
 
-  .phase-sub { font-size: 12px; margin-top: 2px; }
-  .teal .phase-sub { color: #0F6E56; opacity: .7; }
-  .amber .phase-sub { color: #854F0B; opacity: .7; }
-  .purple .phase-sub { color: #3C3489; opacity: .7; }
+.phase-item-text {
+  font-size: clamp(14px, 1.5vw, 19px);
+  line-height: 1.5; font-weight: 400;
+}
+.teal   .phase-item-text { color: #085041; }
+.amber  .phase-item-text { color: #633806; }
+.purple .phase-item-text { color: #26215C; }
 
-  .phase-items { display: flex; flex-direction: column; gap: 6px; }
-  .phase-item {
-    background: rgba(255,255,255,.55);
-    border-radius: 8px;
-    padding: 7px 12px;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  .phase-item-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    margin-top: 5px;
-  }
-  .teal .phase-item-dot { background: var(--teal); }
-  .amber .phase-item-dot { background: var(--amber); }
-  .purple .phase-item-dot { background: var(--purple); }
+/* ── ESPANHA FLOW ── */
+.flow-row {
+  display: grid;
+  grid-template-columns: 1fr 48px 1fr 48px 1fr 48px 1fr;
+  align-items: center;
+  margin-bottom: clamp(24px, 3vw, 44px);
+}
+.flow-node {
+  background: var(--white);
+  border: 1.5px solid var(--rule);
+  border-radius: 16px;
+  padding: clamp(18px, 2.2vw, 32px) clamp(14px, 1.8vw, 24px);
+  text-align: center;
+}
+.flow-node.accent { background: var(--navy); border-color: var(--navy); }
+.flow-flag { font-size: clamp(28px, 3.5vw, 44px); margin-bottom: 8px; }
+.flow-title { font-size: clamp(14px, 1.6vw, 20px); font-weight: 600; color: var(--ink); }
+.flow-node.accent .flow-title { color: #fff; }
+.flow-desc { font-size: clamp(11px, 1.1vw, 14px); color: var(--muted); margin-top: 6px; line-height: 1.5; }
+.flow-node.accent .flow-desc { color: rgba(255,255,255,.55); }
+.flow-arrow { text-align: center; color: var(--gold); font-size: clamp(20px, 2.5vw, 32px); }
 
-  .phase-item-text { font-size: 12.5px; line-height: 1.5; }
-  .teal .phase-item-text { color: #085041; }
-  .amber .phase-item-text { color: #633806; }
-  .purple .phase-item-text { color: #26215C; }
+.esp-pillars { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(14px, 2vw, 24px); }
+.pillar {
+  background: var(--white); border: 1.5px solid var(--rule);
+  border-radius: 16px; padding: clamp(20px, 2.5vw, 36px);
+}
+.pillar-eyebrow {
+  font-size: clamp(10px, 1vw, 13px); font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+}
+.pillar-title { font-size: clamp(17px, 2vw, 26px); font-weight: 600; color: var(--navy); margin-bottom: 16px; }
+.pillar-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.pillar-list li {
+  font-size: clamp(13px, 1.4vw, 18px); color: var(--slate);
+  padding-left: 18px; position: relative; line-height: 1.55;
+}
+.pillar-list li::before { content: '—'; position: absolute; left: 0; color: var(--rule); }
 
-  .phase-note {
-    font-size: 11.5px;
-    font-style: italic;
-    margin-top: 12px;
-    text-align: center;
-    opacity: .65;
-  }
-  .teal .phase-note { color: var(--teal); }
-  .amber .phase-note { color: var(--amber); }
-  .purple .phase-note { color: var(--purple); }
+/* ── BUDGET BRASIL ── */
+.budget-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(14px, 2vw, 24px); margin-bottom: clamp(14px, 2vw, 20px);
+}
+.budget-card { background: var(--white); border: 1.5px solid var(--rule); border-radius: 16px; overflow: hidden; }
+.budget-head {
+  padding: clamp(12px, 1.5vw, 18px) clamp(16px, 2vw, 24px);
+  font-size: clamp(13px, 1.4vw, 17px); font-weight: 600; color: #fff;
+}
+.budget-head.capex  { background: var(--gold); }
+.budget-head.opex   { background: #1C5E8A; }
+.budget-head.people { background: var(--purple); }
 
-  /* ── ESPANHA MODEL ── */
-  .flow-row {
-    display: grid;
-    grid-template-columns: 1fr 40px 1fr 40px 1fr 40px 1fr;
-    align-items: center;
-    gap: 0;
-    margin-bottom: 32px;
-  }
-  .flow-node {
-    background: var(--white);
-    border: 1px solid var(--rule);
-    border-radius: 12px;
-    padding: 16px 14px;
-    text-align: center;
-  }
-  .flow-node.accent {
-    background: var(--navy);
-    border-color: var(--navy);
-  }
-  .flow-flag { font-size: 24px; margin-bottom: 6px; }
-  .flow-title { font-size: 12.5px; font-weight: 600; color: var(--ink); }
-  .flow-node.accent .flow-title { color: #fff; }
-  .flow-desc { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.45; }
-  .flow-node.accent .flow-desc { color: rgba(255,255,255,.55); }
-  .flow-arrow { text-align: center; color: var(--gold); font-size: 20px; }
+.budget-body { padding: clamp(14px, 1.8vw, 24px); }
+.budget-line {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: clamp(7px, .9vw, 11px) 0; border-bottom: 1px solid #F4F2EE; gap: 10px;
+}
+.budget-line:last-child { border-bottom: none; }
+.budget-line-label { font-size: clamp(13px, 1.3vw, 17px); color: var(--ink); flex: 1; }
+.budget-line-val { font-size: clamp(13px, 1.3vw, 17px); font-weight: 600; color: var(--slate); white-space: nowrap; }
+.budget-total-row {
+  margin-top: 12px; padding-top: 12px; border-top: 2px solid var(--rule);
+  display: flex; justify-content: space-between;
+  font-size: clamp(14px, 1.5vw, 19px); font-weight: 700; color: var(--navy);
+}
 
-  .esp-pillars {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-  }
-  .pillar {
-    background: var(--white);
-    border: 1px solid var(--rule);
-    border-radius: 12px;
-    padding: 18px 20px;
-  }
-  .pillar-eyebrow {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-  .pillar-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--navy);
-    margin-bottom: 10px;
-  }
-  .pillar-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  .pillar-list li {
-    font-size: 12px;
-    color: var(--slate);
-    padding-left: 12px;
-    position: relative;
-    line-height: 1.5;
-  }
-  .pillar-list li::before {
-    content: '—';
-    position: absolute;
-    left: 0;
-    color: var(--rule);
-  }
+.total-banner {
+  background: var(--navy); border-radius: 16px;
+  padding: clamp(20px, 2.5vw, 32px) clamp(24px, 3vw, 44px);
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+}
+.total-banner-label { font-size: clamp(14px, 1.6vw, 20px); color: rgba(255,255,255,.6); }
+.total-banner-note  { font-size: clamp(11px, 1vw, 14px); color: rgba(255,255,255,.35); margin-top: 4px; }
+.total-banner-val   { font-size: clamp(26px, 4vw, 50px); font-weight: 700; color: #fff; white-space: nowrap; }
 
-  /* ── CAPEX/OPEX ── */
-  .budget-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    margin-bottom: 16px;
-  }
-  .budget-card {
-    background: var(--white);
-    border: 1px solid var(--rule);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  .budget-head {
-    padding: 11px 16px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #fff;
-    letter-spacing: .04em;
-  }
-  .budget-head.capex { background: var(--gold); }
-  .budget-head.opex { background: #1C5E8A; }
-  .budget-head.people { background: var(--purple); }
-  .budget-head.total { background: var(--navy); }
+/* ── ESPANHA BUDGET ── */
+.esp-budget { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(14px, 2vw, 24px); }
+.esp-card { background: var(--white); border: 1.5px solid var(--rule); border-radius: 16px; overflow: hidden; }
+.esp-head { padding: clamp(12px, 1.5vw, 18px) clamp(16px, 2vw, 24px); font-size: clamp(13px, 1.4vw, 17px); font-weight: 600; color: #fff; }
+.esp-head.capex   { background: var(--gold); }
+.esp-head.opex    { background: #1C5E8A; }
+.esp-head.brasil  { background: var(--teal); }
+.esp-head.blocker { background: #5F6B8A; }
+.esp-body { padding: clamp(14px, 1.8vw, 24px); }
+.esp-line {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: clamp(8px, 1vw, 13px) 0; border-bottom: 1px solid #F4F2EE;
+  font-size: clamp(13px, 1.3vw, 17px); color: var(--ink); line-height: 1.5;
+}
+.esp-line:last-child { border-bottom: none; }
+.esp-line-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; background: var(--rule); }
+.esp-tbd {
+  display: inline-block; font-size: clamp(10px, .9vw, 12px);
+  background: #FFEECC; color: #8B6000; border-radius: 4px;
+  padding: 2px 7px; font-weight: 600; margin-left: 8px; white-space: nowrap;
+}
+.esp-note {
+  margin-top: 14px; font-size: clamp(12px, 1.1vw, 15px); color: var(--muted);
+  font-style: italic; background: var(--paper); border-radius: 10px;
+  padding: 10px 14px; line-height: 1.6;
+}
 
-  .budget-body { padding: 14px 16px; }
-  .budget-line {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 5px 0;
-    border-bottom: 1px solid #F4F2EE;
-    gap: 8px;
-  }
-  .budget-line:last-child { border-bottom: none; }
-  .budget-line-label { font-size: 12px; color: var(--ink); flex: 1; }
-  .budget-line-val {
-    font-size: 12px;
-    font-family: 'Inter', sans-serif;
-    color: var(--slate);
-    white-space: nowrap;
-    font-weight: 500;
-  }
-  .budget-total-row {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 2px solid var(--rule);
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--navy);
-  }
+/* FOOTER */
+footer {
+  background: var(--navy);
+  padding: clamp(16px, 2vw, 24px) clamp(24px, 5vw, 64px);
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  flex-wrap: wrap;
+}
+footer span { font-size: clamp(11px, 1vw, 13px); color: rgba(255,255,255,.3); }
 
-  .total-banner {
-    background: var(--navy);
-    border-radius: 12px;
-    padding: 18px 24px;
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-  }
-  .total-banner-label { font-size: 14px; color: rgba(255,255,255,.6); }
-  .total-banner-val { font-size: 26px; font-weight: 600; color: #fff; font-family: 'Inter', sans-serif; }
-  .total-banner-note { font-size: 11px; color: rgba(255,255,255,.4); }
-
-  /* ── ESPANHA CAPEX/OPEX (necessidades) ── */
-  .esp-budget {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-  }
-  .esp-card {
-    background: var(--white);
-    border: 1px solid var(--rule);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  .esp-head {
-    padding: 11px 16px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #fff;
-  }
-  .esp-head.capex { background: var(--gold); }
-  .esp-head.opex { background: #1C5E8A; }
-  .esp-head.brasil { background: var(--teal); }
-  .esp-head.blocker { background: #5F6B8A; }
-
-  .esp-body { padding: 14px 16px; }
-  .esp-line {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 6px 0;
-    border-bottom: 1px solid #F4F2EE;
-    font-size: 12px;
-    color: var(--ink);
-    line-height: 1.45;
-  }
-  .esp-line:last-child { border-bottom: none; }
-  .esp-line-dot {
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    margin-top: 5px;
-    background: var(--rule);
-  }
-  .esp-tbd {
-    display: inline-block;
-    font-size: 10px;
-    background: #FFEECC;
-    color: #8B6000;
-    border-radius: 4px;
-    padding: 1px 6px;
-    font-weight: 600;
-    margin-left: 6px;
-    white-space: nowrap;
-  }
-  .esp-note {
-    margin-top: 12px;
-    font-size: 11px;
-    color: var(--muted);
-    font-style: italic;
-    background: var(--paper);
-    border-radius: 8px;
-    padding: 8px 12px;
-    line-height: 1.6;
-  }
-
-  .decision-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-top: 16px;
-  }
-  .decision-item {
-    background: var(--white);
-    border: 1px solid var(--rule);
-    border-left: 3px solid var(--amber-bd);
-    border-radius: 0 8px 8px 0;
-    padding: 10px 14px;
-    font-size: 12px;
-    color: var(--slate);
-    line-height: 1.5;
-  }
-  .decision-item strong { display: block; font-weight: 600; color: var(--amber); margin-bottom: 2px; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
-
-  footer {
-    background: var(--navy);
-    padding: 18px 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  footer span { font-size: 12px; color: rgba(255,255,255,.3); }
-
-  @media (max-width: 800px) {
-    header { padding: 20px 24px; }
-    main { padding: 28px 24px 60px; }
-    .phase-row, .budget-grid, .esp-budget, .esp-pillars, .decision-list { grid-template-columns: 1fr; }
-    .flow-row { grid-template-columns: 1fr; }
-    .flow-arrow { transform: rotate(90deg); }
-    footer { padding: 16px 24px; flex-direction: column; gap: 6px; text-align: center; }
-  }
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .phase-row { grid-template-columns: 1fr; }
+  .budget-grid { grid-template-columns: 1fr; }
+  .esp-budget { grid-template-columns: 1fr; }
+  .esp-pillars { grid-template-columns: 1fr; }
+  .flow-row { grid-template-columns: 1fr; gap: 8px; }
+  .flow-arrow { transform: rotate(90deg); font-size: 24px; }
+}
+@media (max-width: 640px) {
+  header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .hdr-right { align-items: flex-start; }
+  footer { flex-direction: column; text-align: center; }
+}
 </style>
 </head>
 <body>
 
-<!-- PIN SCREEN -->
+<!-- PIN -->
 <div id="pin-screen">
   <div class="pin-logo">HBT</div>
   <div class="pin-sub">Dashboard Operacional</div>
   <div class="pin-label">Código de acesso</div>
   <div class="pin-dots">
-    <div class="pin-dot" id="d0"></div>
-    <div class="pin-dot" id="d1"></div>
-    <div class="pin-dot" id="d2"></div>
-    <div class="pin-dot" id="d3"></div>
-    <div class="pin-dot" id="d4"></div>
-    <div class="pin-dot" id="d5"></div>
+    <div class="pin-dot" id="d0"></div><div class="pin-dot" id="d1"></div>
+    <div class="pin-dot" id="d2"></div><div class="pin-dot" id="d3"></div>
+    <div class="pin-dot" id="d4"></div><div class="pin-dot" id="d5"></div>
   </div>
   <div class="pin-pad">
     <button class="pin-btn" onclick="pinInput('1')">1</button>
@@ -510,8 +341,8 @@
     <p>Paulo Barros · Diretor de Operações Globais · Hub Norway</p>
   </div>
   <div class="hdr-right">
-    Handmade Brazilian Tobacco<br>
-    Julho 2026
+    <a href="access__5_.html" class="btn-back">← Ferramentas</a>
+    <span style="font-size:13px;color:rgba(255,255,255,.35)">Handmade Brazilian Tobacco · Julho 2026</span>
   </div>
 </header>
 
@@ -523,10 +354,9 @@
     <div class="phase-row">
 
       <div class="phase-card teal">
-        <div class="phase-head">
-          <div class="phase-period">0 – 30 dias</div>
-          <div class="phase-title">Diagnóstico</div>
-          <div class="phase-sub">Entender antes de propor</div>
+        <div>
+          <div class="phase-tag">Fase 1</div>
+          <div class="phase-title" style="margin-top:14px">Diagnóstico</div>
         </div>
         <div class="phase-items">
           <div class="phase-item">
@@ -535,7 +365,7 @@
           </div>
           <div class="phase-item">
             <div class="phase-item-dot"></div>
-            <div class="phase-item-text">Qualidade — lacunas vs. ISO 9001/14001</div>
+            <div class="phase-item-text">Qualidade — lacunas vs. ISO 9001 / 14001</div>
           </div>
           <div class="phase-item">
             <div class="phase-item-dot"></div>
@@ -546,19 +376,17 @@
             <div class="phase-item-text">Entrevistas, visitas e mapeamento de processos</div>
           </div>
         </div>
-        <div class="phase-note">Sem prometer solução ainda.</div>
       </div>
 
       <div class="phase-card amber">
-        <div class="phase-head">
-          <div class="phase-period">30 – 60 dias</div>
-          <div class="phase-title">Estabilização</div>
-          <div class="phase-sub">Conter o que mais arrisca a operação</div>
+        <div>
+          <div class="phase-tag">Fase 2</div>
+          <div class="phase-title" style="margin-top:14px">Estabilização</div>
         </div>
         <div class="phase-items">
           <div class="phase-item">
             <div class="phase-item-dot"></div>
-            <div class="phase-item-text">Processo — padronizar antes de certificar</div>
+            <div class="phase-item-text">Processos — padronizar antes de certificar</div>
           </div>
           <div class="phase-item">
             <div class="phase-item-dot"></div>
@@ -570,22 +398,20 @@
           </div>
           <div class="phase-item">
             <div class="phase-item-dot"></div>
-            <div class="phase-item-text">Resolver o que custa dinheiro ou gera risco hoje</div>
+            <div class="phase-item-text">Eliminar o que gera custo ou risco operacional agora</div>
           </div>
         </div>
-        <div class="phase-note">Risco mitigado em 60 dias.</div>
       </div>
 
       <div class="phase-card purple">
-        <div class="phase-head">
-          <div class="phase-period">60 – 90 dias</div>
-          <div class="phase-title">Estruturação formal</div>
-          <div class="phase-sub">Construir o que vai durar</div>
+        <div>
+          <div class="phase-tag">Fase 3</div>
+          <div class="phase-title" style="margin-top:14px">Estruturação formal</div>
         </div>
         <div class="phase-items">
           <div class="phase-item">
             <div class="phase-item-dot"></div>
-            <div class="phase-item-text">ISO 9001/14001 — roadmap de certificação</div>
+            <div class="phase-item-text">ISO 9001 / 14001 — roadmap de certificação</div>
           </div>
           <div class="phase-item">
             <div class="phase-item-dot"></div>
@@ -600,17 +426,16 @@
             <div class="phase-item-text">Espanha, outros mercados e plano plurianual</div>
           </div>
         </div>
-        <div class="phase-note">Fundação formal em 90 dias.</div>
       </div>
 
     </div>
   </section>
 
-  <!-- ESPANHA MODELO -->
+  <!-- ESPANHA -->
   <section>
     <div class="section-eyebrow">Expansão internacional — modelo fabril Espanha</div>
 
-    <div class="flow-row" style="margin-bottom:28px">
+    <div class="flow-row">
       <div class="flow-node accent">
         <div class="flow-flag">🇧🇷</div>
         <div class="flow-title">Brasil — Origem</div>
@@ -664,112 +489,62 @@
     </div>
   </section>
 
-  <!-- CAPEX / OPEX BRASIL -->
+  <!-- CAPEX/OPEX BRASIL -->
   <section>
     <div class="section-eyebrow">CAPEX e OPEX · Orçamento 2026 — Operações Brasil</div>
-
     <div class="budget-grid">
+
       <div class="budget-card">
         <div class="budget-head capex">CAPEX — Investimento</div>
         <div class="budget-body">
-          <div class="budget-line">
-            <span class="budget-line-label">Modernização manufatura</span>
-            <span class="budget-line-val">R$ 684.845</span>
-          </div>
-          <div class="budget-line">
-            <span class="budget-line-label">TI e ERP (NEO fases)</span>
-            <span class="budget-line-val">R$ 298.193</span>
-          </div>
-          <div class="budget-line">
-            <span class="budget-line-label">Manutenção e instalações</span>
-            <span class="budget-line-val">R$ 69.000</span>
-          </div>
-          <div class="budget-line">
-            <span class="budget-line-label">Equipamentos comerciais</span>
-            <span class="budget-line-val">R$ 22.000</span>
-          </div>
-          <div class="budget-line">
-            <span class="budget-line-label">Controladoria</span>
-            <span class="budget-line-val">R$ 2.800</span>
-          </div>
-          <div class="budget-total-row">
-            <span>Total CAPEX</span>
-            <span>R$ 1.076.838</span>
-          </div>
+          <div class="budget-line"><span class="budget-line-label">Modernização manufatura</span><span class="budget-line-val">R$ 684.845</span></div>
+          <div class="budget-line"><span class="budget-line-label">TI e ERP (NEO fases)</span><span class="budget-line-val">R$ 298.193</span></div>
+          <div class="budget-line"><span class="budget-line-label">Manutenção e instalações</span><span class="budget-line-val">R$ 69.000</span></div>
+          <div class="budget-line"><span class="budget-line-label">Equipamentos comerciais</span><span class="budget-line-val">R$ 22.000</span></div>
+          <div class="budget-line"><span class="budget-line-label">Controladoria</span><span class="budget-line-val">R$ 2.800</span></div>
+          <div class="budget-total-row"><span>Total CAPEX</span><span>R$ 1.076.838</span></div>
         </div>
       </div>
 
       <div class="budget-card">
         <div class="budget-head opex">OPEX — Custo recorrente</div>
         <div class="budget-body">
-          <div class="budget-line">
-            <span class="budget-line-label">Logística</span>
-            <span class="budget-line-val">R$ 3.775.026</span>
-          </div>
-          <div class="budget-line">
-            <span class="budget-line-label">Comercial</span>
-            <span class="budget-line-val">R$ 2.371.000</span>
-          </div>
-          <div class="budget-line">
-            <span class="budget-line-label">TI</span>
-            <span class="budget-line-val">R$ 960.394</span>
-          </div>
-          <div class="budget-line">
-            <span class="budget-line-label">Internacional</span>
-            <span class="budget-line-val">R$ 720.000</span>
-          </div>
-          <div class="budget-line">
-            <span class="budget-line-label">Manufatura + Manutenção</span>
-            <span class="budget-line-val">R$ 815.793</span>
-          </div>
-          <div class="budget-line">
-            <span class="budget-line-label">Compras</span>
-            <span class="budget-line-val">R$ 35.050</span>
-          </div>
-          <div class="budget-total-row">
-            <span>Total OPEX</span>
-            <span>R$ 8.677.264</span>
-          </div>
+          <div class="budget-line"><span class="budget-line-label">Logística</span><span class="budget-line-val">R$ 3.775.026</span></div>
+          <div class="budget-line"><span class="budget-line-label">Comercial</span><span class="budget-line-val">R$ 2.371.000</span></div>
+          <div class="budget-line"><span class="budget-line-label">TI</span><span class="budget-line-val">R$ 960.394</span></div>
+          <div class="budget-line"><span class="budget-line-label">Internacional</span><span class="budget-line-val">R$ 720.000</span></div>
+          <div class="budget-line"><span class="budget-line-label">Manufatura + Manutenção</span><span class="budget-line-val">R$ 815.793</span></div>
+          <div class="budget-line"><span class="budget-line-label">Compras</span><span class="budget-line-val">R$ 35.050</span></div>
+          <div class="budget-total-row"><span>Total OPEX</span><span>R$ 8.677.264</span></div>
         </div>
       </div>
 
       <div class="budget-card">
         <div class="budget-head people">Pessoas — Estrutura de equipe</div>
         <div class="budget-body">
-          <div class="budget-line">
-            <span class="budget-line-label">Manufatura</span>
-            <span class="budget-line-val">R$ 5.464.562</span>
-          </div>
-          <div class="budget-line">
-            <span class="budget-line-label">Logística</span>
-            <span class="budget-line-val">R$ 421.784</span>
-          </div>
-          <div class="budget-line">
-            <span class="budget-line-label">Compras</span>
-            <span class="budget-line-val">R$ 343.343</span>
-          </div>
-          <div class="budget-total-row">
-            <span>Total Pessoas</span>
-            <span>R$ 6.229.690</span>
-          </div>
+          <div class="budget-line"><span class="budget-line-label">Manufatura</span><span class="budget-line-val">R$ 5.464.562</span></div>
+          <div class="budget-line"><span class="budget-line-label">Logística</span><span class="budget-line-val">R$ 421.784</span></div>
+          <div class="budget-line"><span class="budget-line-label">Compras</span><span class="budget-line-val">R$ 343.343</span></div>
+          <div class="budget-total-row"><span>Total Pessoas</span><span>R$ 6.229.690</span></div>
         </div>
       </div>
+
     </div>
 
-    <div class="total-banner" style="margin-top:16px">
+    <div class="total-banner">
       <div>
         <div class="total-banner-label">Planejamento total previsto 2026</div>
-        <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:2px">CAPEX + OPEX + Pessoas · valor corrigido</div>
+        <div class="total-banner-note">CAPEX + OPEX + Pessoas · valor corrigido</div>
       </div>
       <div class="total-banner-val">R$ 15.983.792</div>
     </div>
   </section>
 
-  <!-- CAPEX / OPEX ESPANHA -->
+  <!-- CAPEX/OPEX ESPANHA -->
   <section>
     <div class="section-eyebrow">CAPEX e OPEX · Necessidades Espanha — estrutura a dimensionar</div>
-
     <div class="esp-budget">
+
       <div class="esp-card">
         <div class="esp-head capex">CAPEX · Investimento inicial — Espanha</div>
         <div class="esp-body">
@@ -780,7 +555,7 @@
           <div class="esp-line"><div class="esp-line-dot"></div><span>Estrutura de armazenagem (racks, câmara controlada)</span></div>
           <div class="esp-line"><div class="esp-line-dot"></div><span>Equipamentos de qualidade e segurança industrial</span></div>
           <div class="esp-line"><div class="esp-line-dot"></div><span>TI local — equipamentos, sistema e integração ERP</span></div>
-          <div class="esp-note">Faixa estimada: €118k–€535k · varia conforme volume de produção e modelo de equipamento</div>
+          <div class="esp-note">Faixa estimada: €118k – €535k · varia conforme volume de produção e modelo de equipamento</div>
         </div>
       </div>
 
@@ -791,11 +566,11 @@
           <div class="esp-line"><div class="esp-line-dot"></div><span>Country Manager (gestão local)</span></div>
           <div class="esp-line"><div class="esp-line-dot"></div><span>Equipe fabril — operadores de produção<span class="esp-tbd">depende do volume</span></span></div>
           <div class="esp-line"><div class="esp-line-dot"></div><span>Utilities — energia, água, climatização industrial</span></div>
-          <div class="esp-line"><div class="esp-line-dot"></div><span>Importação e desembaraço aduaneiro (% do valor)</span></div>
+          <div class="esp-line"><div class="esp-line-dot"></div><span>Importação e desembaraço aduaneiro (% do valor importado)</span></div>
           <div class="esp-line"><div class="esp-line-dot"></div><span>Compliance e regulação de tabaco recorrente</span></div>
           <div class="esp-line"><div class="esp-line-dot"></div><span>Parcerias comerciais / distribuidores<span class="esp-tbd">modelo a definir</span></span></div>
           <div class="esp-line"><div class="esp-line-dot"></div><span>Feira Intertabac Dortmund (já no orçamento 2026)</span></div>
-          <div class="esp-note">Faixa parcial estimada: €120k–€236k/ano + variáveis de volume e distribuição</div>
+          <div class="esp-note">Faixa parcial estimada: €120k – €236k/ano + variáveis de volume e distribuição</div>
         </div>
       </div>
 
@@ -806,8 +581,8 @@
           <div class="esp-line"><div class="esp-line-dot"></div><span>Designer de embalagem (centralizado Brasil)</span></div>
           <div class="esp-line"><div class="esp-line-dot"></div><span>Adequação da linha de blend para padrão exportação<span class="esp-tbd">a avaliar</span></span></div>
           <div class="esp-line"><div class="esp-line-dot"></div><span>Certificações de exportação (MAPA e similares)</span></div>
-          <div class="esp-line"><div class="esp-line-dot"></div><span>Frete internacional (marítimo/aéreo) recorrente</span></div>
-          <div class="esp-note">Faixa estimada: R$ 240k–R$ 504k/ano</div>
+          <div class="esp-line"><div class="esp-line-dot"></div><span>Frete internacional (marítimo / aéreo) recorrente</span></div>
+          <div class="esp-note">Faixa estimada: R$ 240k – R$ 504k/ano</div>
         </div>
       </div>
 
@@ -815,21 +590,22 @@
         <div class="esp-head blocker">Decisões que desbloqueiam o budget</div>
         <div class="esp-body">
           <div class="esp-line"><div class="esp-line-dot"></div><span><strong>Volume de produção mensal</strong> — define máquina, galpão, equipe e CAPEX total</span></div>
-          <div class="esp-line"><div class="esp-line-dot"></div><span><strong>Modelo de equipamento</strong> — compra vs. leasing (delta: €25k–€180k)</span></div>
+          <div class="esp-line"><div class="esp-line-dot"></div><span><strong>Modelo de equipamento</strong> — compra vs. leasing (delta: €25k – €180k)</span></div>
           <div class="esp-line"><div class="esp-line-dot"></div><span><strong>Regulação local</strong> — licenças de fabricante na Espanha (prazo e custo)</span></div>
           <div class="esp-line"><div class="esp-line-dot"></div><span><strong>Localização do hub</strong> — região da Espanha (custo de aluguel e mão de obra)</span></div>
           <div class="esp-line"><div class="esp-line-dot"></div><span><strong>Modelo de distribuição</strong> — comissão vs. fixo vs. exclusividade</span></div>
           <div class="esp-line"><div class="esp-line-dot"></div><span><strong>Capacidade Brasil</strong> — linha de blend suporta exportação sem novo CAPEX?</span></div>
         </div>
       </div>
+
     </div>
   </section>
 
 </main>
 
 <footer>
-  <span>HBT · Handmade Brazilian Tobacco · Documento restrito</span>
-  <span>Diretor de Operações Globais · Hub Norway · 2026</span>
+  <span>HBT · Handmade Brazilian Tobacco · Documento restrito · Diretor de Operações Globais · Hub Norway · 2026</span>
+  <a href="https://app-algoritmo.github.io/digital-solutions" target="_blank" rel="noopener noreferrer" style="margin:0 10px;text-decoration:none;color:#D4AF37;">&lt;/&gt; Digital Solutions</a>
 </footer>
 
 </div>
@@ -837,17 +613,13 @@
 <script>
 const PIN = '202600';
 let entered = '';
-
 function updateDots() {
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 6; i++)
     document.getElementById('d' + i).classList.toggle('filled', i < entered.length);
-  }
 }
-
 function pinInput(n) {
   if (entered.length >= 6) return;
-  entered += n;
-  updateDots();
+  entered += n; updateDots();
   document.getElementById('pin-error').textContent = '';
   if (entered.length === 6) {
     setTimeout(() => {
@@ -856,25 +628,13 @@ function pinInput(n) {
         document.getElementById('dashboard').classList.add('visible');
       } else {
         document.getElementById('pin-error').textContent = 'Código incorreto. Tente novamente.';
-        entered = '';
-        updateDots();
+        entered = ''; updateDots();
       }
     }, 200);
   }
 }
-
-function pinDel() {
-  entered = entered.slice(0, -1);
-  updateDots();
-  document.getElementById('pin-error').textContent = '';
-}
-
-function pinClear() {
-  entered = '';
-  updateDots();
-  document.getElementById('pin-error').textContent = '';
-}
-
+function pinDel()   { entered = entered.slice(0,-1); updateDots(); document.getElementById('pin-error').textContent = ''; }
+function pinClear() { entered = ''; updateDots(); document.getElementById('pin-error').textContent = ''; }
 document.addEventListener('keydown', e => {
   if (document.getElementById('pin-screen').classList.contains('hidden')) return;
   if (e.key >= '0' && e.key <= '9') pinInput(e.key);
