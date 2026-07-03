@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>aLeda · Memorando Interno</title>
+<style>
+  :root {
+    --navy:#1a1a2e; --navy2:#242645;
+    --primary:#667eea; --secondary:#764ba2;
+    --grad:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+    --white:#ffffff; --off-white:#f8f9ff; --light:#eef0ff; --border:#e2e5f5;
+    --text:#1a1a2e; --muted:#6b7280;
+    --green:#0f9d58; --green-bg:#e6f6ec; --green-bd:#bfe8cf;
+    --amber:#b7791f; --amber-bg:#fdf3e3; --amber-bd:#f2ddac;
+    --purple:#5a3fb0; --purple-bg:#efeaff; --purple-bd:#d7c9ff;
+    --shadow:0 4px 24px rgba(102,126,234,.09);
+    --shadow-lg:0 16px 48px rgba(102,126,234,.18);
+    --ease:cubic-bezier(.4,0,.2,1);
+    --font:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --mono:'JetBrains Mono','SF Mono',Consolas,monospace;
+    --r:16px;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--font);background:var(--off-white);color:var(--text);line-height:1.6;min-height:100vh;}
+
+  /* ===== LOGIN (same mechanic as access.html) ===== */
+  #login{position:fixed;inset:0;z-index:999;background:linear-gradient(160deg,#1a1a2e 0%,#2d2150 55%,#1a1a2e 100%);display:flex;align-items:center;justify-content:center;}
+  #login.gone{display:none;}
+  .lc{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:38px 34px 30px;width:300px;backdrop-filter:blur(20px);box-shadow:0 32px 80px rgba(0,0,0,.45);}
+  .lc .lf{font-size:34px;margin-bottom:10px;}
+  .lc .lt{font-size:18px;font-weight:800;color:#fff;margin-bottom:2px;}
+  .lc .ls{font-family:var(--mono);font-size:10px;color:#b9bdd4;letter-spacing:.1em;text-transform:uppercase;margin-bottom:22px;text-align:center;}
+  .ld{display:flex;gap:10px;margin-bottom:20px;}
+  .ldot{width:12px;height:12px;border-radius:50%;border:2px solid rgba(255,255,255,.25);transition:all .15s;}
+  .ldot.on{background:#8b9bf5;border-color:#8b9bf5;box-shadow:0 0 10px rgba(139,155,245,.7);}
+  .ldot.er{background:#e36a6a;border-color:#e36a6a;}
+  .lp{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;width:100%;margin-bottom:8px;}
+  .lk{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:11px;color:#fff;font-family:var(--font);font-size:17px;font-weight:600;padding:15px 0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .12s;user-select:none;}
+  .lk:hover{background:rgba(102,126,234,.4);border-color:rgba(102,126,234,.6);transform:scale(1.04);}
+  .lk:active{transform:scale(.95);}
+  .lk.ast{font-size:13px;color:#6b7395;cursor:default;}
+  .lk.ast:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14);transform:none;}
+  .lk.del{font-size:13px;color:#b9bdd4;}
+  .lk.del:hover{color:#e36a6a;border-color:rgba(227,106,106,.4);background:rgba(227,106,106,.1);}
+  .le{font-family:var(--mono);font-size:11px;color:#e36a6a;letter-spacing:.03em;margin-top:10px;opacity:0;transition:opacity .2s;min-height:16px;}
+  .le.show{opacity:1;}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+  .shake{animation:shake .35s ease;}
+
+  /* ===== HEADER ===== */
+  header{background:var(--navy);color:#fff;}
+  .hdr-inner{max-width:1180px;margin:0 auto;padding:26px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+  .brand{font-size:1.5rem;font-weight:800;letter-spacing:-.01em;font-family:Georgia,'Times New Roman',serif;}
+  .brand-sub{font-size:.85rem;color:#b9bdd4;margin-top:4px;}
+  .hdr-right{display:flex;align-items:center;gap:16px;}
+  .hdr-meta{text-align:right;font-size:.72rem;color:#9aa0c9;line-height:1.5;}
+  .btn-back{
+    display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.2);color:#fff;font-family:var(--font);font-size:.82rem;font-weight:600;
+    padding:9px 18px;border-radius:10px;text-decoration:none;transition:all .2s;white-space:nowrap;
+  }
+  .btn-back:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.35);}
+
+  /* ===== HERO ===== */
+  .hero{max-width:1180px;margin:0 auto;padding:44px 28px 8px;}
+  .eyebrow{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--primary);background:rgba(102,126,234,.09);border:1px solid rgba(102,126,234,.22);padding:6px 16px;border-radius:20px;margin-bottom:16px;}
+  .hero h1{font-size:clamp(1.5rem,3.2vw,2.1rem);font-weight:800;letter-spacing:-.01em;margin-bottom:10px;}
+  .hero p{color:var(--muted);font-size:.98rem;max-width:720px;}
+
+  /* ===== SECTION LABEL ===== */
+  .section-label{font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:38px 0 18px;max-width:1180px;margin-left:auto;margin-right:auto;padding:0 28px;display:flex;align-items:center;gap:12px;}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  /* ===== PHASE CARDS (Blocos) ===== */
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .phase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;margin-bottom:10px;}
+  .phase-card{border-radius:20px;padding:28px 26px 30px;display:flex;flex-direction:column;border:1px solid;}
+  .phase-card.green{background:var(--green-bg);border-color:var(--green-bd);}
+  .phase-card.amber{background:var(--amber-bg);border-color:var(--amber-bd);}
+  .phase-card.purple{background:var(--purple-bg);border-color:var(--purple-bd);}
+  .phase-badge{display:inline-block;align-self:flex-start;font-family:var(--mono);font-size:10.5px;font-weight:800;letter-spacing:.08em;color:#fff;padding:5px 13px;border-radius:20px;margin-bottom:14px;}
+  .green .phase-badge{background:var(--green);}
+  .amber .phase-badge{background:var(--amber);}
+  .purple .phase-badge{background:var(--purple);}
+  .phase-card h2{font-family:Georgia,'Times New Roman',serif;font-size:1.6rem;font-weight:800;margin-bottom:18px;}
+  .green h2{color:var(--green);}
+  .amber h2{color:var(--amber);}
+  .purple h2{color:var(--purple);}
+  .task-item{background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+  .task-item .t{font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:6px;}
+  .task-item .meta{display:flex;justify-content:space-between;gap:8px;font-size:.72rem;color:var(--muted);flex-wrap:wrap;}
+  .task-item .who{font-weight:600;}
+  .task-item .when{font-family:var(--mono);background:var(--light);color:var(--primary);padding:2px 8px;border-radius:6px;font-size:.68rem;font-weight:700;white-space:nowrap;}
+
+  /* ===== BANNER / NEXT MILESTONE ===== */
+  .banner{max-width:1180px;margin:34px auto 0;padding:0 28px;}
+  .banner-inner{background:var(--navy);color:#fff;border-radius:20px;padding:30px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .banner-inner h3{font-size:1.05rem;font-weight:800;margin-bottom:6px;}
+  .banner-inner p{font-size:.86rem;color:#c3c7e6;max-width:640px;}
+  .banner-tag{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:8px 16px;border-radius:20px;white-space:nowrap;}
+
+  footer{border-top:1px solid var(--border);padding:28px;text-align:center;font-size:.8rem;color:var(--muted);margin-top:50px;}
+
+  @media(max-width:640px){
+    .hdr-inner{padding:18px 18px;}
+    .hero{padding:32px 18px 6px;}
+    .wrap,.section-label,.banner{padding-left:18px;padding-right:18px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="lc">
+    <div class="lf">🔒</div>
+    <div class="lt">Acesso Restrito</div>
+    <div class="ls">aLeda · Memorando Interno</div>
+    <div class="ld" id="ldots">
+      <div class="ldot" id="d0"></div><div class="ldot" id="d1"></div><div class="ldot" id="d2"></div>
+      <div class="ldot" id="d3"></div><div class="ldot" id="d4"></div><div class="ldot" id="d5"></div>
+    </div>
+    <div class="lp" id="lpad">
+      <div class="lk" data-k="1">1</div><div class="lk" data-k="2">2</div><div class="lk" data-k="3">3</div>
+      <div class="lk" data-k="4">4</div><div class="lk" data-k="5">5</div><div class="lk" data-k="6">6</div>
+      <div class="lk" data-k="7">7</div><div class="lk" data-k="8">8</div><div class="lk" data-k="9">9</div>
+      <div class="lk ast" data-k="">✱</div><div class="lk" data-k="0">0</div><div class="lk del" data-k="del">⌫</div>
+    </div>
+    <div class="le" id="lerr">PIN incorreto</div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="hdr-inner">
+    <div>
+      <div class="brand">aLeda · Memorando Interno</div>
+      <div class="brand-sub">Diretoria de Operações Globais · Ações prioritárias antes do fechamento com a COMET</div>
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-meta">Confidencial · Uso interno<br/>Julho 2026</div>
+      <a class="btn-back" href="access.html">← Voltar ao Access</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="eyebrow">Força-tarefa · Prazo de 4 semanas</span>
+  <h1>Ações prioritárias — aLeda Espanha</h1>
+  <p>Consolidação das tarefas que precisam estar concluídas ou em estágio avançado antes de agendarmos a reunião de fechamento do contrato de distribuição e do contrato de importação/logística com a COMET. Bloco 1 é bloqueante para o agendamento.</p>
+</section>
+
+<div class="section-label">Blocos de trabalho</div>
+<div class="wrap">
+  <div class="phase-grid">
+
+    <div class="phase-card green">
+      <span class="phase-badge">BLOCO 1</span>
+      <h2>Bloqueantes</h2>
+      <div class="task-item">
+        <div class="t">Formalizar a documentação da nossa fábrica (razão social, registros, certificações UE) no contrato de importação/logística</div>
+        <div class="meta"><span class="who">Rafael Gomes</span><span class="when">2 semanas</span></div>
+      </div>
+      <div class="task-item">
+        <div class="t">Confirmar capacidade de produção/exportação alinhada aos volumes a escoar pela COMET</div>
+        <div class="meta"><span class="who">Rafael Gomes + Diretoria</span><span class="when">2 semanas</span></div>
+      </div>
+      <div class="task-item">
+        <div class="t">Definir posição de preço de venda e preencher o Anexo II da minuta de distribuição</div>
+        <div class="meta"><span class="who">Diretoria</span><span class="when">Semana 3</span></div>
+      </div>
+      <div class="task-item">
+        <div class="t">Preencher campos remanescentes do contrato de importação/logística (entrega, prazos)</div>
+        <div class="meta"><span class="who">Diretoria + Jurídico</span><span class="when">Semana 3</span></div>
+      </div>
+      <div class="task-item">
+        <div class="t">Responder às 8 perguntas-chave de governança do contrato COMET</div>
+        <div class="meta"><span class="who">Diretoria + Rafael</span><span class="when">Semana 2–3</span></div>
+      </div>
+    </div>
+
+    <div class="phase-card amber">
+      <span class="phase-badge">BLOCO 2</span>
+      <h2>Paralelo</h2>
+      <div class="task-item">
+        <div class="t">Depurar a base de clientes: remover contatos fora de escopo e segmentar estancos/expendedurías</div>
+        <div class="meta"><span class="who">Rafael Gomes</span><span class="when">3 semanas</span></div>
+      </div>
+      <div class="task-item">
+        <div class="t">Confirmar encerramento de compromissos ligados ao posicionamento de marca anterior</div>
+        <div class="meta"><span class="who">Diretoria</span><span class="when">2 semanas</span></div>
+      </div>
+      <div class="task-item">
+        <div class="t">Preparar esboço do plano de ativação comercial dentro da rede COMET</div>
+        <div class="meta"><span class="who">Diretoria</span><span class="when">Semana 4</span></div>
+      </div>
+    </div>
+
+    <div class="phase-card purple">
+      <span class="phase-badge">BLOCO 3</span>
+      <h2>Estruturação</h2>
+      <div class="task-item">
+        <div class="t">Abrir processo de recrutamento para Responsável Comercial/Trade Marketing</div>
+        <div class="meta"><span class="who">Diretoria</span><span class="when">Imediato</span></div>
+      </div>
+      <div class="task-item">
+        <div class="t">Consultar a assessoria fiscal sobre eventual necessidade de refinar o epígrafe de atividade (IAE)</div>
+        <div class="meta"><span class="who">Jurídico/Fiscal</span><span class="when">2 semanas</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- NEXT MILESTONE -->
+<div class="banner">
+  <div class="banner-inner">
+    <div>
+      <h3>Próximo marco</h3>
+      <p>Assim que os itens do Bloco 1 estiverem concluídos, a Diretoria agenda a reunião de fechamento com a COMET. Atualização de status esperada semanalmente. Impedimentos devem ser reportados imediatamente — não aguardar o prazo final.</p>
+    </div>
+    <div class="banner-tag">Prazo geral: 4 semanas</div>
+  </div>
+</div>
+
+<footer>
+  <p>aLeda · Documento interno de trabalho — Diretoria de Operações Globais</p>
+</footer>
+
+<script>
+(function(){
+  var pin = '', PIN_CODE = '202600';
+  function dotUp(){
+    for (var i=0;i<6;i++){
+      var d = document.getElementById('d'+i);
+      if(!d) continue;
+      d.classList.remove('er');
+      i < pin.length ? d.classList.add('on') : d.classList.remove('on');
+    }
+  }
+  function pinOk(){
+    var sc = document.getElementById('login');
+    sc.style.transition = 'opacity .4s';
+    sc.style.opacity = '0';
+    setTimeout(function(){ sc.classList.add('gone'); }, 400);
+  }
+  function pinFail(){
+    var dt = document.getElementById('ldots');
+    for (var i=0;i<6;i++){ var d=document.getElementById('d'+i); if(d) d.classList.add('er'); }
+    dt.classList.add('shake');
+    var er = document.getElementById('lerr'); if(er) er.classList.add('show');
+    setTimeout(function(){ pin=''; dotUp(); dt.classList.remove('shake'); }, 700);
+  }
+  function pinPress(n){
+    if (pin.length>=6) return;
+    pin += n; dotUp();
+    if (pin.length===6) setTimeout(function(){ pin===PIN_CODE ? pinOk() : pinFail(); }, 150);
+  }
+  function pinDel(){
+    pin = pin.slice(0,-1); dotUp();
+    var er = document.getElementById('lerr'); if(er) er.classList.remove('show');
+  }
+  var pad = document.getElementById('lpad');
+  if (pad){
+    pad.addEventListener('click', function(e){
+      var el = e.target;
+      while (el && el !== pad){
+        var k = el.getAttribute('data-k');
+        if (k !== null){ k==='del' ? pinDel() : (k!=='' && pinPress(k)); return; }
+        el = el.parentElement;
+      }
+    });
+  }
+  document.addEventListener('keydown', function(e){
+    var loginEl = document.getElementById('login');
+    if (!loginEl || loginEl.classList.contains('gone')) return;
+    if (e.key>='0' && e.key<='9') pinPress(e.key);
+    if (e.key==='Backspace'){ e.preventDefault(); pinDel(); }
+  });
+})();
+</script>
+</body>
+</html>
