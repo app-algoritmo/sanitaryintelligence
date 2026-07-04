@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HBT · Painel Executivo COO — Orçamento 2027-2029</title>
+<style>
+  :root{
+    --ink:#12151A; --navy:#1F3864; --navy2:#2E5496;
+    --green:#009C3B; --yellow:#FFC72C; --blue:#0064B0;
+    --paper:#F4F3EF; --card:#FFFFFF; --line:#DEDDD7; --mut:#5B636E;
+    --input:#FBFAF6; --focus:#0064B0;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:"Inter","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    background:var(--paper); color:var(--ink); font-size:17px; line-height:1.5;
+  }
+  .tricolor{height:6px;width:100%;background:linear-gradient(90deg,
+    var(--green) 0 34%, var(--yellow) 34% 67%, var(--blue) 67% 100%);}
+  /* ---------- PIN GATE ---------- */
+  #gate{position:fixed;inset:0;background:var(--ink);z-index:100;
+    display:flex;align-items:center;justify-content:center;flex-direction:column;}
+  #gate .box{width:min(94vw,440px);background:#191D24;border:1px solid #2A2F38;
+    border-radius:16px;padding:44px 38px;text-align:center;box-shadow:0 24px 70px rgba(0,0,0,.55);}
+  #gate .wm{font-weight:800;letter-spacing:3px;color:#fff;font-size:36px;}
+  #gate .tri{height:5px;width:80px;margin:16px auto 24px;border-radius:2px;
+    background:linear-gradient(90deg,var(--green) 0 34%,var(--yellow) 34% 67%,var(--blue) 67% 100%);}
+  #gate p{color:#9AA3AF;font-size:14px;letter-spacing:.6px;margin:0 0 26px;text-transform:uppercase;}
+  .pins{display:flex;gap:11px;justify-content:center;margin-bottom:18px;}
+  .pins input{width:52px;height:64px;text-align:center;font-size:28px;font-weight:700;
+    border:2px solid #363C46;background:#12151A;color:#fff;border-radius:11px;outline:none;}
+  .pins input:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,100,176,.25);}
+  #gate button{margin-top:8px;width:100%;padding:15px;border:0;border-radius:11px;cursor:pointer;
+    background:#fff;color:var(--ink);font-weight:700;font-size:17px;letter-spacing:.4px;}
+  #gate .err{color:#FF7070;font-size:14px;height:18px;margin-top:12px;}
+  @keyframes shake{10%,90%{transform:translateX(-2px)}30%,70%{transform:translateX(5px)}50%{transform:translateX(-7px)}}
+  .shake{animation:shake .42s;}
+  /* ---------- APP ---------- */
+  #app{display:none;}
+  header.top{background:var(--ink);color:#fff;}
+  .top-in{max-width:1320px;margin:0 auto;padding:22px 28px;display:flex;align-items:center;
+    justify-content:space-between;gap:22px;flex-wrap:wrap;}
+  .brand{display:flex;align-items:center;gap:20px;}
+  .brand .wm{font-weight:800;letter-spacing:3px;font-size:34px;line-height:1;}
+  .brand .divider{width:1px;height:44px;background:#3A414B;}
+  .brand .role{font-size:13px;letter-spacing:2px;color:#AEB6C0;text-transform:uppercase;}
+  .brand .title{font-size:22px;font-weight:800;margin-top:3px;}
+  .hdr-sel{display:flex;flex-direction:column;gap:5px;min-width:290px;}
+  .hdr-sel label{font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:#AEB6C0;}
+  .hdr-sel select{font-size:17px;font-weight:600;padding:11px 34px 11px 13px;border-radius:9px;
+    border:1px solid #3A414B;background:#20252E;color:#fff;appearance:none;-webkit-appearance:none;cursor:pointer;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%23AEB6C0' stroke-width='1.8'/></svg>");
+    background-repeat:no-repeat;background-position:right 12px center;}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;}
+  .btn{border:0;border-radius:9px;padding:12px 18px;font-weight:600;font-size:15px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:8px;transition:.15s;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-pdf{background:var(--blue);color:#fff;} .btn-doc{background:var(--navy2);color:#fff;}
+  .btn-save{background:#2C323B;color:#fff;} .btn-ghost{background:transparent;color:#fff;border:1px solid #3A414B;}
+  main{max-width:1320px;margin:0 auto;padding:30px 28px 80px;}
+  /* executive hero */
+  .hero{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:26px;}
+  .hcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;}
+  .hcard .l{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--mut);}
+  .hcard .v{font-size:34px;font-weight:800;margin-top:8px;font-variant-numeric:tabular-nums;color:var(--navy);line-height:1.1;}
+  .hcard .s{font-size:13px;color:var(--mut);margin-top:6px;}
+  .hcard.accent{background:var(--navy);border-color:var(--navy);}
+  .hcard.accent .l{color:#C7D0DC;} .hcard.accent .v{color:#fff;} .hcard.accent .s{color:#AEB6C0;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:26px;overflow:hidden;}
+  .card > h2{margin:0;padding:18px 24px;font-size:15px;letter-spacing:1.6px;text-transform:uppercase;
+    color:#fff;background:var(--navy);display:flex;align-items:center;gap:12px;}
+  .card > h2 .tag{margin-left:auto;font-size:13px;font-weight:500;letter-spacing:.4px;color:#C7D0DC;text-transform:none;}
+  .pad{padding:24px;}
+  label.f{display:block;font-size:12.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;
+    color:var(--mut);margin:0 0 7px;}
+  .grid{display:grid;gap:20px;} .g3{grid-template-columns:repeat(3,1fr);} .g2{grid-template-columns:repeat(2,1fr);}
+  input,select,textarea{width:100%;font-family:inherit;font-size:16px;color:var(--ink);
+    border:1px solid var(--line);background:var(--input);border-radius:8px;padding:12px 13px;outline:none;}
+  input:focus,select:focus,textarea:focus{border-color:var(--focus);box-shadow:0 0 0 4px rgba(0,100,176,.12);}
+  textarea{resize:vertical;min-height:80px;}
+  select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:32px;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%235B636E' stroke-width='1.7'/></svg>");
+    background-repeat:no-repeat;background-position:right 12px center;}
+  .tbl-wrap{overflow-x:auto;}
+  table{border-collapse:collapse;width:100%;min-width:980px;}
+  th,td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top;}
+  thead th{background:var(--navy2);color:#fff;font-size:12.5px;letter-spacing:.4px;text-transform:uppercase;
+    font-weight:700;white-space:nowrap;}
+  td input,td select,td textarea{border:0;background:transparent;padding:8px;border-radius:6px;font-size:15px;}
+  td input:focus,td select:focus,td textarea:focus{background:var(--input);}
+  td.num input{text-align:right;}
+  td.tot{background:#EEF2F8;font-weight:700;text-align:right;font-variant-numeric:tabular-nums;
+    white-space:nowrap;font-size:15px;color:var(--navy);}
+  tfoot td{background:var(--ink);color:#fff;font-weight:700;text-align:right;white-space:nowrap;
+    font-variant-numeric:tabular-nums;font-size:15px;}
+  .capex-tbl{min-width:820px;}
+  .row-tools{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;
+    background:#FAFAF8;border-top:1px solid var(--line);}
+  .add{background:var(--green);color:#fff;border:0;border-radius:8px;padding:11px 18px;font-weight:600;font-size:15px;cursor:pointer;}
+  .del{background:transparent;border:0;color:#C0392B;font-size:22px;cursor:pointer;line-height:1;}
+  .del:hover{color:#800;}
+  .cons-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;}
+  .chart{border:1px solid var(--line);border-radius:12px;padding:22px;background:#FCFCFB;}
+  .chart h3{margin:0 0 18px;font-size:13px;letter-spacing:.7px;text-transform:uppercase;color:var(--mut);}
+  .bar-row{margin-bottom:18px;}
+  .bar-row .yr{font-size:16px;font-weight:700;margin-bottom:7px;display:flex;justify-content:space-between;}
+  .bar{height:22px;border-radius:6px;background:#ECEBE6;display:flex;overflow:hidden;}
+  .bar .op{background:var(--blue);} .bar .cp{background:var(--green);}
+  .leg{display:flex;gap:22px;font-size:14px;color:var(--mut);margin-top:8px;}
+  .leg i{display:inline-block;width:13px;height:13px;border-radius:4px;margin-right:7px;vertical-align:-1px;}
+  .split{border:1px solid var(--line);border-radius:12px;padding:22px;background:#FCFCFB;}
+  .split h3{margin:0 0 16px;font-size:13px;letter-spacing:.7px;text-transform:uppercase;color:var(--mut);}
+  .split .line{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed var(--line);font-size:17px;}
+  .split .line:last-child{border-bottom:0;font-weight:800;color:var(--navy);}
+  .split .line b{font-variant-numeric:tabular-nums;}
+  .foot-note{font-size:15px;color:var(--mut);padding:20px 24px;border-top:1px solid var(--line);background:#FAFAF8;}
+  .foot-note b{color:var(--ink);}
+  #printArea{display:none;}
+  @media (max-width:980px){.hero{grid-template-columns:repeat(2,1fr);}.g3,.g2,.cons-grid{grid-template-columns:1fr;}}
+  @media print{
+    @page{size:A4 landscape;margin:12mm;}
+    body{background:#fff;} #app,#gate{display:none !important;} #printArea{display:block !important;}
+  }
+  .rep{font-family:Arial,sans-serif;color:#111;font-size:12px;}
+  .rep h1{font-size:19px;margin:0 0 2px;} .rep .repsub{font-size:12px;color:#555;margin:0 0 12px;letter-spacing:1px;text-transform:uppercase;}
+  .rep .band{height:5px;background:linear-gradient(90deg,#009C3B 0 34%,#FFC72C 34% 67%,#0064B0 67% 100%);margin:0 0 16px;}
+  .rep h2{font-size:13px;background:#1F3864;color:#fff;padding:6px 9px;margin:18px 0 9px;text-transform:uppercase;letter-spacing:.5px;}
+  .rep table{border-collapse:collapse;width:100%;font-size:10.5px;}
+  .rep th{background:#2E5496;color:#fff;border:1px solid #7d8ba5;padding:5px;text-align:left;}
+  .rep td{border:1px solid #bbb;padding:5px;vertical-align:top;} .rep td.n{text-align:right;}
+  .rep tfoot td{background:#12151A;color:#fff;font-weight:bold;text-align:right;}
+  .rep .idgrid td{border:0;padding:3px 10px 3px 0;} .rep .idgrid b{display:inline-block;min-width:150px;}
+</style>
+</head>
+<body>
+
+<!-- ===================== PIN GATE ===================== -->
+<div id="gate">
+  <div class="box" id="pinbox">
+    <div class="wm">HBT</div>
+    <div class="tri"></div>
+    <p>Painel Executivo COO · Acesso restrito</p>
+    <div class="pins">
+      <input type="password" inputmode="numeric" maxlength="1" data-i="0" autocomplete="off">
+      <input type="password" inputmode="numeric" maxlength="1" data-i="1" autocomplete="off">
+      <input type="password" inputmode="numeric" maxlength="1" data-i="2" autocomplete="off">
+      <input type="password" inputmode="numeric" maxlength="1" data-i="3" autocomplete="off">
+      <input type="password" inputmode="numeric" maxlength="1" data-i="4" autocomplete="off">
+      <input type="password" inputmode="numeric" maxlength="1" data-i="5" autocomplete="off">
+    </div>
+    <button onclick="checkPin()">Entrar</button>
+    <div class="err" id="pinerr"></div>
+  </div>
+</div>
+
+<!-- ===================== APP ===================== -->
+<div id="app">
+  <header class="top">
+    <div class="top-in">
+      <div class="brand">
+        <div class="wm">HBT</div>
+        <div class="divider"></div>
+        <div>
+          <div class="role">Painel Executivo · COO</div>
+          <div class="title">Orçamento 2027-2029</div>
+        </div>
+      </div>
+      <div class="hdr-sel">
+        <label for="dir">Diretoria em análise</label>
+        <select id="dir" onchange="recalc()"></select>
+      </div>
+      <div class="actions">
+        <button class="btn btn-pdf" onclick="exportPDF()">⭳ PDF</button>
+        <button class="btn btn-doc" onclick="exportWord()">⭳ Word</button>
+        <button class="btn btn-save" onclick="saveDraft()">Salvar rascunho</button>
+        <button class="btn btn-ghost" onclick="document.getElementById('loadf').click()">Abrir rascunho</button>
+        <input id="loadf" type="file" accept="application/json" style="display:none" onchange="loadDraft(event)">
+      </div>
+    </div>
+    <div class="tricolor"></div>
+  </header>
+
+  <main>
+    <!-- EXECUTIVE HERO -->
+    <div class="hero">
+      <div class="hcard"><div class="l">Opex 2027-2029</div><div class="v" id="k_opex">–</div><div class="s">Despesas operacionais</div></div>
+      <div class="hcard"><div class="l">Capex 2027-2029</div><div class="v" id="k_capex">–</div><div class="s">Investimentos</div></div>
+      <div class="hcard"><div class="l">Maior ano</div><div class="v" id="k_peak">–</div><div class="s" id="k_peak_s">Pico de desembolso</div></div>
+      <div class="hcard accent"><div class="l">Total Operações</div><div class="v" id="k_total">–</div><div class="s" id="k_dir_s">—</div></div>
+    </div>
+
+    <!-- CONTEXTO / VALIDAÇÃO COO -->
+    <section class="card">
+      <h2>Contexto e validação <span class="tag">Parecer da COO</span></h2>
+      <div class="pad">
+        <div class="grid g3">
+          <div><label class="f">Centro de custo</label><select id="id_cc"></select></div>
+          <div><label class="f">Responsável pela área</label><input id="id_resp" placeholder="Nome do gestor"></div>
+          <div><label class="f">Exercício</label><select id="id_ex"><option>2027-2029</option><option>2027</option><option>2028</option><option>2029</option></select></div>
+          <div><label class="f">Data da análise</label><input id="id_data" type="date"></div>
+          <div><label class="f">Status do envio</label><select id="id_status"><option>Primeiro envio</option><option>Revisado</option><option>Ajustes concluídos</option><option>Final</option></select></div>
+          <div><label class="f">Parecer da COO</label><select id="id_parecer"><option>Em análise</option><option>Aprovado</option><option>Aprovado com ressalvas</option><option>Ajustes solicitados</option></select></div>
+        </div>
+        <div class="grid g2" style="margin-top:20px;">
+          <div><label class="f">Premissas e justificativas</label><textarea id="id_prem" placeholder="Base de cálculo, premissas macro, drivers..."></textarea></div>
+          <div><label class="f">Observações / ressalvas da COO</label><textarea id="id_obs" placeholder="Pontos de atenção, condições de aprovação..."></textarea></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OPEX -->
+    <section class="card">
+      <h2>Orçamento Opex <span class="tag">Base zero · mês a mês (2027) + anual</span></h2>
+      <div class="tbl-wrap">
+        <table id="opexTable">
+          <thead><tr>
+            <th style="min-width:170px;">Centro de custo</th><th style="min-width:190px;">Tipo de conta</th>
+            <th style="min-width:160px;">Descrição</th><th style="min-width:180px;">Justificativa</th>
+            <th>Jan</th><th>Fev</th><th>Mar</th><th>Abr</th><th>Mai</th><th>Jun</th>
+            <th>Jul</th><th>Ago</th><th>Set</th><th>Out</th><th>Nov</th><th>Dez</th>
+            <th>Total 2027</th><th>2028</th><th>2029</th><th>Total geral</th><th></th>
+          </tr></thead>
+          <tbody id="opexBody"></tbody>
+          <tfoot><tr>
+            <td colspan="4" style="text-align:right;background:var(--ink);color:#fff;">TOTAL OPEX</td>
+            <td id="of_1"></td><td id="of_2"></td><td id="of_3"></td><td id="of_4"></td><td id="of_5"></td><td id="of_6"></td>
+            <td id="of_7"></td><td id="of_8"></td><td id="of_9"></td><td id="of_10"></td><td id="of_11"></td><td id="of_12"></td>
+            <td id="of_t27"></td><td id="of_28"></td><td id="of_29"></td><td id="of_tg"></td><td style="background:var(--ink);"></td>
+          </tr></tfoot>
+        </table>
+      </div>
+      <div class="row-tools"><button class="add" onclick="addOpex()">+ Adicionar linha</button>
+        <span style="font-size:14px;color:var(--mut);">Totais calculados automaticamente.</span></div>
+    </section>
+
+    <!-- CAPEX -->
+    <section class="card">
+      <h2>Orçamento Capex <span class="tag">Plano de investimentos · por ano</span></h2>
+      <div class="tbl-wrap">
+        <table id="capexTable" class="capex-tbl">
+          <thead><tr>
+            <th style="min-width:170px;">Centro de custo</th><th style="min-width:200px;">Item de investimento</th>
+            <th style="min-width:170px;">Descrição</th><th style="min-width:180px;">Justificativa</th>
+            <th style="min-width:140px;">Tipo</th><th>2027</th><th>2028</th><th>2029</th><th>Total</th><th></th>
+          </tr></thead>
+          <tbody id="capexBody"></tbody>
+          <tfoot><tr>
+            <td colspan="5" style="text-align:right;background:var(--ink);color:#fff;">TOTAL CAPEX</td>
+            <td id="cf_27"></td><td id="cf_28"></td><td id="cf_29"></td><td id="cf_tg"></td><td style="background:var(--ink);"></td>
+          </tr></tfoot>
+        </table>
+      </div>
+      <div class="row-tools"><button class="add" onclick="addCapex()">+ Adicionar linha</button>
+        <span style="font-size:14px;color:var(--mut);">Total = 2027 + 2028 + 2029.</span></div>
+    </section>
+
+    <!-- CONSOLIDAÇÃO -->
+    <section class="card">
+      <h2>Consolidação <span class="tag">Opex + Capex · atualiza automaticamente</span></h2>
+      <div class="pad">
+        <div class="cons-grid">
+          <div class="split">
+            <h3>Resumo por ano</h3>
+            <div class="line"><span>2027</span><b id="s27">–</b></div>
+            <div class="line"><span>2028</span><b id="s28">–</b></div>
+            <div class="line"><span>2029</span><b id="s29">–</b></div>
+            <div class="line"><span>Total Operações 2027-2029</span><b id="sT">–</b></div>
+          </div>
+          <div class="chart">
+            <h3>Opex × Capex por ano</h3>
+            <div id="bars"></div>
+            <div class="leg"><span><i style="background:var(--blue)"></i>Opex</span><span><i style="background:var(--green)"></i>Capex</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="foot-note">Enviar para <b>controladoria@hbtofficial.com</b> · Assunto padrão:
+        <b>ORÇAMENTO 2027-2029 | [Diretoria] | [status]</b></div>
+    </section>
+  </main>
+</div>
+
+<div id="printArea"></div>
+
+<script>
+const PIN="202600";
+const DIRETORIAS=["Diretoria de Operações Globais (DOG)","COO","CEO","Conselho",
+  "Comercial","Supply / Compras","Controladoria","RH","Outro"];
+const CCS=["03.01 – Operações / Logística","03.02 – Produção / PCP","03.03 – Supply / Compras",
+  "03.04 – Armazenagem / Distribuição","03.05 – Comércio Exterior","03.06 – Manutenção","Outro"];
+const CONTAS=["Aluguel de galpão / armazém","Energia elétrica","Água e esgoto","Manutenção predial",
+  "Manutenção de máquinas e equipamentos","Combustível de frota","Manutenção de veículos",
+  "Frete e logística de distribuição","Materiais de consumo / operacionais","EPIs e uniformes",
+  "Limpeza e conservação","Segurança e vigilância","Telefonia e internet",
+  "Softwares e licenças operacionais","Serviços terceirizados","Seguros operacionais",
+  "Viagens e deslocamentos","Treinamento operacional","Fretes de importação / comércio exterior",
+  "Taxas e despesas aduaneiras","Outro (digitar)"];
+const CAPEX_TIPOS=["Novo","Reposição","Expansão"];
+const BRL=new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:2});
+const fmt=v=>BRL.format(v||0);
+
+const pinInputs=[...document.querySelectorAll('.pins input')];
+pinInputs.forEach((inp,i)=>{
+  inp.addEventListener('input',()=>{inp.value=inp.value.replace(/\D/g,'');if(inp.value&&i<5)pinInputs[i+1].focus();});
+  inp.addEventListener('keydown',e=>{if(e.key==='Backspace'&&!inp.value&&i>0)pinInputs[i-1].focus();if(e.key==='Enter')checkPin();});
+});
+pinInputs[0].focus();
+function checkPin(){
+  const v=pinInputs.map(x=>x.value).join('');
+  if(v===PIN){document.getElementById('gate').style.display='none';document.getElementById('app').style.display='block';init();}
+  else{const b=document.getElementById('pinbox');b.classList.add('shake');
+    document.getElementById('pinerr').textContent='PIN incorreto. Tente novamente.';
+    setTimeout(()=>b.classList.remove('shake'),450);pinInputs.forEach(x=>x.value='');pinInputs[0].focus();}
+}
+function opt(list,sel){return list.map(o=>`<option${o===sel?' selected':''}>${o}</option>`).join('');}
+
+function addOpex(pre={}){
+  const tr=document.createElement('tr');
+  let c=`<td><select class="cc">${opt(CCS,pre.cc)}</select></td>
+    <td><select class="conta">${opt(CONTAS,pre.conta)}</select></td>
+    <td><input class="desc" value="${pre.desc||''}" placeholder="descrição"></td>
+    <td><input class="just" value="${pre.just||''}" placeholder="justificativa base zero"></td>`;
+  for(let m=0;m<12;m++)c+=`<td class="num"><input type="number" step="0.01" class="mes" value="${pre.meses?pre.meses[m]||'':''}"></td>`;
+  c+=`<td class="tot t27">–</td><td class="num"><input type="number" step="0.01" class="y28" value="${pre.y28||''}"></td>
+    <td class="num"><input type="number" step="0.01" class="y29" value="${pre.y29||''}"></td><td class="tot tg">–</td>
+    <td style="text-align:center;border:0;"><button class="del" onclick="this.closest('tr').remove();recalc();">×</button></td>`;
+  tr.innerHTML=c;document.getElementById('opexBody').appendChild(tr);
+  tr.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',recalc));recalc();
+}
+function addCapex(pre={}){
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td><select class="cc">${opt(CCS,pre.cc)}</select></td>
+    <td><input class="item" value="${pre.item||''}" placeholder="item"></td>
+    <td><input class="desc" value="${pre.desc||''}" placeholder="descrição"></td>
+    <td><input class="just" value="${pre.just||''}" placeholder="justificativa"></td>
+    <td><select class="tipo">${opt(CAPEX_TIPOS,pre.tipo)}</select></td>
+    <td class="num"><input type="number" step="0.01" class="c27" value="${pre.c27||''}"></td>
+    <td class="num"><input type="number" step="0.01" class="c28" value="${pre.c28||''}"></td>
+    <td class="num"><input type="number" step="0.01" class="c29" value="${pre.c29||''}"></td>
+    <td class="tot ctg">–</td>
+    <td style="text-align:center;border:0;"><button class="del" onclick="this.closest('tr').remove();recalc();">×</button></td>`;
+  document.getElementById('capexBody').appendChild(tr);
+  tr.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',recalc));recalc();
+}
+function num(el){return parseFloat(el.value)||0;}
+function recalc(){
+  const mt=Array(12).fill(0);let t27=0,o28=0,o29=0;
+  document.querySelectorAll('#opexBody tr').forEach(tr=>{
+    const mes=[...tr.querySelectorAll('.mes')].map(num);const rt=mes.reduce((a,b)=>a+b,0);
+    const y28=num(tr.querySelector('.y28')),y29=num(tr.querySelector('.y29'));
+    tr.querySelector('.t27').textContent=fmt(rt);tr.querySelector('.tg').textContent=fmt(rt+y28+y29);
+    mes.forEach((v,i)=>mt[i]+=v);t27+=rt;o28+=y28;o29+=y29;});
+  for(let i=0;i<12;i++)document.getElementById('of_'+(i+1)).textContent=fmt(mt[i]);
+  document.getElementById('of_t27').textContent=fmt(t27);document.getElementById('of_28').textContent=fmt(o28);
+  document.getElementById('of_29').textContent=fmt(o29);document.getElementById('of_tg').textContent=fmt(t27+o28+o29);
+  let c27=0,c28=0,c29=0;
+  document.querySelectorAll('#capexBody tr').forEach(tr=>{
+    const a=num(tr.querySelector('.c27')),b=num(tr.querySelector('.c28')),c=num(tr.querySelector('.c29'));
+    tr.querySelector('.ctg').textContent=fmt(a+b+c);c27+=a;c28+=b;c29+=c;});
+  document.getElementById('cf_27').textContent=fmt(c27);document.getElementById('cf_28').textContent=fmt(c28);
+  document.getElementById('cf_29').textContent=fmt(c29);document.getElementById('cf_tg').textContent=fmt(c27+c28+c29);
+  const opexTotal=t27+o28+o29,capexTotal=c27+c28+c29;
+  const yr=[t27+c27,o28+c28,o29+c29],years=['2027','2028','2029'];
+  document.getElementById('k_opex').textContent=fmt(opexTotal);
+  document.getElementById('k_capex').textContent=fmt(capexTotal);
+  document.getElementById('k_total').textContent=fmt(opexTotal+capexTotal);
+  const peak=Math.max(...yr),pi=yr.indexOf(peak);
+  document.getElementById('k_peak').textContent=peak>0?years[pi]:'–';
+  document.getElementById('k_peak_s').textContent=peak>0?fmt(peak):'Pico de desembolso';
+  const dir=document.getElementById('dir'); document.getElementById('k_dir_s').textContent=dir?dir.value:'—';
+  document.getElementById('s27').textContent=fmt(yr[0]);document.getElementById('s28').textContent=fmt(yr[1]);
+  document.getElementById('s29').textContent=fmt(yr[2]);document.getElementById('sT').textContent=fmt(opexTotal+capexTotal);
+  const maxYr=Math.max(...yr,1);
+  document.getElementById('bars').innerHTML=years.map((y,i)=>{
+    const op=(i===0?t27:i===1?o28:o29),cp=(i===0?c27:i===1?c28:c29);
+    return `<div class="bar-row"><div class="yr"><span>${y}</span><span>${fmt(yr[i])}</span></div>
+      <div class="bar"><div class="op" style="width:${op/maxYr*100}%"></div><div class="cp" style="width:${cp/maxYr*100}%"></div></div></div>`;
+  }).join('');
+}
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function selVal(id){const e=document.getElementById(id);return e?(e.value||''):'';}
+function buildReport(){
+  const opexRows=[...document.querySelectorAll('#opexBody tr')].map(tr=>{
+    const mes=[...tr.querySelectorAll('.mes')].map(i=>parseFloat(i.value)||0);const rt=mes.reduce((a,b)=>a+b,0);
+    const y28=parseFloat(tr.querySelector('.y28').value)||0,y29=parseFloat(tr.querySelector('.y29').value)||0;
+    return {cc:tr.querySelector('.cc').value,conta:tr.querySelector('.conta').value,desc:tr.querySelector('.desc').value,
+      just:tr.querySelector('.just').value,rt,y28,y29,tg:rt+y28+y29};});
+  const capexRows=[...document.querySelectorAll('#capexBody tr')].map(tr=>{
+    const a=parseFloat(tr.querySelector('.c27').value)||0,b=parseFloat(tr.querySelector('.c28').value)||0,c=parseFloat(tr.querySelector('.c29').value)||0;
+    return {cc:tr.querySelector('.cc').value,item:tr.querySelector('.item').value,desc:tr.querySelector('.desc').value,
+      just:tr.querySelector('.just').value,tipo:tr.querySelector('.tipo').value,a,b,c,t:a+b+c};});
+  const oT=opexRows.reduce((s,r)=>({rt:s.rt+r.rt,y28:s.y28+r.y28,y29:s.y29+r.y29}),{rt:0,y28:0,y29:0});
+  const cT=capexRows.reduce((s,r)=>({a:s.a+r.a,b:s.b+r.b,c:s.c+r.c}),{a:0,b:0,c:0});
+  const opexTotal=oT.rt+oT.y28+oT.y29,capexTotal=cT.a+cT.b+cT.c;
+  let h=`<div class="rep"><h1>HBT · Orçamento 2027-2029 — ${esc(selVal('dir'))}</h1>
+    <div class="repsub">Painel Executivo COO</div><div class="band"></div>
+    <h2>Contexto e validação</h2><table class="idgrid">
+    <tr><td><b>Diretoria:</b> ${esc(selVal('dir'))}</td><td><b>Centro de custo:</b> ${esc(selVal('id_cc'))}</td></tr>
+    <tr><td><b>Responsável:</b> ${esc(selVal('id_resp'))}</td><td><b>Exercício:</b> ${esc(selVal('id_ex'))}</td></tr>
+    <tr><td><b>Data da análise:</b> ${esc(selVal('id_data'))}</td><td><b>Status:</b> ${esc(selVal('id_status'))}</td></tr>
+    <tr><td><b>Parecer da COO:</b> ${esc(selVal('id_parecer'))}</td><td></td></tr></table>
+    <p><b>Premissas:</b> ${esc(selVal('id_prem'))||'—'}</p>
+    <p><b>Observações / ressalvas da COO:</b> ${esc(selVal('id_obs'))||'—'}</p>`;
+  h+=`<h2>Orçamento Opex</h2><table><thead><tr><th>Centro de custo</th><th>Tipo de conta</th><th>Descrição</th><th>Justificativa</th><th>Total 2027</th><th>2028</th><th>2029</th><th>Total geral</th></tr></thead><tbody>`;
+  opexRows.forEach(r=>{h+=`<tr><td>${esc(r.cc)}</td><td>${esc(r.conta)}</td><td>${esc(r.desc)}</td><td>${esc(r.just)}</td><td class="n">${fmt(r.rt)}</td><td class="n">${fmt(r.y28)}</td><td class="n">${fmt(r.y29)}</td><td class="n">${fmt(r.tg)}</td></tr>`;});
+  h+=`</tbody><tfoot><tr><td colspan="4">TOTAL OPEX</td><td>${fmt(oT.rt)}</td><td>${fmt(oT.y28)}</td><td>${fmt(oT.y29)}</td><td>${fmt(opexTotal)}</td></tr></tfoot></table>`;
+  h+=`<h2>Orçamento Capex</h2><table><thead><tr><th>Centro de custo</th><th>Item</th><th>Descrição</th><th>Justificativa</th><th>Tipo</th><th>2027</th><th>2028</th><th>2029</th><th>Total</th></tr></thead><tbody>`;
+  capexRows.forEach(r=>{h+=`<tr><td>${esc(r.cc)}</td><td>${esc(r.item)}</td><td>${esc(r.desc)}</td><td>${esc(r.just)}</td><td>${esc(r.tipo)}</td><td class="n">${fmt(r.a)}</td><td class="n">${fmt(r.b)}</td><td class="n">${fmt(r.c)}</td><td class="n">${fmt(r.t)}</td></tr>`;});
+  h+=`</tbody><tfoot><tr><td colspan="5">TOTAL CAPEX</td><td>${fmt(cT.a)}</td><td>${fmt(cT.b)}</td><td>${fmt(cT.c)}</td><td>${fmt(capexTotal)}</td></tr></tfoot></table>`;
+  h+=`<h2>Consolidação</h2><table><thead><tr><th>Bloco</th><th>2027</th><th>2028</th><th>2029</th><th>Total 2027-2029</th></tr></thead><tbody>
+    <tr><td>Opex</td><td class="n">${fmt(oT.rt)}</td><td class="n">${fmt(oT.y28)}</td><td class="n">${fmt(oT.y29)}</td><td class="n">${fmt(opexTotal)}</td></tr>
+    <tr><td>Capex</td><td class="n">${fmt(cT.a)}</td><td class="n">${fmt(cT.b)}</td><td class="n">${fmt(cT.c)}</td><td class="n">${fmt(capexTotal)}</td></tr></tbody>
+    <tfoot><tr><td>TOTAL OPERAÇÕES</td><td>${fmt(oT.rt+cT.a)}</td><td>${fmt(oT.y28+cT.b)}</td><td>${fmt(oT.y29+cT.c)}</td><td>${fmt(opexTotal+capexTotal)}</td></tr></tfoot></table>
+    <p style="margin-top:16px;font-size:11px;color:#555;">controladoria@hbtofficial.com · Assunto: ORÇAMENTO 2027-2029 | ${esc(selVal('dir'))} | ${esc(selVal('id_status'))}</p></div>`;
+  return h;
+}
+function exportPDF(){document.getElementById('printArea').innerHTML=buildReport();window.print();}
+function exportWord(){
+  const html=`<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+  <head><meta charset='utf-8'><style>body{font-family:Arial,sans-serif;font-size:12px;}h1{font-size:18px;}h2{font-size:13px;background:#1F3864;color:#fff;padding:5px 7px;}
+  table{border-collapse:collapse;width:100%;font-size:10.5px;}th{background:#2E5496;color:#fff;border:1px solid #7d8ba5;padding:5px;}
+  td{border:1px solid #bbb;padding:5px;}.n{text-align:right;}tfoot td{background:#12151A;color:#fff;font-weight:bold;}.idgrid td{border:0;}</style></head>
+  <body>${buildReport()}</body></html>`;
+  const blob=new Blob(['\ufeff',html],{type:'application/msword'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='HBT-Orcamento-COO-2027-2029.doc';a.click();
+}
+function saveDraft(){
+  const data={id:{},dir:selVal('dir'),opex:[],capex:[]};
+  ['id_cc','id_resp','id_ex','id_data','id_status','id_parecer','id_prem','id_obs'].forEach(k=>data.id[k]=selVal(k));
+  document.querySelectorAll('#opexBody tr').forEach(tr=>data.opex.push({cc:tr.querySelector('.cc').value,conta:tr.querySelector('.conta').value,
+    desc:tr.querySelector('.desc').value,just:tr.querySelector('.just').value,meses:[...tr.querySelectorAll('.mes')].map(i=>i.value),
+    y28:tr.querySelector('.y28').value,y29:tr.querySelector('.y29').value}));
+  document.querySelectorAll('#capexBody tr').forEach(tr=>data.capex.push({cc:tr.querySelector('.cc').value,item:tr.querySelector('.item').value,
+    desc:tr.querySelector('.desc').value,just:tr.querySelector('.just').value,tipo:tr.querySelector('.tipo').value,
+    c27:tr.querySelector('.c27').value,c28:tr.querySelector('.c28').value,c29:tr.querySelector('.c29').value}));
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='HBT-orcamento-COO-rascunho.json';a.click();
+}
+function loadDraft(ev){
+  const file=ev.target.files[0];if(!file)return;const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);
+    if(d.dir)document.getElementById('dir').value=d.dir;
+    Object.keys(d.id||{}).forEach(k=>{const e=document.getElementById(k);if(e)e.value=d.id[k];});
+    document.getElementById('opexBody').innerHTML='';document.getElementById('capexBody').innerHTML='';
+    (d.opex||[]).forEach(row=>addOpex(row));(d.capex||[]).forEach(row=>addCapex(row));
+    if(!(d.opex||[]).length)addOpex();if(!(d.capex||[]).length)addCapex();recalc();
+  }catch(e){alert('Arquivo inválido.');}};r.readAsText(file);ev.target.value='';
+}
+function init(){
+  document.getElementById('dir').innerHTML=opt(DIRETORIAS,DIRETORIAS[0]);
+  document.getElementById('id_cc').innerHTML=opt(CCS,CCS[0]);
+  document.getElementById('id_data').valueAsDate=new Date();
+  ['Aluguel de galpão / armazém','Energia elétrica','Manutenção de máquinas e equipamentos','Frete e logística de distribuição'].forEach(c=>addOpex({conta:c}));
+  addCapex({item:'Máquinas e equipamentos de produção',tipo:'Novo'});
+  addCapex({item:'Equipamentos de movimentação (empilhadeiras)',tipo:'Reposição'});
+  recalc();
+}
+</script>
+</body>
+</html>
