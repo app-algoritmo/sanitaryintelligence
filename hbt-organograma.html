@@ -142,9 +142,65 @@
     .doc-meta{margin-left:0;text-align:left;}
     .foot{grid-template-columns:1fr;}
   }
+
+  /* ===== PIN GATE ===== */
+  #gate{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(160deg,#0E2E2A 0%,#15343A 55%,#0B2420 100%);font-family:"IBM Plex Sans",sans-serif;}
+  #gate.hidden{display:none;}
+  .gate-card{width:320px;max-width:88vw;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
+    border-radius:22px;padding:34px 30px 26px;display:flex;flex-direction:column;align-items:center;
+    box-shadow:0 30px 80px rgba(0,0,0,.45);backdrop-filter:blur(14px);}
+  .gate-badge{width:56px;height:56px;background:var(--q);color:#EAF3F0;border-radius:13px;display:grid;place-items:center;
+    font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:20px;letter-spacing:.5px;margin-bottom:14px;position:relative;}
+  .gate-badge::after{content:"";position:absolute;inset:5px;border:1px solid rgba(255,255,255,.18);border-radius:9px;}
+  .gate-title{color:#fff;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:18px;margin-bottom:3px;}
+  .gate-sub{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#9DB4AE;margin-bottom:22px;text-align:center;}
+  .gate-dots{display:flex;gap:11px;margin-bottom:22px;}
+  .gate-dot{width:12px;height:12px;border-radius:50%;border:2px solid rgba(255,255,255,.28);transition:.15s;}
+  .gate-dot.on{background:#4FD0BC;border-color:#4FD0BC;box-shadow:0 0 10px rgba(79,208,188,.6);}
+  .gate-dot.err{background:#E36A6A;border-color:#E36A6A;box-shadow:none;}
+  .gate-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;}
+  .gate-key{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:12px;color:#fff;
+    font-family:"IBM Plex Sans",sans-serif;font-size:20px;font-weight:500;height:52px;cursor:pointer;transition:.12s;user-select:none;}
+  .gate-key:hover{background:rgba(255,255,255,.14);}
+  .gate-key:active{transform:scale(.96);}
+  .gate-key.ghost{background:transparent;border-color:transparent;cursor:default;}
+  .gate-key.ghost:hover{background:transparent;}
+  .gate-msg{min-height:16px;margin-top:14px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.05em;color:#E39A9A;}
+  @keyframes gate-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+  .gate-card.shake{animation:gate-shake .4s;}
+  @media (prefers-reduced-motion:reduce){.gate-card.shake{animation:none;}}
 </style>
 </head>
 <body>
+
+<div id="gate">
+  <div class="gate-card" id="gateCard">
+    <div class="gate-badge">HBT</div>
+    <div class="gate-title">Acesso restrito</div>
+    <div class="gate-sub">Organograma Corporativo · ISO 9001</div>
+    <div class="gate-dots" id="gateDots">
+      <span class="gate-dot"></span><span class="gate-dot"></span><span class="gate-dot"></span>
+      <span class="gate-dot"></span><span class="gate-dot"></span><span class="gate-dot"></span>
+    </div>
+    <div class="gate-pad" id="gatePad">
+      <button class="gate-key" data-k="1">1</button>
+      <button class="gate-key" data-k="2">2</button>
+      <button class="gate-key" data-k="3">3</button>
+      <button class="gate-key" data-k="4">4</button>
+      <button class="gate-key" data-k="5">5</button>
+      <button class="gate-key" data-k="6">6</button>
+      <button class="gate-key" data-k="7">7</button>
+      <button class="gate-key" data-k="8">8</button>
+      <button class="gate-key" data-k="9">9</button>
+      <span class="gate-key ghost"></span>
+      <button class="gate-key" data-k="0">0</button>
+      <button class="gate-key" data-k="del" aria-label="Apagar">⌫</button>
+    </div>
+    <div class="gate-msg" id="gateMsg"></div>
+  </div>
+</div>
+
 <div class="wrap">
 
   <header class="top reveal d1">
@@ -357,5 +413,51 @@
   <div class="credit">HBT · Organograma corporativo consolidado · Cláusulas conforme ABNT NBR ISO 9001:2015<br>Mapeamento indicativo de responsabilidades — não substitui a matriz formal de autoridade do SGQ</div>
 
 </div>
+<script>
+(function(){
+  var PIN = "202600", buf = "";
+  var gate = document.getElementById('gate'),
+      card = document.getElementById('gateCard'),
+      msg  = document.getElementById('gateMsg'),
+      dots = document.querySelectorAll('#gateDots .gate-dot');
+
+  document.body.style.overflow = 'hidden';
+
+  function render(){
+    dots.forEach(function(d,i){ d.classList.toggle('on', i < buf.length); d.classList.remove('err'); });
+  }
+  function unlock(){
+    gate.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+  function fail(){
+    dots.forEach(function(d){ d.classList.add('err'); });
+    card.classList.add('shake');
+    msg.textContent = 'PIN incorreto';
+    setTimeout(function(){ card.classList.remove('shake'); buf = ''; render(); msg.textContent = ''; }, 650);
+  }
+  function press(v){
+    if(v === 'del'){ buf = buf.slice(0,-1); msg.textContent = ''; render(); return; }
+    if(buf.length >= 6) return;
+    buf += v; render();
+    if(buf.length === 6){ setTimeout(function(){ buf === PIN ? unlock() : fail(); }, 150); }
+  }
+
+  document.getElementById('gatePad').addEventListener('click', function(e){
+    var k = e.target.closest('.gate-key');
+    if(!k || k.classList.contains('ghost')) return;
+    press(k.dataset.k);
+  });
+  document.addEventListener('keydown', function(e){
+    if(gate.classList.contains('hidden')) return;
+    if(e.key >= '0' && e.key <= '9') press(e.key);
+    else if(e.key === 'Backspace'){ e.preventDefault(); press('del'); }
+    else if(e.key === 'Enter' && buf.length === 6){ buf === PIN ? unlock() : fail(); }
+  });
+
+  render();
+})();
+</script>
+
 </body>
 </html>
