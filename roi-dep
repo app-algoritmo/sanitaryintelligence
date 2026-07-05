@@ -179,10 +179,54 @@
   @media (max-width:960px){.kpis{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.capex-grid{grid-template-columns:1fr}.donut-wrap{max-width:320px;margin:0 auto}.ctl-actions{margin-left:0;width:100%}.catbar{grid-template-columns:150px 1fr 110px}}
   @media (max-width:560px){.kpis{grid-template-columns:1fr}.titlebar h1{font-size:1.5rem}.roirow{grid-template-columns:100px 1fr 78px}.axis{padding:0 78px 0 100px}.stackrow{grid-template-columns:90px 1fr 120px}}
   @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
-  @media print{body{background:#fff;color:#111}header.top{position:static}.controls,.ctl-actions,.aurora,.monogram::after{display:none !important}.card,.kpi,.controls{box-shadow:none;border-color:#ccc;background:#fff}*{color:#111 !important}.confidencial{border-color:#c00;color:#c00}}
+  @media print{body{background:#fff;color:#111}header.top{position:static}.controls,.ctl-actions,.aurora,.monogram::after{display:none !important}.card,.kpi,.controls{box-shadow:none;border-color:#ccc;background:#fff}*{color:#111 !important}.confidencial{border-color:#c00;color:#c00}#lockScreen{display:none !important}}
+
+  /* ---------- Tela de acesso (PIN) ---------- */
+  #lockScreen{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px;background:radial-gradient(900px 500px at 50% -10%, rgba(51,198,174,.12), transparent 60%),linear-gradient(180deg,var(--bg-grad),var(--bg))}
+  .lock-card{width:100%;max-width:400px;background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:34px 30px 28px;text-align:center;position:relative;overflow:hidden}
+  .lock-card::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--info),var(--accent),var(--warn),transparent);background-size:220% 100%;animation:aurora 9s linear infinite}
+  .lock-mono{width:60px;height:60px;margin:0 auto 16px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(155deg,var(--panel-3),var(--panel));border:1px solid var(--line);font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:.78rem;color:var(--accent)}
+  .lock-office{font-size:.64rem;letter-spacing:.26em;color:var(--accent);font-weight:600;text-transform:uppercase}
+  .lock-card h2{margin:8px 0 4px;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.3rem}
+  .lock-card p{margin:0 0 22px;color:var(--muted);font-size:.85rem}
+  .pin-row{display:flex;gap:9px;justify-content:center;margin-bottom:8px}
+  .pin-box{width:44px;height:54px;text-align:center;font-family:"JetBrains Mono",monospace;font-size:1.35rem;font-weight:600;color:var(--ink);background:var(--panel-3);border:1px solid var(--line);border-radius:11px;transition:all .15s;-moz-appearance:textfield}
+  .pin-box::-webkit-outer-spin-button,.pin-box::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .pin-box:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);background:var(--panel)}
+  .pin-box.filled{border-color:var(--accent-deep)}
+  #lockScreen.shake .pin-row{animation:shake .4s}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+  .lock-err{min-height:20px;color:var(--neg);font-size:.8rem;font-weight:600;margin:6px 0 14px}
+  .lock-btn{width:100%;padding:13px;border:0;border-radius:11px;background:linear-gradient(180deg,var(--accent),var(--accent-deep));color:#04110E;font-family:inherit;font-weight:700;font-size:.92rem;cursor:pointer;transition:filter .15s}
+  .lock-btn:hover{filter:brightness(1.07)}
+  .lock-btn:focus-visible{outline:none;box-shadow:0 0 0 3px var(--accent-glow)}
+  .lock-foot{margin-top:18px;display:flex;align-items:center;justify-content:center;gap:7px;color:var(--faint);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase}
+  .lock-foot .dot{width:6px;height:6px;border-radius:50%;background:var(--neg)}
 </style>
 </head>
 <body>
+
+<div id="lockScreen">
+  <div class="lock-card">
+    <div class="lock-mono">D.O.G.</div>
+    <div class="lock-office">Diretoria de Operações Globais</div>
+    <h2 class="display">Acesso restrito</h2>
+    <p>Informe o PIN de 6 dígitos para acessar o painel de ROI.</p>
+    <div class="pin-row" id="pinRow">
+      <input class="pin-box" type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Dígito 1" />
+      <input class="pin-box" type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Dígito 2" />
+      <input class="pin-box" type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Dígito 3" />
+      <input class="pin-box" type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Dígito 4" />
+      <input class="pin-box" type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Dígito 5" />
+      <input class="pin-box" type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Dígito 6" />
+    </div>
+    <div class="lock-err" id="pinErr" role="alert"></div>
+    <button class="lock-btn" id="pinBtn" type="button">Acessar painel</button>
+    <div class="lock-foot"><span class="dot"></span>Confidencial · HBT</div>
+  </div>
+</div>
+
+<div id="appContent" style="display:none">
 
 <header class="top">
   <div class="top-inner">
@@ -356,6 +400,8 @@
   </footer>
 
 </div>
+
+</div><!-- /appContent -->
 
 <script>
 (function(){
@@ -719,7 +765,56 @@
 
   function stamp(){ var d=new Date(); document.getElementById("stamp").textContent=d.toLocaleDateString("pt-BR",{day:"2-digit",month:"short",year:"numeric"})+" · "+d.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}); }
 
-  initSelects(); initSegments(); initActions(); stamp(); renderAll();
+  function initApp(){ initSelects(); initSegments(); initActions(); stamp(); renderAll(); }
+
+  /* ---------- Tela de acesso (PIN) ---------- */
+  var PIN = "202600";
+  (function lockGate(){
+    var boxes = Array.prototype.slice.call(document.querySelectorAll("#pinRow .pin-box"));
+    var err = document.getElementById("pinErr");
+    var lock = document.getElementById("lockScreen");
+    var started = false;
+
+    function value(){ return boxes.map(function(b){return b.value;}).join(""); }
+    function focusFirstEmpty(){ for(var i=0;i<boxes.length;i++){ if(!boxes[i].value){ boxes[i].focus(); return; } } boxes[boxes.length-1].focus(); }
+
+    boxes.forEach(function(b,i){
+      b.addEventListener("input",function(){
+        this.value = this.value.replace(/\D/g,"").slice(0,1);
+        this.classList.toggle("filled", !!this.value);
+        err.textContent="";
+        if(this.value && i<boxes.length-1) boxes[i+1].focus();
+        if(value().length===6) submit();
+      });
+      b.addEventListener("keydown",function(e){
+        if(e.key==="Backspace" && !this.value && i>0){ boxes[i-1].focus(); boxes[i-1].value=""; boxes[i-1].classList.remove("filled"); }
+        if(e.key==="Enter") submit();
+      });
+      b.addEventListener("paste",function(e){
+        e.preventDefault();
+        var d=(e.clipboardData||window.clipboardData).getData("text").replace(/\D/g,"").slice(0,6);
+        boxes.forEach(function(bx,j){ bx.value=d[j]||""; bx.classList.toggle("filled",!!d[j]); });
+        if(d.length===6) submit(); else focusFirstEmpty();
+      });
+    });
+
+    function submit(){
+      if(value()===PIN){
+        lock.style.display="none";
+        document.getElementById("appContent").style.display="";
+        if(!started){ started=true; initApp(); }
+      } else {
+        err.textContent="PIN incorreto. Tente novamente.";
+        lock.classList.add("shake");
+        setTimeout(function(){ lock.classList.remove("shake"); },400);
+        boxes.forEach(function(b){ b.value=""; b.classList.remove("filled"); });
+        boxes[0].focus();
+      }
+    }
+
+    document.getElementById("pinBtn").addEventListener("click",submit);
+    boxes[0].focus();
+  })();
 })();
 </script>
 </body>
