@@ -51,6 +51,18 @@ button{font-family:var(--font-display);cursor:pointer}
 
 /* ---------- APP SHELL ---------- */
 #app{height:100%;display:flex;flex-direction:column}
+.govbar{background:#0A1C2E;color:#fff;display:flex;align-items:center;gap:16px;padding:8px 22px;border-bottom:1px solid rgba(255,255,255,.08);flex-wrap:wrap}
+.backbtn{display:inline-flex;align-items:center;gap:9px;min-height:44px;padding:0 18px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#fff;font-family:var(--font-display);font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap;transition:.12s}
+.backbtn:hover{background:var(--route);border-color:var(--route)}
+.backbtn .arw{font-size:17px;line-height:1}
+.conf{margin-left:auto;font-family:var(--font-mono);font-size:11px;letter-spacing:.09em;color:#9fb3c6;text-transform:uppercase;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.conf .dog{color:#cfe0f0}
+.conf .cl{display:inline-flex;align-items:center;gap:6px;color:#F0A05A;font-weight:600}
+.conf .cl::before{content:'';width:7px;height:7px;border-radius:50%;background:#F0A05A;box-shadow:0 0 8px rgba(240,160,90,.7)}
+.appfoot{background:var(--ink);color:#8fa3b5;display:flex;align-items:center;justify-content:center;gap:8px 18px;flex-wrap:wrap;padding:11px 22px;font-size:12px;font-family:var(--font-mono);letter-spacing:.02em;border-top:1px solid rgba(255,255,255,.08)}
+.appfoot a{color:#c6d7e7;text-decoration:none;transition:.12s}
+.appfoot a:hover{color:var(--route)}
+.appfoot .sep{opacity:.35}
 .topbar{background:var(--ink);color:#fff;padding:14px 22px;display:flex;align-items:center;gap:26px;flex-wrap:wrap}
 .topbar .logo{font-family:var(--font-display);font-weight:800;font-size:22px;letter-spacing:-0.02em;white-space:nowrap}
 .topbar .logo span{color:var(--route)}
@@ -168,6 +180,10 @@ table.data tr.total td{font-weight:600;background:#EAF4EE;border-top:2px solid v
 
 <!-- ================= APP ================= -->
 <div id="app" hidden>
+  <div class="govbar">
+    <a class="backbtn" href="https://sanitaryintelligence.com/access.html"><span class="arw">←</span> Voltar para aplicativos</a>
+    <div class="conf"><span class="dog">D.O.G. · Diretoria de Operações Globais</span><span class="cl">Confidencial · Diretoria Executiva</span></div>
+  </div>
   <div class="topbar">
     <div class="logo">SP<span>10X</span></div>
     <div class="kpistrip">
@@ -371,6 +387,12 @@ table.data tr.total td{font-weight:600;background:#EAF4EE;border-top:2px solid v
       <div class="glos" id="glosGrid"></div>
     </section>
 
+  </div>
+
+  <div class="appfoot">
+    <a href="https://app-algoritmo.github.io/digital-solutions" target="_blank" rel="noopener">&lt;/&gt; Digital Solutions</a>
+    <span class="sep">·</span>
+    <span>© 2026 SI Hub Norway — Inteligência de Dados</span>
   </div>
 </div>
 
