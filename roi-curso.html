@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Programa de Capacitação — Gestão de Custos por Área · Operação Hermes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#080D13;--bg-grad:#0A121B;--panel:#0F1822;--panel-2:#13202C;--panel-3:#172736;
+    --line:#233241;--line-soft:#1A2733;--ink:#EAF2F8;--muted:#8DA1B4;--faint:#5C7082;
+    --accent:#33C6AE;--accent-deep:#178576;--accent-glow:rgba(51,198,174,.28);
+    --pos:#46C58C;--pos-soft:rgba(70,197,140,.16);--neg:#EC6B7E;--neg-soft:rgba(236,107,126,.16);
+    --warn:#E6B24E;--info:#5AA6F2;--folha:#B98CE0;
+    --shadow:0 24px 60px -28px rgba(0,0,0,.75);--r:14px;--r-sm:9px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(1200px 620px at 82% -8%, rgba(51,198,174,.10), transparent 60%),radial-gradient(1000px 560px at 4% 4%, rgba(90,166,242,.08), transparent 55%),linear-gradient(180deg,var(--bg-grad),var(--bg) 46%);color:var(--ink);font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.66;min-height:100vh}
+  .display{font-family:"Space Grotesk",sans-serif}
+  .num{font-family:"JetBrains Mono",monospace;font-variant-numeric:tabular-nums}
+  a{color:inherit}
+
+  header.top{position:sticky;top:0;z-index:40;background:linear-gradient(180deg, rgba(8,13,19,.94), rgba(8,13,19,.78));backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
+  .top-inner{max-width:1180px;margin:0 auto;padding:14px 24px 15px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .btn-back{display:inline-flex;align-items:center;gap:6px;flex-shrink:0;text-decoration:none;padding:8px 13px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--panel-3);color:var(--muted);font-size:.8rem;font-weight:600;transition:all .15s}
+  .btn-back:hover{border-color:var(--accent-deep);color:var(--ink);background:var(--panel-2)}
+  .btn-back svg{width:15px;height:15px}
+  .monogram{display:grid;place-items:center;flex-shrink:0;width:48px;height:48px;border-radius:12px;background:linear-gradient(155deg,var(--panel-3),var(--panel));border:1px solid var(--line);font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:.66rem;color:var(--accent)}
+  .id-block{display:flex;flex-direction:column;gap:1px;min-width:0}
+  .id-office{font-size:.64rem;letter-spacing:.26em;color:var(--accent);font-weight:600;text-transform:uppercase}
+  .id-name{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.05rem;line-height:1.15}
+  .id-role{font-size:.74rem;color:var(--muted)}
+  .top-spacer{flex:1 1 auto}
+  .op-badge{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;background:rgba(51,198,174,.1);border:1px solid rgba(51,198,174,.32);color:var(--accent);font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+  .confidencial{display:inline-flex;align-items:center;gap:7px;flex-shrink:0;padding:6px 12px;border-radius:999px;background:var(--neg-soft);border:1px solid rgba(236,107,126,.4);color:#F4A6B0;font-size:.64rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+  .btn-print{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--panel-3);color:var(--muted);font-family:inherit;font-size:.78rem;font-weight:600;padding:8px 12px;border-radius:var(--r-sm);cursor:pointer;transition:all .15s}
+  .btn-print:hover{border-color:var(--accent-deep);color:var(--ink)}
+  .btn-print svg{width:14px;height:14px}
+  .aurora{height:2px;background:linear-gradient(90deg,transparent,var(--info),var(--accent),var(--warn),transparent);background-size:220% 100%;animation:aurora 9s linear infinite;opacity:.7}
+  @keyframes aurora{0%{background-position:0% 0}100%{background-position:220% 0}}
+
+  .doc{max-width:900px;margin:0 auto;padding:0 24px 90px}
+  .cover{padding:52px 0 30px;border-bottom:1px solid var(--line-soft)}
+  .eyebrow{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);background:rgba(51,198,174,.08);border:1px solid rgba(51,198,174,.22);padding:6px 15px;border-radius:20px;margin-bottom:20px}
+  .cover h1{font-family:"Space Grotesk",sans-serif;font-size:clamp(1.9rem,4vw,2.6rem);font-weight:600;letter-spacing:-.02em;line-height:1.12;margin:0 0 14px}
+  .cover .lead{font-size:1.06rem;color:var(--muted);max-width:66ch}
+
+  .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:26px 0 6px}
+  .fact{background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+  .fact .fl{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600}
+  .fact .fv{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.15rem;margin-top:5px}
+  .fact .fv small{font-size:.78rem;color:var(--muted);font-weight:400}
+
+  section.blk{padding:32px 0 4px;scroll-margin-top:90px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:4px}
+  .sec-num{font-family:"JetBrains Mono",monospace;font-size:1rem;font-weight:700;color:var(--accent-deep)}
+  h2.sec-title{font-family:"Space Grotesk",sans-serif;font-size:1.42rem;font-weight:600;letter-spacing:-.01em;margin:0}
+  .sec-sub{color:var(--faint);font-size:.9rem;margin:0 0 18px 40px}
+  section.blk p{margin:0 0 14px;color:#D3DEE8}
+  strong{color:var(--ink);font-weight:600}
+
+  .callout{border-radius:var(--r);padding:16px 20px;margin:16px 0;font-size:.94rem;border:1px solid var(--line);border-left-width:3px;background:linear-gradient(180deg,var(--panel-2),var(--panel))}
+  .callout.key{border-left-color:var(--accent)} .callout.warn{border-left-color:var(--warn)}
+  .callout .ct{font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+  .callout.key .ct{color:var(--accent)} .callout.warn .ct{color:var(--warn)}
+  .callout p:last-child{margin-bottom:0}
+
+  /* módulos */
+  .mod{background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:var(--r);padding:0;margin:14px 0;overflow:hidden}
+  .mod-head{display:flex;align-items:center;gap:14px;padding:15px 20px;border-bottom:1px solid var(--line-soft)}
+  .mod-n{width:44px;height:44px;flex-shrink:0;border-radius:11px;display:grid;place-items:center;background:linear-gradient(155deg,var(--accent-deep),#0f5f54);color:#04110E;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:.9rem}
+  .mod-n.m0{background:linear-gradient(155deg,#3a4a5a,#26323e);color:var(--ink)}
+  .mod-n.final{background:linear-gradient(155deg,var(--warn),#c8912f);color:#1a1204}
+  .mod-ti{flex:1;min-width:0}
+  .mod-ti .t{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.06rem}
+  .mod-ti .o{font-size:.85rem;color:var(--muted);margin-top:2px}
+  .mod-dur{flex-shrink:0;font-family:"JetBrains Mono",monospace;font-size:.78rem;color:var(--accent);font-weight:600;background:rgba(51,198,174,.08);border:1px solid rgba(51,198,174,.2);padding:5px 10px;border-radius:7px}
+  .mod-body{padding:15px 20px 17px;display:grid;grid-template-columns:1.5fr 1fr;gap:18px}
+  .mod-body .lab{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:7px}
+  ul.clean{margin:0;padding-left:0;list-style:none}
+  ul.clean li{position:relative;padding-left:18px;margin-bottom:6px;font-size:.9rem;color:#D3DEE8}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:8px;width:6px;height:6px;border-radius:50%;background:var(--accent-deep)}
+  .mod-deliver{background:var(--panel-3);border:1px solid var(--line);border-radius:var(--r-sm);padding:12px 14px}
+  .mod-deliver .fm{font-size:.85rem;color:var(--muted);margin-bottom:10px}
+  .mod-deliver .fm b{color:var(--ink)}
+  .mod-deliver .ent{font-size:.85rem;color:var(--ink)}
+  .mod-deliver .ent .tag{display:inline-block;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--accent);background:rgba(51,198,174,.1);padding:2px 8px;border-radius:5px;margin-bottom:5px}
+
+  /* trilhas */
+  .trilhas{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+  .tri{background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;position:relative;overflow:hidden}
+  .tri::before{content:"";position:absolute;left:0;top:0;right:0;height:3px}
+  .tri.op::before{background:var(--warn)} .tri.sup::before{background:var(--info)} .tri.com::before{background:var(--pos)}
+  .tri .th{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1rem}
+  .tri .who{font-size:.75rem;color:var(--faint);font-family:"JetBrains Mono",monospace;margin:4px 0 10px}
+  .tri ul.clean li{font-size:.85rem}
+
+  footer{max-width:1180px;margin:30px auto 0;padding:22px 24px;border-top:1px solid var(--line-soft);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .copy{font-size:.8rem;color:var(--faint)} .copy b{color:var(--muted);font-weight:600}
+  .ds-discreet{color:var(--faint);font-size:.76rem;text-decoration:none;font-family:"JetBrains Mono",monospace;transition:color .15s}
+  .ds-discreet:hover{color:var(--accent);text-decoration:underline} .ds-discreet .code{color:var(--muted)}
+
+  @media (max-width:820px){.facts{grid-template-columns:repeat(2,1fr)}.mod-body{grid-template-columns:1fr}.trilhas{grid-template-columns:1fr}.sec-sub{margin-left:0}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media print{body{background:#fff;color:#111}header.top{position:static}.aurora,.btn-print,.btn-back{display:none!important}.callout,.mod,.fact,.tri,.mod-deliver{box-shadow:none;background:#fff;border-color:#ccc}*{color:#111!important}section.blk{page-break-inside:avoid}.mod{page-break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="btn-back" href="access.html" aria-label="Voltar ao hub">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+      Voltar
+    </a>
+    <div class="monogram">D.O.G.</div>
+    <div class="id-block">
+      <span class="id-office">Diretoria de Operações Globais</span>
+      <span class="id-name">Academia de Gestão · D.O.G.</span>
+      <span class="id-role">Programa de capacitação de gestores</span>
+    </div>
+    <div class="top-spacer"></div>
+    <span class="op-badge">Operação Hermes</span>
+    <span class="confidencial">Confidencial</span>
+    <button class="btn-print" onclick="window.print()" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Imprimir
+    </button>
+  </div>
+  <div class="aurora"></div>
+</header>
+
+<div class="doc">
+
+  <div class="cover">
+    <span class="eyebrow">Programa do Curso · Operação Hermes</span>
+    <h1 class="display">Gestão de Custos e Eficiência por Área</h1>
+    <p class="lead">Capacitação dos responsáveis de departamento para entender e <strong>agir</strong> sobre os custos da sua área — em linguagem de ação, não de contabilidade. O objetivo não é explicar o painel: é fazer cada gestor sair com um plano do que está na mão dele.</p>
+    <div class="facts">
+      <div class="fact"><div class="fl">Público</div><div class="fv">Gestores<br><small>responsáveis de área</small></div></div>
+      <div class="fact"><div class="fl">Formato</div><div class="fv">Modular<br><small>7 módulos + trilhas</small></div></div>
+      <div class="fact"><div class="fl">Carga estimada</div><div class="fv">~8h<br><small>1 módulo/semana ou 2 dias</small></div></div>
+      <div class="fact"><div class="fl">Entregável final</div><div class="fv">Plano de Ação<br><small>por área</small></div></div>
+    </div>
+  </div>
+
+  <section class="blk" id="obj">
+    <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title display">Princípio pedagógico</h2></div>
+    <p class="sec-sub">Como o curso ensina — antes do que ensina.</p>
+    <p>Gestores de operação não precisam virar contadores. Precisam enxergar <strong>quais alavancas estão na mão deles</strong> e sair sabendo puxá-las. Por isso o curso troca "ROI", "artefato contábil" e "margem" por perguntas concretas: <em>o que faz meu custo subir? o que eu controlo? onde perco dinheiro sem perceber?</em></p>
+    <div class="callout key">
+      <div class="ct">Regra do curso</div>
+      <p>O ROI é <strong>consequência</strong>, nunca a cobrança. Cada gestor é avaliado pela eficiência da parte que controla — não por um número que depende de como a receita é lançada. Isso precisa ficar claro no Módulo 0, ou o resto vira defensiva.</p>
+    </div>
+  </section>
+
+  <section class="blk" id="mods">
+    <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title display">Os módulos</h2></div>
+    <p class="sec-sub">Progressão do enquadramento ao plano de ação.</p>
+
+    <div class="mod">
+      <div class="mod-head"><span class="mod-n m0">00</span><div class="mod-ti"><div class="t">Enquadramento — "isto não é auditoria"</div><div class="o">Desarmar a leitura de "estão me chamando de custo".</div></div><span class="mod-dur">0,5h</span></div>
+      <div class="mod-body">
+        <div><div class="lab">O gestor entende</div><ul class="clean"><li>Por que o curso existe e o que se espera dele.</li><li>Que o painel não julga pessoas — o vermelho é como a receita é contabilizada.</li><li>Que operação é onde o custo nasce, porque é onde o valor é feito.</li></ul></div>
+        <div class="mod-deliver"><div class="fm"><b>Formato:</b> plenária de abertura, com a diretoria presente.</div><div class="ent"><span class="tag">Entregável</span><br>Nenhum — é a conversa de enquadramento.</div></div>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="mod-head"><span class="mod-n">01</span><div class="mod-ti"><div class="t">Fundamentos — como a empresa ganha e gasta</div><div class="o">Nivelar todos na linguagem básica de custo.</div></div><span class="mod-dur">1h</span></div>
+      <div class="mod-body">
+        <div><div class="lab">O gestor entende</div><ul class="clean"><li>Receita, custo e margem sem jargão.</li><li>OPEX, Folha e CAPEX: o que é cada um, com exemplos da própria área.</li><li>A diferença entre gastar e investir.</li></ul></div>
+        <div class="mod-deliver"><div class="fm"><b>Formato:</b> aula curta + exemplos reais.</div><div class="ent"><span class="tag">Entregável</span><br>Quiz rápido de nivelamento (diagnóstico, não nota).</div></div>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="mod-head"><span class="mod-n">02</span><div class="mod-ti"><div class="t">Variável × Fixo — o que eu controlo</div><div class="o">O conceito que separa esforço útil de corte que quebra a operação.</div></div><span class="mod-dur">1,5h</span></div>
+      <div class="mod-body">
+        <div><div class="lab">O gestor entende</div><ul class="clean"><li>O que sobe quando a empresa vende mais (variável) e o que não (fixo).</li><li>Por que não se corta o custo variável — cortá-lo é vender menos.</li><li>Onde está, na sua área, o custo estrutural que ele de fato administra.</li></ul></div>
+        <div class="mod-deliver"><div class="fm"><b>Formato:</b> workshop com os números reais da área.</div><div class="ent"><span class="tag">Entregável</span><br>Cada gestor classifica os custos da sua área em variável × fixo.</div></div>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="mod-head"><span class="mod-n">03</span><div class="mod-ti"><div class="t">Alavancas na sua mão</div><div class="o">O que dá para fazer, na prática, para gastar melhor.</div></div><span class="mod-dur">1,5h</span></div>
+      <div class="mod-body">
+        <div><div class="lab">O gestor entende</div><ul class="clean"><li>Eficiência unitária: custo por entrega, por unidade produzida, por chamado.</li><li>Renegociação, fim de ociosidade, consolidação de fornecedores.</li><li>Perdas e avarias — dinheiro que escapa sem aparecer.</li></ul></div>
+        <div class="mod-deliver"><div class="fm"><b>Formato:</b> por trilha (operação / suporte / comercial).</div><div class="ent"><span class="tag">Entregável</span><br>Lista de 3 alavancas próprias, priorizadas por impacto.</div></div>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="mod-head"><span class="mod-n">04</span><div class="mod-ti"><div class="t">Ler o painel da minha área</div><div class="o">Usar o dashboard sem se assustar com o −100%.</div></div><span class="mod-dur">1h</span></div>
+      <div class="mod-body">
+        <div><div class="lab">O gestor entende</div><ul class="clean"><li>Como interpretar os indicadores e o detalhamento (drill-down) da sua área.</li><li>O que olhar toda semana/mês e o que reportar.</li><li>Como o painel mostra "onde o dinheiro vai" — o caso do frete da Logística.</li></ul></div>
+        <div class="mod-deliver"><div class="fm"><b>Formato:</b> hands-on no próprio painel (roi-dep).</div><div class="ent"><span class="tag">Entregável</span><br>Leitura comentada da própria área, por escrito.</div></div>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="mod-head"><span class="mod-n">05</span><div class="mod-ti"><div class="t">De custo a valor</div><div class="o">Como a área demonstra o que entrega — sobretudo o suporte.</div></div><span class="mod-dur">1h</span></div>
+      <div class="mod-body">
+        <div><div class="lab">O gestor entende</div><ul class="clean"><li>Chargeback: cobrar internamente pelo serviço prestado.</li><li>Savings (economia) e nível de serviço como prova de valor.</li><li>Por que TI, Manutenção e Suprimentos não devem ser medidos por ROI.</li></ul></div>
+        <div class="mod-deliver"><div class="fm"><b>Formato:</b> aula + discussão por tipo de área.</div><div class="ent"><span class="tag">Entregável</span><br>Definição da métrica de valor da própria área.</div></div>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="mod-head"><span class="mod-n final">06</span><div class="mod-ti"><div class="t">Metas, cadência e plano de ação</div><div class="o">Transformar tudo em compromisso acompanhável.</div></div><span class="mod-dur">1,5h</span></div>
+      <div class="mod-body">
+        <div><div class="lab">O gestor entende</div><ul class="clean"><li>Como definir metas realistas para a sua área.</li><li>A cadência de atualização (mensal para Logística e Produção; trimestral para as demais).</li><li>O ciclo de melhoria contínua: medir, agir, revisar.</li></ul></div>
+        <div class="mod-deliver"><div class="fm"><b>Formato:</b> oficina de fechamento.</div><div class="ent"><span class="tag">Entregável final</span><br><b>Plano de Ação da Área:</b> 3 alavancas, meta, prazo e responsável.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="trilhas">
+    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title display">Trilhas por tipo de área</h2></div>
+    <p class="sec-sub">Nos módulos 3 e 5, o conteúdo se especializa.</p>
+    <div class="trilhas">
+      <div class="tri op">
+        <div class="th">Operação</div>
+        <div class="who">Produção · Logística</div>
+        <ul class="clean"><li>OEE e ritmo de linha</li><li>Custo de frete por entrega</li><li>Perdas, avarias e retrabalho</li><li>Capacidade ociosa a monetizar</li></ul>
+      </div>
+      <div class="tri sup">
+        <div class="th">Suporte</div>
+        <div class="who">TI · Manutenção · Suprimentos</div>
+        <ul class="clean"><li>Chargeback por serviço/hora</li><li>Disponibilidade e nível de serviço</li><li>Savings de compras</li><li>Custo evitado (parada, falha)</li></ul>
+      </div>
+      <div class="tri com">
+        <div class="th">Comercial</div>
+        <div class="who">Comercial BR · Internacional</div>
+        <ul class="clean"><li>Margem por produto/canal</li><li>Retorno de campanhas e feiras</li><li>Atribuição de receita à área</li><li>Mix e novos contratos</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="aval">
+    <div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title display">Avaliação e continuidade</h2></div>
+    <p class="sec-sub">O curso não termina no certificado — termina no painel.</p>
+    <p>A avaliação não é prova: é o <strong>Plano de Ação da Área</strong>, entregue no Módulo 6. Cada gestor sai comprometido com 3 alavancas concretas, metas e prazos. O acompanhamento acontece na cadência já definida do painel — o que fecha o ciclo entre capacitar e cobrar de forma justa.</p>
+    <div class="callout warn">
+      <div class="ct">Fator crítico de sucesso</div>
+      <p>A conversa de enquadramento (Módulo 0) importa mais que qualquer slide. Se os gestores entrarem achando que o painel é para puni-los, nenhum conteúdo técnico funciona. A diretoria precisa abrir o curso pessoalmente com a mensagem: <em>"o vermelho é contábil; o que quero de vocês é eficiência na parte que está na mão de vocês."</em></p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <span class="copy">© SI - <b>HBT Hub Norway</b> — Centro de Inteligência e Estratégia Regulatória</span>
+  <a class="ds-discreet" href="https://app-algoritmo.github.io/digital-solutions" target="_blank" rel="noopener"><span class="code">&lt;/&gt;</span> Digital Solutions</a>
+</footer>
+
+</body>
+</html>
