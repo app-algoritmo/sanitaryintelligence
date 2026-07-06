@@ -234,6 +234,45 @@
     .node .name{font-size:22px;}
     .brand-txt h1{font-size:29px;}
   }
+
+  /* ===== EDIÇÃO / IMPRESSÃO ===== */
+  .topbar{justify-content:space-between;flex-wrap:wrap;gap:14px;}
+  .toolbar{display:flex;gap:9px;flex-wrap:wrap;}
+  .tbtn{font-family:"IBM Plex Sans",sans-serif;font-size:13.5px;font-weight:600;color:var(--ink-soft);background:var(--card);border:1px solid var(--hair);border-radius:11px;padding:9px 15px;box-shadow:var(--shadow);cursor:pointer;transition:transform .14s ease,background .14s ease,border-color .14s ease;}
+  .tbtn:hover{background:var(--q-tint);border-color:#BEDDD4;}
+  .tbtn:active{transform:scale(.97);}
+  .tbtn.primary,.tbtn.on{color:#fff;background:var(--q);border-color:var(--q);}
+  .tbtn.primary:hover,.tbtn.on:hover{background:var(--q-deep);}
+
+  .fld-label{display:block;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:9px 0 3px;}
+  [contenteditable="true"]{outline:1px dashed rgba(27,127,112,.5);outline-offset:2px;border-radius:4px;background:rgba(27,127,112,.06);padding:1px 4px;cursor:text;}
+  [contenteditable="true"]:focus{outline:2px solid var(--q);background:#fff;}
+  .dir-head [contenteditable="true"]{background:rgba(255,255,255,.18);outline-color:rgba(255,255,255,.55);}
+  .dir-head [contenteditable="true"]:focus{background:#fff;color:var(--ink);}
+
+  .card{position:relative;}
+  .member{position:relative;}
+  .del-btn{position:absolute;top:8px;right:8px;width:24px;height:24px;border-radius:50%;border:1px solid var(--hair);background:#fff;color:#C0504A;font-size:16px;line-height:1;cursor:pointer;display:grid;place-items:center;box-shadow:var(--shadow);z-index:2;padding:0;}
+  .del-btn:hover{background:#FBEDEC;border-color:#E7C3BF;}
+  .member .del-btn{width:20px;height:20px;font-size:13px;top:6px;right:6px;}
+  .add-btn{width:100%;border:1.5px dashed #BEDDD4;background:rgba(27,127,112,.05);color:var(--q-deep);font-family:"IBM Plex Sans",sans-serif;font-weight:600;font-size:13.5px;border-radius:12px;padding:12px;cursor:pointer;transition:background .14s;}
+  .add-btn:hover{background:var(--q-tint);}
+  .branch.o .add-btn{border-color:#E4CFA6;color:var(--o-deep);background:rgba(176,114,42,.05);}
+  .branch.o .add-btn:hover{background:var(--o-tint);}
+  .add-mem{font-size:12.5px;padding:9px 16px;border-radius:10px;border:1.5px dashed #C4D3D2;background:var(--board-tint);color:var(--board);font-weight:600;cursor:pointer;font-family:"IBM Plex Sans",sans-serif;}
+  .add-mem:hover{background:#CFDDDC;}
+
+  @media print{
+    #gate,.topbar,.toolbar,.backbtn,.add-btn,.add-mem,.del-btn,#importFile{display:none !important;}
+    body{background:#fff !important;}
+    .wrap{max-width:none;padding:0;}
+    .card,.kpi,.council,.node,.dir-head,.member{box-shadow:none !important;}
+    .reveal{opacity:1 !important;transform:none !important;animation:none !important;}
+    [contenteditable="true"]{outline:none !important;background:none !important;padding:0 !important;}
+    .directorates{gap:12px;}
+    .foot{page-break-inside:avoid;}
+    @page{margin:12mm;}
+  }
 </style>
 </head>
 <body>
@@ -269,6 +308,14 @@
 
   <div class="topbar reveal d1">
     <a href="access.html" class="backbtn"><span class="ar">←</span> Voltar</a>
+    <div class="toolbar">
+      <button class="tbtn primary" data-act="toggle-edit" id="editBtn">✎ Editar</button>
+      <button class="tbtn" data-act="print">🖨 Imprimir</button>
+      <button class="tbtn" data-act="export">⭳ Exportar</button>
+      <button class="tbtn" data-act="import">⭱ Importar</button>
+      <button class="tbtn" data-act="reset">↺ Restaurar</button>
+      <input type="file" id="importFile" accept="application/json" style="display:none">
+    </div>
   </div>
 
   <header class="top reveal d1">
@@ -287,173 +334,9 @@
     </div>
   </header>
 
-  <section class="kpis">
-    <div class="kpi k-b reveal d2"><span class="tag">Governança</span><div class="num">5</div><div class="lbl">Membros do Conselho Administrativo</div></div>
-    <div class="kpi reveal d2"><span class="tag">Estrutura</span><div class="num">2</div><div class="lbl">Diretorias executivas</div></div>
-    <div class="kpi k-o reveal d3"><span class="tag">Áreas</span><div class="num">16</div><div class="lbl">Subáreas mapeadas</div></div>
-    <div class="kpi reveal d3"><span class="tag">Conformidade</span><div class="num">30+</div><div class="lbl">Cláusulas ISO 9001 mapeadas às áreas</div></div>
-    <div class="kpi k-v reveal d4"><span class="tag">Atenção</span><div class="num">2</div><div class="lbl">Posições em aberto (a contratar)</div></div>
-  </section>
+  <section class="kpis reveal d2" id="kpis"></section>
 
-  <section class="tree">
-
-    <div class="level-label reveal d2">Nível 1 · Governança · Alta Direção</div>
-    <div class="council reveal d2">
-      <div class="council-grid">
-        <div class="member lead"><div class="nm">Giorgio Volonghi</div><div class="rl">Presidente · CEO · Cotista</div></div>
-        <div class="member"><div class="nm">Renato Volonghi</div><div class="rl">Membro · Cotista</div></div>
-        <div class="member"><div class="nm">Willian Jambeiro</div><div class="rl">Membro · Cotista</div></div>
-        <div class="member"><div class="nm">Dra. Natalia Bellan</div><div class="rl">COO · Membro</div></div>
-        <div class="member"><div class="nm">Paulo Barros</div><div class="rl">DOG · Membro</div></div>
-      </div>
-      <div class="council-clause">Cláusulas-âncora · 5.1 Liderança · 5.2 Política · 5.3 Papéis e autoridades · 9.3 Análise crítica pela direção</div>
-    </div>
-
-    <div class="vline md reveal d2"></div>
-
-    <div class="node ceo reveal d3">
-      <div class="role">Presidente do Conselho &amp; CEO</div>
-      <div class="name">Giorgio Volonghi</div>
-      <div class="clabel">Seção 5 · Liderança e comprometimento</div>
-    </div>
-
-    <div class="vline md reveal d3"></div>
-
-    <div class="node coo reveal d3">
-      <div class="role">COO — Chief Operating Officer</div>
-      <div class="name">Dra. Natalia Bellan</div>
-      <div class="cred">Farmacêutica Bioquímica · MSc · PhD</div>
-      <div class="clabel">SGQ · 4.4 · 9.3 · 10.3 Melhoria contínua</div>
-    </div>
-
-    <div class="fork reveal d4"><span class="drop l"></span><span class="drop r"></span></div>
-
-    <div class="directorates">
-
-      <!-- QUALIDADE -->
-      <div class="branch q reveal d4">
-        <div class="dir-head">
-          <div class="letter">DIRETORIA A</div>
-          <h2>Assuntos Corporativos &amp; Qualidade</h2>
-          <div class="owner">Dra. Natalia Bellan <small>· Responsável</small></div>
-          <span class="reporte">Reporte → CEO</span>
-          <div class="head-clauses">Cláusulas-âncora · Seção 5 · 9.3 · Seção 10 (Melhoria)</div>
-        </div>
-        <div class="cards">
-          <div class="card">
-            <div class="ctitle">Regulatórios &amp; Garantia da Qualidade</div>
-            <div class="who"><span class="dot"></span>Mariana Meier</div>
-            <div class="resp">Gestão do SGQ · Auditorias internas · Rastreabilidade · Interface ANVISA · Não conformidades</div>
-            <div class="chips"><span class="ck">Cláusulas</span><span class="chip sgq">SGQ · 4.4</span><span class="chip">8.5.2</span><span class="chip">8.7</span><span class="chip">9.2</span><span class="chip">10.2</span></div>
-          </div>
-          <div class="card">
-            <div class="ctitle">Controle de Qualidade, Segurança &amp; Meio Ambiente</div>
-            <div class="who"><span class="dot"></span>Betina Benidotto</div>
-            <div class="resp">Inspeções e testes laboratoriais · Controle estatístico de processo · Segurança do trabalho · Gestão ambiental</div>
-            <div class="chips"><span class="ck">Cláusulas</span><span class="chip">7.1.5</span><span class="chip">8.6</span><span class="chip">9.1.1</span><span class="chip">9.1.3</span></div>
-          </div>
-          <div class="card">
-            <div class="ctitle">Embalagens, P&amp;D &amp; Compliance de Marketing</div>
-            <div class="who"><span class="dot"></span>Alexandre Machado</div>
-            <div class="resp">Desenvolvimento de novos produtos · Qualificação de embalagens · Compliance de rótulos · Homologações</div>
-            <div class="chips"><span class="ck">Cláusulas</span><span class="chip">8.2.2</span><span class="chip">8.3</span><span class="chip">8.5.4</span></div>
-          </div>
-          <div class="card vacant">
-            <div class="ctitle">Compliance &amp; Jurídico</div>
-            <div class="who"><span class="pill-vacant">A contratar</span></div>
-            <div class="resp">Contratos · Compliance corporativo · LGPD e governança</div>
-            <div class="chips"><span class="ck">Cláusulas</span><span class="chip">4.2</span><span class="chip">8.2.3</span><span class="chip">7.5.3</span><span class="chip">8.5.3</span></div>
-          </div>
-          <div class="card">
-            <div class="ctitle">Comunicação</div>
-            <div class="who"><span class="dot"></span>Paula Azzar Mariosa</div>
-            <div class="resp">Comunicação interna · Relacionamento institucional · Apoio a treinamentos e mudanças</div>
-            <div class="chips"><span class="ck">Cláusulas</span><span class="chip">6.3</span><span class="chip">7.3</span><span class="chip">7.4</span></div>
-          </div>
-          <div class="card">
-            <div class="ctitle">Recursos Humanos</div>
-            <div class="who"><span class="dot"></span>Daniela Lopes</div>
-            <div class="resp">Recrutamento e seleção · Treinamento e desenvolvimento · Gestão de competências · Clima organizacional</div>
-            <div class="chips"><span class="ck">Cláusulas</span><span class="chip">7.1.2</span><span class="chip">7.1.4</span><span class="chip">7.2</span><span class="chip">7.3</span></div>
-          </div>
-          <div class="card">
-            <div class="ctitle">Controladoria</div>
-            <div class="who"><span class="dot"></span>Fabio</div>
-            <div class="resp">Indicadores de desempenho (KPIs) · Análise de custos · Orçamento da diretoria</div>
-            <div class="chips"><span class="ck">Cláusulas</span><span class="chip">7.1.1</span><span class="chip">9.1.1</span><span class="chip">9.1.3</span></div>
-          </div>
-          <div class="card">
-            <div class="ctitle">Financeiro</div>
-            <div class="who"><span class="dot"></span>Elvis</div>
-            <div class="resp">Contabilidade geral · Fluxo de caixa · Pagamentos e recebimentos</div>
-            <div class="chips"><span class="ck">Cláusulas</span><span class="chip">7.1.1</span><span class="chip scope">gestão financeira · fora do escopo direto (0.4)</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- OPERAÇÕES -->
-      <div class="branch o reveal d5">
-        <div class="dir-head">
-          <div class="letter">DIRETORIA B</div>
-          <h2>Operações Globais</h2>
-          <div class="owner">Paulo Barros <small>· DOG · Responsável</small></div>
-          <span class="reporte">Reporte duplo → CEO + COO</span>
-          <div class="head-clauses">Cláusulas-âncora · Seção 8 (Operação) · 8.1 Planejamento operacional</div>
-        </div>
-        <div class="cards">
-          <div class="card">
-            <div class="ctitle">Produção &amp; Operações</div>
-            <div class="who"><span class="dot"></span>Valdemir</div>
-            <div class="resp">Execução da produção · Controle operacional diário · Eficiência das linhas (OEE) · Qualidade na operação</div>
-            <div class="chips"><span class="ck">Cláusulas</span><span class="chip">8.1</span><span class="chip">8.5.1</span><span class="chip">8.6</span></div>
-          </div>
-          <div class="card">
-            <div class="ctitle">Suprimentos &amp; PCP</div>
-            <div class="who"><span class="dot"></span>Pamela</div>
-            <div class="resp">Planejamento e Controle da Produção · Compras e fornecedores · Estoques · Previsão de demanda</div>
-            <div class="chips"><span class="ck">Cláusulas</span><span class="chip">8.1</span><span class="chip">8.4</span><span class="chip">8.5.4</span></div>
-          </div>
-          <div class="card vacant">
-            <div class="ctitle">Manutenção</div>
-            <div class="who"><span class="pill-vacant">A contratar</span></div>
-            <div class="resp">Manutenção preventiva e corretiva · Disponibilidade de equipamentos · Calibração de instrumentos</div>
-            <div class="chips"><span class="ck">Cláusulas</span><span class="chip">7.1.3</span><span class="chip">7.1.5</span></div>
-          </div>
-          <div class="card">
-            <div class="ctitle">Logística &amp; Expedição</div>
-            <div class="who"><span class="dot"></span>Rafael</div>
-            <div class="resp">Armazenagem · Distribuição e expedição · Transporte</div>
-            <div class="chips"><span class="ck">Cláusulas</span><span class="chip">8.5.2</span><span class="chip">8.5.4</span><span class="chip">8.5.5</span></div>
-          </div>
-          <div class="card">
-            <div class="ctitle">Comercial Brasil</div>
-            <div class="who"><span class="dot"></span>Luiz</div>
-            <div class="resp">Carteira de clientes nacionais · Requisitos do produto · Satisfação do cliente · Tratamento de reclamações</div>
-            <div class="chips"><span class="ck">Cláusulas</span><span class="chip">8.2.1</span><span class="chip">8.2.3</span><span class="chip">9.1.2</span></div>
-          </div>
-          <div class="card">
-            <div class="ctitle">Comercial Internacional</div>
-            <div class="who"><span class="dot"></span>Dom Sebastian</div>
-            <div class="resp">Contratos e clientes externos · Exigências legais e alfandegárias · Comunicação com o cliente · Satisfação global</div>
-            <div class="chips"><span class="ck">Cláusulas</span><span class="chip">8.2.1</span><span class="chip">8.2.2</span><span class="chip">8.2.4</span><span class="chip">9.1.2</span></div>
-          </div>
-          <div class="card">
-            <div class="ctitle">TI / Sistemas</div>
-            <div class="who"><span class="dot"></span>Roberto</div>
-            <div class="resp">Infraestrutura e redes · Integridade e backup (ERP/CRM) · Segurança cibernética · Continuidade dos negócios</div>
-            <div class="chips"><span class="ck">Cláusulas</span><span class="chip">6.1</span><span class="chip">7.1.3</span><span class="chip">7.5.3</span></div>
-          </div>
-          <div class="card">
-            <div class="ctitle">Hub Espanha / Barcelona</div>
-            <div class="who"><span class="dot"></span>Rafael Gomes</div>
-            <div class="resp">Operação Europa — escopo de responsabilidades a definir no documento base</div>
-            <div class="chips"><span class="ck">Cláusulas</span><span class="chip">4.3</span><span class="chip scope">escopo a definir</span></div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
+  <section class="tree reveal d3" id="tree"></section>
 
   <section class="foot reveal d6">
     <div class="panel">
@@ -483,7 +366,7 @@
   <div class="site-credit">
     <a href="https://app-algoritmo.github.io/digital-solutions" target="_blank" rel="noopener">&lt;/&gt; Digital Solutions</a>
     <span class="sep">·</span>
-    ©SI Hub Norway — ©SI Hub Norway — Centro de Inteligência e Estratégia Regulatória
+    ©SI Hub Norway — Centro de Inteligência e Estratégia Regulatória
   </div>
 
 </div>
@@ -533,5 +416,178 @@
 })();
 </script>
 
+<script>
+(function(){
+  var KEY = "hbt_organograma_v1";
+  var DEFAULT = {
+    council: [
+      {name:"Giorgio Volonghi", role:"Presidente do Conselho \u00b7 CEO \u00b7 Cotista", lead:true},
+      {name:"Renato Volonghi", role:"Membro \u00b7 Cotista"},
+      {name:"Willian Jambeiro", role:"Membro \u00b7 Cotista"},
+      {name:"Dra. Natalia Bellan", role:"COO \u00b7 Membro"},
+      {name:"Paulo Barros", role:"DOG \u00b7 Membro"}
+    ],
+    councilClause:"Cl\u00e1usulas-\u00e2ncora \u00b7 5.1 Lideran\u00e7a \u00b7 5.2 Pol\u00edtica \u00b7 5.3 Pap\u00e9is e autoridades \u00b7 9.3 An\u00e1lise cr\u00edtica pela dire\u00e7\u00e3o",
+    ceo:{role:"Presidente do Conselho & CEO", name:"Giorgio Volonghi", clabel:"Se\u00e7\u00e3o 5 \u00b7 Lideran\u00e7a e comprometimento"},
+    coo:{role:"COO \u2014 Chief Operating Officer", name:"Dra. Natalia Bellan", cred:"Farmac\u00eautica Bioqu\u00edmica \u00b7 MSc \u00b7 PhD", clabel:"SGQ \u00b7 4.4 \u00b7 9.3 \u00b7 10.3 Melhoria cont\u00ednua"},
+    dirA:{letter:"DIRETORIA A", title:"Assuntos Corporativos & Qualidade", owner:"Dra. Natalia Bellan", ownerSmall:"\u00b7 Respons\u00e1vel", reporte:"Reporte \u2192 CEO", headClauses:"Cl\u00e1usulas-\u00e2ncora \u00b7 Se\u00e7\u00e3o 5 \u00b7 9.3 \u00b7 Se\u00e7\u00e3o 10 (Melhoria)", subs:[
+      {title:"Regulat\u00f3rios & Garantia da Qualidade", who:"Mariana Meier", resp:"Gest\u00e3o do SGQ \u00b7 Auditorias internas \u00b7 Rastreabilidade \u00b7 Interface ANVISA \u00b7 N\u00e3o conformidades", clauses:"SGQ \u00b7 4.4, 8.5.2, 8.7, 9.2, 10.2"},
+      {title:"Controle de Qualidade, Seguran\u00e7a & Meio Ambiente", who:"Betina Benidotto", resp:"Inspe\u00e7\u00f5es e testes laboratoriais \u00b7 Controle estat\u00edstico de processo \u00b7 Seguran\u00e7a do trabalho \u00b7 Gest\u00e3o ambiental", clauses:"7.1.5, 8.6, 9.1.1, 9.1.3"},
+      {title:"Embalagens, P&D & Compliance de Marketing", who:"Alexandre Machado", resp:"Desenvolvimento de novos produtos \u00b7 Qualifica\u00e7\u00e3o de embalagens \u00b7 Compliance de r\u00f3tulos \u00b7 Homologa\u00e7\u00f5es", clauses:"8.2.2, 8.3, 8.5.4"},
+      {title:"Compliance & Jur\u00eddico", who:"A contratar", resp:"Elabora\u00e7\u00e3o e revis\u00e3o de contratos \u00b7 Compliance corporativo \u00b7 LGPD e governan\u00e7a", clauses:"4.2, 8.2.3, 7.5.3, 8.5.3"},
+      {title:"Comunica\u00e7\u00e3o", who:"Paula Azzar Mariosa", resp:"Comunica\u00e7\u00e3o interna \u00b7 Relacionamento institucional \u00b7 Apoio a treinamentos e mudan\u00e7as", clauses:"6.3, 7.3, 7.4"},
+      {title:"Recursos Humanos", who:"Daniela Lopes", resp:"Recrutamento e sele\u00e7\u00e3o \u00b7 Treinamento e desenvolvimento \u00b7 Gest\u00e3o de compet\u00eancias \u00b7 Clima organizacional", clauses:"7.1.2, 7.1.4, 7.2, 7.3"},
+      {title:"Controladoria", who:"Fabio", resp:"Indicadores de desempenho (KPIs) \u00b7 An\u00e1lise de custos \u00b7 Or\u00e7amento da diretoria", clauses:"7.1.1, 9.1.1, 9.1.3"},
+      {title:"Financeiro", who:"Elvis", resp:"Contabilidade geral \u00b7 Fluxo de caixa \u00b7 Pagamentos e recebimentos", clauses:"7.1.1, fora do escopo direto (0.4)"}
+    ]},
+    dirB:{letter:"DIRETORIA B", title:"Opera\u00e7\u00f5es Globais", owner:"Paulo Barros", ownerSmall:"\u00b7 DOG \u00b7 Respons\u00e1vel", reporte:"Reporte duplo \u2192 CEO + COO", headClauses:"Cl\u00e1usulas-\u00e2ncora \u00b7 Se\u00e7\u00e3o 8 (Opera\u00e7\u00e3o) \u00b7 8.1 Planejamento operacional", subs:[
+      {title:"Produ\u00e7\u00e3o & Opera\u00e7\u00f5es", who:"Valdemir", resp:"Execu\u00e7\u00e3o da produ\u00e7\u00e3o \u00b7 Controle operacional di\u00e1rio \u00b7 Efici\u00eancia das linhas (OEE) \u00b7 Qualidade na opera\u00e7\u00e3o", clauses:"8.1, 8.5.1, 8.6"},
+      {title:"Suprimentos & PCP", who:"Pamela", resp:"Planejamento e Controle da Produ\u00e7\u00e3o \u00b7 Compras e fornecedores \u00b7 Estoques \u00b7 Previs\u00e3o de demanda", clauses:"8.1, 8.4, 8.5.4"},
+      {title:"Manuten\u00e7\u00e3o", who:"A contratar", resp:"Manuten\u00e7\u00e3o preventiva e corretiva \u00b7 Disponibilidade de equipamentos \u00b7 Calibra\u00e7\u00e3o de instrumentos", clauses:"7.1.3, 7.1.5"},
+      {title:"Log\u00edstica & Expedi\u00e7\u00e3o", who:"Rafael", resp:"Armazenagem \u00b7 Distribui\u00e7\u00e3o e expedi\u00e7\u00e3o \u00b7 Transporte", clauses:"8.5.2, 8.5.4, 8.5.5"},
+      {title:"Comercial Brasil", who:"Luiz", resp:"Carteira de clientes nacionais \u00b7 Requisitos do produto \u00b7 Satisfa\u00e7\u00e3o do cliente \u00b7 Tratamento de reclama\u00e7\u00f5es", clauses:"8.2.1, 8.2.3, 9.1.2"},
+      {title:"Comercial Internacional", who:"Dom Sebastian", resp:"Contratos e clientes externos \u00b7 Exig\u00eancias legais e alfandeg\u00e1rias \u00b7 Comunica\u00e7\u00e3o com o cliente \u00b7 Satisfa\u00e7\u00e3o global", clauses:"8.2.1, 8.2.2, 8.2.4, 9.1.2"},
+      {title:"TI / Sistemas", who:"Roberto", resp:"Infraestrutura e redes \u00b7 Integridade e backup (ERP/CRM) \u00b7 Seguran\u00e7a cibern\u00e9tica \u00b7 Continuidade dos neg\u00f3cios", clauses:"6.1, 7.1.3, 7.5.3"},
+      {title:"Hub Espanha / Barcelona", who:"Rafael Gomes", resp:"Opera\u00e7\u00e3o Europa \u2014 escopo de responsabilidades a definir", clauses:"4.3, escopo a definir"}
+    ]}
+  };
+
+  var data, editing=false;
+
+  function clone(o){ return JSON.parse(JSON.stringify(o)); }
+  function load(){ try{ var s=localStorage.getItem(KEY); if(s) return JSON.parse(s); }catch(e){} return clone(DEFAULT); }
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){} }
+  function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+  function ce(){ return editing ? ' contenteditable="true"' : ''; }
+  function fld(ref,val,cls){ return '<span class="ed '+(cls||'')+'" data-ref="'+ref+'"'+ce()+'>'+esc(val)+'</span>'; }
+  function isVacant(w){ return !w || !w.trim() || /a\s*contratar/i.test(w); }
+  function tokens(str){ return String(str||"").split(",").map(function(t){return t.trim();}).filter(Boolean); }
+  function chipHTML(tok){
+    var low=tok.toLowerCase(), cls="chip";
+    if(/^sgq/i.test(tok)) cls="chip sgq";
+    else if(low.indexOf("escopo")>=0||low.indexOf("fora")>=0||low.indexOf("definir")>=0||low.indexOf("apoio")>=0) cls="chip scope";
+    return '<span class="'+cls+'">'+esc(tok)+'</span>';
+  }
+  function distinctClauses(){
+    var set={};
+    [data.dirA,data.dirB].forEach(function(d){ d.subs.forEach(function(s){ tokens(s.clauses).forEach(function(t){
+      var low=t.toLowerCase();
+      if(low.indexOf("escopo")>=0||low.indexOf("fora")>=0||low.indexOf("definir")>=0||low.indexOf("apoio")>=0) return;
+      var m=t.replace(/^sgq\s*\u00b7?\s*/i,"").trim(); if(m) set[m]=1;
+    }); }); });
+    return Object.keys(set).length;
+  }
+  function countVacant(){ var n=0; [data.dirA,data.dirB].forEach(function(d){ d.subs.forEach(function(s){ if(isVacant(s.who)) n++; }); }); return n; }
+
+  function renderKpis(){
+    var subs = data.dirA.subs.length + data.dirB.subs.length;
+    var items = [
+      ["k-b","Governan\u00e7a", data.council.length, "Membros do Conselho Administrativo"],
+      ["","Estrutura", 2, "Diretorias executivas"],
+      ["k-o","\u00c1reas", subs, "Sub\u00e1reas mapeadas"],
+      ["","Conformidade", distinctClauses(), "Cl\u00e1usulas ISO 9001 mapeadas \u00e0s \u00e1reas"],
+      ["k-v","Aten\u00e7\u00e3o", countVacant(), "Posi\u00e7\u00f5es em aberto (a contratar)"]
+    ];
+    document.getElementById("kpis").innerHTML = items.map(function(it){
+      return '<div class="kpi '+it[0]+'"><span class="tag">'+it[1]+'</span><div class="num">'+it[2]+'</div><div class="lbl">'+it[3]+'</div></div>';
+    }).join("");
+  }
+
+  function renderDir(dirKey){
+    var d=data[dirKey], cls=(dirKey==="dirA"?"q":"o"), dl=(dirKey==="dirA"?"A":"B");
+    var head = '<div class="dir-head">'
+      + '<div class="letter">'+fld(dirKey+".letter", d.letter)+'</div>'
+      + '<h2>'+fld(dirKey+".title", d.title)+'</h2>'
+      + '<div class="owner">'+fld(dirKey+".owner", d.owner)+' <small>'+fld(dirKey+".ownerSmall", d.ownerSmall)+'</small></div>'
+      + '<span class="reporte">'+fld(dirKey+".reporte", d.reporte)+'</span>'
+      + '<div class="head-clauses">'+fld(dirKey+".headClauses", d.headClauses)+'</div>'
+      + '</div>';
+    var cards = d.subs.map(function(s,idx){
+      var vac=isVacant(s.who);
+      var del = editing ? '<button class="del-btn" data-act="del-sub" data-dir="'+dl+'" data-i="'+idx+'" title="Excluir">\u00d7</button>' : '';
+      var whoBlock, clauseBlock;
+      if(editing){
+        whoBlock = '<div class="fld-label">Respons\u00e1vel (use \u201cA contratar\u201d para vaga)</div>'+fld(dirKey+".subs."+idx+".who", s.who);
+        clauseBlock = '<div class="fld-label">Cl\u00e1usulas ISO (separe por v\u00edrgula)</div>'+fld(dirKey+".subs."+idx+".clauses", s.clauses);
+      } else {
+        whoBlock = vac ? '<div class="who"><span class="pill-vacant">'+esc(s.who||"A contratar")+'</span></div>'
+                       : '<div class="who"><span class="dot"></span>'+esc(s.who)+'</div>';
+        clauseBlock = '<div class="chips"><span class="ck">Cl\u00e1usulas</span>'+tokens(s.clauses).map(chipHTML).join("")+'</div>';
+      }
+      return '<div class="card'+((vac&&!editing)?' vacant':'')+'">'+del
+        + '<div class="ctitle">'+fld(dirKey+".subs."+idx+".title", s.title)+'</div>'
+        + whoBlock
+        + '<div class="resp">'+fld(dirKey+".subs."+idx+".resp", s.resp)+'</div>'
+        + clauseBlock
+        + '</div>';
+    }).join("");
+    var addBtn = editing ? '<button class="add-btn" data-act="add-sub" data-dir="'+dl+'">+ Adicionar sub\u00e1rea</button>' : '';
+    return '<div class="branch '+cls+'">'+head+'<div class="cards">'+cards+addBtn+'</div></div>';
+  }
+
+  function renderTree(){
+    var mem = data.council.map(function(m,idx){
+      var del = editing ? '<button class="del-btn" data-act="del-mem" data-i="'+idx+'" title="Excluir">\u00d7</button>' : '';
+      return '<div class="member'+(m.lead?' lead':'')+'">'+del
+        + '<div class="nm">'+fld("council."+idx+".name", m.name)+'</div>'
+        + '<div class="rl">'+fld("council."+idx+".role", m.role)+'</div></div>';
+    }).join("");
+    var addMem = editing ? '<div style="width:100%;text-align:center;margin-top:12px;"><button class="add-mem" data-act="add-mem">+ Adicionar membro</button></div>' : '';
+    var council = '<div class="level-label">N\u00edvel 1 \u00b7 Governan\u00e7a \u00b7 Alta Dire\u00e7\u00e3o</div>'
+      + '<div class="council"><div class="council-grid">'+mem+'</div>'+addMem
+      + '<div class="council-clause">'+fld("councilClause", data.councilClause)+'</div></div>';
+    var ceo = '<div class="vline md"></div><div class="node ceo"><div class="role">'+fld("ceo.role",data.ceo.role)+'</div><div class="name">'+fld("ceo.name",data.ceo.name)+'</div><div class="clabel">'+fld("ceo.clabel",data.ceo.clabel)+'</div></div>';
+    var coo = '<div class="vline md"></div><div class="node coo"><div class="role">'+fld("coo.role",data.coo.role)+'</div><div class="name">'+fld("coo.name",data.coo.name)+'</div><div class="cred">'+fld("coo.cred",data.coo.cred)+'</div><div class="clabel">'+fld("coo.clabel",data.coo.clabel)+'</div></div>';
+    var fork = '<div class="fork"><span class="drop l"></span><span class="drop r"></span></div>';
+    var dirs = '<div class="directorates">'+renderDir("dirA")+renderDir("dirB")+'</div>';
+    document.getElementById("tree").innerHTML = council+ceo+coo+fork+dirs;
+  }
+
+  function renderAll(){
+    renderKpis(); renderTree();
+    document.body.classList.toggle("editing", editing);
+    var eb=document.getElementById("editBtn");
+    if(eb){ eb.textContent = editing ? "\u2713 Concluir" : "\u270e Editar"; eb.classList.toggle("on", editing); }
+  }
+
+  function setPath(ref,val){
+    var p=ref.split("."), o=data;
+    for(var k=0;k<p.length-1;k++){ o=o[p[k]]; }
+    o[p[p.length-1]]=val;
+  }
+  function exportJSON(){
+    var blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+    var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="organograma_hbt.json"; a.click(); URL.revokeObjectURL(a.href);
+  }
+
+  document.addEventListener("click", function(e){
+    var b=e.target.closest("[data-act]"); if(!b) return;
+    var act=b.getAttribute("data-act");
+    if(act==="toggle-edit"){ editing=!editing; renderAll(); }
+    else if(act==="print"){ window.print(); }
+    else if(act==="export"){ exportJSON(); }
+    else if(act==="import"){ document.getElementById("importFile").click(); }
+    else if(act==="reset"){ if(confirm("Restaurar o organograma para o padr\u00e3o? As altera\u00e7\u00f5es locais ser\u00e3o perdidas.")){ data=clone(DEFAULT); save(); renderAll(); } }
+    else if(act==="add-sub"){ var dk=(b.getAttribute("data-dir")==="A"?"dirA":"dirB"); data[dk].subs.push({title:"Nova sub\u00e1rea", who:"A contratar", resp:"Descreva as responsabilidades", clauses:""}); save(); renderAll(); }
+    else if(act==="del-sub"){ var dk2=(b.getAttribute("data-dir")==="A"?"dirA":"dirB"); data[dk2].subs.splice(+b.getAttribute("data-i"),1); save(); renderAll(); }
+    else if(act==="add-mem"){ data.council.push({name:"Novo membro", role:"Cargo"}); save(); renderAll(); }
+    else if(act==="del-mem"){ data.council.splice(+b.getAttribute("data-i"),1); save(); renderAll(); }
+  });
+
+  var treeEl=document.getElementById("tree");
+  treeEl.addEventListener("input", function(e){
+    var el=e.target.closest("[data-ref]"); if(!el) return;
+    setPath(el.getAttribute("data-ref"), el.textContent);
+    save(); renderKpis();
+  });
+  document.getElementById("importFile").addEventListener("change", function(e){
+    var f=e.target.files[0]; if(!f) return; var r=new FileReader();
+    r.onload=function(){ try{ data=JSON.parse(r.result); save(); renderAll(); }catch(err){ alert("Arquivo inv\u00e1lido."); } };
+    r.readAsText(f); e.target.value="";
+  });
+
+  data=load(); renderAll();
+})();
+</script>
 </body>
 </html>
