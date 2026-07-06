@@ -35,6 +35,9 @@
   .id-name{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.16rem;line-height:1.15}
   .id-role{font-size:.78rem;color:var(--muted)}
   .top-spacer{flex:1 1 auto}
+  .btn-back{display:inline-flex;align-items:center;gap:6px;flex-shrink:0;text-decoration:none;padding:8px 13px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--panel-3);color:var(--muted);font-size:.8rem;font-weight:600;transition:all .15s}
+  .btn-back:hover{border-color:var(--accent-deep);color:var(--ink);background:var(--panel-2)}
+  .btn-back svg{width:15px;height:15px}
   .confidencial{display:inline-flex;align-items:center;gap:7px;flex-shrink:0;padding:7px 13px;border-radius:999px;background:var(--neg-soft);border:1px solid rgba(236,107,126,.4);color:#F4A6B0;font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
   .confidencial .dot{width:7px;height:7px;border-radius:50%;background:var(--neg);animation:pulse 2.6s infinite}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(236,107,126,.55)}70%{box-shadow:0 0 0 8px rgba(236,107,126,0)}100%{box-shadow:0 0 0 0 rgba(236,107,126,0)}}
@@ -174,6 +177,9 @@
   .ds-link:hover{border-color:var(--accent);color:var(--accent)}
   .ds-link .code{font-family:"JetBrains Mono",monospace;color:var(--accent);font-weight:700}
   .copy{font-size:.8rem;color:var(--faint)}
+  .ds-discreet{color:var(--faint);font-size:.76rem;text-decoration:none;font-family:"JetBrains Mono",monospace;transition:color .15s}
+  .ds-discreet:hover{color:var(--accent);text-decoration:underline}
+  .ds-discreet .code{color:var(--muted)}
   .copy b{color:var(--muted);font-weight:600}
 
   @media (max-width:960px){.kpis{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.capex-grid{grid-template-columns:1fr}.donut-wrap{max-width:320px;margin:0 auto}.ctl-actions{margin-left:0;width:100%}.catbar{grid-template-columns:150px 1fr 110px}}
@@ -230,6 +236,10 @@
 
 <header class="top">
   <div class="top-inner">
+    <a class="btn-back" href="access.html" aria-label="Voltar ao hub de ferramentas">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+      Voltar
+    </a>
     <div class="monogram">D.O.G.</div>
     <div class="id-block">
       <span class="id-office">Diretoria de Operações Globais</span>
@@ -279,7 +289,7 @@
       <div class="seg" id="segMoeda" role="group" aria-label="Moeda">
         <button data-c="BRL" aria-pressed="true">BRL</button>
         <button data-c="USD" aria-pressed="false">USD</button>
-        <button data-c="NOK" aria-pressed="false">NOK</button>
+        <button data-c="EUR" aria-pressed="false">EUR</button>
       </div>
     </div>
     <div class="ctl-actions">
@@ -393,10 +403,8 @@
   </section>
 
   <footer>
-    <a class="ds-link" href="https://app-algoritmo.github.io/digital-solutions" target="_blank" rel="noopener">
-      <span class="code">&lt;/&gt;</span> Digital Solutions
-    </a>
-    <span class="copy">© 2026 <b>SI - HBT Hub Norway</b> — Centro de Inteligência e Estratégia Regulatória</span>
+    <span class="copy">© SI - <b>HBT Hub Norway</b> — Centro de Inteligência e Estratégia Regulatória</span>
+    <a class="ds-discreet" href="https://app-algoritmo.github.io/digital-solutions" target="_blank" rel="noopener"><span class="code">&lt;/&gt;</span> Digital Solutions</a>
   </footer>
 
 </div>
@@ -423,39 +431,44 @@
      =================================================================== */
 
   var DEPARTAMENTOS = [
-    { id:"comercial", nome:"Comercial", gestor:"Luiz", headcount:0,
-      opexQ:[639167,677500,567833,486500], folhaQ:[0,0,0,0], capexQ:[22000,0,0,0],
-      detalhe:[["Despesas com bonificação",600000],["Honorários e serviços profissionais",491500],["Feiras e eventos",490000],["Campanhas e ações de vendas",280000],["Viagens",132000]] },
-    { id:"compras", nome:"Compras", gestor:"Fabiano", headcount:3,
-      opexQ:[9000,6700,8750,10600], folhaQ:[83299,86682,86682,86682], capexQ:[0,0,0,0],
-      detalhe:[["Viagens",18000],["Alimentação",5200],["Honorários e serviços profissionais",5000],["Brindes e doações",2500],["Correios e frete expresso",1200]] },
-    { id:"internacional", nome:"Internacional", gestor:"Renato", headcount:0,
-      opexQ:[180000,290000,220000,30000], folhaQ:[0,0,0,0], capexQ:[0,0,0,0],
-      detalhe:[["Feiras e eventos",450000],["Viagens",150000],["Honorários e serviços profissionais",120000]] },
-    { id:"logistica", nome:"Logística", gestor:"Rafael", headcount:4,
-      opexQ:[826363,862992,1032992,1052679], folhaQ:[99437,107449,107449,107449], capexQ:[0,0,0,0],
-      detalhe:[["Fretes sobre vendas",3428906],["Armazenagem",300000],["Viagens",20820],["Material de expediente",11800],["Correios e frete expresso",6000]] },
-    { id:"manufatura", nome:"Manufatura", gestor:"Lutiane", headcount:10,
+    /* Diretoria B — Operações Globais (Paulo Barros). Subáreas conforme o
+       organograma corporativo HBT; valores reais do orçamento 2026. */
+    { id:"producao", nome:"Produção e Operações", gestor:"Valdemir", headcount:10,
       opexQ:[159570,151250,170275,132275], folhaQ:[1440341,1428950,1278161,1317111], capexQ:[428121,85575,85575,85575],
       detalhe:[["Honorários e serviços profissionais",262500],["Limpeza e conservação (fábrica)",96000],["Material de uso e consumo (fábrica)",81080],["Controle de pragas",49846],["Perdas/avarias de estoque",21600]] },
-    { id:"manutencao", nome:"Manutenção", gestor:"Lutiane", headcount:0,
+    { id:"suprimentos", nome:"Suprimentos & PCP", gestor:"Pamela", headcount:3,
+      opexQ:[9000,6700,8750,10600], folhaQ:[83299,86682,86682,86682], capexQ:[0,0,0,0],
+      detalhe:[["Viagens",18000],["Alimentação",5200],["Honorários e serviços profissionais",5000],["Brindes e doações",2500],["Correios e frete expresso",1200]] },
+    { id:"manutencao", nome:"Manutenção", gestor:"A contratar", headcount:0,
       opexQ:[62517,43302,53302,43302], folhaQ:[0,0,0,0], capexQ:[6000,11000,36000,16000],
       detalhe:[["Manutenção de máquinas e equipamentos",95726],["Manutenção de prédios e instalações",74103],["Honorários e serviços profissionais",20000],["Material de uso e consumo",7200],["Manutenção de móveis e utensílios",5393]] },
-    { id:"ti", nome:"TI", gestor:"José Roberto", headcount:0,
+    { id:"logistica", nome:"Logística e Expedição", gestor:"Rafael", headcount:4,
+      opexQ:[826363,862992,1032992,1052679], folhaQ:[99437,107449,107449,107449], capexQ:[0,0,0,0],
+      detalhe:[["Fretes sobre vendas",3428906],["Armazenagem",300000],["Viagens",20820],["Material de expediente",11800],["Correios e frete expresso",6000]] },
+    { id:"comercial_br", nome:"Comercial Brasil", gestor:"Luiz", headcount:0,
+      opexQ:[639167,677500,567833,486500], folhaQ:[0,0,0,0], capexQ:[22000,0,0,0],
+      detalhe:[["Despesas com bonificação",600000],["Honorários e serviços profissionais",491500],["Feiras e eventos",490000],["Campanhas e ações de vendas",280000],["Viagens",132000]] },
+    { id:"comercial_int", nome:"Comercial Internacional", gestor:"Dom Sebastian", headcount:0,
+      opexQ:[180000,290000,220000,30000], folhaQ:[0,0,0,0], capexQ:[0,0,0,0],
+      detalhe:[["Feiras e eventos",450000],["Viagens",150000],["Honorários e serviços profissionais",120000]] },
+    { id:"ti", nome:"TI / Sistemas", gestor:"Roberto", headcount:0,
       opexQ:[260612,235909,233261,230612], folhaQ:[0,0,0,0], capexQ:[111652,77541,54500,54500],
-      detalhe:[["Sistemas de informática",706490],["Honorários e serviços profissionais",210000],["Telefonia",19851],["Locação de equipamentos",12631],["Internet",11423]] }
+      detalhe:[["Sistemas de informática",706490],["Honorários e serviços profissionais",210000],["Telefonia",19851],["Locação de equipamentos",12631],["Internet",11423]] },
+    /* Nova subárea do organograma sem orçamento cadastrado — preencha OPEX/Folha/CAPEX quando definir o escopo Europa. */
+    { id:"hub_espanha", nome:"Hub Espanha / Barcelona", gestor:"Rafael Gomes", headcount:0,
+      opexQ:[0,0,0,0], folhaQ:[0,0,0,0], capexQ:[0,0,0,0], detalhe:[] }
   ];
 
   /* Receita ANUAL por departamento (editável no painel).
-     Hoje toda a receita entra via Comercial. Parcerias futuras (empresas
-     que contratam a HBT para produzir) devem ser lançadas no departamento
-     que produz (ex.: Manufatura), o que faz o ROI dele virar positivo. */
-  var RECEITA_ANUAL = { comercial:100000000 };
+     Hoje a receita entra pelo Comercial Brasil. Vendas de exportação vão em
+     Comercial Internacional; parcerias de produção devem ser lançadas em
+     Produção e Operações, o que faz o ROI dessa área virar positivo. */
+  var RECEITA_ANUAL = { comercial_br:100000000 };
 
   var CURR = {
     BRL:{ symbol:"R$", rate:1,     loc:"pt-BR" },
     USD:{ symbol:"$",  rate:0.187, loc:"en-US" },
-    NOK:{ symbol:"kr", rate:1.981, loc:"nb-NO" }
+    EUR:{ symbol:"€", rate:0.161, loc:"de-DE" }
   };
   var QIDX = { Q1:0, Q2:1, Q3:2, Q4:3 };
   var ROI_VIS_MAX = 150; // limite visual das barras de ROI (rótulo mostra o valor real)
