@@ -260,7 +260,7 @@
   <div class="titlebar">
     <div>
       <h1 class="display">Lucro &amp; Prejuízo · ROI por Departamento</h1>
-      <p class="sub">Rentabilidade e retorno por departamento — <b>visão corporativa</b> (Operações + Assuntos Corporativos e Qualidade). Custos reais do orçamento 2026 (OPEX + Folha + CAPEX); a Diretoria A entra à medida que o orçamento for preenchido. Clique num departamento para ver <b>onde o dinheiro vai</b>.</p>
+      <p class="sub">Rentabilidade e retorno por departamento — <b>visão corporativa</b> (Operações + Assuntos Corporativos e Qualidade). Custos: orçamento 2026 (OPEX + Folha + CAPEX). Receita: real — realizado Jan–Mai + projeção YTG Jul–Dez (~R$ 102 mi). A Diretoria A entra à medida que o orçamento for preenchido. Clique num departamento para ver <b>onde o dinheiro vai</b>.</p>
     </div>
     <div class="updated">
       <div>Ciclo fiscal <b>2026</b></div>
@@ -448,10 +448,10 @@
 
   var DEPARTAMENTOS = [
     /* ---- Diretoria B — Operações Globais (Paulo Barros) — dados reais ---- */
-    { id:"producao", dir:"B", nome:"Produção e Operações", gestor:"Valdemir", headcount:10,
+    { id:"producao", dir:"B", nome:"Produção e Operações", gestor:"Valdemir", headcount:5,
       opexQ:[159570,151250,170275,132275], folhaQ:[1440341,1428950,1278161,1317111], capexQ:[428121,85575,85575,85575],
       detalhe:[["Honorários e serviços profissionais",262500],["Limpeza e conservação (fábrica)",96000],["Material de uso e consumo (fábrica)",81080],["Controle de pragas",49846],["Perdas/avarias de estoque",21600]] },
-    { id:"suprimentos", dir:"B", nome:"Suprimentos & PCP", gestor:"Pamela", headcount:3,
+    { id:"suprimentos", dir:"B", nome:"Suprimentos & PCP", gestor:"Pamela", headcount:2,
       opexQ:[9000,6700,8750,10600], folhaQ:[83299,86682,86682,86682], capexQ:[0,0,0,0],
       detalhe:[["Viagens",18000],["Alimentação",5200],["Honorários e serviços profissionais",5000],["Brindes e doações",2500],["Correios e frete expresso",1200]] },
     { id:"manutencao", dir:"B", nome:"Manutenção", gestor:"A contratar", headcount:0,
@@ -460,13 +460,13 @@
     { id:"logistica", dir:"B", nome:"Logística e Expedição", gestor:"Rafael", headcount:4,
       opexQ:[826363,862992,1032992,1052679], folhaQ:[99437,107449,107449,107449], capexQ:[0,0,0,0],
       detalhe:[["Fretes sobre vendas",3428906],["Armazenagem",300000],["Viagens",20820],["Material de expediente",11800],["Correios e frete expresso",6000]] },
-    { id:"comercial_br", dir:"B", nome:"Comercial Brasil", gestor:"Luiz", headcount:0,
+    { id:"comercial_br", dir:"B", nome:"Comercial Brasil", gestor:"Luiz", headcount:6,
       opexQ:[639167,677500,567833,486500], folhaQ:[0,0,0,0], capexQ:[22000,0,0,0],
       detalhe:[["Despesas com bonificação",600000],["Honorários e serviços profissionais",491500],["Feiras e eventos",490000],["Campanhas e ações de vendas",280000],["Viagens",132000]] },
     { id:"comercial_int", dir:"B", nome:"Comercial Internacional", gestor:"Dom Sebastian", headcount:0,
       opexQ:[180000,290000,220000,30000], folhaQ:[0,0,0,0], capexQ:[0,0,0,0],
       detalhe:[["Feiras e eventos",450000],["Viagens",150000],["Honorários e serviços profissionais",120000]] },
-    { id:"ti", dir:"B", nome:"TI / Sistemas", gestor:"Roberto", headcount:0,
+    { id:"ti", dir:"B", nome:"TI / Sistemas", gestor:"Roberto", headcount:2,
       opexQ:[260612,235909,233261,230612], folhaQ:[0,0,0,0], capexQ:[111652,77541,54500,54500],
       detalhe:[["Sistemas de informática",706490],["Honorários e serviços profissionais",210000],["Telefonia",19851],["Locação de equipamentos",12631],["Internet",11423]] },
     { id:"hub_espanha", dir:"B", nome:"Hub Espanha / Barcelona", gestor:"Rafael Gomes", headcount:0,
@@ -494,10 +494,10 @@
   ];
 
   /* Receita ANUAL por departamento (editável no painel).
-     Hoje a receita entra pelo Comercial Brasil. Vendas de exportação vão em
-     Comercial Internacional; parcerias de produção devem ser lançadas em
-     Produção e Operações, o que faz o ROI dessa área virar positivo. */
-  var RECEITA_ANUAL = { comercial_br:100000000 };
+     Comercial Brasil = receita real 2026: realizado Jan–Mai R$ 42.546.595
+     (retorno da controladoria) + YTG Jul–Dez R$ 59.735.217 (revisão de volumes
+     02/07) = R$ 102.281.812. Junho ainda não fechou (~+R$ 8,5 mi → ~R$ 110 mi). */
+  var RECEITA_ANUAL = { comercial_br:102281812 };
 
   var CURR = {
     BRL:{ symbol:"R$", rate:1,     loc:"pt-BR" },
