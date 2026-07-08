@@ -208,13 +208,13 @@ table.data tr.total td{font-weight:600;background:#EAF4EE;border-top:2px solid v
     <section class="section active" id="overview">
       <div class="eyebrow">Painel executivo</div>
       <h2>Expansão São Paulo — Projeto 10x</h2>
-      <p class="lead">Multiplicar por dez a receita de São Paulo, de R$ 60M para R$ 600M em 36 meses, dentro do modelo de distribuição que já operamos (1 vendedor + 4 distribuidores hoje).</p>
+      <p class="lead">Multiplicar por dez a receita de São Paulo, de R$ 60M para R$ 600M em 36 meses, dentro do modelo de distribuição que já operamos (1 vendedor + X distribuidores hoje).</p>
 
       <div class="grid cards4">
-        <div class="card"><div class="lab">Base São Paulo</div><div class="big">R$ 60M</div><div class="foot">Confirmado · 4 distribuidores</div></div>
+        <div class="card"><div class="lab">Base São Paulo</div><div class="big">R$ 60M</div><div class="foot">Confirmado · X distribuidores</div></div>
         <div class="card"><div class="lab">Meta 36 meses</div><div class="big g">R$ 600M</div><div class="foot">10x a base atual</div></div>
         <div class="card"><div class="lab">CAGR (3 anos)</div><div class="big">115%<span style="font-size:16px">/ano</span></div><div class="foot">Agressivo — não conservador</div></div>
-        <div class="card"><div class="lab">Distribuidores-ref.</div><div class="big g">~40</div><div class="foot">De 4 → ~40 (R$ 15M cada)</div></div>
+        <div class="card"><div class="lab">Distribuidores-ref.</div><div class="big g">~10X</div><div class="foot">De X → ~10X (R$ 60M ÷ X cada)</div></div>
       </div>
 
       <div class="panel">
@@ -284,22 +284,22 @@ table.data tr.total td{font-weight:600;background:#EAF4EE;border-top:2px solid v
     <section class="section" id="viab">
       <div class="eyebrow">Análise de viabilidade</div>
       <h2>A lógica do 10x no modelo de distribuição</h2>
-      <p class="lead">Como já operamos por distribuição, o 10x não exige inventar um modelo novo — exige multiplicar a máquina que já funciona. Mantendo ~R$ 15M por distribuidor, R$ 600M equivalem a cerca de 40 distribuidores ativos.</p>
+      <p class="lead">Como já operamos por distribuição, o 10x não exige inventar um modelo novo — exige multiplicar a máquina que já funciona. Mantendo a produtividade por distribuidor (R$ 60M ÷ X), R$ 600M equivalem a cerca de 10X distribuidores — dez vezes o número atual.</p>
 
       <div class="twocol">
         <div class="panel" style="margin-top:0">
           <h3>Rampa de distribuidores</h3>
-          <div class="sub">Referência pela produtividade atual (R$ 15M/distribuidor).</div>
+          <div class="sub">Referência pela produtividade atual (R$ 60M ÷ X por distribuidor).</div>
           <table class="data">
             <thead><tr><th>Período</th><th class="num">Receita SP</th><th class="num">Distrib.</th><th class="num">Cresc. a/a</th></tr></thead>
             <tbody>
-              <tr><td>Base (hoje)</td><td class="num">R$ 60M</td><td class="num">4</td><td class="num">—</td></tr>
-              <tr><td>Ano 1 · M12</td><td class="num">R$ 175M</td><td class="num">~12</td><td class="num">+192%</td></tr>
-              <tr><td>Ano 2 · M24</td><td class="num">R$ 325M</td><td class="num">~22</td><td class="num">+86%</td></tr>
-              <tr><td>Ano 3 · M36</td><td class="num">R$ 600M</td><td class="num">~40</td><td class="num">+85%</td></tr>
+              <tr><td>Base (hoje)</td><td class="num">R$ 60M</td><td class="num">X</td><td class="num">—</td></tr>
+              <tr><td>Ano 1 · M12</td><td class="num">R$ 175M</td><td class="num">≈ 3X</td><td class="num">+192%</td></tr>
+              <tr><td>Ano 2 · M24</td><td class="num">R$ 325M</td><td class="num">≈ 5X</td><td class="num">+86%</td></tr>
+              <tr><td>Ano 3 · M36</td><td class="num">R$ 600M</td><td class="num">≈ 10X</td><td class="num">+85%</td></tr>
             </tbody>
           </table>
-          <div class="callout" style="margin-top:14px"><b>Atenção:</b> os ~40 distribuidores são referência, não promessa. O número real só fecha após mapear onde estão concentrados os R$ 60M atuais.</div>
+          <div class="callout" style="margin-top:14px"><b>Atenção:</b> o alvo de ~10X distribuidores é referência, não promessa. O número real só fecha após mapear onde estão concentrados os R$ 60M atuais.</div>
         </div>
 
         <div class="panel" style="margin-top:0">
@@ -325,7 +325,7 @@ table.data tr.total td{font-weight:600;background:#EAF4EE;border-top:2px solid v
         <table class="data">
           <thead><tr><th>Dado</th><th>Onde obter</th><th>Impacto</th></tr></thead>
           <tbody>
-            <tr><td><b>Capacidade fabril</b></td><td>Manufatura</td><td>Teto físico. 10x receita ≈ 10x volume — se não escala, o 10x cai por terra.</td></tr>
+            <tr><td><b>Capacidade fabril</b></td><td>Manufatura (em tratativa)</td><td>Teto físico da meta. Confirmação já em andamento; assim que fechada, destrava a escala.</td></tr>
             <tr><td><b>TAM de São Paulo</b></td><td>Pesquisa / IBGE + sindicato</td><td>Valida se R$ 600M é realista ou até subestimado.</td></tr>
             <tr><td><b>Distribuição dos R$ 60M</b></td><td>Vendedor + ERP/CRM</td><td>Define quantos distribuidores novos e onde.</td></tr>
           </tbody>
@@ -485,13 +485,13 @@ const CAPEX_DEF=[
 ];
 const OPEX_DEF=[
  ['Folha salarial base (M36)',187500],
- ['Encargos trabalhistas (~80%)',150000],
- ['Comissões',90000],
- ['Benefícios (VT / VR / saúde)',45000],
- ['Despesas de campo (viagem/combustível)',60000],
- ['Verba de trade marketing (ativações)',80000],
- ['Software e licenças',12000],
- ['Escritório (aluguel / utilidades)',25000],
+ ['Encargos trabalhistas (~70%)',130000],
+ ['Comissões',65000],
+ ['Benefícios (VT / VR / saúde)',35000],
+ ['Despesas de campo (viagem/combustível)',35000],
+ ['Verba de trade marketing (ativações)',30000],
+ ['Software e licenças',10000],
+ ['Escritório (aluguel / utilidades)',12000],
 ];
 
 /* ---------------- GLOSSARY ---------------- */
@@ -499,7 +499,8 @@ const GLOSSARY=[
  ['CAGR','TAXA','Crescimento anual composto — o ritmo médio de crescimento ao ano ao longo do período. Aqui, 115%/ano por 3 anos gera o 10x.'],
  ['CAPEX','CAPITAL','Despesa de capital: investimento único para montar a operação (equipamentos, sistemas, estruturação).'],
  ['OPEX','OPERAÇÃO','Despesa operacional: custo recorrente que se repete todo mês (folha, comissões, benefícios, campo).'],
- ['Distribuidor','PARCEIRO','Parceiro que compra o produto e revende à sua própria rede. É o pilar do nosso modelo — hoje 4 em SP.'],
+ ['Distribuidor','PARCEIRO','Parceiro que compra o produto e revende à sua própria rede. É o pilar do nosso modelo — hoje X em SP.'],
+ ['X (distribuidores)','PARÂMETRO','Número de distribuidores ativos hoje em SP. Tratamos como parâmetro: mantendo a produtividade por distribuidor, a meta de 10x leva a cerca de 10X distribuidores ao final.'],
  ['KAM','VENDAS','Key Account Manager: gerente de contas-chave, cuida dos distribuidores e grandes clientes.'],
  ['RTM','VENDAS','Route to Market: vendedor de campo/rota, executa a cobertura no ponto de venda.'],
  ['PDV','VAREJO','Ponto de venda — cada loja/estabelecimento onde o produto chega ao consumidor.'],
@@ -508,7 +509,7 @@ const GLOSSARY=[
  ['TAM','MERCADO','Total Addressable Market: tamanho total do mercado endereçável. Diz se R$ 600M é fatia pequena ou grande de SP.'],
  ['Headcount','EQUIPE','Número de pessoas no quadro — cresce de 10 (M12) a 29 (M36) na estrutura comercial de SP.'],
  ['Headroom','FOLGA','Espaço para crescer dentro de um distribuidor ou território já existente.'],
- ['Benchmark','REFERÊNCIA','Ponto de comparação. R$ 15M por distribuidor é o nosso benchmark de produtividade atual.'],
+ ['Benchmark','REFERÊNCIA','Ponto de comparação. R$ 60M ÷ X por distribuidor é o nosso benchmark de produtividade atual.'],
  ['Velocidade de cruzeiro','REGIME','Operação madura, rodando em ritmo pleno e estável — cenário do Ano 3.'],
  ['Back-office','SUPORTE','Retaguarda administrativa/comercial: CRM, relatórios, pedidos, apoio ao time de rua.'],
  ['10x','META','Multiplicar por dez. De R$ 60M para R$ 600M na receita de São Paulo.'],
